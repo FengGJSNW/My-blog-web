@@ -49,7 +49,7 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		{
 			// 图标文件路径
-			src: "/assets/images/favicon.ico",
+			src: "/assets/images/favicon.ico?v=20260106",
 			// 可选，指定主题 'light' | 'dark'
 			// theme: "light",
 			// 可选，图标大小
@@ -66,7 +66,7 @@ export const siteConfig: SiteConfig = {
 		// { type: "image", value: "https://example.com/logo.png", alt: "Firefly Logo" }
 		logo: {
 			type: "image",
-			value: "/assets/images/meow.png",
+			value: "/assets/images/meow.png?v=20260106",
 			alt: "🍀",
 		},
 		// 导航栏标题

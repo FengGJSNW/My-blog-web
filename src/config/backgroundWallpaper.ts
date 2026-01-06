@@ -8,9 +8,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 背景图片配置
 	src: {
 		// 桌面背景图片
-		desktop: "/assets/images/d1.webp",
+		desktop: "/assets/images/d1.webp?v=20260106",
 		// 移动背景图片
-		mobile: "/assets/images/m1.webp",
+		mobile: "/assets/images/m1.webp?v=20260106",
 	},
 	// Banner模式特有配置
 	banner: {

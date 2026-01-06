@@ -30,7 +30,7 @@ export const coverImageConfig: CoverImageConfig = {
 			"https://uapis.cn/api/v1/random/image?category=acg&type=pc",
 		],
 		// 备用图片路径
-		fallback: "/assets/images/cover.webp",
+		fallback: "/assets/images/cover.webp?v=20260106",
 
 		/**
 		 * 加载指示器配置
@@ -41,7 +41,7 @@ export const coverImageConfig: CoverImageConfig = {
 			// 加载指示器开关
 			enable: true,
 			// 自定义加载图片路径（相对于 public 目录）
-			image: "/assets/images/loading.gif",
+			image: "/assets/images/loading.gif?v=20260106",
 			// 加载指示器背景颜色，应与加载图片的背景色一致，避免在暗色模式下显得突兀
 			backgroundColor: "#fefefe",
 		},
