@@ -14,23 +14,22 @@ draft: false
 
 ### 🌳 文章分类索引
 
+>注：索引中显示为绿色文字的就是有链接的，黑色就是还没写的
+
 * 🏆 **算法竞赛 (Competitive Programming)**
     * 📖 **基础算法or思想**
         * 算法
-            * 图论
-            * 动态规划
-            * 
         * 思想
-            * 贪心
     * 🧩 **数据结构**
         * 链表、树和图
-            * 二叉树
         * 栈
         * 队列
         * 哈希表
         * 动态数组
+        * ...
     * 📝 **模版构造**
-        * c++ unorder_map中对tuple，pair类型的拓展
+        * [c++ unorder_map中对tuple，pair哈希类型的拓展写法](/posts/code/language/cpp/hash-for-tuple/)
+        * [c++ 中的运算符重载](/posts/code/language/cpp/operator-overloading/)
     * 📜 **竞赛真题**
         * [广东工业大学ACM-ICPC校赛-月赛](/posts/code/competition/post-01/post/)
         * 广东工业大学ACM-ICPC校赛-校队选拔初赛
@@ -39,24 +38,15 @@ draft: false
     * 🦀 **C**
     * ⚡ **C++**
     * 🐍 **Python**
+    * 🍵 **java**
 * 🛠️ **技术折腾 (Tech & Tools)**
     * 🎨 **博客建设**
-        * [Astro + Firefly 搭建笔记](#)
+        * Astro + Firefly 搭建笔记
     * 🔧 **开发工具**
-        * [VS Code 配置指南](#)
-        * [安卓 adb 工具的使用](#)
+        * VS Code 配置指南
+        * 安卓 adb 工具的使用
 * ✍️ **生活随笔 & 心得**
-    * [2026 年度计划](#)
 
----
-
-### 📋 快速访问
-
-| 栏目 | 描述 | 链接 |
-| :--- | :--- | :--- |
-| **关于我** | 了解 Feng_GJSNW 和版权声明 | [点击进入](/about) |
-| **项目列表** | 我的 GitHub 开源项目汇总 | [点击进入](#) |
-| **友链墙** | 志同道合的小伙伴们 | [点击进入](#) |
 
 ---
 
