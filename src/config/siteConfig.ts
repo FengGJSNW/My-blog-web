@@ -78,7 +78,7 @@ export const siteConfig: SiteConfig = {
 	},
 
 	// 站点开始日期，用于统计运行天数
-	siteStartDate: "2025-01-01",
+	siteStartDate: "2026-01-01",
 
 	// 文章页底部的"上次编辑时间"卡片开关
 	showLastModified: true,
