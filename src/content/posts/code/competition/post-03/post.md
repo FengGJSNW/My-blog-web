@@ -1,5 +1,5 @@
 ---
-title: 广东工业大学 ACM-ICPC 第一次比赛(2025/10月月赛)
+title: 广东工业大学 ACM-ICPC 第三次比赛(2025/12月月赛)
 published: 2026-01-07
 description: 讲解与解题的思考历程
 tags: [比赛, 讲解]
