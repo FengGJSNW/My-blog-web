@@ -39,9 +39,14 @@ draft: false
     * ⚡ **C++**
     * 🐍 **Python**
     * 🍵 **java**
+* 📝 **markdown**
+    * markdown基础语法
+    * markdown进阶语法
+    * markdown与html的联动
 * 🛠️ **技术折腾 (Tech & Tools)**
     * 🎨 **博客建设**
         * Astro + Firefly 搭建笔记
+    
     * 🔧 **开发工具**
         * VS Code 配置指南
         * [安卓 adb 工具的使用](/posts/tech/adb/)
