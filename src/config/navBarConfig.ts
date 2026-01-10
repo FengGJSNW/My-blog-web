@@ -32,12 +32,12 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				external: true,
 				icon: "fa6-brands:github",
 			},
-			{
-				name: "Bilibili",
-				url: "https://space.bilibili.com/38932988",
-				external: true,
-				icon: "fa6-brands:bilibili",
-			},
+			// {
+			// 	name: "Bilibili",
+			// 	url: "https://space.bilibili.com/38932988",
+			// 	external: true,
+			// 	icon: "fa6-brands:bilibili",
+			// },
 		],
 	});
 
