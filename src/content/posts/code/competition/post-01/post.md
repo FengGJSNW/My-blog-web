@@ -34,6 +34,9 @@ draft: false
 ---
 
 ## 📈 **官方参考难度与通过率**
+> 本比赛大多数人都为新手，就大概10人为0基础，所以最好根据AC率之比来评判题目之间的难度差。
+
+> 非零基础标准：至少1年编程经验（不是Scratch那种），或者曾经有过参赛经验的人
 
 | 题目 | 官方难度 | 通过人数 (封榜前) | 通过率 (AC/Total) |
 | :--- | :--- | :--- | :--- |
@@ -55,37 +58,115 @@ draft: false
 ---
 
 ## 🔑 **开始解题🥰**
+> **温馨提示：**解题时主要使用的是**c++(c20/c23/c26标准)**，对于c(c99)和c++(c17及以下版本)看情况给出模版。
 
 ### %%%自动机
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+这里没什么好讲的，直接粘代码就好了:
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
 
+int main() {
+    int n;  cin >> n;
+    while(n--) cout << "%";
+}
+```
+考虑到有人用c(c99标准)，再粘贴一个c版本的。(这里主要针对初学者)
+```c
+#include <stdio.h>
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    while(n--) printf("%%");    //两个%%打印一个%
+}
+```
 
 ---
 
 ### k-冲突数对
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+解决这题要具备一定的数论知识:
+
 
 ---
 
 ### 序列重构（简单版）
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+简单版的简单之处在于你可以输出询问一个可重复序列，困难版本中这是不被允许的：
+
+考虑到查询次数为n^2,那么，显然在这个版本中可以对每个位置进行枚举查询即可。然后监控返回值变化即可。然后中途最好开一个数组vis用于记录已经得到答案的位置。注意输出序列后进行 **cout << flush;** 即可。
+
+这里展示一个参考代码，感觉我自己写的有点一坨...
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+ 
+vector<int> ans, vis;
+ 
+void printfa(int a,int b,int len,int mode) {
+    switch(mode) {  //根据mode进行输出查询或者答案
+        case 0:
+            cout << '?';
+            for(int i = 1;i <= len;++i) {
+                if(i != a) cout << ' ' << ans[i];
+                else cout << ' ' << b;
+            }
+            cout << endl << flush;
+            break;
+        case 1:
+            cout << '!';
+            for(int i = 1;i <= len;++i) cout << ' ' << ans[i];
+            cout << endl << flush;
+            break;
+    }
+}
+ 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+ 
+    int t;
+    cin >> t;
+ 
+    while (t--) {
+        int len;
+        cin >> len;
+ 
+        ans.assign(len + 1,0);
+        vis.assign(len + 1,0);
+ 
+        int r = 0;
+        for(int i = 1;i <= len;++i) {
+            for(int j = 1;j <= len; ++j) {
+                if(vis[j] == 0) {
+                    printfa(j,i,len,0);
+                    int temp;   cin >> temp;
+                    if(temp != r) {
+                        ans[j] = i;
+                        vis[j] = 1;
+                        ++r;
+                        break;
+                    }
+                }
+            }
+        }
+        printfa(0,0,len,1);
+    }
+}
+```
 
 ---
 
 ### 序列重构（困难版）
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+我们需要分类讨论：
+
 
 ---
 
@@ -116,48 +197,384 @@ draft: false
 ### 我不吃水果
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+* 讲解思路
+显然这是一个动态规划可以解决的问题，不懂得话就理解为按照一个规则填表即可。
+
+填表思路：
+
+网格为 **N*N** 的大小，考虑dp常常遇到边界问题，创建dp表格时应当考虑 **(N+1)*(N+1)** 的网格。
+然后根据处理网格的方式，大概归为两种，下面画图展示：
+
+#### 图一
+
+#### 图二
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vector<vector<int>> mp(n + 1,vector<int>(n + 1,0));
+    vector<vector<int>> dp(n + 1,vector<int>(n + 1,0));
+    for(int i = 0;i < n;++i)
+        for(int j = 0;j < n;++j)
+            cin >> mp[i][j];
+    
+    int maxn = 0;
+    for(int i = 0;i < n;++i) {
+        for(int j = 0;j < n;++j) {
+            if(!mp[i][j] && !dp[i][j]) {
+                dp[i][j] = (i+1) * (j+1);
+                maxn = max(maxn, dp[i][j]);
+            } else {
+                dp[i+1][j] = dp[i][j+1] = -1;
+            }
+        }
+    }
+    cout << maxn;
+}
+```
+
 
 ---
 
 ### 运动世界校园
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+简单的概率问题，初中甚至小学水平，直接粘代码：
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
 
+int main() {
+    double p;
+    cin >> p;
+    cout << fixed << setprecision(6) << p + (1-p)*p + (1-p)*(1-p)*p << endl;
+}
+```
 ---
 
 ### 逃出生天
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+这题看完以后，不难发现地图是静态的，只需把石像和激光当成墙即可。那么这个题就是走迷宫的经典题型。
+因此第一个思路不难想到使用DFS或BFS总能解决。
+
+#### 这里是BFS的思路
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Point {
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int rows, cols;
+    cin >> rows >> cols;
+    vector<vector<int>> vis(rows + 2, vector<int>(cols, 0));
+
+    for (int i = 1; i <= rows; ++i) {
+        int n; char m;
+        cin >> n >> m;
+        if (m == 'R') {
+            for (int j = n - 1; j < cols; ++j) vis[i][j] = 1;
+        } else {
+            for (int j = n - 1; j >= 0; --j) vis[i][j] = 1;
+        }
+    }
+
+    queue<Point> qu;
+    qu.emplace(0, 0); 
+    vis[0][0] = 1;
+
+    int dx[4] = {0, 0, -1, 1};
+    int dy[4] = {1, -1, 0, 0};
+
+    while (!qu.empty()) {
+        Point tmp = qu.front();
+        qu.pop();
+
+        if (tmp.y == rows + 1) {
+            cout << "YES" << endl;
+            return 0;
+        }
+
+        for (int i = 0; i < 4; ++i) {
+            int nx = tmp.x + dx[i];
+            int ny = tmp.y + dy[i];
+
+            if (nx >= 0 && nx < cols && ny >= 0 && ny < rows + 2) {
+                if (!vis[ny][nx]) {
+                    vis[ny][nx] = 1;
+                    qu.emplace(nx, ny);
+                }
+            }
+        }
+    }
+
+    cout << "NO" << endl;
+    return 0;
+}
+```
+
+#### 这里是DFS的思路
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int rows, cols;
+vector<vector<int>> vis;
+
+const int dx[4] = {0, 0, -1, 1};
+const int dy[4] = {1, -1, 0, 0};
+
+bool dfs(int x, int y) {
+    if (y == rows + 1) return true;
+
+    vis[y][x] = 1;
+
+    for (int i = 0; i < 4; ++i) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+
+        if (nx >= 0 && nx < cols && ny >= 0 && ny < rows + 2) {
+            if (!vis[ny][nx]) {
+                if (dfs(nx, ny)) return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    cin >> rows >> cols;
+    vis.assign(rows + 2, vector<int>(cols, 0));
+
+    for (int i = 1; i <= rows; ++i) {
+        int n; char m;
+        cin >> n >> m;
+        if (m == 'R') {
+            for (int j = n - 1; j < cols; ++j) vis[i][j] = 1;
+        } else {
+            for (int j = n - 1; j >= 0; --j) vis[i][j] = 1;
+        }
+    }
+
+    if (dfs(0, 0)) cout << "YES" << endl;
+    else cout << "NO" << endl;
+
+    return 0;
+}
+```
+在看这个迷宫具有某些性质：
+对于地图有n列n+2行;当任意行属于1,n+1时，都能走到下一行,那么整个地图必然连通到终点
+于是只需两行两行的扫描判定即可。
+
+#### 这里是根据题目特殊性质的思路
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int y, x;
+    cin >> y >> x;
+    vector<vector<int>> mp(y+2,vector<int>(x));
+    for(int i = 1;i <= y;++i) {
+        int n;  char m;
+        cin >> n >> m;
+        if(m == 'R') {
+            for(int j = n-1;j < x;++j)  mp[i][j] = 1;
+        } else {
+            for(int j = n-1;j >= 0;--j)  mp[i][j] = 1;
+        }
+    }
+
+    for(int i = 0;i <= y;++i) {
+        bool ok = 0;
+        for(int j = 0;j < x;++j) {
+            if(!mp[i][j] && !mp[i+1][j]) {
+                ok = 1;
+                break;
+            }
+        }
+        if(ok == 0) {
+            cout << "NO";
+            return 0;
+        }
+    }
+    cout << "YES";
+}
+```
+最后，展示一下性能区别：（评测机给出）
+| 解决方式| Time | Memory |
+| :--- | :--- | :--- |
+| DFS | 46ms | 19700 KB |
+| BFS | 46ms | 600KB |
+| 特殊做法 | 31ms | 600KB |
 
 ---
 
 ### 最不上升也不下降序列
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+不妨先研究下数学性质：
 
+根据基本不等式，显然有
+$$
+LIS + LDS \ge 2\sqrt{LIS*LDS}
+$$
+然后又有：
+$$
+LIS*LDS \ge n
+$$
+于是:
+$$
+LIS + LDS \ge 2\sqrt{n}
+$$
+因此，当 LIS ≈ LDS ≈ sqrt{n} 时，能找到最优解
+
+然后，观察题目给出的参考数据，不难看到有**分组**和**倒序**的规律。结合上面的数学结论，尝试这样构造数列：
+
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    // 找到使 a + ceil(n / a) 最小的 a
+    int bestA = 1;
+    int bestSum = n + 1;
+
+    for (int a = 1; a * a <= n; ++a) {
+        int b = (n + a - 1) / a;
+        if (a + b < bestSum) {
+            bestSum = a + b;
+            bestA = a;
+        }
+    }
+
+    int a = bestA;
+    vector<int> ans;
+    ans.reserve(n);
+
+    // 分块构造：每块倒序
+    for (int i = 1; i <= n; i += a) {
+        int r = min(i + a - 1, n);
+        for (int j = r; j >= i; --j) {
+            ans.push_back(j);
+        }
+    }
+
+    // 输出结果
+    for (int x : ans) {
+        cout << x << " ";
+    }
+    cout << "\n";
+
+    return 0;
+}
+```
 ---
 
 ### 翻转硬币
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+这题说是不难，但需要你能注意到其中的某些性质，否则较难通过模拟解决。
+* 思考历程
+
+打比赛时，我刚开始想不出来吧，想着可能是一种贪心题，但那时我贼菜，显然不知到怎么处理。
+但是看到比赛时这题的解决率很高，搞得我又不得不思考这题。
+
+* **第一次**，我尝试猜测可能在二进制转码到十进制可能有的规律<br>
+0 -> 0<br>
+1 -> 1<br>
+10 -> 2<br>
+...
+我大概列举到了20多，没看出什么规律。然后我突然想起，这个前面能有前导0，那么显然这个思路错误了
+
+* **第二次**，我尝试数1和0，以及他们共有的个数。
+经过例举，不难发现当1为偶数，所有数字个数为偶数时，能全部翻到正面；当1为奇数，所有数字个数为奇数时，能全部翻到正面。
+
+于是，有了以下代码并提交测试：
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    char ch;
+    int a = 0;
+    while(1) {
+        char ch = getchar();
+        if(ch == '0')   {++a;   continue;}
+        if(ch == '1')   {continue;}
+        break;
+    }
+    if(a & 1) cout << "No"; //等价写法(a % 2 == 1)，读者自证不难(位运算)
+    else cout << "Yes";
+}
+```
+然后通过测试。<br>
+总结时，我想了想，发现无论怎么翻转，1的个数是不变的，也就是奇偶性不变。<br>
+然后使用贪心的思路就总能解决该问题。
 
 ---
 
 ### 字符消消乐
 [⬅️ 返回目录](#-题目跳转)
 
-> &emsp;**💡 解题思路**
-> &emsp;...
+有了雪碧给的魔法后，这题一下子就简单明了了：
+记录字符个数，按照从大到小的顺序排序，然后每次去除最大者即可。
+最后，注意到k允许大于26，注意数组边界。
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int a, b;
+    cin >> a >> b;
+    vector<int> hash(26,0);
+
+    int t = a;
+    while(t--) {
+        char ch;
+        cin >> ch;
+        ++hash[ch - 'a'];
+    }
+
+    sort(hash.begin(),hash.end(), greater<>());
+
+    for(int i = 0;i < b && i < 26;++i)
+        if(hash[i] >= 3) a -= hash[i];
+
+    cout << a;
+}
+```
 
 ---
 

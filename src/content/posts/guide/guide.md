@@ -18,6 +18,9 @@ draft: false
 
 * 🏆 **算法竞赛 (Competitive Programming)**
     * 📖 **基础算法or思想**
+        * [模版](/posts/code/competition/tips-advice/)
+        * [建议](/posts/code/competition/template/)
+    * 📖 **基础算法or思想**
         * 算法
         * 思想
     * 🧩 **数据结构**
