@@ -585,12 +585,46 @@ int main() {
 填表思路：
 
 网格为 **N*N** 的大小，考虑dp常常遇到边界问题，创建dp表格时应当考虑 **(N+1)*(N+1)** 的网格。
-然后根据处理网格的方式，大概归为两种，下面画图展示：
+然后根据处理网格的方式，大概主要归为两种，下面分别展示：
 
-#### 图一
+#### 代码一
+写法特点：对于任意格子，查询前面格子以确定自己的值
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
 
-#### 图二
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
+    int n;
+    cin >> n;
+    vector<vector<int>> mp(n + 1, vector<int>(n + 1, 0));
+    vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+    for(int i = 0; i < n; ++i)
+        for(int j = 0; j < n; ++j)
+            cin >> mp[i][j];
+    
+    int maxn = 0;
+    for(int i = 0; i < n; ++i) {
+        for(int j = 0; j < n; ++j) {
+            bool from_up = (i > 0 && dp[i-1][j] == -1);
+            bool from_left = (j > 0 && dp[i][j-1] == -1);
+
+            if(!mp[i][j] && !from_up && !from_left) {
+                dp[i][j] = (i + 1) * (j + 1);
+                maxn = max(maxn, dp[i][j]);
+            } else {
+                dp[i][j] = -1;
+            }
+        }
+    }
+    cout << maxn;
+}
+```
+
+#### 代码二
+写法特点：对于任意格子，根据自己情况赋值后再影响周边格子
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
