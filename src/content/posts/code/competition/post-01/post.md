@@ -1,6 +1,6 @@
 ---
-title: 广东工业大学 ACM-ICPC 第一次比赛(2025/10/19月月赛)
-published: 2026-01-07
+title: 广东工业大学 ACM-ICPC 第一次比赛(2025/10/19月月赛)[已更新部分讲解]
+published: 2026-01-12
 description: 讲解与解题的思考历程
 tags: [比赛, 讲解]
 category: 比赛
@@ -89,7 +89,203 @@ int main() {
 ### k-冲突数对
 [⬅️ 返回目录](#-题目跳转)
 
-解决这题要具备一定的数论知识:
+不妨先尝试一个较为朴素的解法：
+
+这里使用了gcd辗转相除法+滑动窗口的解法：
+#### 第一次尝试
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int gcd(int a,int b)
+{
+	if(b==0) return a;
+	return gcd(b,a%b);
+}
+
+inline bool impact(int x, int y, int k) {
+    return x + y - gcd(x, y) == k;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int n, k;
+    cin >> n >> k;
+
+    vector<long long> data(n);
+    for(int i = 0;i < n;++i)
+        cin >> data[i];
+
+    int l = 0, r = 0, len = 0;
+    while (r < n) {
+        bool bad = impact(data[r], data[r], k) ? true : false;
+
+        for (int cur = l; !bad && cur < r; ++cur) {
+            if (impact(data[cur], data[r], k)) {
+                bad = true;
+            }
+        }
+
+        if (!bad) {
+            len = max(len, r - l + 1);
+            ++r;
+        } else {
+            ++l;
+            if (l > r) {
+                r = l;
+            }
+        }
+    }
+
+    cout << len;
+}
+```
+该解法时间复杂度在O(n^2logn)，大概能解决长度小于1e4的数组（1s内），但是目标是要解决1e5级别的，显然，我们要继续优化
+
+对于gcd的部分，已经是竞赛的常用最优解了，不需要再优化，那么我们要从滑动窗口这边继续优化，将O(n^2)的时间复杂度降下去。
+
+我们能考虑的思路有：剪枝，哈希表，还有k-冲突数对内在的数学性质等等一系列解决方案。
+
+不妨先从数学性质入手，看看它暗含什么信息：
+
+我们先这样假设:
+$$
+x = at, y = bt, t = gcd(x, y) (a,b ∈ Z)
+$$
+然后得到:
+$$
+at + bt - t = k \\
+t(a + b - 1) = k \\
+t(a + b - 1) = k
+$$
+也就是
+$$
+gcd(x,y) \mid k
+$$
+然后就是通过:
+$$
+x + y - gcd(x, y) = k \\
+gcd(x, y) \le y
+$$
+那么必然$$ x > k $$的时候不存在k-冲突数对的问题
+
+到了这一步，我们总结一下上面的信息:
+
+我们原本的判断标准是
+$$
+x + y − gcd(x,y)= k
+$$
+现在我们的判断标准变成了:
+$$
+y = k − x + gcd(x, y) ⟹ y = k − x + gcd(x, y)
+$$
+
+
+
+
+这是因为k是固定的，而x是唯一变量，且只需考虑$$x \le k$$，那么我们可以枚举k的所有因子，再次求解**因子的因子**即可。
+
+同时不难注意到，当你求出k的所有因子后，因子的因子也被包含在k的因子集合内。
+
+于是我们不妨这样做：
+
+开一个一维数组：factor_k,求出k的所有因子。
+
+开一个二维数组: factor_table,将k的所有因子的因子放进去。
+
+然后，我们就可以这样快速访问gcd(x, k):
+gcd(x, k) = factor_table[x][it] (it的范围为x的因子个数)
+
+当我们再次面对$$gcd(x,y) \mid gcd(x,k)$$，只需这样子:
+```cpp
+for(auto it : factor_table[x]) {}
+```
+就可以遍历所有gcd(x, k)的情况了。
+
+再保留滑动窗口的思路，就有了以下代码：
+#### 第二次尝试
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+long long gcd(long long a,long long b)
+{
+	if(b==0) return a;
+	return gcd(b,a%b);
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int n, k;
+    cin >> n >> k;
+
+    vector<long long> data(n);
+    for(long long i = 0;i < n;++i)
+        cin >> data[i];
+
+    vector<long long> factor;
+    for(long long i = 1;i * i <= k;++i) {
+        if (k % i != 0) continue;
+        factor.push_back(i);
+        if (i * i != k) factor.push_back(k / i);
+    }
+    vector<vector<long long>> factor_table(k+1);
+    for(long long x : factor) {
+        for(long long y : factor) {
+            if(y % x != 0)  continue;
+            factor_table[y].push_back(x);
+        }
+    }
+
+    int ans = 0;
+    vector<int> mark(k+1);
+    for(int l = 0, r = 0; r < n; ++r) {
+        long long x = data[r];
+
+        if(x <= k) mark[x]++;
+
+        long long g = gcd(x, k);
+        for(auto d : factor_table[g]) {
+            long long y = k - x + d;
+            if(y <= 0 || y > k) continue;
+            if(gcd(x, y) != d) continue;
+
+            while(y <= k && mark[y] && l <= r) {
+                if(data[l] <= k) mark[data[l]]--;
+                l++;
+            }
+        }
+
+        ans = max(ans, r - l + 1);
+    }
+    cout << ans;
+}
+```
+这时，代码已经成功AC。
+
+该代码的性能：
+
+评测机给出Time和Memory分别为968ms和34600KB
+
+时间复杂度分析：
+1. 因数预处理,复杂度：O(√n)
+2. 滑动窗口部分:外层循环 r → O(n);内层循环 d ∈ factor_table[g] → O(√n)
+3. gcd(x,y) → O(log k)
+
+共计 O(n√nlogn)
+
+此时程序能解决的数组大小在40000左右，还是有一定风险不通过，毕竟$$1 \le a_i \le 1081080$$,考虑这是讲解...
+
+于是，继续优化！！！：
+
+
+
+
+
 
 
 ---
