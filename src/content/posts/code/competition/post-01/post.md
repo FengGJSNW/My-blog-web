@@ -12,6 +12,9 @@ draft: false
 <br>
 <a href="/assets/blog_article/material/2025-10-19-oct-contest-answer.pdf" target="_blank">📥 点击下载/在线查看：2025/10/19年月赛题解</a>
 
+<!-- <br>
+<a href="/assets/blog_article/material/2025-10-19-oct-contest-answer.pdf" target="_blank">📥 文章内的程序下载[还没整理完] </a> -->
+
 
 ---
 
@@ -280,23 +283,193 @@ int main() {
 ```
 这时，代码已经成功AC。
 
-该代码的性能：
-
-评测机给出Time和Memory分别为968ms和34600KB
+该代码的性能：<br>
+Time：968ms <br>
+Memory：34600KB
 
 时间复杂度分析：
 1. 因数预处理,复杂度：O(√n)
 2. 滑动窗口部分:外层循环 r → O(n);内层循环 d ∈ factor_table[g] → O(√n)
 3. gcd(x,y) → O(log k)
 
-共计 O(n√nlogn)
+共计 $$\mathbf{O(n \sqrt{n} \log n)}$$
 
 此时程序能解决的数组大小在40000左右，还是有一定风险不通过，毕竟$$1 \le a_i \le 1081080$$,考虑这是讲解...
 
-于是，继续优化！！！：
+于是，**继续优化！！！：**
+
+不难发现，结合前面的例子，**反复求解gcd()是一个极大的性能瓶颈**，而我们还有一个gcd(x, y)仍旧需要反复求解。于是我们的第一个想的目标就是**消灭所有滑动窗口阶段运行的gcd()，将他们全部预处理化。**
+
+核心观察上：<br>
+还是令
+$$
+x = at, y = bt, t = gcd(x, y) (a,b ∈ Z,gcd(a, b) = 1)
+$$
+那么
+$$
+gcd(x, y) = t ⟺ gcd(a, b) = 1
+$$
+带入
+$$
+y = k − x + t ⇒ b = \frac{k}{t}​− a + 1
+$$
+于是我们的等价判断条件呼之欲出！！！
+$$
+\boxed{
+gcd(\frac{x}{t}, \frac{k}{t} - \frac{x}{t} + 1) = 1
+}
+$$
+此时我们只需要把原来的等式判定转化为两个数互质的判定即可。
+1. 预处理最小因子
+$$
+f[i] = i的最小因子
+$$
+作用:
+* O(log n) 分解任意整数
+
+* 为后续“是否含有非法质因子”服务
+2. 对每个 t，预处理合法性表 h[t]
+目标是回答这个问题：
+对于固定的t,给定$$u = \frac{x}{t}$$是否有
+$$
+gcd(u, \frac{k}{t} - u + 1) = 1
+$$
+
+思路：
+* 设$$K = \frac{k}{t} + 1$$
+* 若$$ p \mid K$$，且$$p \mid u$$,则不互质
+* 所以只需判断：u是否包含K的质因子
+
+预处理方式：
+h[t][u] = 是否非法
+
+3. 枚举顺序的优化+剪枝
+* 枚举t时注意从小到大
+这是因为t = k - x + t<br>
+t越小，y越靠左，更早出发窗口收缩，减少后续冲突
+* 然后注意，直接逃过非法y
+
+#### 第三次尝试
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+constexpr int INF = 1e9;
 
 
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> data(n + 1);
+    for (int i = 1; i <= n; i++) cin >> data[i];
+
+    /* ---------- 1. k 的所有因子 ---------- */
+    vector<int> factor;
+    for (int i = 1; i * i <= k; i++) {
+        if (k % i) continue;
+        factor.push_back(i);
+        if (i * i != k) factor.push_back(k / i);
+    }
+    sort(factor.begin(), factor.end());
+
+    int m = factor.size();
+    unordered_map<int,int> id;
+    for (int i = 0; i < m; i++) id[factor[i]] = i;
+
+    /* ---------- 2. factor[d] = d 的所有因子（d | k） ---------- */
+    vector<vector<int>> fac(m);
+    for (int i = 0; i < m; i++) {
+        for (int j = i; j < m; j++) {
+            if (factor[j] % factor[i] == 0)
+                fac[j].push_back(i);
+        }
+    }
+
+    /* ---------- 3. 最小质因子预处理 ---------- */
+    int min_prime = k + 1;
+    vector<int> spf(min_prime + 1);
+    for (int i = 2; i <= min_prime; i++) {
+        if (!spf[i]) {
+            spf[i] = i;
+            if ((long long)i * i <= min_prime)
+                for (long long j = 1LL * i * i; j <= min_prime; j += i)
+                    if (!spf[j]) spf[j] = i;
+        }
+    }
+
+    /* ---------- 4. h[id][u]：是否合法 ---------- */
+    vector<vector<char>> h(m);
+    for (int i = 0; i < m; i++) {
+        int t = factor[i];
+        int K = k / t + 1;
+
+        vector<char> bad(K + 1, 0);
+
+        int tmp = K;
+        vector<int> primes;
+        for (int x = tmp; x > 1; ) {
+            int p = spf[x];
+            primes.push_back(p);
+            while (x % p == 0) x /= p;
+        }
+
+        for (int p : primes) {
+            for (int j = p; j <= K; j += p)
+                bad[j] = 1;
+        }
+
+        h[i].resize(K + 1);
+        for (int u = 1; u <= K; u++)
+            h[i][u] = bad[u];
+    }
+
+    /* ---------- 5. 滑动窗口 ---------- */ 
+    vector<int> cnt(k + 1);
+    int ans = 0;
+    for (int l = 0, r = 1; r <= n; r++) {
+        int x = data[r];
+        if (x <= k) cnt[x]++;
+
+        if (x <= k) {
+            int gx = gcd(x, k);
+            int gid = id[gx];
+
+            for (int tid : fac[gid]) {
+                int t = factor[tid];
+                int y = k - x + t;
+                if (y <= 0 || y > k) continue;
+
+                int u = x / t;
+                if (u < (int)h[tid].size() && h[tid][u]) continue;
+
+                while (cnt[y]) {
+                    if (data[++l] <= k) cnt[data[l]]--;
+                }
+            }
+        }
+        ans = max(ans, r - l);
+    }
+
+    cout << ans << '\n';
+    return 0;
+}
+
+```
+
+此时，程序的性能达到了前所未有的提升：<br>
+Time:406ms<br>
+Memory:13900KB
+
+你可能觉得时间变化不大，这是因为评测机和多组测试数据的缘故。<br>
+但衡量一个程序性能的显然不能只靠这个，要靠时间复杂度判断
+
+本程序时间复杂度为：$$\mathbf{O(k \log \log k + n \cdot d(k))}$$
+
+此时可以处理至**1e7级别**的数据，甚至超过了题目要求！！！
 
 
 
