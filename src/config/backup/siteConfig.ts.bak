@@ -1,0 +1,249 @@
+import type { SiteConfig } from "@/types/config";
+import { fontConfig } from "./fontConfig";
+
+// 瀹氫箟绔欑偣璇█
+// 璇█浠ｇ爜锛屼緥濡傦細'zh_CN', 'zh_TW', 'en', 'ja', 'ru'銆?
+const SITE_LANG = "zh_CN";
+
+export const siteConfig: SiteConfig = {
+	// 绔欑偣鏍囬
+	title: "Feng_GJSNW",
+
+	// 绔欑偣鍓爣棰?
+	subtitle: "blog",
+
+	// 绔欑偣 URL
+	site_url: "https://fenggjsnw.top",
+
+	// Site description
+	description: "记录",
+
+	// Site keywords
+	keywords: [
+		"Firefly",
+		"Astro",
+		"ACGN",
+		"博客",
+		"技术博客",
+		"静态博客",
+		"linux",
+		"c++",
+		"c",
+		"cuda",
+		"python",
+		"java",
+	],
+
+	// 涓婚鑹?
+	themeColor: {
+		// 涓婚鑹茬殑榛樿鑹茬浉锛岃寖鍥翠粠 0 鍒?360銆備緥濡傦細绾㈣壊锛?锛岄潚鑹诧細200锛岃摑缁胯壊锛?50锛岀矇鑹诧細345
+		hue: 165,
+		// 鏄惁瀵硅闂€呴殣钘忎富棰樿壊閫夋嫨鍣?
+		fixed: false,
+		// 榛樿妯″紡锛?light" 浜壊锛?dark" 鏆楄壊锛?system" 璺熼殢绯荤粺
+		defaultMode: "system",
+	},
+
+	// 椤甸潰鏁翠綋瀹藉害锛堝崟浣嶏細rem锛?
+	// 鏁板€艰秺澶у彲浠ヨ椤甸潰鍐呭鍖哄煙鏇村
+	// 鍦ㄤ娇鐢ㄥ崟渚ф爮杈规爮鏃讹紝寤鸿璋冧綆涓€浜涘搴︿互鑾峰緱鏇村ソ鐨勮瑙夋晥鏋溿€?
+	pageWidth: 100,
+
+	// 缃戠珯Card鏍峰紡閰嶇疆
+	card: {
+		// 鏄惁寮€鍚崱鐗囪竟妗嗗拰闃村奖锛屽紑鍚悗璁╃綉绔欐洿鏈夌珛浣撴劅
+		border: true,
+		// 鏄惁璁╁崱鐗囬鏍艰窡闅忎富棰樿壊鐩?
+		followTheme: false,
+	},
+
+	// Favicon 閰嶇疆
+	favicon: [
+		{
+			// 鍥炬爣鏂囦欢璺緞
+			src: "/assets/images/favicon.ico?v=20260106",
+			// 鍙€夛紝鎸囧畾涓婚 'light' | 'dark'
+			// theme: "light",
+			// 鍙€夛紝鍥炬爣澶у皬
+			// sizes: "32x32",
+		},
+	],
+
+	// 瀵艰埅鏍忛厤缃?
+	navbar: {
+		// 瀵艰埅鏍廘ogo
+		// 鏀寔涓夌绫诲瀷锛?
+		// 1. Astro鍥炬爣搴? { type: "icon", value: "material-symbols:home-pin-outline" }
+		// 2. 鏈湴鍥剧墖锛坧ublic鐩綍锛屼笉浼樺寲锛? { type: "image", value: "/assets/images/logo.webp", alt: "Logo" }
+		// 3. 鏈湴鍥剧墖锛坰rc鐩綍锛岃嚜鍔ㄤ紭鍖栦絾浼氬鍔犳瀯寤烘椂闂达紝鎺ㄨ崘锛? { type: "image", value: "assets/images/logo.webp", alt: "Logo" }
+		// 4. 缃戠粶鍥剧墖: { type: "url", value: "https://example.com/logo.png", alt: "Logo" }
+		logo: {
+			type: "image",
+			value: "/assets/images/meow.png?v=20260106",
+			alt: "馃崁",
+		},
+		// 瀵艰埅鏍忔爣棰?
+		title: "Feng_GJSNW",
+		// 鍏ㄥ瀵艰埅鏍忥紝瀵艰埅鏍忔槸鍚﹀崰婊″睆骞曞搴?
+		widthFull: false,
+		// 瀵艰埅鑿滃崟瀵归綈鏂瑰紡锛宭eft锛氬乏瀵归綈锛宑enter锛氬眳涓?
+		menuAlign: "center",
+		// 瀵艰埅鏍忓浘鏍囧拰鏍囬鏄惁璺熼殢涓婚鑹?
+		followTheme: false,
+		// 瀵艰埅鏍忔槸鍚﹀浐瀹氬湪椤堕儴骞跺缁堝彲瑙?
+		stickyNavbar: true,
+	},
+
+	// 绔欑偣寮€濮嬫棩鏈燂紝鐢ㄤ簬缁熻杩愯澶╂暟
+	siteStartDate: "2026-01-01",
+
+	// 绔欑偣鏃跺尯锛圛ANA 鏃跺尯瀛楃涓诧級锛岀敤浜庢牸寮忓寲bangumi銆乺ss閲岀殑鏋勫缓鏃ユ湡鏃堕棿绛夌瓑..
+	// 绀轰緥锛?Asia/Shanghai", "UTC", 濡傛灉涓虹┖锛屽垯鎸夌収鏋勫缓鏈嶅姟鍣ㄧ殑鏃跺尯杩涜鏃跺尯杞崲
+	timezone: "Asia/Shanghai",
+
+	// 鎻愰啋妗嗭紙Admonitions锛夐厤缃紝淇敼鍚庨渶瑕侀噸鍚紑鍙戞湇鍔″櫒鎵嶈兘鐢熸晥
+	// 涓婚锛?github' | 'obsidian' | 'vitepress'锛屾瘡涓富棰橀鏍煎拰璇硶涓嶅悓锛屽彲鏍规嵁鍠滃ソ閫夋嫨
+	rehypeCallouts: {
+		theme: "github",
+	},
+
+	// 鏂囩珷椤靛簳閮ㄧ殑"涓婃缂栬緫鏃堕棿"鍗＄墖寮€鍏?
+	showLastModified: true,
+
+	// 鏂囩珷杩囨湡闃堝€硷紙澶╂暟锛夛紝瓒呰繃姝ゅぉ鏁版墠鏄剧ず"涓婃缂栬緫"鍗＄墖
+	outdatedThreshold: 30,
+
+	// 鏄惁寮€鍚垎浜捣鎶ョ敓鎴愬姛鑳?
+	sharePoster: true,
+
+	// OpenGraph鍥剧墖鍔熻兘,娉ㄦ剰寮€鍚悗瑕佹覆鏌撳緢闀挎椂闂达紝涓嶅缓璁湰鍦拌皟璇曠殑鏃跺€欏紑鍚?
+	generateOgImages: false,
+
+	// bangumi閰嶇疆
+	bangumi: {
+		// Bangumi鐢ㄦ埛ID
+		userId: "100000000",
+		// 鏉＄洰绫诲瀷鎺掑簭锛屾暟缁勪腑鐨勭被鍨嬪皢鎸夐『搴忎紭鍏堝睍绀?
+		// 鍙€夊€? "anime" | "book" | "music" | "game" | "real" (鏆備笉鏀寔"real"绫诲瀷)
+		// 鏈垪鍑虹殑绫诲瀷灏嗘寜榛樿椤哄簭鎺掑湪鍚庨潰
+		categoryOrder: ["anime", "book", "music", "game"],
+	},
+
+	// 椤甸潰寮€鍏抽厤缃?- 鎺у埗鐗瑰畾椤甸潰鐨勮闂潈闄愶紝璁句负false浼氳繑鍥?04
+	// bangumi鐨勬暟鎹负缂栬瘧鏃惰幏鍙栫殑锛屾墍浠ヤ笉鏄疄鏃舵暟鎹紝璇烽厤缃産angumi.userId
+	pages: {
+		// 鍙嬮摼椤甸潰寮€鍏?
+		friends: true,
+		// 璧炲姪椤甸潰寮€鍏?
+		sponsor: true,
+		// 鐣欒█鏉块〉闈㈠紑鍏筹紝闇€瑕侀厤缃瘎璁虹郴缁?
+		guestbook: true,
+		// 鐣粍璁″垝椤甸潰寮€鍏筹紝鍚拷鐣€佹父鎴忋€佷功绫嶅拰闊充箰锛宒ev璋冭瘯鏃跺彧鑾峰彇涓€椤垫暟鎹紝build鎵嶄細鑾峰彇鍏ㄩ儴鏁版嵁
+		bangumi: false,
+		// 鐩稿唽椤甸潰寮€鍏?
+		gallery: false,
+	},
+
+	// 鍒嗙被瀵艰埅鏍忓紑鍏筹紝鍦ㄩ椤靛拰褰掓。椤甸《閮ㄦ樉绀哄垎绫诲揩鎹峰鑸?
+	categoryBar: true,
+
+	// 鏂囩珷鍒楄〃甯冨眬閰嶇疆
+	postListLayout: {
+		// 榛樿甯冨眬妯″紡锛?list" 鍒楄〃妯″紡锛堝崟鍒楀竷灞€锛夛紝"grid" 缃戞牸妯″紡锛堝鍒楀竷灞€锛?
+		defaultMode: "list",
+		// 绉诲姩绔粯璁ゅ竷灞€妯″紡锛屼笉璁剧疆鍒欒窡闅?defaultMode
+		mobileDefaultMode: "list",
+		// 鏄惁鍦ㄦ枃绔犲垪琛ㄤ腑鏄剧ず鏍囩
+		showTags: true,
+		// 鏂囩珷绠€浠嬫樉绀鸿鏁帮紝璁句负 0 鍒欎笉鎴柇
+		descriptionLines: 2,
+		// 鏄惁鍏佽鐢ㄦ埛鍒囨崲甯冨眬
+		allowSwitch: true,
+		// 缃戞牸甯冨眬閰嶇疆锛屼粎鍦?defaultMode 涓?"grid" 鎴栧厑璁稿垏鎹㈠竷灞€鏃剁敓鏁?
+		grid: {
+			// 鏄惁寮€鍚€戝竷娴佸竷灞€锛屽悓鏃舵湁灏侀潰鍥惧拰鏃犲皝闈㈠浘鐨勬贩鍚堟枃绔犳帹鑽愬紑鍚?
+			masonry: false,
+			// 缃戞牸妯″紡鍗＄墖鏈€灏忓搴?px)锛屾祻瑙堝櫒鏍规嵁瀹瑰櫒瀹藉害鑷姩璁＄畻鍒楁暟
+			columnWidth: 320,
+		},
+	},
+
+	// 鍒嗛〉閰嶇疆
+	pagination: {
+		// 姣忛〉鏄剧ず鐨勬枃绔犳暟閲?
+		postsPerPage: 10,
+	},
+
+	// 缁熻鍒嗘瀽
+	analytics: {
+		// Google Analytics ID
+		googleAnalyticsId: "",
+		// Microsoft Clarity ID
+		microsoftClarityId: "",
+		// Umami 缁熻閰嶇疆
+		umamiAnalytics: {
+			// Umami Website ID
+			websiteId: "",
+			// Umami JS鍦板潃锛屾敮鎸佷娇鐢ㄨ嚜寤?
+			scriptUrl: "https://cloud.umami.is/script.js",
+			// 鏄惁杩借釜鍑虹珯閾炬帴
+			trackOutboundLinks: true,
+			// 鏄惁鏀堕泦娴忚鍣ㄦ€ц兘鎸囨爣
+			collectWebVitals: false,
+			// 浼氳瘽鍥炴斁閰嶇疆
+			relpays: {
+				// 鏄惁鍚敤浼氳瘽鍥炴斁
+				enabled: false,
+				// 褰曞埗浼氳瘽閲囨牱鐜囷紝鑼冨洿 0-1锛屼緥濡?0.15 琛ㄧず璁板綍 15% 鐨勪細璇?
+				sampleRate: 0.15,
+				// 闅愮閬僵绾у埆锛?moderate" 浼氶伄缃╂墍鏈夎緭鍏ユ锛?strict" 棰濆閬僵椤甸潰鍏ㄩ儴鏂囨湰
+				maskLevel: "moderate",
+				// 鍗曟褰曞埗鏈€澶ф椂闀匡紙姣锛?
+				maxDuration: 300000,
+				// 闇€瑕佹帓闄ゅ綍鍒剁殑鍏冪礌 CSS 閫夋嫨鍣紝渚嬪 ".sensitive-widget"
+				blockSelector: "",
+			},
+		},
+		// 51la 缁熻閰嶇疆
+		la51Analytics: {
+			// 51la 缁熻 ID
+			Id: "",
+			// 鑷畾涔?SDK JS 鍦板潃锛岄槻姝?DNS 姹℃煋锛岀暀绌轰娇鐢ㄩ粯璁ゅ湴鍧€
+			sdkUrl: "",
+			// 澶氫釜缁熻 ID 鐨勬暟鎹垎绂绘爣璇嗭紝鐣欑┖鍒欎娇鐢?Id
+			ck: "",
+			// 鏄惁寮€鍚簨浠跺垎鏋愬姛鑳?
+			autoTrack: false,
+			//  Hash璺敱妯″紡, 椤圭洰浣跨敤History API璺敱, 鎵€浠ヤ笉蹇呭紑鍚粯璁alse
+			hashMode: false,
+			// 鏄惁寮€鍚綉绔欏綍灞忓姛鑳?
+			screenRecord: true,
+		},
+	},
+
+	// 鍥惧儚浼樺寲鍙婂搷搴斿紡閰嶇疆
+	// 鍥惧儚浼樺寲鍘嬬缉鍙繚鐣檃vif鎴杦ebp
+	// 鍝嶅簲寮忓浘鍍忔槸涓哄湪涓嶅悓璁惧涓婃彁楂樻€ц兘鑰岃皟鏁寸殑鍥惧儚銆傝繖浜涘浘鍍忓彲浠ヨ皟鏁村ぇ灏忎互閫傚簲鍏跺鍣紝骞朵笖鍙互鏍规嵁璁块棶鑰呯殑灞忓箷灏哄鍜屽垎杈ㄧ巼浠ヤ笉鍚岀殑澶у皬鎻愪緵銆?
+	// Astro 浠呰兘瀵?src 鐩綍涓嬬殑鍥惧儚杩涜浼樺寲锛宻rc 鐩綍涓嬬殑鍥惧儚瓒婂锛屾瀯寤烘椂闂翠細瓒婇暱
+	// Astro 鍥惧儚鏂囨。 https://docs.astro.build/zh-cn/guides/images/
+	imageOptimization: {
+		// 杈撳嚭鍥剧墖鏍煎紡
+		// - "avif": 浠呰緭鍑?AVIF 鏍煎紡锛堟渶鏂版妧鏈紝鏈€灏忎綋绉紝鐩墠鍏煎鎬ц緝浣庯級
+		// - "webp": 浠呰緭鍑?WebP 鏍煎紡锛堜綋绉€備腑锛屽吋瀹规€уソ锛?
+		// - "both": 鍚屾椂杈撳嚭 AVIF 鍜?WebP锛堟帹鑽愶紝娴忚鍣ㄨ嚜鍔ㄩ€夋嫨鏈€浣虫牸寮忥級
+		formats: "webp",
+		// 鍥剧墖鍘嬬缉璐ㄩ噺 (1-100)锛屽€艰秺浣庝綋绉秺灏忎絾璐ㄩ噺瓒婂樊锛屾帹鑽?70-85
+		quality: 85,
+		// 涓虹壒瀹氬煙鍚嶇殑鍥剧墖娣诲姞 referrerpolicy="no-referrer" 灞炴€?
+		// 鏀寔閫氶厤绗?*锛屼緥濡傦細["i0.hdslb.com", "*.bilibili.com"]
+		// 鍙В鍐虫寚瀹氬煙鍚嶅浘鐗囧姞杞芥椂鐨?403 闂锛堝闃茬洍閾惧浘鐗囷級
+		noReferrerDomains: [],
+	},
+
+	// 瀛椾綋閰嶇疆
+	// 鍦╯rc/config/fontConfig.ts涓厤缃叿浣撳瓧浣?
+	font: fontConfig,
+
+	// 绔欑偣璇█锛屽湪鏈厤缃枃浠堕《閮⊿ITE_LANG瀹氫箟
+	lang: SITE_LANG,
+};
