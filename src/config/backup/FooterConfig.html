@@ -1,0 +1,169 @@
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="interactive-trigger custom-threshold-only" onclick="handleInteraction(event)" id="footerTrigger">
+            <div class="decorator-line left"></div>
+            <div class="symbol-box">
+                <span class="symbol" id="triggerSymbol">✦</span>
+                <span class="ripple"></span>
+            </div>
+            <div class="decorator-line right"></div>
+            <div id="hintText" class="click-hint-text">展开心语</div>
+        </div>
+
+        <div class="poem-wrapper custom-threshold-only" id="poemWrapper">
+            <div class="poem-inner">
+                <div id="poemText" class="gradient-text xing-shu">
+                    万物皆有裂痕，那是光照进来的地方。
+                </div>
+            </div>
+        </div>
+
+        <div class="permanent-content">
+            <div class="footer-row">
+                <span>本站内容采用 <a class="license-link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议</span>
+                <span class="dot">●</span>
+                <span>非盈利性个人站点</span>
+            </div>
+            <div class="footer-end">
+                记录生活，留存思绪。感谢你的到访。
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .site-footer {
+        padding: 30px 20px 60px;
+        text-align: center;
+        background: transparent;
+        color: #2D4035;
+        font-family: -apple-system, "Noto Sans SC", sans-serif;
+    }
+
+    .xing-shu { font-family: 'Ma Shan Zheng', serif; }
+
+    .interactive-trigger { 
+        cursor: pointer !important; 
+        user-select: none; 
+        margin-bottom: 5px; 
+        padding: 10px 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative; 
+    }
+    
+    .decorator-line {
+        display: inline-block; 
+        width: 60px; height: 1px;
+        background: linear-gradient(to var(--dir, right), transparent, #78A083);
+    }
+    .left { --dir: right; margin-right: 15px; }
+    .right { --dir: left; margin-left: 15px; }
+
+    /* 修正：圆圈提示不再偏移的关键点 */
+    .symbol-box { 
+        position: relative; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        width: 24px; /* 固定宽度确保中心对齐 */
+        height: 24px;
+    }
+    .symbol { font-size: 18px; transition: transform 0.9s; z-index: 2; }
+    .symbol.active { transform: rotate(180deg); color: #78A083; }
+
+    /* 修正：让波纹在容器中心点扩散 */
+    .ripple { 
+        position: absolute; 
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px; height: 20px; 
+        background: #78A083; 
+        border-radius: 50%; 
+        animation: pulse 4s infinite; 
+        z-index: 1; 
+    }
+    @keyframes pulse { 
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; } 
+        100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; } 
+    }
+
+    .click-hint-text { 
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px; 
+        opacity: 0.5; 
+        white-space: nowrap;
+    }
+
+    /* 严格照抄这一版动画曲线 */
+    .poem-wrapper {
+        height: 0; opacity: 0; overflow: hidden;
+        position: relative;
+        transition: height 0.9s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.7s;
+    }
+    .poem-wrapper.active { height: 140px; opacity: 1; }
+
+    .poem-inner { 
+        padding: 40px 10px 0; 
+        display: flex; justify-content: center; align-items: center;
+        position: relative; z-index: 2; 
+    }
+
+    .gradient-text {
+        font-size: 28px; letter-spacing: 3px; line-height: 1.2;
+        background: linear-gradient(110deg, #2D4035 30%, #a8c3b0 45%, #2D4035 60%);
+        background-size: 200% auto;
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        animation: shine 5s linear infinite;
+    }
+
+    @keyframes shine { to { background-position: -200% center; } }
+
+    .permanent-content {
+        padding-top: 25px;
+        border-top: 1px dashed rgba(120, 160, 131, 0.2);
+        position: relative; z-index: 3;
+    }
+    .footer-row { font-size: 13px; margin-bottom: 8px; }
+    .footer-end { font-size: 11px; color: #5D7365; }
+    .license-link { color: #1A2F23; text-decoration: none; border-bottom: 1.5px solid rgba(120, 160, 131, 0.4); font-weight: 600; }
+    .dot { margin: 0 8px; color: #78A083; opacity: 0.5; }
+
+    @media (max-width: 1144px) {
+        .custom-threshold-only { display: none !important; }
+        .permanent-content { border-top: none; padding-top: 0; }
+    }
+</style>
+
+<script>
+    var poems = ["万物皆有裂痕，那是光照进来的地方。", "星光不问赶路人，时光不负有心人。", "与其向往，不如出发。", "但行好事，莫问前程。", "此心光明，亦复何言。"];
+    var currentPoemIndex = 0;
+    var isPendingUpdate = false;
+
+    function handleInteraction(event) {
+        if (window.innerWidth < 1145) return;
+        var wrapper = document.getElementById('poemWrapper');
+        var symbol = document.getElementById('triggerSymbol');
+        var poemDisplay = document.getElementById('poemText');
+
+        if (wrapper.classList.contains('active')) {
+            wrapper.classList.remove('active');
+            symbol.classList.remove('active');
+            isPendingUpdate = true;
+        } else {
+            if (isPendingUpdate) {
+                currentPoemIndex = (currentPoemIndex + 1) % poems.length;
+                poemDisplay.innerText = poems[currentPoemIndex];
+                isPendingUpdate = false;
+            }
+            wrapper.classList.add('active');
+            symbol.classList.add('active');
+        }
+    }
+</script>

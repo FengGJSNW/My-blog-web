@@ -6,7 +6,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 是否允许用户通过导航栏切换壁纸模式
 	// 且同时维护多种壁纸模式过于复杂（已经屎山代码），在切换时有时候可能会出现一些奇怪的过渡效果或者bug
 	// 推荐只选择自己喜欢的模式并关闭切换功能
-	switchable: true,
+	switchable: false,
 	/**
 	 * 背景图片配置
 	 * 图片路径支持三种格式：
@@ -55,7 +55,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	// 横幅壁纸和全屏壁纸共享配置
 	common: {
 		// 横幅文字遮罩暗度，0-1之间，值越大越暗
-		dimOpacity: 0.1,
+		dimOpacity: 0.2,
 		// 主页横幅文字
 		homeText: {
 			// 是否启用主页横幅文字
@@ -63,33 +63,28 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 是否允许用户通过控制面板切换横幅标题显示
 			switchable: true,
 			// 主页横幅主标题
-			title: "知码寻光",
+			title: "",
 			// 主页横幅主标题字体大小
-			titleSize: "3.8rem",
+			titleSize: "5.0rem",
 			// 主页横幅副标题
 			subtitle: [
-				"拾光成章，记岁留痕",
-				"拆解问题，重构思路",
-				"算法为径，逻辑成章",
-				"以码为笔，写意成篇",
-				"追问本质，探寻边界",
-				"微光不息，求知长明",
 			],
 			// 主页横幅副标题字体大小
-			subtitleSize: "1.5rem",
+			subtitleSize: "2.2rem",
 			typewriter: {
 				// 是否启用打字机效果
 				// 打字机开启 → 循环显示所有副标题
 				// 打字机关闭 → 每次刷新随机显示一条副标题
-				enable: true,
+				enable: false,
 				// 打字速度（毫秒）
-				speed: 100,
+				speed: 45,
 				// 删除速度（毫秒）
-				deleteSpeed: 50,
+				deleteSpeed: 45,
 				// 完全显示后的暂停时间（毫秒）
-				pauseTime: 2000,
+				pauseTime: 4000,
 			},
 		},
+
 		// 导航栏配置
 		navbar: {
 			// 导航栏透明模式："semi" 半透明，"full" 完全透明，"semifull" 动态透明
@@ -114,14 +109,14 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		gradient: {
 			enable: {
 				// 桌面端是否启用渐变过渡
-				desktop: true,
+				desktop: false,
 				// 移动端是否启用渐变过渡
-				mobile: true,
+				mobile: false,
 			},
 			// 渐变高度
-			height: "15vh",
+			height: "100vh",
 			// 是否允许用户通过控制面板切换渐变过渡
-			switchable: true,
+			switchable: false,
 		},
 	},
 	// Banner模式特有配置
