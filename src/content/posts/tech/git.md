@@ -4,7 +4,6 @@ published: 2026-05-12
 description: 记录一些Git的常用指令，帮助你快速上手Git
 tags: [Git, GitHub]
 category: 索引
-pinned: true
 draft: false
 ---
 

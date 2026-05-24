@@ -4,7 +4,6 @@ published: 2026-05-12
 description: 分享个人博客搭建过程与心得
 tags: [博客搭建, Astro, Vercel, GitHub]
 category: 索引
-pinned: true
 draft: false
 ---
 
