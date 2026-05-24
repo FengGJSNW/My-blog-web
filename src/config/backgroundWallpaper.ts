@@ -41,15 +41,12 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 桌面背景图片（支持单张或多张随机）
 		// desktop: "assets/images/DesktopWallpaper/d1.avif",
 		desktop: [
-			"/assets/images/cover.webp"
+			"/assets/images/ChatGPT Image 2026年5月24日 21_43_17 (1).png"
 		],
 		// 移动背景图片（支持单张或多张随机）
 		// mobile: "assets/images/MobileWallpaper/m1.avif",
 		mobile: [
-			"/assets/images/1778681561927.jpeg",
-			"/assets/images/1778681506692.jpeg",
-			"/assets/images/e16.png",
-			"/assets/images/e11.jpeg"
+			"/assets/images/1778681561927.jpeg"
 		],
 	},
 	// 横幅壁纸和全屏壁纸共享配置
@@ -103,9 +100,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		waves: {
 			enable: {
 				// 桌面端是否启用水波纹动画效果
-				desktop: true,
+				desktop: false,
 				// 移动端是否启用水波纹动画效果
-				mobile: true,
+				mobile: false,
 			},
 			// 是否允许用户通过控制面板切换水波纹动画
 			switchable: true,
@@ -114,9 +111,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		gradient: {
 			enable: {
 				// 桌面端是否启用渐变过渡
-				desktop: true,
+				desktop: false,
 				// 移动端是否启用渐变过渡
-				mobile: true,
+				mobile: false,
 			},
 			// 渐变高度
 			height: "15vh",
@@ -129,7 +126,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 图片位置
 		// 支持所有CSS object-position值，如: 'top', 'center', 'bottom', 'left top', 'right bottom', '25% 75%', '10px 20px'..
 		// 如果不知道怎么配置百分百之类的配置，推荐直接使用：'center'居中，'top'顶部居中，'bottom' 底部居中，'left'左侧居中，'right'右侧居中
-		position: "0% 20%",
+		position: "0% 50%",
 		// 横幅图片轮播配置，仅在当配置多张图片时生效
 		carousel: {
 			// 是否启用横幅图片轮播；关闭时保持每次刷新随机显示一张
@@ -154,11 +151,11 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		// 层级，确保壁纸在背景层
 		zIndex: -1,
 		// 壁纸透明度
-		opacity: 0.8,
+		opacity: 1,
 		// 背景模糊度
-		blur: 10,
+		blur: 13,
 		// 卡片透明度，0-1之间，值越小越透明
-		cardOpacity: 0.5,
+		cardOpacity: 0.6,
 	},
 	// 全屏壁纸模式特有配置
 	fullscreen: {
