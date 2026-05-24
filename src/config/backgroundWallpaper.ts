@@ -111,9 +111,9 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		gradient: {
 			enable: {
 				// 桌面端是否启用渐变过渡
-				desktop: false,
+				desktop: true,
 				// 移动端是否启用渐变过渡
-				mobile: false,
+				mobile: true,
 			},
 			// 渐变高度
 			height: "15vh",
