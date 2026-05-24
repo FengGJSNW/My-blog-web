@@ -114,14 +114,14 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 		gradient: {
 			enable: {
 				// 桌面端是否启用渐变过渡
-				desktop: true,
+				desktop: false,
 				// 移动端是否启用渐变过渡
-				mobile: true,
+				mobile: false,
 			},
 			// 渐变高度
-			height: "15vh",
+			height: "100vh",
 			// 是否允许用户通过控制面板切换渐变过渡
-			switchable: true,
+			switchable: false,
 		},
 	},
 	// Banner模式特有配置
