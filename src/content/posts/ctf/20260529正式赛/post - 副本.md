@@ -5,7 +5,7 @@ description: 记录做题思路
 tags: [做题思路, CTF, 笔记]
 category: 索引
 draft: false
-image: "/public/assets/images/1778682116401.jpeg"
+image: "/assets/images/1778682116401.jpeg"
 ---
 
 
