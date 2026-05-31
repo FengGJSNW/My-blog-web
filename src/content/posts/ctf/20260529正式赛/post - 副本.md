@@ -1,5 +1,5 @@
 ---
-title: CTF-20260529 正式赛
+title: CTF-20260529 正式赛 [Writinginging]
 published: 2026-05-29
 description: 记录做题思路[Writinginging]
 tags: [做题思路, CTF, 笔记]
