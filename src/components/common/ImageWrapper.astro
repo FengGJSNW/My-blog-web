@@ -48,34 +48,60 @@ const {
 const fallbackFormat = getFallbackFormat();
 const className = Astro.props.class;
 
+const isSvg = src.toLowerCase().split("?")[0].endsWith(".svg");
+
 const isLocal = !(
 	src.startsWith("/") ||
 	src.startsWith("http") ||
 	src.startsWith("https") ||
 	src.startsWith("data:")
 );
+
 const isPublic = src.startsWith("/");
 
 // TODO temporary workaround for images dynamic import
 // https://github.com/withastro/astro/issues/3373
 let img: ImageMetadata | null = null;
+let svgSrc: string | null = null;
+
 if (isLocal) {
-	const files = import.meta.glob<ImageMetadata>(
-		"../../**/*.{png,jpg,jpeg,webp,avif}",
-		{
-			import: "default",
-		},
-	);
-	let normalizedPath = path
+	const normalizedPath = path
 		.normalize(path.join("../../", basePath, src))
 		.replace(/\\/g, "/");
-	const file = files[normalizedPath];
-	if (!file) {
-		console.error(
-			`\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")}`,
-		);
+
+	if (isSvg) {
+		// SVG 不走 Astro Image/Picture 优化，避免 NoImageMetadata
+		const files = import.meta.glob<string>("../../**/*.svg", {
+			import: "default",
+			query: "?url",
+		});
+
+		const file = files[normalizedPath];
+
+		if (!file) {
+			console.error(
+				`\n[ERROR] SVG file not found: ${normalizedPath.replace("../../", "src/")}`,
+			);
+		} else {
+			svgSrc = await file();
+		}
 	} else {
-		img = await file();
+		const files = import.meta.glob<ImageMetadata>(
+			"../../**/*.{png,jpg,jpeg,webp,avif}",
+			{
+				import: "default",
+			},
+		);
+
+		const file = files[normalizedPath];
+
+		if (!file) {
+			console.error(
+				`\n[ERROR] Image file not found: ${normalizedPath.replace("../../", "src/")}`,
+			);
+		} else {
+			img = await file();
+		}
 	}
 }
 
@@ -95,31 +121,56 @@ const responsiveProps = {
 	...(quality && { quality }),
 };
 ---
-<div id={id} class:list={[className, 'overflow-hidden relative']}>
-    <div class="transition absolute inset-0 dark:bg-black/10 pointer-events-none"></div>
-    {isLocal && img && usePicture && (
-        <Picture
-            src={img}
-            alt={alt || ""}
-            class={imageClass}
-            style={imageStyle}
-            loading={loading}
-            fetchpriority={fetchpriority}
-            formats={formats}
-            fallbackFormat={fallbackFormat}
-            {...responsiveProps}
-        />
-    )}
-    {isLocal && img && !usePicture && (
-        <Image
-            src={img}
-            alt={alt || ""}
-            class={imageClass}
-            style={imageStyle}
-            loading={loading}
-            fetchpriority={fetchpriority}
-            {...responsiveProps}
-        />
-    )}
-    {!isLocal && <img src={isPublic ? url(src) : src} alt={alt || ""} class={imageClass} style={imageStyle} loading={loading} fetchpriority={fetchpriority} referrerpolicy={referrerPolicy} />}
+
+<div id={id} class:list={[className, "overflow-hidden relative"]}>
+	<div class="transition absolute inset-0 dark:bg-black/10 pointer-events-none"></div>
+
+	{isLocal && isSvg && svgSrc && (
+		<img
+			src={svgSrc}
+			alt={alt || ""}
+			class={imageClass}
+			style={imageStyle}
+			loading={loading}
+			fetchpriority={fetchpriority}
+		/>
+	)}
+
+	{isLocal && !isSvg && img && usePicture && (
+		<Picture
+			src={img}
+			alt={alt || ""}
+			class={imageClass}
+			style={imageStyle}
+			loading={loading}
+			fetchpriority={fetchpriority}
+			formats={formats}
+			fallbackFormat={fallbackFormat}
+			{...responsiveProps}
+		/>
+	)}
+
+	{isLocal && !isSvg && img && !usePicture && (
+		<Image
+			src={img}
+			alt={alt || ""}
+			class={imageClass}
+			style={imageStyle}
+			loading={loading}
+			fetchpriority={fetchpriority}
+			{...responsiveProps}
+		/>
+	)}
+
+	{!isLocal && (
+		<img
+			src={isPublic ? url(src) : src}
+			alt={alt || ""}
+			class={imageClass}
+			style={imageStyle}
+			loading={loading}
+			fetchpriority={fetchpriority}
+			referrerpolicy={referrerPolicy}
+		/>
+	)}
 </div>

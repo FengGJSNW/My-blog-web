@@ -35,11 +35,83 @@ import mdx from "@astrojs/mdx";
 import rehypeEmailProtection from "./src/plugins/rehype-email-protection.mjs";
 import rehypeExternalLinks from "./src/plugins/rehype-external-links.mjs";
 import rehypeFigure from "./src/plugins/rehype-figure.mjs";
+import { remarkFolder } from "./src/plugins/remark-folder.js";
 import { remarkImageGrid } from "./src/plugins/remark-image-grid.js";
 import { plantumlConfig } from "./src/config";
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
 
 if (process.env.NODE_ENV === "development") {
 	setMaxListeners(20);
+}
+
+function remarkLocalSvgToPublic() {
+	return (tree, file) => {
+		const mdPath = file.history?.[0] || file.path;
+		if (!mdPath) return;
+
+		const mdDir = path.dirname(mdPath);
+		const projectRoot = process.cwd();
+
+		const outDir = path.join(projectRoot, "public", "__local_svg");
+		fs.mkdirSync(outDir, { recursive: true });
+
+		function walk(node) {
+			if (!node || typeof node !== "object") return;
+
+			if (node.type === "image" && typeof node.url === "string") {
+				const rawUrl = node.url;
+
+				// 跳过 public / 远程 / data 图片
+				if (
+					rawUrl.startsWith("/") ||
+					rawUrl.startsWith("http://") ||
+					rawUrl.startsWith("https://") ||
+					rawUrl.startsWith("data:")
+				) {
+					return;
+				}
+
+				const cleanUrl = rawUrl.split("?")[0].split("#")[0];
+
+				if (cleanUrl.toLowerCase().endsWith(".svg")) {
+					const srcAbs = path.resolve(mdDir, decodeURIComponent(cleanUrl));
+
+					if (!fs.existsSync(srcAbs)) {
+						console.warn(`[remarkLocalSvgToPublic] SVG not found: ${srcAbs}`);
+						return;
+					}
+
+					const relPath = path.relative(projectRoot, srcAbs).replace(/\\/g, "/");
+					const hash = crypto
+						.createHash("sha256")
+						.update(relPath)
+						.digest("hex")
+						.slice(0, 10);
+
+					const baseName = path
+						.basename(cleanUrl, ".svg")
+						.replace(/[^\w.-]/g, "_");
+
+					const outName = `${baseName}.${hash}.svg`;
+					const outAbs = path.join(outDir, outName);
+
+					fs.copyFileSync(srcAbs, outAbs);
+
+					node.url = `/__local_svg/${outName}`;
+				}
+			}
+
+			if (Array.isArray(node.children)) {
+				for (const child of node.children) {
+					walk(child);
+				}
+			}
+		}
+
+		walk(tree);
+	};
 }
 
 // https://astro.build/config
@@ -198,6 +270,7 @@ export default defineConfig({
 			remarkReadingTime,
 			remarkImageGrid,
 			remarkExcerpt,
+			remarkFolder,
 			remarkDirective,
 			remarkSectionize,
 			parseDirectiveNode,
