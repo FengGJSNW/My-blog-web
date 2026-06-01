@@ -20,6 +20,10 @@ interface Props {
 	tags: string[];
 	category: string | null;
 	image: string;
+	centerX?: string | number;
+	centerY?: string | number;
+	imageDx?: string | number;
+	imageDy?: string | number;
 	description: string;
 	draft: boolean;
 	pinned?: boolean;
@@ -35,6 +39,10 @@ const {
 	tags,
 	category,
 	image,
+	centerX = "0",
+	centerY = "0",
+	imageDx = "0",
+	imageDy = "0",
 	description,
 	pinned,
 	password,
@@ -52,6 +60,27 @@ const hasCover =
 	processedImage !== "";
 
 const coverWidth = "30%";
+const coverSize = "clamp(8rem, 22vw, 13rem)";
+
+function normalizeImageOffset(value: string | number) {
+	const raw = String(value).trim();
+
+	if (/^[+-]?\d+(?:\.\d+)?$/.test(raw)) return `${raw}px`;
+	if (/^[+-]?\d+(?:\.\d+)?(?:px|rem|em|%|vw|vh)$/i.test(raw)) return raw;
+
+	return "0px";
+}
+
+function normalizeFocusOffset(value: string | number) {
+	const raw = String(value).trim();
+
+	if (/^[+-]?\d+(?:\.\d+)?$/.test(raw)) return `${raw}%`;
+	if (/^[+-]?\d+(?:\.\d+)?(?:%|px|rem|em|vw|vh)$/i.test(raw)) return raw;
+
+	return "0%";
+}
+
+const coverPosition = `calc(50% + ${normalizeFocusOffset(centerX)} + ${normalizeImageOffset(imageDx)}) calc(50% + ${normalizeFocusOffset(centerY)} + ${normalizeImageOffset(imageDy)})`;
 
 const showTags = siteConfig.postListLayout.showTags;
 const descriptionLines = Math.max(
@@ -162,8 +191,8 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
           "post-card-image",
           "group",
           "w-full md:w-(--coverWidth)",
-          "aspect-2/1 md:aspect-auto",
-          "relative md:absolute md:top-4 md:bottom-4 md:right-4",
+          "aspect-square",
+          "relative md:absolute md:top-4 md:right-4",
           "rounded-(--radius-large) md:rounded-xl overflow-hidden",
         ]}
       >
@@ -178,6 +207,7 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
           src={processedImage}
           basePath={getFileDirFromPath(entry.filePath || "")}
           alt="Cover Image of the Post"
+          position={coverPosition}
           class="w-full h-full transition-transform duration-300 group-hover:scale-110 group-active:scale-115"
           preview={true}
           loading={loading}
@@ -208,7 +238,7 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
   }
 </div>
 
-<style define:vars={{ coverWidth, descriptionClampLines }}>
+<style define:vars={{ coverWidth, coverSize, descriptionClampLines }}>
   .description-clamped {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -217,24 +247,44 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
     line-clamp: var(--descriptionClampLines);
   }
 
+  .post-card-image {
+    aspect-ratio: 1 / 1 !important;
+    contain: layout paint;
+    flex-shrink: 0;
+  }
+
+  .post-card-image :global(img),
+  .post-card-image :global(picture),
+  .post-card-image :global(picture img) {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .post-card-image :global(img) {
+    object-fit: cover !important;
+  }
+
   /* === List Mode Mobile Styles === */
   /* 移动端列表模式：封面在右侧，内容缩小 */
   :global(.list-mode) .post-card-wrapper {
     flex-direction: row !important;
+    min-height: calc(var(--coverSize) + 1rem) !important;
   }
 
   :global(.list-mode) .has-cover .post-card-content {
-    width: calc(100% - 9rem - 0.75rem) !important;
+    width: calc(100% - var(--coverSize) - 1rem) !important;
     padding: 0.75rem 0.5rem 0.75rem 0.75rem !important;
   }
 
   :global(.list-mode) .has-cover .post-card-image {
     position: absolute !important;
     top: 0.5rem !important;
-    bottom: 0.5rem !important;
+    bottom: auto !important;
     right: 0.5rem !important;
-    width: 9rem !important;
-    aspect-ratio: auto !important;
+    width: var(--coverSize) !important;
+    height: var(--coverSize) !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 0 !important;
     border-radius: 0.75rem !important;
   }
 
@@ -271,18 +321,23 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
   @media (min-width: 768px) {
     :global(.list-mode) .post-card-wrapper {
       flex-direction: row !important;
+      min-height: calc(var(--coverSize) + 2rem) !important;
     }
 
     :global(.list-mode) .has-cover .post-card-content {
-      width: calc(100% - var(--coverWidth) - 1.5rem) !important;
+      width: calc(100% - var(--coverSize) - 2rem) !important;
       padding: 1.75rem 0.5rem 1.75rem 2.25rem !important;
     }
 
     :global(.list-mode) .has-cover .post-card-image {
+      position: absolute !important;
       top: 1rem !important;
-      bottom: 1rem !important;
+      bottom: auto !important;
       right: 1rem !important;
-      width: var(--coverWidth) !important;
+      width: var(--coverSize) !important;
+      height: var(--coverSize) !important;
+      aspect-ratio: 1 / 1 !important;
+      margin: 0 !important;
       border-radius: 0.75rem !important;
     }
 
@@ -340,7 +395,7 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
     margin: 0 !important;
     border-radius: var(--radius-large) var(--radius-large) 0 0 !important;
     max-height: none !important;
-    aspect-ratio: 2/1 !important;
+    aspect-ratio: 1 / 1 !important;
   }
 
   :global(.grid-mode) .description {
