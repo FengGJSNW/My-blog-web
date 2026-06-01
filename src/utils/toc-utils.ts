@@ -50,8 +50,8 @@ export class TOCManager {
 			return [];
 		}
 		return Array.from(
-			contentContainer.querySelectorAll("h1, h2, h3, h4, h5, h6"),
-		);
+			contentContainer.querySelectorAll<HTMLElement>("h1, h2, h3, h4, h5, h6"),
+		).filter((heading) => !heading.closest(".folded-block"));
 	}
 
 	/**

@@ -113,6 +113,41 @@ function createOpeningHtml(attributes) {
 	};
 }
 
+function normalizeClassName(value) {
+	if (Array.isArray(value)) return value;
+	if (typeof value === "string") return value.split(/\s+/).filter(Boolean);
+	return [];
+}
+
+function convertFolderHeadings(node) {
+	if (!node || !Array.isArray(node.children)) return;
+
+	for (const child of node.children) {
+		if (child.type === "heading") {
+			const depth = Math.min(Math.max(Number(child.depth) || 2, 1), 6);
+			const properties = child.data?.hProperties ?? {};
+
+			child.type = "folderHeading";
+			child.data = {
+				...(child.data ?? {}),
+				hName: "div",
+				hProperties: {
+					...properties,
+					className: [
+						...normalizeClassName(properties.className),
+						"folded-block__heading",
+						`folded-block__heading--h${depth}`,
+					],
+					role: "heading",
+					ariaLevel: depth,
+				},
+			};
+		}
+
+		convertFolderHeadings(child);
+	}
+}
+
 export function remarkFolder() {
 	return (tree) => {
 		function transformChildren(parent) {
@@ -166,6 +201,7 @@ export function remarkFolder() {
 				const bodyNode = folderNode.children[1];
 				bodyNode.children = parent.children.slice(index + 1, endIndex);
 				transformChildren(bodyNode);
+				convertFolderHeadings(bodyNode);
 
 				parent.children.splice(index, endIndex - index + 1, folderNode);
 				index += 1;

@@ -48,8 +48,14 @@ if (r === page.lastPage - 2) pages.push(page.lastPage - 1);
 if (r < page.lastPage) pages.push(page.lastPage);
 
 const getPageUrl = (p: number) => {
-	if (p === 1) return "/";
-	return `/${p}/`;
+	if (p === 1) return "/#posts";
+	return `/${p}/#posts`;
+};
+
+const withPostListHash = (href: string | undefined) => {
+	if (!href) return "#";
+	const cleanHref = href.split("#")[0];
+	return `${cleanHref}#posts`;
 };
 ---
 
@@ -68,7 +74,7 @@ const getPageUrl = (p: number) => {
   <!-- 分页控件 -->
   <div class="flex flex-row gap-3 justify-center" role="navigation" aria-label={i18n(I18nKey.postList)}>
     <a
-      href={page.url.prev || "#"}
+      href={withPostListHash(page.url.prev)}
       aria-label={i18n(I18nKey.paginationPrev)}
       aria-disabled={page.url.prev === undefined ? "true" : "false"}
       tabindex={page.url.prev === undefined ? "-1" : "0"}
@@ -113,7 +119,7 @@ const getPageUrl = (p: number) => {
       }
     </div>
     <a
-      href={page.url.next || "#"}
+      href={withPostListHash(page.url.next)}
       aria-label={i18n(I18nKey.paginationNext)}
       aria-disabled={page.url.next === undefined ? "true" : "false"}
       tabindex={page.url.next === undefined ? "-1" : "0"}

@@ -1042,6 +1042,12 @@ function disableAnimation() {
 
     });
     window.swup.hooks.on("visit:start", (visit: { to: { url: string } }) => {
+      const targetVisitUrl = new URL(visit.to.url, window.location.href);
+      const shouldScrollToPosts = targetVisitUrl.hash === "#posts";
+      if (shouldScrollToPosts) {
+        sessionStorage.setItem("fireflyScrollToPosts", "1");
+      }
+
       // Start progress bar
       const progressBar = document.getElementById("progress-bar");
       if (progressBar) {
@@ -1053,7 +1059,7 @@ function disableAnimation() {
 
       // change banner height immediately when a link is clicked
       const bodyElement = document.querySelector("body");
-      const isHomePage = pathsEqual(visit.to.url, url("/"));
+      const isHomePage = pathsEqual(targetVisitUrl.pathname, url("/"));
 
       // 禁用 #main-grid 的过渡动画，防止 lg:is-home 切换时 transform 产生 700ms 动画
       const mainGrid = document.getElementById("main-grid");
@@ -1214,7 +1220,7 @@ function disableAnimation() {
 
       // 确保页面滚动到顶部，切页期间使用即时回顶，移动端不使用，避免出现闪烁
       const shouldUseSmoothScroll = window.innerWidth >= 768;
-      if (shouldUseSmoothScroll) {
+      if (shouldUseSmoothScroll && !shouldScrollToPosts) {
         window.scrollTo({
           top: 0,
           behavior: "auto",
@@ -1304,6 +1310,22 @@ function disableAnimation() {
       }
 
       // 同步主题状态 - 解决从首页进入文章页面时代码块渲染问题
+      const shouldScrollToPostsAfterView =
+        window.location.hash === "#posts" ||
+        sessionStorage.getItem("fireflyScrollToPosts") === "1";
+      if (shouldScrollToPostsAfterView) {
+        sessionStorage.removeItem("fireflyScrollToPosts");
+        [0, 80, 220].forEach((delay) => {
+          setTimeout(() => {
+            document.dispatchEvent(
+              new CustomEvent("firefly:scroll-to-posts", {
+                detail: { behavior: "auto" },
+              }),
+            );
+          }, delay);
+        });
+      }
+
       const storedTheme = localStorage.getItem("theme") || siteConfig.themeColor.defaultMode || "light";
       let isDark = false;
       

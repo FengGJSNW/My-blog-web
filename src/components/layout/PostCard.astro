@@ -60,8 +60,6 @@ const hasCover =
 	processedImage !== "";
 
 const coverWidth = "30%";
-const coverSize = "clamp(8rem, 22vw, 13rem)";
-
 function normalizeImageOffset(value: string | number) {
 	const raw = String(value).trim();
 
@@ -191,8 +189,8 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
           "post-card-image",
           "group",
           "w-full md:w-(--coverWidth)",
-          "aspect-square",
-          "relative md:absolute md:top-4 md:right-4",
+          "aspect-2/1 md:aspect-auto",
+          "relative md:absolute md:top-4 md:bottom-4 md:right-4",
           "rounded-(--radius-large) md:rounded-xl overflow-hidden",
         ]}
       >
@@ -238,7 +236,7 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
   }
 </div>
 
-<style define:vars={{ coverWidth, coverSize, descriptionClampLines }}>
+<style define:vars={{ coverWidth, descriptionClampLines }}>
   .description-clamped {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -247,44 +245,24 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
     line-clamp: var(--descriptionClampLines);
   }
 
-  .post-card-image {
-    aspect-ratio: 1 / 1 !important;
-    contain: layout paint;
-    flex-shrink: 0;
-  }
-
-  .post-card-image :global(img),
-  .post-card-image :global(picture),
-  .post-card-image :global(picture img) {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .post-card-image :global(img) {
-    object-fit: cover !important;
-  }
-
   /* === List Mode Mobile Styles === */
   /* 移动端列表模式：封面在右侧，内容缩小 */
   :global(.list-mode) .post-card-wrapper {
     flex-direction: row !important;
-    min-height: calc(var(--coverSize) + 1rem) !important;
   }
 
   :global(.list-mode) .has-cover .post-card-content {
-    width: calc(100% - var(--coverSize) - 1rem) !important;
+    width: calc(100% - 9rem - 0.75rem) !important;
     padding: 0.75rem 0.5rem 0.75rem 0.75rem !important;
   }
 
   :global(.list-mode) .has-cover .post-card-image {
     position: absolute !important;
     top: 0.5rem !important;
-    bottom: auto !important;
+    bottom: 0.5rem !important;
     right: 0.5rem !important;
-    width: var(--coverSize) !important;
-    height: var(--coverSize) !important;
-    aspect-ratio: 1 / 1 !important;
-    margin: 0 !important;
+    width: 9rem !important;
+    aspect-ratio: auto !important;
     border-radius: 0.75rem !important;
   }
 
@@ -321,23 +299,18 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
   @media (min-width: 768px) {
     :global(.list-mode) .post-card-wrapper {
       flex-direction: row !important;
-      min-height: calc(var(--coverSize) + 2rem) !important;
     }
 
     :global(.list-mode) .has-cover .post-card-content {
-      width: calc(100% - var(--coverSize) - 2rem) !important;
+      width: calc(100% - var(--coverWidth) - 1.5rem) !important;
       padding: 1.75rem 0.5rem 1.75rem 2.25rem !important;
     }
 
     :global(.list-mode) .has-cover .post-card-image {
-      position: absolute !important;
       top: 1rem !important;
-      bottom: auto !important;
+      bottom: 1rem !important;
       right: 1rem !important;
-      width: var(--coverSize) !important;
-      height: var(--coverSize) !important;
-      aspect-ratio: 1 / 1 !important;
-      margin: 0 !important;
+      width: var(--coverWidth) !important;
       border-radius: 0.75rem !important;
     }
 
@@ -395,7 +368,7 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
     margin: 0 !important;
     border-radius: var(--radius-large) var(--radius-large) 0 0 !important;
     max-height: none !important;
-    aspect-ratio: 1 / 1 !important;
+    aspect-ratio: 2/1 !important;
   }
 
   :global(.grid-mode) .description {

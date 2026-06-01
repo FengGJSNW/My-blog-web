@@ -199,6 +199,36 @@
     margin-bottom: 0;
   }
 
+  .folded-block__heading {
+    @apply font-bold text-(--content);
+    line-height: 1.25;
+    margin: 1.35em 0 0.65em;
+  }
+
+  .folded-block__heading--h1 {
+    @apply text-3xl;
+  }
+
+  .folded-block__heading--h2 {
+    @apply text-2xl;
+  }
+
+  .folded-block__heading--h3 {
+    @apply text-xl;
+  }
+
+  .folded-block__heading--h4 {
+    @apply text-lg;
+  }
+
+  .folded-block__heading--h5 {
+    @apply text-base;
+  }
+
+  .folded-block__heading--h6 {
+    @apply text-sm;
+  }
+
   .folded-block--style-3[open] .folded-block__body {
     max-height: var(--folded-block-scroll-height, 28rem);
     overflow-y: auto;
