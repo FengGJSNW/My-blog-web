@@ -51,10 +51,28 @@ const isLocal = !(
 	src.startsWith("data:")
 );
 const isPublic = src.startsWith("/");
+const isSvg = src.toLowerCase().split("?")[0].endsWith(".svg");
 
 // 动态导入本地图片
 let img: ImageMetadata | null = null;
-if (isLocal) {
+let svgSrc: string | null = null;
+if (isLocal && isSvg) {
+	const files = import.meta.glob<string>("../../**/*.svg", {
+		import: "default",
+		query: "?url",
+	});
+	const normalizedPath = path
+		.normalize(path.join("../../", basePath, src))
+		.replace(/\\/g, "/");
+	const file = files[normalizedPath];
+	if (file) {
+		svgSrc = await file();
+	} else {
+		console.error(
+			`[ERROR] SVG cover not found: ${normalizedPath.replace("../../", "src/")}`,
+		);
+	}
+} else if (isLocal) {
 	const files = import.meta.glob<ImageMetadata>(
 		"../../**/*.{png,jpg,jpeg,webp,avif}",
 		{
@@ -174,6 +192,18 @@ const remoteReferrerPolicy =
 	)}
 
 	<!-- 本地图片 -->
+	{isLocal && isSvg && svgSrc && (
+		<img
+			src={svgSrc}
+			alt={alt || ""}
+			class={imageClass}
+			style={imageStyle}
+			loading={loading}
+			decoding="async"
+			data-cover-img
+		/>
+	)}
+
 	{isLocal && img && (
 		<Picture
 			src={img}

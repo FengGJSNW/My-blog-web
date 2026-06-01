@@ -114,6 +114,27 @@
     }
   }
 
+  .line-divider {
+    @apply flex flex-col;
+    gap: var(--line-divider-distance, 6px);
+    padding-top: var(--line-divider-padding-top, 1.25rem);
+    padding-bottom: var(--line-divider-padding-bottom, 1.25rem);
+  }
+
+  .line-divider__rule {
+    display: block;
+    height: var(--line-divider-height, 1px);
+    border-radius: 999px;
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        var(--line-divider-color, color-mix(in oklch, var(--primary) 32%, var(--line-color))) 18%,
+        var(--line-divider-color, color-mix(in oklch, var(--primary) 32%, var(--line-color))) 82%,
+        transparent
+      );
+  }
+
   .folded-block {
     @apply my-5 overflow-hidden;
     border: 1px solid color-mix(in oklch, var(--primary) 22%, var(--line-color));

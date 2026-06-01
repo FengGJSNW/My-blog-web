@@ -1,5 +1,6 @@
 # build output
 dist/
+public/__local_svg/
 
 # generated types
 .astro/

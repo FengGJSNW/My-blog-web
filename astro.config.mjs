@@ -37,6 +37,7 @@ import rehypeExternalLinks from "./src/plugins/rehype-external-links.mjs";
 import rehypeFigure from "./src/plugins/rehype-figure.mjs";
 import { remarkFolder } from "./src/plugins/remark-folder.js";
 import { remarkImageGrid } from "./src/plugins/remark-image-grid.js";
+import { remarkLineDivider } from "./src/plugins/remark-line-divider.js";
 import { plantumlConfig } from "./src/config";
 import fs from "node:fs";
 import path from "node:path";
@@ -44,6 +45,75 @@ import crypto from "node:crypto";
 
 if (process.env.NODE_ENV === "development") {
 	setMaxListeners(20);
+}
+
+const SVG_VIEWBOX_PADDING = 0;
+const SVG_PADDING_OPEN_RE = /^<padding(?<attrs>(?:\s+[^>]*)?)>\s*$/i;
+const SVG_PADDING_CLOSE_RE = /^<\/padding>\s*$/i;
+
+function expandSvgViewBox(svgContent, padding = SVG_VIEWBOX_PADDING) {
+	if (padding <= 0) return svgContent;
+
+	const svgOpenTagMatch = svgContent.match(/<svg\b[^>]*>/i);
+	if (!svgOpenTagMatch) return svgContent;
+
+	const svgOpenTag = svgOpenTagMatch[0];
+	const viewBoxMatch = svgOpenTag.match(/\sviewBox=(["'])([^"']+)\1/i);
+
+	if (viewBoxMatch) {
+		const values = viewBoxMatch[2].trim().split(/[\s,]+/).map(Number);
+		if (values.length === 4 && values.every(Number.isFinite)) {
+			const [minX, minY, width, height] = values;
+			const expandedViewBox = [
+				minX - padding,
+				minY - padding,
+				width + padding * 2,
+				height + padding * 2,
+			].join(" ");
+
+			return svgContent.replace(
+				viewBoxMatch[0],
+				` viewBox=${viewBoxMatch[1]}${expandedViewBox}${viewBoxMatch[1]}`,
+			);
+		}
+	}
+
+	const widthMatch = svgOpenTag.match(/\swidth=(["'])([\d.]+)(?:px)?\1/i);
+	const heightMatch = svgOpenTag.match(/\sheight=(["'])([\d.]+)(?:px)?\1/i);
+
+	if (!widthMatch || !heightMatch) return svgContent;
+
+	const width = Number(widthMatch[2]);
+	const height = Number(heightMatch[2]);
+	if (!Number.isFinite(width) || !Number.isFinite(height)) return svgContent;
+
+	const expandedViewBox = [
+		-padding,
+		-padding,
+		width + padding * 2,
+		height + padding * 2,
+	].join(" ");
+
+	const expandedSvgOpenTag = svgOpenTag.replace(
+		/<svg\b/i,
+		`<svg viewBox="${expandedViewBox}"`,
+	);
+
+	return svgContent.replace(svgOpenTag, expandedSvgOpenTag);
+}
+
+function resolveSvgPadding(value = "") {
+	const expandMatch = value.match(
+		/\sexpand(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/i,
+	);
+
+	if (!expandMatch) return 4;
+
+	const raw = expandMatch[1] ?? expandMatch[2] ?? expandMatch[3] ?? "4";
+	const amountMatch = String(raw).trim().match(/^(\d+(?:\.\d+)?)(?:\s*px)?$/i);
+	if (!amountMatch) return 0;
+
+	return Number(amountMatch[1]);
 }
 
 function remarkLocalSvgToPublic() {
@@ -57,9 +127,7 @@ function remarkLocalSvgToPublic() {
 		const outDir = path.join(projectRoot, "public", "__local_svg");
 		fs.mkdirSync(outDir, { recursive: true });
 
-		function walk(node) {
-			if (!node || typeof node !== "object") return;
-
+		function processSvgImage(node, padding) {
 			if (node.type === "image" && typeof node.url === "string") {
 				const rawUrl = node.url;
 
@@ -74,9 +142,18 @@ function remarkLocalSvgToPublic() {
 				}
 
 				const cleanUrl = rawUrl.split("?")[0].split("#")[0];
+				const cleanUrlLower = cleanUrl.toLowerCase();
+				const isSvg = cleanUrlLower.endsWith(".svg");
+				const isSvgExportPngName = cleanUrlLower.endsWith(".svg.png");
 
-				if (cleanUrl.toLowerCase().endsWith(".svg")) {
-					const srcAbs = path.resolve(mdDir, decodeURIComponent(cleanUrl));
+				if (isSvg || isSvgExportPngName) {
+					const requestedAbs = path.resolve(mdDir, decodeURIComponent(cleanUrl));
+					const svgFallbackAbs = isSvgExportPngName
+						? requestedAbs.replace(/\.png$/i, "")
+						: requestedAbs;
+					const srcAbs = fs.existsSync(requestedAbs)
+						? requestedAbs
+						: svgFallbackAbs;
 
 					if (!fs.existsSync(srcAbs)) {
 						console.warn(`[remarkLocalSvgToPublic] SVG not found: ${srcAbs}`);
@@ -86,28 +163,61 @@ function remarkLocalSvgToPublic() {
 					const relPath = path.relative(projectRoot, srcAbs).replace(/\\/g, "/");
 					const hash = crypto
 						.createHash("sha256")
-						.update(relPath)
+						.update(`${relPath}:${padding}`)
 						.digest("hex")
 						.slice(0, 10);
 
 					const baseName = path
-						.basename(cleanUrl, ".svg")
+						.basename(srcAbs, ".svg")
 						.replace(/[^\w.-]/g, "_");
 
-					const outName = `${baseName}.${hash}.svg`;
+						const outName = `${baseName}.${hash}.svg`;
 					const outAbs = path.join(outDir, outName);
 
-					fs.copyFileSync(srcAbs, outAbs);
+					const svgContent = fs.readFileSync(srcAbs, "utf8");
+					fs.writeFileSync(outAbs, expandSvgViewBox(svgContent, padding), "utf8");
 
 					node.url = `/__local_svg/${outName}`;
 				}
 			}
+		}
+
+		function walk(node, activePadding = 0) {
+			if (!node || typeof node !== "object") return;
 
 			if (Array.isArray(node.children)) {
-				for (const child of node.children) {
-					walk(child);
+				const paddingStack = [];
+				let currentPadding = activePadding;
+
+				for (let index = 0; index < node.children.length; ) {
+					const child = node.children[index];
+
+					if (child.type === "html" && typeof child.value === "string") {
+						const value = child.value.trim();
+						const openMatch = value.match(SVG_PADDING_OPEN_RE);
+
+						if (openMatch) {
+							paddingStack.push(currentPadding);
+							currentPadding = resolveSvgPadding(openMatch.groups?.attrs);
+							node.children.splice(index, 1);
+							continue;
+						}
+
+						if (SVG_PADDING_CLOSE_RE.test(value)) {
+							currentPadding = paddingStack.pop() ?? activePadding;
+							node.children.splice(index, 1);
+							continue;
+						}
+					}
+
+					processSvgImage(child, currentPadding);
+					walk(child, currentPadding);
+					index += 1;
 				}
+				return;
 			}
+
+			processSvgImage(node, activePadding);
 		}
 
 		walk(tree);
@@ -270,7 +380,9 @@ export default defineConfig({
 			remarkReadingTime,
 			remarkImageGrid,
 			remarkExcerpt,
+			remarkLocalSvgToPublic,
 			remarkFolder,
+			remarkLineDivider,
 			remarkDirective,
 			remarkSectionize,
 			parseDirectiveNode,

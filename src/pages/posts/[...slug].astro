@@ -70,16 +70,32 @@ if (processedImage) {
 	);
 	if (isLocal) {
 		const basePath = getFileDirFromPath(entry.filePath || "");
-		const files = import.meta.glob<ImageMetadata>("../../**", {
-			import: "default",
-		});
 		let normalizedPath = path
 			.normalize(path.join("../../", basePath, processedImage))
 			.replace(/\\/g, "/");
-		const file = files[normalizedPath];
-		if (file) {
-			const img = await file();
-			posterCoverUrl = img.src;
+		const isSvg = processedImage.toLowerCase().split("?")[0].endsWith(".svg");
+
+		if (isSvg) {
+			const files = import.meta.glob<string>("../../**/*.svg", {
+				import: "default",
+				query: "?url",
+			});
+			const file = files[normalizedPath];
+			if (file) {
+				posterCoverUrl = await file();
+			}
+		} else {
+			const files = import.meta.glob<ImageMetadata>(
+				"../../**/*.{png,jpg,jpeg,webp,avif}",
+				{
+					import: "default",
+				},
+			);
+			const file = files[normalizedPath];
+			if (file) {
+				const img = await file();
+				posterCoverUrl = img.src;
+			}
 		}
 	}
 }
