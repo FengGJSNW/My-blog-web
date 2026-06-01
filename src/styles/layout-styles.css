@@ -2,7 +2,9 @@
 
 /* 鐢ㄦ埛鍏抽棴鏃堕殣钘忔í骞呮爣棰橈紙闇€瑕佽冻澶熺壒寮傛€ц鐩?fullscreen/overlay 鐨?display: flex !important锛?*/
 html[data-banner-title-enabled="false"] #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay,
-html[data-banner-title-enabled="false"] #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay {
+html[data-banner-title-enabled="false"] #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay,
+html[data-banner-title-enabled="false"][data-wallpaper-mode="fullscreen"] #wallpaper-wrapper .banner-home-text-overlay,
+html[data-banner-title-enabled="false"][data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-home-text-overlay {
     display: none !important;
 }
 
@@ -665,11 +667,15 @@ body.is-home #wallpaper-wrapper.wallpaper-overlay img {
 /* Overlay 妯″紡闅愯棌 Banner 涓撳睘鍏冪礌 */
 #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay,
 #wallpaper-wrapper.wallpaper-overlay .banner-page-title-overlay,
-#wallpaper-wrapper.wallpaper-overlay .banner-post-meta-overlay {
+#wallpaper-wrapper.wallpaper-overlay .banner-post-meta-overlay,
+html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-home-text-overlay,
+html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-page-title-overlay,
+html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-post-meta-overlay {
     display: none !important;
 }
 
-body.is-home #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay {
+body.is-home #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay,
+html[data-wallpaper-mode="overlay"] body.is-home #wallpaper-wrapper .banner-home-text-overlay {
     display: flex !important;
     transition: opacity 0.12s linear;
 }
@@ -709,12 +715,17 @@ html[data-wallpaper-mode="overlay"] body.is-home #top-row {
 /* Fullscreen 妯″紡闅愯棌 overlay 涓撳睘鐨勫崐閫忔槑鏁堟灉 */
 #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay,
 #wallpaper-wrapper.wallpaper-fullscreen .banner-page-title-overlay,
-#wallpaper-wrapper.wallpaper-fullscreen .banner-post-meta-overlay {
+#wallpaper-wrapper.wallpaper-fullscreen .banner-post-meta-overlay,
+html[data-wallpaper-mode="fullscreen"] #wallpaper-wrapper .banner-home-text-overlay,
+html[data-wallpaper-mode="fullscreen"] #wallpaper-wrapper .banner-page-title-overlay,
+html[data-wallpaper-mode="fullscreen"] #wallpaper-wrapper .banner-post-meta-overlay {
     display: flex !important;
 }
 
 /* Fullscreen 妯″紡涓嬮潪棣栭〉闅愯棌涓婚〉鏍囬鏂囧瓧锛圫wup 椤甸潰鍒囨崲鏃堕€氳繃 hidden 绫绘帶鍒讹級 */
-#wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay.hidden {
+#wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay.hidden,
+html[data-wallpaper-mode="fullscreen"] #wallpaper-wrapper .banner-home-text-overlay.hidden,
+html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .banner-home-text-overlay.hidden {
     display: none !important;
 }
 
@@ -725,44 +736,90 @@ html[data-wallpaper-mode="overlay"] body.is-home #top-row {
     z-index: 5 !important;
 }
 
-/* Fullscreen 妯″紡涓嬫粴鍔ㄥ悜涓嬫寚绀哄櫒 */
+/* Overlay/full transparent mode scroll hint */
 #wallpaper-wrapper .scroll-down-indicator {
     display: none;
 }
 
-#wallpaper-wrapper.wallpaper-fullscreen .scroll-down-indicator {
+#wallpaper-wrapper.wallpaper-overlay .scroll-down-indicator,
+html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .scroll-down-indicator {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
     position: absolute;
-    bottom: 5rem;
+    bottom: clamp(3rem, 8vh, 5.5rem);
     left: 50%;
+    right: auto;
+    width: max-content;
+    max-width: calc(100vw - 2rem);
+    justify-content: center;
+    text-align: center;
     transform: translateX(-50%);
     z-index: 10;
     cursor: pointer;
     pointer-events: auto;
-    color: rgba(255, 255, 255, 0.8);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.25s ease;
+}
+
+#wallpaper-wrapper .scroll-down-indicator.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0.75rem);
+    pointer-events: none;
 }
 
 @media (max-width: 1023px) {
-    #wallpaper-wrapper.wallpaper-fullscreen .scroll-down-indicator {
-        bottom: 10rem;
+    #wallpaper-wrapper.wallpaper-overlay .scroll-down-indicator,
+    html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .scroll-down-indicator {
+        bottom: clamp(5.5rem, 11vh, 10rem);
     }
 }
 
-#wallpaper-wrapper.wallpaper-fullscreen .scroll-down-indicator .scroll-down-icon {
-    font-size: 5rem;
-    animation: scroll-down-bounce 2s ease-in-out infinite;
+#wallpaper-wrapper .scroll-down-indicator .scroll-down-text {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: transparent;
+    background:
+        linear-gradient(
+            100deg,
+            rgba(255, 255, 255, 0.5) 0%,
+            rgba(255, 255, 255, 0.84) 34%,
+            #ffffff 50%,
+            rgba(255, 255, 255, 0.84) 66%,
+            rgba(255, 255, 255, 0.5) 100%
+        );
+    background-size: 220% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: scroll-down-text-shine 2.8s ease-in-out infinite;
+}
+
+#wallpaper-wrapper .scroll-down-indicator .scroll-down-icon {
+    font-size: 2.35rem;
+    animation: scroll-down-bounce 1.85s ease-in-out infinite;
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
 
-#wallpaper-wrapper.wallpaper-fullscreen .scroll-down-indicator:hover {
+#wallpaper-wrapper.wallpaper-overlay .scroll-down-indicator:hover,
+html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .scroll-down-indicator:hover {
     color: rgba(255, 255, 255, 1);
+    transform: translateX(-50%) translateY(-0.15rem);
 }
 
 
 @keyframes scroll-down-bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(8px); }
+    50% { transform: translateY(0.45rem); }
+}
+
+@keyframes scroll-down-text-shine {
+    0% { background-position: 130% 0; }
+    55%, 100% { background-position: -130% 0; }
 }
 
 /* 鐐瑰嚮婊氬姩鎸囩ず鍣ㄨ烦杞埌鏂囩珷鍒楄〃鏃讹紝閬垮厤琚浐瀹氬鑸爮閬尅 */

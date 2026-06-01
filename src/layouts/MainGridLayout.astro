@@ -824,9 +824,9 @@ const bannerCarouselInterval = Math.max(
 
             function updateTitleScroll() {
                 ticking = false;
-                var overlay = document.querySelector('#wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay');
-                var indicator = document.querySelector('#wallpaper-wrapper.wallpaper-overlay .scroll-down-indicator');
-                var wallpaperWrapper = document.querySelector('#wallpaper-wrapper.wallpaper-overlay');
+                var overlay = document.querySelector('#wallpaper-wrapper .banner-home-text-overlay');
+                var indicator = document.querySelector('#wallpaper-wrapper .scroll-down-indicator');
+                var wallpaperWrapper = document.querySelector('#wallpaper-wrapper');
                 if (!overlay) return;
 
                 if (!isOverlayHome()) {
@@ -864,7 +864,7 @@ const bannerCarouselInterval = Math.max(
                 overlay.style.opacity = String(Math.max(1 - eased * 1.18, 0));
                 if (indicator) {
                     indicator.style.opacity = String(Math.max(1 - eased * 1.4, 0));
-                    indicator.style.transform = 'translate3d(0, ' + (-eased * 1.25) + 'rem, 0)';
+                    indicator.style.transform = 'translateX(-50%) translate3d(0, ' + (-eased * 1.25) + 'rem, 0)';
                 }
             }
 
