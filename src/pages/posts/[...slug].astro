@@ -110,9 +110,12 @@ if (posterAvatarUrl) {
 		posterAvatarUrl.startsWith("data:")
 	);
 	if (isLocalAvatar) {
-		const files = import.meta.glob<ImageMetadata>("../../**", {
-			import: "default",
-		});
+		const files = import.meta.glob<ImageMetadata>(
+			"../../**/*.{png,jpg,jpeg,webp,avif}",
+			{
+				import: "default",
+			},
+		);
 		const normalizedPath = path
 			.normalize(path.join("../../", posterAvatarUrl))
 			.replace(/\\/g, "/");

