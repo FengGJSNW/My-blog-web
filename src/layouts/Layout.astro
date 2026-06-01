@@ -455,6 +455,7 @@ const siteLang = lang.replace("_", "-");
           if (mainContentWrapper) {
             // 初始化期间禁用过渡动画，防止内容位置跳动
             mainContentWrapper.style.setProperty("transition", "none", "important");
+            mainContentWrapper.classList.toggle("overlay-fusion-main", wallpaperMode === WALLPAPER_OVERLAY && isHomePage);
             const isMobile = window.innerWidth < 1024;
             // 只在移动端非首页时调整主内容位置
             if (isMobile && !isHomePage) {
@@ -469,6 +470,11 @@ const siteLang = lang.replace("_", "-");
               mainContentWrapper.style.top = "0";
               mainContentWrapper.style.zIndex = "30";
               mainContentWrapper.style.setProperty("margin-top", "1rem", "important");
+            } else if (wallpaperMode === WALLPAPER_OVERLAY && isHomePage) {
+              mainContentWrapper.style.position = "";
+              mainContentWrapper.style.zIndex = "";
+              mainContentWrapper.style.setProperty("top", "calc(100vh + 1rem)", "important");
+              mainContentWrapper.style.setProperty("margin-top", "0", "important");
             } else if (isMobileNonHome) {
               mainContentWrapper.style.setProperty("top", "5.5rem", "important");
               mainContentWrapper.style.position = "";
@@ -498,7 +504,7 @@ const siteLang = lang.replace("_", "-");
               window.location.pathname === baseUrl || 
               (baseUrl !== '/' && window.location.pathname === baseUrl.replace(/\/$/, '')) ||
               window.location.pathname === "/";
-            if ((wallpaperMode === WALLPAPER_BANNER || wallpaperMode === WALLPAPER_FULLSCREEN) && isHomePage) {
+            if ((wallpaperMode === WALLPAPER_BANNER || wallpaperMode === WALLPAPER_FULLSCREEN || wallpaperMode === WALLPAPER_OVERLAY) && isHomePage) {
               bannerTextOverlay.classList.remove("hidden");
             } else {
               bannerTextOverlay.classList.add("hidden");
@@ -976,6 +982,16 @@ function disableAnimation() {
         mainEl.style.setProperty("margin-top", "1rem", "important");
       }
 
+      if (currentMode === "overlay" && mainEl) {
+        mainEl.classList.toggle("overlay-fusion-main", isHome);
+        mainEl.style.position = "";
+        mainEl.style.zIndex = "";
+        mainEl.style.setProperty("top", isHome ? "calc(100vh + 1rem)" : "5.5rem", "important");
+        mainEl.style.setProperty("margin-top", "0", "important");
+      } else if (mainEl) {
+        mainEl.classList.remove("overlay-fusion-main");
+      }
+
       // 桌面端横幅模式：统一用banner高度定位，不改变grid transform
       if (!isMobileForBanner && currentMode === "banner" && mainEl) {
         mainEl.style.setProperty("top", "calc(var(--banner-height) - 3rem)", "important");
@@ -1123,7 +1139,13 @@ function disableAnimation() {
               mainContentWrapper.style.zIndex = "30";
               mainContentWrapper.style.setProperty("top", "0", "important");
               mainContentWrapper.style.setProperty("margin-top", "1rem", "important");
-            } else if (visitCurrentMode === "overlay" || visitCurrentMode === "none") {
+            } else if (visitCurrentMode === "overlay") {
+              mainContentWrapper.classList.add("overlay-fusion-main");
+              mainContentWrapper.style.setProperty("top", "calc(100vh + 1rem)", "important");
+              mainContentWrapper.style.position = "";
+              mainContentWrapper.style.zIndex = "";
+              mainContentWrapper.style.setProperty("margin-top", "0", "important");
+            } else if (visitCurrentMode === "none") {
               mainContentWrapper.style.setProperty("top", "5.5rem", "important");
               mainContentWrapper.style.position = "";
               mainContentWrapper.style.zIndex = "";
@@ -1158,6 +1180,15 @@ function disableAnimation() {
             mainContentWrapper.style.zIndex = "30";
             mainContentWrapper.style.setProperty("top", "0", "important");
             mainContentWrapper.style.setProperty("margin-top", "1rem", "important");
+          }
+          if (visitDesktopMode === "overlay") {
+            mainContentWrapper.classList.toggle("overlay-fusion-main", isHomePage);
+            mainContentWrapper.style.position = "";
+            mainContentWrapper.style.zIndex = "";
+            mainContentWrapper.style.setProperty("top", isHomePage ? "calc(100vh + 1rem)" : "5.5rem", "important");
+            mainContentWrapper.style.setProperty("margin-top", "0", "important");
+          } else {
+            mainContentWrapper.classList.remove("overlay-fusion-main");
           }
           // 桌面端横幅模式：统一用banner高度定位，不改变grid transform
           if (visitDesktopMode === "banner") {
@@ -1241,6 +1272,16 @@ function disableAnimation() {
         mainEl.style.zIndex = "30";
         mainEl.style.setProperty("top", "0", "important");
         mainEl.style.setProperty("margin-top", "1rem", "important");
+      }
+
+      if (currentMode === "overlay" && mainEl) {
+        mainEl.classList.toggle("overlay-fusion-main", isHome);
+        mainEl.style.position = "";
+        mainEl.style.zIndex = "";
+        mainEl.style.setProperty("top", isHome ? "calc(100vh + 1rem)" : "5.5rem", "important");
+        mainEl.style.setProperty("margin-top", "0", "important");
+      } else if (mainEl) {
+        mainEl.classList.remove("overlay-fusion-main");
       }
 
       // 桌面端横幅模式：统一用banner高度定位，不改变grid transform

@@ -111,6 +111,7 @@ const shouldRenderGradient =
 
 // 检查是否为首页
 const isHomePageCheck = isHomePage(Astro.url.pathname);
+const isOverlayFusionHome = isOverlayMode && isBackgroundEnabled && isHomePageCheck;
 
 const shouldRenderCategoryBar = !!siteConfig.categoryBar;
 
@@ -131,7 +132,9 @@ const randomSubtitle = getRandomSubtitle();
 // 主页横幅文本只在首页且全局开关为 true 时显示，不区分设备
 const homeTextEnable = backgroundWallpaper.common?.homeText?.enable;
 const showHomeText =
-	(isBannerMode || isFullscreenMode) && !!homeTextEnable && isHomePageCheck;
+	(isBannerMode || isFullscreenMode || isOverlayMode) &&
+	!!homeTextEnable &&
+	isHomePageCheck;
 
 const showBannerPostMeta =
 	(isBannerMode || isFullscreenMode) &&
@@ -140,7 +143,8 @@ const showBannerPostMeta =
 	isPostPage &&
 	!!bannerPostMeta;
 
-const showBannerDim = (isBannerMode || isFullscreenMode) && isBackgroundEnabled;
+const showBannerDim =
+	(isBannerMode || isFullscreenMode || isOverlayMode) && isBackgroundEnabled;
 const dimOpacity = backgroundWallpaper.common?.dimOpacity ?? 0.15;
 
 const showBannerPageTitle =
@@ -671,6 +675,162 @@ const bannerCarouselInterval = Math.max(
         // Run on initial load
         setRandomSubtitle();
     </script>
+    <script is:inline data-swup-ignore-script>
+        (function initOverlayFusionTitleScroll() {
+            if (window.__overlayFusionTitleScrollCleanup) {
+                window.__overlayFusionTitleScrollCleanup();
+            }
+
+            var ticking = false;
+            var snapTimer = null;
+            var isAutoScrolling = false;
+            var lastScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+            var lastDirection = 0; // 1: down, -1: up
+            var baseUrl = document.querySelector('meta[name="firefly-base-url"]')?.content || '/';
+
+            function isHomePage() {
+                var path = window.location.pathname;
+                return path === '/' || path === baseUrl || (baseUrl !== '/' && path === baseUrl.replace(/\/$/, ''));
+            }
+
+            function isOverlayHome() {
+                return document.documentElement.getAttribute('data-wallpaper-mode') === 'overlay' && isHomePage();
+            }
+
+            function getCardTopY() {
+                var mainArea = document.querySelector('.w-full.z-30.pointer-events-none');
+                if (!mainArea) return null;
+                var rect = mainArea.getBoundingClientRect();
+                return rect.top + (window.scrollY || document.documentElement.scrollTop || 0);
+            }
+
+            function smoothScrollTo(y) {
+                isAutoScrolling = true;
+                window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+                window.setTimeout(function() {
+                    isAutoScrolling = false;
+                }, 460);
+            }
+
+            function snapIfInTransitionZone() {
+                if (!isOverlayHome() || isAutoScrolling) return;
+                var targetY = getCardTopY();
+                if (targetY === null || targetY < 40) return;
+                var y = window.scrollY || document.documentElement.scrollTop || 0;
+                if (y <= 8 || y >= targetY + 8) return;
+
+                // Direction-driven snap: small upward nudge goes back to clear area,
+                // small downward nudge goes into card area.
+                if (lastDirection > 0) {
+                    smoothScrollTo(targetY);
+                    return;
+                }
+                if (lastDirection < 0) {
+                    smoothScrollTo(0);
+                    return;
+                }
+
+                // Fallback when direction cannot be inferred.
+                smoothScrollTo(y >= targetY * 0.5 ? targetY : 0);
+            }
+
+            function updateTitleScroll() {
+                ticking = false;
+                var overlay = document.querySelector('#wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay');
+                var indicator = document.querySelector('#wallpaper-wrapper.wallpaper-overlay .scroll-down-indicator');
+                var wallpaperWrapper = document.querySelector('#wallpaper-wrapper.wallpaper-overlay');
+                if (!overlay) return;
+
+                if (!isOverlayHome()) {
+                    overlay.style.transform = '';
+                    overlay.style.opacity = '';
+                    overlay.style.willChange = '';
+                    document.documentElement.style.removeProperty('--overlay-fusion-nav-alpha');
+                    if (wallpaperWrapper) {
+                        wallpaperWrapper.style.removeProperty('--overlay-fusion-blur');
+                    }
+                    if (indicator) {
+                        indicator.style.opacity = '';
+                        indicator.style.transform = '';
+                    }
+                    return;
+                }
+
+                var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+                var viewport = Math.max(window.innerHeight || 0, 1);
+                var progress = Math.min(Math.max(scrollTop / (viewport * 0.72), 0), 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                document.documentElement.style.setProperty('--overlay-fusion-nav-alpha', eased.toFixed(4));
+
+                if (wallpaperWrapper) {
+                    var cssBlur = getComputedStyle(wallpaperWrapper).getPropertyValue('--overlay-blur').trim();
+                    var targetBlur = parseFloat(cssBlur || '0');
+                    if (!Number.isFinite(targetBlur) || targetBlur < 0) {
+                        targetBlur = 0;
+                    }
+                    wallpaperWrapper.style.setProperty('--overlay-fusion-blur', (targetBlur * eased).toFixed(2) + 'px');
+                }
+
+                overlay.style.willChange = 'transform, opacity';
+                overlay.style.transform = 'translate3d(0, ' + (-eased * 34) + 'vh, 0)';
+                overlay.style.opacity = String(Math.max(1 - eased * 1.18, 0));
+                if (indicator) {
+                    indicator.style.opacity = String(Math.max(1 - eased * 1.4, 0));
+                    indicator.style.transform = 'translate3d(0, ' + (-eased * 1.25) + 'rem, 0)';
+                }
+            }
+
+            function requestUpdate() {
+                var currentY = window.scrollY || document.documentElement.scrollTop || 0;
+                var deltaY = currentY - lastScrollY;
+                if (Math.abs(deltaY) > 0.5) {
+                    lastDirection = deltaY > 0 ? 1 : -1;
+                    lastScrollY = currentY;
+                }
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(updateTitleScroll);
+                if (snapTimer) {
+                    clearTimeout(snapTimer);
+                }
+                snapTimer = setTimeout(snapIfInTransitionZone, 140);
+            }
+
+            function handleIndicatorClick(event) {
+                var indicator = event.target && event.target.closest
+                    ? event.target.closest('#scroll-down-indicator')
+                    : null;
+                if (!indicator) return;
+                if (!isOverlayHome()) return;
+                event.preventDefault();
+                var targetY = getCardTopY();
+                if (targetY !== null) {
+                    smoothScrollTo(targetY);
+                }
+            }
+
+            window.addEventListener('scroll', requestUpdate, { passive: true });
+            window.addEventListener('resize', requestUpdate);
+            window.addEventListener('wallpaperModeChange', requestUpdate);
+            document.addEventListener('astro:page-load', requestUpdate);
+            document.addEventListener('swup:contentReplaced', requestUpdate);
+            document.addEventListener('click', handleIndicatorClick, true);
+            requestUpdate();
+
+            window.__overlayFusionTitleScrollCleanup = function() {
+                window.removeEventListener('scroll', requestUpdate);
+                window.removeEventListener('resize', requestUpdate);
+                window.removeEventListener('wallpaperModeChange', requestUpdate);
+                document.removeEventListener('astro:page-load', requestUpdate);
+                document.removeEventListener('swup:contentReplaced', requestUpdate);
+                document.removeEventListener('click', handleIndicatorClick, true);
+                if (snapTimer) {
+                    clearTimeout(snapTimer);
+                    snapTimer = null;
+                }
+            };
+        })();
+    </script>
 
     <!-- Non-home non-post page title overlay (desktop only) -->
     {showBannerPageTitle && (
@@ -727,7 +887,7 @@ const bannerCarouselInterval = Math.max(
     )}
 
     <!-- Fullscreen 模式下显示向下滚动指示器 -->
-    {(isFullscreenMode || isWallpaperSwitchable) && <ScrollDownIndicator />}
+    {(isFullscreenMode || isOverlayMode || isWallpaperSwitchable) && <ScrollDownIndicator />}
     </div>
 
     <!-- Water waves effect - 如果允许切换或任一设备启用则渲染 -->
@@ -801,7 +961,7 @@ const bannerCarouselInterval = Math.max(
 )}
 
 <!-- Main content -->
-<div class={`absolute w-full z-30 pointer-events-none ${mobileNonHomeBannerClass ? 'mobile-main-no-banner' : ''} ${!(isBannerMode && isBackgroundEnabled) ? 'no-banner-layout' : ''}`} style={isFullscreenMode ? 'top: 0;' : `top: ${finalMainPanelTop}`}>
+<div class={`absolute w-full z-30 pointer-events-none ${mobileNonHomeBannerClass ? 'mobile-main-no-banner' : ''} ${isOverlayFusionHome ? 'overlay-fusion-main' : ''} ${!(isBannerMode && isBackgroundEnabled) ? 'no-banner-layout' : ''}`} style={isOverlayFusionHome ? 'top: calc(100vh + 1rem);' : isFullscreenMode ? 'top: 0;' : `top: ${finalMainPanelTop}`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
     <div class="relative w-full xl:w-[92vw] max-w-(--page-width) mx-auto pointer-events-auto">
         <div id="main-grid"

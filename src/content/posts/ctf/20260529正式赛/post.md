@@ -772,8 +772,11 @@ flag截图：
 ![flag](./pwm/ezstack/ezstack_flag.png)
 
 
-
 ## ezstring
+
+本题的漏洞是格式化字符串漏洞
+
+![flag](./pwm/ezstring/main.png)
 
 ## baseh
 
@@ -799,7 +802,3 @@ flag截图：
 | 第三天 |||
 | Reverse | 入 | Easy |
 | Misc | 猜猜数字喵 | Hard |
-| Pwn | ezstack | Easy |
-| Pwn | ezstring | Easy |
-| Pwn | baseh | Normal |
-| Pwn | nopnopnop | Normal |

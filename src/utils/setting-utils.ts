@@ -558,6 +558,7 @@ function showFullscreenMode(animate = false) {
 }
 
 function showOverlayMode() {
+	const isHome = checkIsHomePage(window.location.pathname);
 	// 切换 wallpaper-wrapper 为 overlay 模式
 	const wallpaperWrapper = document.getElementById("wallpaper-wrapper");
 	if (wallpaperWrapper) {
@@ -579,7 +580,7 @@ function showOverlayMode() {
 	// 隐藏横幅首页文本
 	const bannerTextOverlay = document.querySelector(".banner-home-text-overlay");
 	if (bannerTextOverlay) {
-		bannerTextOverlay.classList.add("hidden");
+		bannerTextOverlay.classList.toggle("hidden", !isHome);
 	}
 
 	// 调整主内容透明度
@@ -623,9 +624,14 @@ function updateNavbarTransparency(mode: WALLPAPER_MODE) {
 	// 根据当前壁纸模式设置导航栏透明模式和模糊效果
 	if (mode === WALLPAPER_OVERLAY) {
 		// 全屏透明模式
-		transparentMode = "none";
-		enableBlur = false;
-		blurAmount = 0;
+		const isHome = checkIsHomePage(window.location.pathname);
+		transparentMode = isHome
+			? backgroundWallpaper.common?.navbar?.transparentMode || "semi"
+			: "none";
+		enableBlur = isHome
+			? (backgroundWallpaper.common?.navbar?.enableBlur ?? true)
+			: false;
+		blurAmount = isHome ? (backgroundWallpaper.common?.navbar?.blur ?? 20) : 0;
 	} else if (mode === WALLPAPER_NONE) {
 		// 纯色背景模式
 		transparentMode = "none";
@@ -695,6 +701,7 @@ function adjustMainContentPosition(
 
 	// 移除现有的位置类
 	mainContent.classList.remove("mobile-main-no-banner", "no-banner-layout");
+	mainContent.classList.remove("overlay-fusion-main");
 
 	switch (mode) {
 		case "banner": {
@@ -784,7 +791,17 @@ function adjustMainContentPosition(
 		case "overlay":
 			// Overlay模式：使用紧凑布局，主内容从导航栏下方开始
 			mainContent.classList.add("no-banner-layout");
-			mainContent.style.setProperty("top", "5.5rem", "important");
+			mainContent.classList.toggle(
+				"overlay-fusion-main",
+				checkIsHomePage(window.location.pathname),
+			);
+			mainContent.style.setProperty(
+				"top",
+				checkIsHomePage(window.location.pathname)
+					? "calc(100vh + 1rem)"
+					: "5.5rem",
+				"important",
+			);
 			mainContent.style.setProperty("margin-top", "0", "important");
 			mainContent.style.position = "";
 			mainContent.style.minHeight = "";

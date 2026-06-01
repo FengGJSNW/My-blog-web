@@ -1,19 +1,19 @@
-/* Layout specific styles */
+﻿/* Layout specific styles */
 
-/* 用户关闭时隐藏横幅标题（需要足够特异性覆盖 fullscreen/overlay 的 display: flex !important） */
+/* 鐢ㄦ埛鍏抽棴鏃堕殣钘忔í骞呮爣棰橈紙闇€瑕佽冻澶熺壒寮傛€ц鐩?fullscreen/overlay 鐨?display: flex !important锛?*/
 html[data-banner-title-enabled="false"] #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay,
 html[data-banner-title-enabled="false"] #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay {
     display: none !important;
 }
 
-/* 注意：不使用 data-banner-title-enabled="true" 强制显示，
-   因为横幅标题只应在首页显示，由页面本身的 hidden 类控制 */
+/* 娉ㄦ剰锛氫笉浣跨敤 data-banner-title-enabled="true" 寮哄埗鏄剧ず锛?
+   鍥犱负妯箙鏍囬鍙簲鍦ㄩ椤垫樉绀猴紝鐢遍〉闈㈡湰韬殑 hidden 绫绘帶鍒?*/
 
 .banner-home-text-overlay.user-hidden {
     display: none !important;
 }
 
-/* 页面切换期间隐藏首页横幅文案，避免与文章元信息层重叠闪现 */
+/* 椤甸潰鍒囨崲鏈熼棿闅愯棌棣栭〉妯箙鏂囨锛岄伩鍏嶄笌鏂囩珷鍏冧俊鎭眰閲嶅彔闂幇 */
 html.is-page-transitioning .banner-home-text-overlay {
     display: none !important;
 }
@@ -23,7 +23,7 @@ html.is-page-transitioning .banner-home-text-overlay {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     animation: banner-fadeInUp 0.3s ease-out;
     font-weight: bold;
-    /* 防止大字体标题溢出容器 */
+    /* 闃叉澶у瓧浣撴爣棰樻孩鍑哄鍣?*/
     overflow-wrap: break-word;
     word-break: break-word;
 }
@@ -44,7 +44,7 @@ html.is-page-transitioning .banner-home-text-overlay {
     }
 }
 
-/* 移动端无侧边栏布局优化 */
+/* 绉诲姩绔棤渚ц竟鏍忓竷灞€浼樺寲 */
 @media (max-width: 767px) {
     .mobile-no-sidebar {
         display: block !important;
@@ -66,46 +66,46 @@ html.is-page-transitioning .banner-home-text-overlay {
     }
 }
 
-/* 移动端横幅优化 - 小屏手机 (320px - 480px) */
+/* 绉诲姩绔í骞呬紭鍖?- 灏忓睆鎵嬫満 (320px - 480px) */
 @media (max-width: 480px) {
-    /* Banner wrapper 高度优化 - 优先保持banner显示 - 仅在首页应用 */
+    /* Banner wrapper 楂樺害浼樺寲 - 浼樺厛淇濇寔banner鏄剧ず - 浠呭湪棣栭〉搴旂敤 */
     #wallpaper-wrapper:not(.mobile-hide-banner) {
         height: 70vh !important;
         top: 0 !important;
         transform: none !important;
     }
     
-    /* 主内容区域位置调整 - 向上移动以部分遮挡banner */
-    /* 仅在 banner 模式下应用，其他模式（全屏壁纸/纯色）使用默认的 5.5rem */
+    /* 涓诲唴瀹瑰尯鍩熶綅缃皟鏁?- 鍚戜笂绉诲姩浠ラ儴鍒嗛伄鎸anner */
+    /* 浠呭湪 banner 妯″紡涓嬪簲鐢紝鍏朵粬妯″紡锛堝叏灞忓绾?绾壊锛変娇鐢ㄩ粯璁ょ殑 5.5rem */
     body.enable-banner .absolute.w-full.z-30:not(.no-banner-layout):not(.mobile-main-no-banner) {
-        top: 70vh !important; /* 内容从水波纹处开始，平滑过渡 */
+        top: 70vh !important; /* 鍐呭浠庢按娉㈢汗澶勫紑濮嬶紝骞虫粦杩囨浮 */
         min-height: calc(100vh - 70vh) !important;
     }
     
-    /* 横幅文本覆盖层优化 */
+    /* 妯箙鏂囨湰瑕嗙洊灞備紭鍖?*/
     .banner-home-text-overlay {
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
         padding: 1rem !important;
-        text-align: center !important; /* 文字居中对齐 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
-    /* 文本容器优化 */
+    /* 鏂囨湰瀹瑰櫒浼樺寲 */
     .banner-home-text-overlay > div {
-        margin-bottom: 0 !important; /* 移除底部边距，保持居中 */
-        width: 95% !important; /* 增加文本宽度利用率 */
-        text-align: center !important; /* 确保文字居中 */
+        margin-bottom: 0 !important; /* 绉婚櫎搴曢儴杈硅窛锛屼繚鎸佸眳涓?*/
+        width: 95% !important; /* 澧炲姞鏂囨湰瀹藉害鍒╃敤鐜?*/
+        text-align: center !important; /* 纭繚鏂囧瓧灞呬腑 */
     }
     
-    /* 标题字体优化 */
+    /* 鏍囬瀛椾綋浼樺寲 */
     .banner-title {
         font-size: min(var(--banner-title-size, 3rem), 10vw) !important;
         line-height: 1.1 !important;
         margin-bottom: 0.5rem !important;
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important; /* 增强阴影 */
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important; /* 澧炲己闃村奖 */
     }
     
-    /* 副标题字体优化 */
+    /* 鍓爣棰樺瓧浣撲紭鍖?*/
     .banner-subtitle {
         font-size: 1rem !important;
         line-height: 1.3 !important;
@@ -114,38 +114,38 @@ html.is-page-transitioning .banner-home-text-overlay {
     
 }
 
-/* 移动端横幅优化 - 大屏手机 (481px - 640px) */
+/* 绉诲姩绔í骞呬紭鍖?- 澶у睆鎵嬫満 (481px - 640px) */
 @media (min-width: 481px) and (max-width: 640px) {
-    /* Banner wrapper 高度优化 - 优先保持banner显示 - 仅在首页应用 */
+    /* Banner wrapper 楂樺害浼樺寲 - 浼樺厛淇濇寔banner鏄剧ず - 浠呭湪棣栭〉搴旂敤 */
     #wallpaper-wrapper:not(.mobile-hide-banner) {
         height: 75vh !important;
         top: 0 !important;
         transform: none !important;
     }
     
-    /* 主内容区域位置调整 - 向上移动以部分遮挡banner */
-    /* 仅在 banner 模式下应用，其他模式（全屏壁纸/纯色）使用默认的 5.5rem */
+    /* 涓诲唴瀹瑰尯鍩熶綅缃皟鏁?- 鍚戜笂绉诲姩浠ラ儴鍒嗛伄鎸anner */
+    /* 浠呭湪 banner 妯″紡涓嬪簲鐢紝鍏朵粬妯″紡锛堝叏灞忓绾?绾壊锛変娇鐢ㄩ粯璁ょ殑 5.5rem */
     body.enable-banner .absolute.w-full.z-30:not(.no-banner-layout):not(.mobile-main-no-banner) {
-        top: 75vh !important; /* 内容从水波纹处开始，平滑过渡 */
+        top: 75vh !important; /* 鍐呭浠庢按娉㈢汗澶勫紑濮嬶紝骞虫粦杩囨浮 */
         min-height: calc(100vh - 75vh) !important;
     }
     
-    /* 横幅文本覆盖层优化 */
+    /* 妯箙鏂囨湰瑕嗙洊灞備紭鍖?*/
     .banner-home-text-overlay {
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
         padding: 1.5rem !important;
-        text-align: center !important; /* 文字居中对齐 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
-    /* 文本容器优化 */
+    /* 鏂囨湰瀹瑰櫒浼樺寲 */
     .banner-home-text-overlay > div {
-        margin-bottom: 0 !important; /* 移除底部边距，保持居中 */
+        margin-bottom: 0 !important; /* 绉婚櫎搴曢儴杈硅窛锛屼繚鎸佸眳涓?*/
         width: 90% !important;
-        text-align: center !important; /* 确保文字居中 */
+        text-align: center !important; /* 纭繚鏂囧瓧灞呬腑 */
     }
     
-    /* 标题字体优化 */
+    /* 鏍囬瀛椾綋浼樺寲 */
     .banner-title {
         font-size: min(var(--banner-title-size, 3rem), 10vw) !important;
         line-height: 1.1 !important;
@@ -153,7 +153,7 @@ html.is-page-transitioning .banner-home-text-overlay {
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
     }
 
-    /* 副标题字体优化 */
+    /* 鍓爣棰樺瓧浣撲紭鍖?*/
     .banner-subtitle {
         font-size: 1.125rem !important;
         line-height: 1.4 !important;
@@ -162,38 +162,38 @@ html.is-page-transitioning .banner-home-text-overlay {
 
 }
 
-/* 移动端横幅优化 - 超大屏手机/小平板 (641px - 767px) */
+/* 绉诲姩绔í骞呬紭鍖?- 瓒呭ぇ灞忔墜鏈?灏忓钩鏉?(641px - 767px) */
 @media (min-width: 641px) and (max-width: 767px) {
-    /* Banner wrapper 高度优化 - 仅在首页应用 */
+    /* Banner wrapper 楂樺害浼樺寲 - 浠呭湪棣栭〉搴旂敤 */
     #wallpaper-wrapper:not(.mobile-hide-banner) {
         height: 72vh !important;
         top: 0 !important;
         transform: none !important;
     }
     
-    /* 主内容区域位置调整 - 向上移动以部分遮挡banner */
-    /* 仅在 banner 模式下应用，其他模式（全屏壁纸/纯色）使用默认的 5.5rem */
+    /* 涓诲唴瀹瑰尯鍩熶綅缃皟鏁?- 鍚戜笂绉诲姩浠ラ儴鍒嗛伄鎸anner */
+    /* 浠呭湪 banner 妯″紡涓嬪簲鐢紝鍏朵粬妯″紡锛堝叏灞忓绾?绾壊锛変娇鐢ㄩ粯璁ょ殑 5.5rem */
     body.enable-banner .absolute.w-full.z-30:not(.no-banner-layout):not(.mobile-main-no-banner) {
-        top: 72vh !important; /* 内容从水波纹处开始，平滑过渡 */
+        top: 72vh !important; /* 鍐呭浠庢按娉㈢汗澶勫紑濮嬶紝骞虫粦杩囨浮 */
         min-height: calc(100vh - 72vh) !important;
     }
     
-    /* 横幅文本覆盖层优化 */
+    /* 妯箙鏂囨湰瑕嗙洊灞備紭鍖?*/
     .banner-home-text-overlay {
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
         padding: 1.75rem !important;
-        text-align: center !important; /* 文字居中对齐 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
-    /* 文本容器优化 */
+    /* 鏂囨湰瀹瑰櫒浼樺寲 */
     .banner-home-text-overlay > div {
-        margin-bottom: 0 !important; /* 移除底部边距，保持居中 */
+        margin-bottom: 0 !important; /* 绉婚櫎搴曢儴杈硅窛锛屼繚鎸佸眳涓?*/
         width: 88% !important;
-        text-align: center !important; /* 确保文字居中 */
+        text-align: center !important; /* 纭繚鏂囧瓧灞呬腑 */
     }
     
-    /* 标题字体优化 */
+    /* 鏍囬瀛椾綋浼樺寲 */
     .banner-title {
         font-size: min(var(--banner-title-size, 3rem), 8vw) !important;
         line-height: 1.1 !important;
@@ -201,7 +201,7 @@ html.is-page-transitioning .banner-home-text-overlay {
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
     }
     
-    /* 副标题字体优化 */
+    /* 鍓爣棰樺瓧浣撲紭鍖?*/
     .banner-subtitle {
         font-size: 1.25rem !important;
         line-height: 1.4 !important;
@@ -210,38 +210,38 @@ html.is-page-transitioning .banner-home-text-overlay {
 
 }
 
-/* 平板设备横幅优化 (768px - 1023px) - Tailwind md 断点 */
+/* 骞虫澘璁惧妯箙浼樺寲 (768px - 1023px) - Tailwind md 鏂偣 */
 @media (min-width: 768px) and (max-width: 1023px) {
-    /* Banner wrapper 高度优化 - 仅在首页应用 */
+    /* Banner wrapper 楂樺害浼樺寲 - 浠呭湪棣栭〉搴旂敤 */
     #wallpaper-wrapper:not(.mobile-hide-banner) {
         height: 70vh !important;
         top: 0 !important;
         transform: none !important;
     }
     
-    /* 主内容区域位置调整 - 向上移动以部分遮挡banner */
-    /* 仅在 banner 模式下应用，其他模式（全屏壁纸/纯色）使用默认的 5.5rem */
+    /* 涓诲唴瀹瑰尯鍩熶綅缃皟鏁?- 鍚戜笂绉诲姩浠ラ儴鍒嗛伄鎸anner */
+    /* 浠呭湪 banner 妯″紡涓嬪簲鐢紝鍏朵粬妯″紡锛堝叏灞忓绾?绾壊锛変娇鐢ㄩ粯璁ょ殑 5.5rem */
     body.enable-banner .absolute.w-full.z-30:not(.no-banner-layout):not(.mobile-main-no-banner) {
-        top: 70vh !important; /* 内容从水波纹处开始，平滑过渡 */
+        top: 70vh !important; /* 鍐呭浠庢按娉㈢汗澶勫紑濮嬶紝骞虫粦杩囨浮 */
         min-height: calc(100vh - 70vh) !important;
     }
     
-    /* 横幅文本覆盖层优化 */
+    /* 妯箙鏂囨湰瑕嗙洊灞備紭鍖?*/
     .banner-home-text-overlay {
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
         padding: 2rem !important;
-        text-align: center !important; /* 文字居中对齐 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
-    /* 文本容器优化 */
+    /* 鏂囨湰瀹瑰櫒浼樺寲 */
     .banner-home-text-overlay > div {
-        margin-bottom: 0 !important; /* 移除底部边距，保持居中 */
+        margin-bottom: 0 !important; /* 绉婚櫎搴曢儴杈硅窛锛屼繚鎸佸眳涓?*/
         width: 85% !important;
-        text-align: center !important; /* 确保文字居中 */
+        text-align: center !important; /* 纭繚鏂囧瓧灞呬腑 */
     }
     
-    /* 标题字体优化 */
+    /* 鏍囬瀛椾綋浼樺寲 */
     .banner-title {
         font-size: min(var(--banner-title-size, 3rem), 7vw) !important;
         line-height: 1.1 !important;
@@ -249,7 +249,7 @@ html.is-page-transitioning .banner-home-text-overlay {
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
     }
     
-    /* 副标题字体优化 */
+    /* 鍓爣棰樺瓧浣撲紭鍖?*/
     .banner-subtitle {
         font-size: 1.5rem !important;
         line-height: 1.4 !important;
@@ -258,42 +258,42 @@ html.is-page-transitioning .banner-home-text-overlay {
     
 }
 
-/* 桌面端保持居中 (1024px+) - Tailwind lg 断点 */
+/* 妗岄潰绔繚鎸佸眳涓?(1024px+) - Tailwind lg 鏂偣 */
 @media (min-width: 1024px) {
     .banner-home-text-overlay {
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
         padding: 2rem !important;
-        text-align: center !important; /* 文字居中对齐 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
     .banner-home-text-overlay > div {
         margin-bottom: 0 !important;
         width: 75% !important;
-        text-align: center !important; /* 确保文字居中 */
+        text-align: center !important; /* 纭繚鏂囧瓧灞呬腑 */
     }
     
-    /* 背景图片优化 */
+    /* 鑳屾櫙鍥剧墖浼樺寲 */
     #banner img {
         transition: transform 1s ease-out !important;
     }
     
 }
 
-/* 移动端图片优化 */
+/* 绉诲姩绔浘鐗囦紭鍖?*/
 @media (max-width: 1023px) {
-    /* 移动端背景图片优化 */
+    /* 绉诲姩绔儗鏅浘鐗囦紭鍖?*/
     #banner img {
         transition: transform 0.5s ease-out !important;
     }
 }
 
-/* 平板和手机端非首页隐藏banner - 改进的分阶段动画 (1024px以下) */
+/* 骞虫澘鍜屾墜鏈虹闈為椤甸殣钘廱anner - 鏀硅繘鐨勫垎闃舵鍔ㄧ敾 (1024px浠ヤ笅) */
 @media (max-width: 1023px) {
     #wallpaper-wrapper {
         transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease-out;
         transform-origin: top center;
-        /* 硬件加速优化 */
+        /* 纭欢鍔犻€熶紭鍖?*/
         will-change: transform, opacity;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
@@ -305,16 +305,16 @@ html.is-page-transitioning .banner-home-text-overlay {
         transform: translateY(-100%) translateZ(0) !important;
         opacity: 0 !important;
         pointer-events: none !important;
-        /* 快速消失 */
+        /* 蹇€熸秷澶?*/
         transition: transform 0.3s ease-in, opacity 0.2s ease-in !important;
     }
     
-    /* 手机端非首页时主内容区域从顶部开始 - 延迟出现的动画 */
+    /* 鎵嬫満绔潪棣栭〉鏃朵富鍐呭鍖哄煙浠庨《閮ㄥ紑濮?- 寤惰繜鍑虹幇鐨勫姩鐢?*/
     .absolute.w-full.z-30 {
         transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
-        /* 硬件加速优化 */
+        /* 纭欢鍔犻€熶紭鍖?*/
         will-change: top;
-        /* 禁用transform以保证back to top 按钮可以显示
+        /* 绂佺敤transform浠ヤ繚璇乥ack to top 鎸夐挳鍙互鏄剧ず
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
         */
@@ -323,39 +323,39 @@ html.is-page-transitioning .banner-home-text-overlay {
     body .absolute.w-full.z-30.mobile-main-no-banner {
         top: 5.5rem !important;
         min-height: calc(100vh - 5.5rem) !important;
-        /* 内容区域快速上移 */
+        /* 鍐呭鍖哄煙蹇€熶笂绉?*/
         transition: top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s !important;
     }
 
-    /* 移动端非首页隐藏横幅时，移除main-grid的transform偏移 */
+    /* 绉诲姩绔潪棣栭〉闅愯棌妯箙鏃讹紝绉婚櫎main-grid鐨則ransform鍋忕Щ */
     body.enable-banner .mobile-main-no-banner #main-grid {
         transform: none !important;
     }
 }
 
-/* 移动端banner性能优化 */
+/* 绉诲姩绔痓anner鎬ц兘浼樺寲 */
 @media (max-width: 1023px) {
     .banner-container {
-        /* 启用硬件加速 */
+        /* 鍚敤纭欢鍔犻€?*/
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
         will-change: transform, opacity;
         
-        /* 优化渲染性能 */
+        /* 浼樺寲娓叉煋鎬ц兘 */
         contain: layout style paint;
         
-        /* 减少重绘 */
+        /* 鍑忓皯閲嶇粯 */
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
     }
 
     .carousel-item {
-        /* 硬件加速 */
+        /* 纭欢鍔犻€?*/
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
         will-change: transform, opacity;
         
-        /* 优化触摸响应 */
+        /* 浼樺寲瑙︽懜鍝嶅簲 */
         touch-action: pan-y;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -363,32 +363,32 @@ html.is-page-transitioning .banner-home-text-overlay {
     }
 
     .banner-home-text-overlay {
-        /* 文字渲染优化 */
+        /* 鏂囧瓧娓叉煋浼樺寲 */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeLegibility;
         
-        /* 减少重排 */
+        /* 鍑忓皯閲嶆帓 */
         contain: layout style;
     }
 
-    /* 移动端图片优化 - 只针对装饰性图片 */
+    /* 绉诲姩绔浘鐗囦紭鍖?- 鍙拡瀵硅楗版€у浘鐗?*/
     .banner-container img:not(.interactive):not([onclick]):not([data-clickable]) {
-        /* 图片渲染优化 */
+        /* 鍥剧墖娓叉煋浼樺寲 */
         image-rendering: -webkit-optimize-contrast;
         image-rendering: crisp-edges;
         
-        /* 防止图片拖拽 */
+        /* 闃叉鍥剧墖鎷栨嫿 */
         -webkit-user-drag: none;
         -khtml-user-drag: none;
         -moz-user-drag: none;
         -o-user-drag: none;
         
-        /* 触摸优化 - 只针对装饰性图片 */
+        /* 瑙︽懜浼樺寲 - 鍙拡瀵硅楗版€у浘鐗?*/
         pointer-events: none;
     }
     
-    /* 交互式图片保持可点击 */
+    /* 浜や簰寮忓浘鐗囦繚鎸佸彲鐐瑰嚮 */
     .banner-container img.interactive,
     .banner-container img[onclick],
     .banner-container img[data-clickable] {
@@ -397,27 +397,27 @@ html.is-page-transitioning .banner-home-text-overlay {
     }
 }
 
-/* 当banner被禁用时的布局样式 */
+/* 褰揵anner琚鐢ㄦ椂鐨勫竷灞€鏍峰紡 */
 .no-banner-layout {
     top: 5.5rem !important;
     min-height: calc(100vh - 5.5rem) !important;
 }
 
-/* 全屏壁纸模式：主内容在壁纸下方 */
+/* 鍏ㄥ睆澹佺焊妯″紡锛氫富鍐呭鍦ㄥ绾镐笅鏂?*/
 html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     min-height: calc(100vh - 0.5rem) !important;
 }
 
-/* 移动端当banner被禁用时的布局样式 */
+/* 绉诲姩绔綋banner琚鐢ㄦ椂鐨勫竷灞€鏍峰紡 */
 @media (max-width: 1023px) {
     .absolute.w-full.z-30.no-banner-layout {
         top: 5.5rem !important;
         min-height: calc(100vh - 5.5rem) !important;
-        transition: none !important; /* 移除过渡动画，立即应用位置 */
+        transition: none !important; /* 绉婚櫎杩囨浮鍔ㄧ敾锛岀珛鍗冲簲鐢ㄤ綅缃?*/
     }
 }
 
-/* 小屏手机当banner被禁用时的布局样式 */
+/* 灏忓睆鎵嬫満褰揵anner琚鐢ㄦ椂鐨勫竷灞€鏍峰紡 */
 @media (max-width: 480px) {
     .absolute.w-full.z-30.no-banner-layout {
         top: 5.5rem !important;
@@ -426,7 +426,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     }
 }
 
-/* 平板设备当banner被禁用时的布局样式 */
+/* 骞虫澘璁惧褰揵anner琚鐢ㄦ椂鐨勫竷灞€鏍峰紡 */
 @media (min-width: 768px) and (max-width: 1023px) {
     .absolute.w-full.z-30.no-banner-layout {
         top: 5.5rem !important;
@@ -435,18 +435,18 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     }
 }
 
-/* 移动端横屏优化 */
+/* 绉诲姩绔í灞忎紭鍖?*/
 @media (max-width: 1023px) and (orientation: landscape) {
     #wallpaper-wrapper:not(.mobile-hide-banner) {
-        top: 0 !important; /* 横屏模式从顶部开始，避免被导航栏覆盖 */
+        top: 0 !important; /* 妯睆妯″紡浠庨《閮ㄥ紑濮嬶紝閬垮厤琚鑸爮瑕嗙洊 */
         height: 60vh !important;
-        transform: none !important; /* 移除桌面端的translateY偏移 */
+        transform: none !important; /* 绉婚櫎妗岄潰绔殑translateY鍋忕Щ */
     }
     
-    /* 主内容区域位置调整 - 确保在banner下面，但不影响非首页 */
-    /* 仅在 banner 模式下应用，其他模式（全屏壁纸/纯色）使用默认的 5.5rem */
+    /* 涓诲唴瀹瑰尯鍩熶綅缃皟鏁?- 纭繚鍦╞anner涓嬮潰锛屼絾涓嶅奖鍝嶉潪棣栭〉 */
+    /* 浠呭湪 banner 妯″紡涓嬪簲鐢紝鍏朵粬妯″紡锛堝叏灞忓绾?绾壊锛変娇鐢ㄩ粯璁ょ殑 5.5rem */
     body.enable-banner .absolute.w-full.z-30:not(.mobile-main-no-banner):not(.no-banner-layout) {
-        top: 60vh !important; /* 内容从水波纹处开始，平滑过渡 */
+        top: 60vh !important; /* 鍐呭浠庢按娉㈢汗澶勫紑濮嬶紝骞虫粦杩囨浮 */
         min-height: calc(100vh - 60vh) !important;
     }
     
@@ -457,9 +457,9 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
 
     .banner-home-text-overlay {
         padding: 1rem 1.5rem;
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
-        text-align: center !important; /* 文字居中对齐 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
 
     .banner-title {
@@ -473,7 +473,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     }
 }
 
-/* 移动端暗色模式优化 */
+/* 绉诲姩绔殫鑹叉ā寮忎紭鍖?*/
 @media (max-width: 1023px) and (prefers-color-scheme: dark) {
     .banner-home-text-overlay {
         background: linear-gradient(
@@ -494,8 +494,8 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
 }
 
 
-/* 基于屏幕高度的banner优化 - 优先显示banner */
-/* 极小高度屏幕 (高度 ≤ 500px) - 仅移动端 */
+/* 鍩轰簬灞忓箷楂樺害鐨刡anner浼樺寲 - 浼樺厛鏄剧ずbanner */
+/* 鏋佸皬楂樺害灞忓箷 (楂樺害 鈮?500px) - 浠呯Щ鍔ㄧ */
 @media (max-width: 1023px) and (max-height: 500px) {
     #wallpaper-wrapper {
         height: 85vh !important;
@@ -509,9 +509,9 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     
     .banner-home-text-overlay {
         padding: 1rem !important;
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
-        text-align: center !important; /* 文字居中对齐 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
     .banner-title {
@@ -527,7 +527,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
 
 }
 
-/* 小高度屏幕 (高度 501px - 600px) - 仅移动端 */
+/* 灏忛珮搴﹀睆骞?(楂樺害 501px - 600px) - 浠呯Щ鍔ㄧ */
 @media (max-width: 1023px) and (min-height: 501px) and (max-height: 600px) {
     #wallpaper-wrapper {
         height: 80vh !important;
@@ -541,9 +541,9 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     
     .banner-home-text-overlay {
         padding: 1.5rem !important;
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
-        text-align: center !important; /* 文字居中对齐 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
     .banner-title {
@@ -559,7 +559,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     
 }
 
-/* 中等高度屏幕 (高度 601px - 700px) - 仅移动端 */
+/* 涓瓑楂樺害灞忓箷 (楂樺害 601px - 700px) - 浠呯Щ鍔ㄧ */
 @media (max-width: 1023px) and (min-height: 601px) and (max-height: 700px) {
     #wallpaper-wrapper {
         height: 75vh !important;
@@ -573,9 +573,9 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     
     .banner-home-text-overlay {
         padding: 2rem !important;
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
-        text-align: center !important; /* 文字居中对齐 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
     .banner-title {
@@ -591,7 +591,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     
 }
 
-/* 横屏模式特殊处理 - 优先显示banner - 仅移动端 */
+/* 妯睆妯″紡鐗规畩澶勭悊 - 浼樺厛鏄剧ずbanner - 浠呯Щ鍔ㄧ */
 @media (max-width: 1023px) and (orientation: landscape) and (max-height: 500px) {
     #wallpaper-wrapper {
         height: 90vh !important;
@@ -605,9 +605,9 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     
     .banner-home-text-overlay {
         padding: 1rem 2rem !important;
-        align-items: center !important; /* 垂直居中 */
-        justify-content: center !important; /* 水平居中 */
-        text-align: center !important; /* 文字居中对齐 */
+        align-items: center !important; /* 鍨傜洿灞呬腑 */
+        justify-content: center !important; /* 姘村钩灞呬腑 */
+        text-align: center !important; /* 鏂囧瓧灞呬腑瀵归綈 */
     }
     
     .banner-title {
@@ -624,8 +624,8 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
 }
 
 /* ============================================
- * Overlay 模式 - 全屏壁纸
- * 通过 .wallpaper-overlay 类切换显示模式
+ * Overlay 妯″紡 - 鍏ㄥ睆澹佺焊
+ * 閫氳繃 .wallpaper-overlay 绫诲垏鎹㈡樉绀烘ā寮?
  * ============================================ */
 #wallpaper-wrapper.wallpaper-overlay {
     position: fixed !important;
@@ -643,7 +643,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     transition: opacity 0.6s ease !important;
 }
 
-/* Overlay 模式下图片模糊效果 */
+/* Overlay 妯″紡涓嬪浘鐗囨ā绯婃晥鏋?*/
 #wallpaper-wrapper.wallpaper-overlay img {
     width: 100% !important;
     height: 100% !important;
@@ -652,16 +652,35 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     filter: blur(var(--overlay-blur, 0px));
 }
 
-/* Overlay 模式隐藏 Banner 专属元素 */
+body.is-home #wallpaper-wrapper.wallpaper-overlay {
+    z-index: 10 !important;
+    opacity: 1 !important;
+}
+
+body.is-home #wallpaper-wrapper.wallpaper-overlay img {
+    filter: blur(var(--overlay-fusion-blur, 0px)) !important;
+    opacity: 1 !important;
+}
+
+/* Overlay 妯″紡闅愯棌 Banner 涓撳睘鍏冪礌 */
 #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay,
 #wallpaper-wrapper.wallpaper-overlay .banner-page-title-overlay,
 #wallpaper-wrapper.wallpaper-overlay .banner-post-meta-overlay {
     display: none !important;
 }
 
+body.is-home #wallpaper-wrapper.wallpaper-overlay .banner-home-text-overlay {
+    display: flex !important;
+    transition: opacity 0.12s linear;
+}
+
+html[data-wallpaper-mode="overlay"] body.is-home #top-row {
+    opacity: var(--overlay-fusion-nav-alpha, 0);
+    transition: opacity 0.12s linear;
+}
 /* ============================================
- * Fullscreen 模式 - 全屏壁纸
- * 壁纸全屏显示，水波纹在底部，内容在壁纸下方
+ * Fullscreen 妯″紡 - 鍏ㄥ睆澹佺焊
+ * 澹佺焊鍏ㄥ睆鏄剧ず锛屾按娉㈢汗鍦ㄥ簳閮紝鍐呭鍦ㄥ绾镐笅鏂?
  * ============================================ */
 #wallpaper-wrapper.wallpaper-fullscreen {
     position: relative !important;
@@ -676,7 +695,7 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     transition: none !important;
 }
 
-/* Fullscreen 模式下图片全屏覆盖，无模糊 */
+/* Fullscreen 妯″紡涓嬪浘鐗囧叏灞忚鐩栵紝鏃犳ā绯?*/
 #wallpaper-wrapper.wallpaper-fullscreen img,
 #wallpaper-wrapper.wallpaper-fullscreen img[class*="object-cover"] {
     width: 100% !important;
@@ -687,26 +706,26 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     opacity: 1 !important;
 }
 
-/* Fullscreen 模式隐藏 overlay 专属的半透明效果 */
+/* Fullscreen 妯″紡闅愯棌 overlay 涓撳睘鐨勫崐閫忔槑鏁堟灉 */
 #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay,
 #wallpaper-wrapper.wallpaper-fullscreen .banner-page-title-overlay,
 #wallpaper-wrapper.wallpaper-fullscreen .banner-post-meta-overlay {
     display: flex !important;
 }
 
-/* Fullscreen 模式下非首页隐藏主页标题文字（Swup 页面切换时通过 hidden 类控制） */
+/* Fullscreen 妯″紡涓嬮潪棣栭〉闅愯棌涓婚〉鏍囬鏂囧瓧锛圫wup 椤甸潰鍒囨崲鏃堕€氳繃 hidden 绫绘帶鍒讹級 */
 #wallpaper-wrapper.wallpaper-fullscreen .banner-home-text-overlay.hidden {
     display: none !important;
 }
 
-/* Fullscreen 模式下 waves 显示在底部 */
+/* Fullscreen 妯″紡涓?waves 鏄剧ず鍦ㄥ簳閮?*/
 #wallpaper-wrapper.wallpaper-fullscreen .waves {
     position: absolute !important;
     bottom: -1px !important;
     z-index: 5 !important;
 }
 
-/* Fullscreen 模式下滚动向下指示器 */
+/* Fullscreen 妯″紡涓嬫粴鍔ㄥ悜涓嬫寚绀哄櫒 */
 #wallpaper-wrapper .scroll-down-indicator {
     display: none;
 }
@@ -746,32 +765,33 @@ html[data-wallpaper-mode="fullscreen"] .absolute.w-full.z-30.no-banner-layout {
     50% { transform: translateY(8px); }
 }
 
-/* 点击滚动指示器跳转到文章列表时，避免被固定导航栏遮挡 */
-/* 排除overlay和none模式和banner模式，避免scroll-margin-top影响视觉间距 */
+/* 鐐瑰嚮婊氬姩鎸囩ず鍣ㄨ烦杞埌鏂囩珷鍒楄〃鏃讹紝閬垮厤琚浐瀹氬鑸爮閬尅 */
+/* 鎺掗櫎overlay鍜宯one妯″紡鍜宐anner妯″紡锛岄伩鍏峴croll-margin-top褰卞搷瑙嗚闂磋窛 */
 html:not([data-wallpaper-mode="overlay"]):not([data-wallpaper-mode="none"]):not([data-wallpaper-mode="banner"]) body.sticky-navbar #main-grid {
     scroll-margin-top: 5.5rem;
 }
 
-/* Fullscreen 模式下主内容在壁纸下方，用 relative 定位紧跟壁纸 */
+/* Fullscreen 妯″紡涓嬩富鍐呭鍦ㄥ绾镐笅鏂癸紝鐢?relative 瀹氫綅绱ц窡澹佺焊 */
 html[data-wallpaper-mode="fullscreen"] .w-full.z-30.pointer-events-none {
     top: 0 !important;
 }
 
-/* 初始加载时隐藏主内容，防止壁纸初始化前内容闪烁 */
+/* 鍒濆鍔犺浇鏃堕殣钘忎富鍐呭锛岄槻姝㈠绾稿垵濮嬪寲鍓嶅唴瀹归棯鐑?*/
 html[data-wallpaper-mode="fullscreen"] body:not(.wallpaper-initialized) .w-full.z-30.pointer-events-none {
     visibility: hidden;
 }
 
-/* Fullscreen 模式下移动端非首页隐藏壁纸（与横幅模式一致） */
+/* Fullscreen 妯″紡涓嬬Щ鍔ㄧ闈為椤甸殣钘忓绾革紙涓庢í骞呮ā寮忎竴鑷达級 */
 @media (max-width: 1023px) {
     #wallpaper-wrapper.wallpaper-fullscreen.mobile-hide-banner {
         display: none !important;
     }
 
-    /* Fullscreen 模式下主内容使用 relative 定位，需要匹配 pointer-events-none 类 */
+    /* Fullscreen 妯″紡涓嬩富鍐呭浣跨敤 relative 瀹氫綅锛岄渶瑕佸尮閰?pointer-events-none 绫?*/
     .w-full.z-30.pointer-events-none.mobile-main-no-banner {
         top: 5.5rem !important;
         min-height: calc(100vh - 5.5rem) !important;
         transition: top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s !important;
     }
 }
+

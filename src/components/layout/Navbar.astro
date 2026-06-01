@@ -22,20 +22,25 @@ import NavMenuPanel from "./NavMenuPanel.astro";
 const className = Astro.props.class;
 
 // 获取导航栏透明模式配置
+const useWallpaperNavbar =
+	backgroundWallpaper.mode === "banner" ||
+	backgroundWallpaper.mode === "fullscreen" ||
+	backgroundWallpaper.mode === "overlay";
+
 const navbarTransparentMode =
-	backgroundWallpaper.mode === "banner"
+	useWallpaperNavbar
 		? backgroundWallpaper.common?.navbar?.transparentMode || "semi"
 		: "semi";
 
 // 获取导航栏毛玻璃效果配置
 const navbarEnableBlur =
-	backgroundWallpaper.mode === "banner"
+	useWallpaperNavbar
 		? (backgroundWallpaper.common?.navbar?.enableBlur ?? true)
 		: false;
 
 // 获取导航栏模糊度
 const navbarBlur =
-	backgroundWallpaper.mode === "banner"
+	useWallpaperNavbar
 		? (backgroundWallpaper.common?.navbar?.blur ?? 20)
 		: 0;
 
