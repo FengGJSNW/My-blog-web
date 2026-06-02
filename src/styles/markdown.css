@@ -139,6 +139,7 @@
     @apply my-5 overflow-hidden;
     border: 1px solid color-mix(in oklch, var(--primary) 22%, var(--line-color));
     border-radius: calc(var(--radius-large) - 0.35rem);
+    overflow-anchor: none;
     background:
       linear-gradient(
         135deg,
@@ -191,6 +192,19 @@
     border-top: 1px dashed color-mix(in oklch, var(--primary) 24%, var(--line-color));
   }
 
+  .folded-block--style-3 .folded-block__body {
+    max-height: 0;
+    overflow: hidden;
+    overflow-anchor: none;
+    opacity: 0;
+    transform-origin: top center;
+    transition:
+      max-height 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.24s ease,
+      filter 0.35s ease;
+    will-change: max-height, opacity;
+  }
+
   .folded-block__body > :first-child {
     margin-top: 1rem;
   }
@@ -231,10 +245,17 @@
 
   .folded-block--style-3[open] .folded-block__body {
     max-height: var(--folded-block-scroll-height, 28rem);
+    opacity: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+    contain: content;
     scrollbar-gutter: stable;
     scrollbar-color: color-mix(in oklch, var(--primary) 38%, transparent) transparent;
+  }
+
+  .folded-block--style-3.folded-block--animating .folded-block__body {
+    overflow: hidden;
   }
 
   .folded-block--style-3[open] .folded-block__body::-webkit-scrollbar {

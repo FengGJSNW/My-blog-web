@@ -22,6 +22,13 @@ export class TOCManager {
 	private contentId: string;
 	private indicatorId: string;
 	private scrollOffset: number;
+	private headings: HTMLElement[] = [];
+	private visibleHeadingIds = new Set<string>();
+	private activeItems: HTMLElement[] = [];
+	private pendingActiveUpdate: number | null = null;
+	private tocContent: HTMLElement | null = null;
+	private tocContainer: Element | null = null;
+	private indicator: HTMLElement | null = null;
 
 	constructor(config: TOCConfig) {
 		this.contentId = config.contentId;
@@ -208,6 +215,9 @@ export class TOCManager {
 		if (!tocContent) return;
 
 		tocContent.innerHTML = this.generateTOCHTML();
+		this.tocContent = tocContent;
+		this.tocContainer = tocContent.closest(".toc-scroll-container");
+		this.indicator = document.getElementById(this.indicatorId);
 		this.tocItems = Array.from(
 			document.querySelectorAll(`#${this.contentId} a`),
 		);
@@ -217,7 +227,8 @@ export class TOCManager {
 	 * 获取可见的标题ID
 	 */
 	private getVisibleHeadingIds(): string[] {
-		const headings = this.getAllHeadings();
+		const headings =
+			this.headings.length > 0 ? this.headings : this.getAllHeadings();
 		const visibleHeadingIds: string[] = [];
 
 		headings.forEach((heading) => {
@@ -263,11 +274,14 @@ export class TOCManager {
 		if (!this.tocItems || this.tocItems.length === 0) return;
 
 		// 移除所有活动状态
-		this.tocItems.forEach((item) => {
+		this.activeItems.forEach((item) => {
 			item.classList.remove("visible");
 		});
 
-		const visibleHeadingIds = this.getVisibleHeadingIds();
+		const visibleHeadingIds =
+			this.visibleHeadingIds.size > 0
+				? Array.from(this.visibleHeadingIds)
+				: this.getVisibleHeadingIds();
 
 		// 找到对应的TOC项并添加活动状态
 		const activeItems = this.tocItems.filter((item) => {
@@ -279,6 +293,7 @@ export class TOCManager {
 		activeItems.forEach((item) => {
 			item.classList.add("visible");
 		});
+		this.activeItems = activeItems;
 
 		// 更新活动指示器
 		this.updateActiveIndicator(activeItems);
@@ -288,15 +303,19 @@ export class TOCManager {
 	 * 更新活动指示器
 	 */
 	private updateActiveIndicator(activeItems: HTMLElement[]): void {
-		const indicator = document.getElementById(this.indicatorId);
+		const indicator =
+			this.indicator ?? document.getElementById(this.indicatorId);
 		if (!indicator || !this.tocItems.length) return;
 
 		if (activeItems.length === 0) {
-			indicator.style.opacity = "0";
+			if (indicator.style.opacity !== "0") {
+				indicator.style.opacity = "0";
+			}
 			return;
 		}
 
-		const tocContent = document.getElementById(this.contentId);
+		const tocContent =
+			this.tocContent ?? document.getElementById(this.contentId);
 		if (!tocContent) return;
 
 		const contentRect = tocContent.getBoundingClientRect();
@@ -309,9 +328,17 @@ export class TOCManager {
 		const top = firstRect.top - contentRect.top;
 		const height = lastRect.bottom - firstRect.top;
 
-		indicator.style.top = `${top}px`;
-		indicator.style.height = `${height}px`;
-		indicator.style.opacity = "1";
+		const nextTop = `${top}px`;
+		const nextHeight = `${height}px`;
+		if (indicator.style.top !== nextTop) {
+			indicator.style.top = nextTop;
+		}
+		if (indicator.style.height !== nextHeight) {
+			indicator.style.height = nextHeight;
+		}
+		if (indicator.style.opacity !== "1") {
+			indicator.style.opacity = "1";
+		}
 
 		// 自动滚动到活动项
 		if (firstActive) {
@@ -325,9 +352,9 @@ export class TOCManager {
 	private scrollToActiveItem(activeItem: HTMLElement): void {
 		if (!activeItem) return;
 
-		const tocContainer = document
-			.querySelector(`#${this.contentId}`)
-			?.closest(".toc-scroll-container");
+		const tocContainer =
+			this.tocContainer ??
+			document.querySelector(`#${this.contentId}`)?.closest(".toc-scroll-container");
 		if (!tocContainer) return;
 
 		// 清除之前的定时器
@@ -356,7 +383,7 @@ export class TOCManager {
 
 				tocContainer.scrollTo({
 					top: targetScroll,
-					behavior: "smooth",
+					behavior: "auto",
 				});
 			}
 		}, 100);
@@ -391,14 +418,31 @@ export class TOCManager {
 	 */
 	public setupObserver(): void {
 		const headings = this.getAllHeadings();
+		this.headings = headings;
+		this.visibleHeadingIds.clear();
+		this.activeItems = [];
 
 		if (this.observer) {
 			this.observer.disconnect();
 		}
 
 		this.observer = new IntersectionObserver(
-			() => {
-				this.updateActiveState();
+			(entries) => {
+				entries.forEach((entry) => {
+					const target = entry.target as HTMLElement;
+					if (!target.id) return;
+					if (entry.isIntersecting) {
+						this.visibleHeadingIds.add(target.id);
+					} else {
+						this.visibleHeadingIds.delete(target.id);
+					}
+				});
+
+				if (this.pendingActiveUpdate !== null) return;
+				this.pendingActiveUpdate = window.requestAnimationFrame(() => {
+					this.pendingActiveUpdate = null;
+					this.updateActiveState();
+				});
 			},
 			{
 				rootMargin: "0px 0px 0px 0px",
@@ -434,6 +478,16 @@ export class TOCManager {
 			clearTimeout(this.scrollTimeout);
 			this.scrollTimeout = null;
 		}
+		if (this.pendingActiveUpdate !== null) {
+			window.cancelAnimationFrame(this.pendingActiveUpdate);
+			this.pendingActiveUpdate = null;
+		}
+		this.headings = [];
+		this.visibleHeadingIds.clear();
+		this.activeItems = [];
+		this.tocContent = null;
+		this.tocContainer = null;
+		this.indicator = null;
 	}
 
 	/**

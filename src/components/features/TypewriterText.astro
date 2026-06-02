@@ -28,6 +28,7 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
   class TypewriterEffect {
     private element: HTMLElement;
     private texts: string[];
+    private textSegments: string[][];
     private currentTextIndex: number = 0;
     private speed: number;
     private deleteSpeed: number;
@@ -35,6 +36,11 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
     private currentIndex: number = 0;
     private isDeleting: boolean = false;
     private timeoutId: number | null = null;
+    private destroyed: boolean = false;
+    private static segmenter: Intl.Segmenter | null =
+      typeof Intl !== "undefined" && "Segmenter" in Intl
+        ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
+        : null;
 
     constructor(element: HTMLElement) {
       this.element = element;
@@ -51,6 +57,7 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
       this.speed = parseInt(element.dataset.speed || "100");
       this.deleteSpeed = parseInt(element.dataset.deleteSpeed || "50");
       this.pauseTime = parseInt(element.dataset.pauseTime || "2000");
+      this.textSegments = this.texts.map((text) => this.segmentText(text));
 
       // 如果有多条文本且未启用打字机效果，随机显示一条
       if (this.texts.length > 1 && !this.isTypewriterEnabled()) {
@@ -79,13 +86,28 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
       this.type();
     }
 
-    private getCurrentText(): string {
-      return this.texts[this.currentTextIndex] || "";
+    private getCurrentSegments(): string[] {
+      return this.textSegments[this.currentTextIndex] || [];
+    }
+
+    private schedule(delay: number) {
+      if (this.destroyed) return;
+      this.timeoutId = window.setTimeout(() => this.type(), delay);
+    }
+
+    private shouldYieldForScroll(): boolean {
+      const suspendUntil = (window as any).__fireflyTypewriterSuspendUntil;
+      return typeof suspendUntil === "number" && Date.now() < suspendUntil;
     }
 
     private type() {
-      const currentText = this.getCurrentText();
-      const segments = this.segmentText(currentText);
+      if (this.destroyed) return;
+      if (document.hidden || this.shouldYieldForScroll()) {
+        this.schedule(140);
+        return;
+      }
+
+      const segments = this.getCurrentSegments();
 
       if (this.isDeleting) {
         // 删除字符
@@ -95,16 +117,13 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
             .slice(0, this.currentIndex)
             .join("");
 
-          this.timeoutId = window.setTimeout(
-            () => this.type(),
-            this.deleteSpeed
-          );
+          this.schedule(this.deleteSpeed);
         } else {
           // 删除完成，切换到下一条文本
           this.isDeleting = false;
           this.currentTextIndex =
             (this.currentTextIndex + 1) % this.texts.length;
-          this.timeoutId = window.setTimeout(() => this.type(), this.speed);
+          this.schedule(this.speed);
         }
       } else {
         if (this.currentIndex < segments.length) {
@@ -113,15 +132,12 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
             .slice(0, this.currentIndex)
             .join("");
 
-          this.timeoutId = window.setTimeout(() => this.type(), this.speed);
+          this.schedule(this.speed);
         } else {
           // 打字完成，暂停后开始删除（如果有多条文本）
           if (this.texts.length > 1) {
             this.isDeleting = true;
-            this.timeoutId = window.setTimeout(
-              () => this.type(),
-              this.pauseTime
-            );
+            this.schedule(this.pauseTime);
           }
           // 如果只有一条文本，保持显示不删除
         }
@@ -129,32 +145,72 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
     }
 
     public destroy() {
+      this.destroyed = true;
       if (this.timeoutId) {
         clearTimeout(this.timeoutId);
+        this.timeoutId = null;
       }
     }
 
     private segmentText(text: string): string[] {
-      const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
-      return Array.from(segmenter.segment(text), s => s.segment);
+      if (TypewriterEffect.segmenter) {
+        return Array.from(TypewriterEffect.segmenter.segment(text), s => s.segment);
+      }
+      return Array.from(text);
     }
 
+  }
+
+  function getTypewriterSignature(element: HTMLElement): string {
+    return JSON.stringify({
+      text: element.dataset.text || "",
+      speed: element.dataset.speed || "",
+      deleteSpeed: element.dataset.deleteSpeed || "",
+      pauseTime: element.dataset.pauseTime || "",
+    });
   }
 
   function initTypewriterElements() {
     const typewriterElements = document.querySelectorAll(".typewriter");
     typewriterElements.forEach((element) => {
-      const el = element as HTMLElement & { __typewriterInstance?: TypewriterEffect };
+      const el = element as HTMLElement & {
+        __typewriterInstance?: TypewriterEffect;
+        __typewriterSignature?: string;
+      };
+      const signature = getTypewriterSignature(el);
+      if (el.__typewriterInstance && el.__typewriterSignature === signature) {
+        return;
+      }
       if (el.__typewriterInstance) {
         el.__typewriterInstance.destroy();
       }
       el.textContent = "";
+      el.__typewriterSignature = signature;
       el.__typewriterInstance = new TypewriterEffect(el);
     });
   }
 
+  function initTypewriterScrollYield() {
+    if ((window as any).__fireflyTypewriterScrollYieldInitialized) return;
+    (window as any).__fireflyTypewriterScrollYieldInitialized = true;
+    (window as any).__fireflyTypewriterSuspendUntil = 0;
+
+    const shouldYield =
+      window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 768;
+    if (!shouldYield) return;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        (window as any).__fireflyTypewriterSuspendUntil = Date.now() + 180;
+      },
+      { passive: true },
+    );
+  }
+
   // 初始化所有打字机效果
   function runInitWithDelay() {
+    initTypewriterScrollYield();
     initTypewriterElements();
     // 兼容 banner 显隐晚于内容替换的场景
     setTimeout(initTypewriterElements, 220);
@@ -180,12 +236,15 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
 
 <style>
   .typewriter {
+    display: inline-block;
     position: relative;
+    min-width: 1ch;
+    text-rendering: optimizeSpeed;
   }
 
   .typewriter::after {
     content: "|";
-    animation: blink 1s infinite;
+    animation: blink 1s steps(2, end) infinite;
     margin-left: 2px;
   }
 

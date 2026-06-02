@@ -48,6 +48,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const SVG_VIEWBOX_PADDING = 0;
+const SVG_INK_FILTER_VERSION = "ink-v3";
+const SVG_STROKE_WIDTH = "1.35";
 const SVG_PADDING_OPEN_RE = /^<padding(?<attrs>(?:\s+[^>]*)?)>\s*$/i;
 const SVG_PADDING_CLOSE_RE = /^<\/padding>\s*$/i;
 
@@ -116,6 +118,129 @@ function resolveSvgPadding(value = "") {
 	return Number(amountMatch[1]);
 }
 
+function getSvgFilenamePadding(filePath) {
+	const match = path.basename(filePath).match(/\.p(\d+(?:\.\d+)?)\.svg$/i);
+	if (!match) return 0;
+
+	const padding = Number(match[1]);
+	return Number.isFinite(padding) ? padding : 0;
+}
+
+function normalizeSvgStrokeWidth(tag) {
+	if (/\bstroke=(["'])none\1/i.test(tag) || /stroke\s*:\s*none\s*;?/i.test(tag)) {
+		return tag;
+	}
+
+	const hasVisibleStroke =
+		/\bstroke=(["'])(?!none\1)[^"']+\1/i.test(tag) ||
+		/stroke\s*:\s*(?!none\b)[^;]+;?/i.test(tag);
+
+	if (!hasVisibleStroke) return tag;
+
+	let next = tag;
+	if (/\bstroke-width=(["'])[^"']+\1/i.test(next)) {
+		next = next.replace(
+			/\bstroke-width=(["'])[^"']+\1/i,
+			`stroke-width="${SVG_STROKE_WIDTH}"`,
+		);
+	} else {
+		next = next.replace(/\s*\/?>$/, (ending) => ` stroke-width="${SVG_STROKE_WIDTH}"${ending}`);
+	}
+
+	if (/stroke-width\s*:/i.test(next)) {
+		next = next.replace(/stroke-width\s*:\s*[^;]+;?/gi, `stroke-width: ${SVG_STROKE_WIDTH};`);
+	} else if (/\sstyle=(["'])/i.test(next)) {
+		next = next.replace(/\sstyle=(["'])(.*?)\1/i, (_match, quote, style) => {
+			const normalizedStyle = `${style}; stroke-width: ${SVG_STROKE_WIDTH};`
+				.replace(/\s*;\s*/g, "; ")
+				.replace(/^\s*;\s*|\s*;\s*$/g, "");
+			return ` style=${quote}${normalizedStyle}${quote}`;
+		});
+	}
+
+	if (!/\bvector-effect=(["'])non-scaling-stroke\1/i.test(next)) {
+		next = next.replace(/\s*\/?>$/, (ending) => ` vector-effect="non-scaling-stroke"${ending}`);
+	}
+
+	return next;
+}
+
+function normalizeSvgInk(svgContent) {
+	let content = svgContent;
+
+	// Draw.io exports use light-dark(), which makes text/strokes white in dark mode.
+	// Local article diagrams should stay visually consistent on every blog theme.
+	content = content
+		.replace(
+			/light-dark\(\s*#000000\s*,\s*#ffffff\s*\)/gi,
+			"#000000",
+		)
+		.replace(
+			/light-dark\(\s*rgb\(\s*0\s*,\s*0\s*,\s*0\s*\)\s*,\s*rgb\(\s*255\s*,\s*255\s*,\s*255\s*\)\s*\)/gi,
+			"#000000",
+		)
+		.replace(
+			/light-dark\(\s*#ffffff\s*,\s*var\(--ge-dark-color,\s*#[0-9a-fA-F]{3,8}\)\s*\)/gi,
+			"transparent",
+		)
+		.replace(
+			/light-dark\(\s*rgb\(\s*255\s*,\s*255\s*,\s*255\s*\)\s*,\s*var\(--ge-dark-color,\s*#[0-9a-fA-F]{3,8}\)\s*\)/gi,
+			"transparent",
+		);
+
+	content = content.replace(/<svg\b[^>]*>/i, (tag) => {
+		let next = tag
+			.replace(/background(?:-color)?\s*:\s*(?:#[fF]{3,6}|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\)|transparent)\s*;?/gi, "")
+			.replace(/color-scheme\s*:\s*light\s+dark\s*;?/gi, "color-scheme: light;");
+
+		if (/\sstyle=(["'])/i.test(next)) {
+			next = next.replace(/\sstyle=(["'])(.*?)\1/i, (_match, quote, style) => {
+				const normalizedStyle = `${style}; background: transparent; background-color: transparent; color-scheme: light;`
+					.replace(/\s*;\s*/g, "; ")
+					.replace(/^\s*;\s*|\s*;\s*$/g, "");
+				return ` style=${quote}${normalizedStyle}${quote}`;
+			});
+		} else {
+			next = next.replace(
+				/<svg\b/i,
+				'<svg style="background: transparent; background-color: transparent; color-scheme: light;"',
+			);
+		}
+
+		return next;
+	});
+
+	// Remove draw.io's full-canvas white background rect.
+	content = content.replace(
+		/<rect\b(?=[^>]*\bwidth=(["'])100%\1)(?=[^>]*\bheight=(["'])100%\2)[^>]*\/>/gi,
+		"",
+	);
+
+	content = content.replace(/<text\b[^>]*>/gi, (tag) =>
+		tag
+			.replace(/\sfill=(["'])(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\1/gi, ' fill="#000000"')
+			.replace(/color\s*:\s*(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\s*;?/gi, "color: #000000;"),
+	);
+
+	content = content.replace(
+		/<(path|rect|circle|ellipse|polygon|polyline|line)\b[^>]*>/gi,
+		(tag) =>
+			normalizeSvgStrokeWidth(tag)
+				.replace(/\sfill=(["'])(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\1/gi, ' fill="transparent"')
+				.replace(/fill\s*:\s*(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\s*;?/gi, "fill: transparent;")
+				.replace(/\sstroke=(["'])(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\1/gi, ' stroke="#000000"')
+				.replace(/stroke\s*:\s*(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\s*;?/gi, "stroke: #000000;"),
+	);
+
+	content = content
+		.replace(/color\s*:\s*(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\s*;?/gi, "color: #000000;")
+		.replace(/stroke\s*:\s*(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\s*;?/gi, "stroke: #000000;")
+		.replace(/\sstroke=(["'])(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\1/gi, ' stroke="#000000"')
+		.replace(/background(?:-color)?\s*:\s*(?:#fff(?:fff)?|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\))\s*;?/gi, "background-color: transparent;");
+
+	return content;
+}
+
 function remarkLocalSvgToPublic() {
 	return (tree, file) => {
 		const mdPath = file.history?.[0] || file.path;
@@ -133,7 +258,6 @@ function remarkLocalSvgToPublic() {
 
 				// 跳过 public / 远程 / data 图片
 				if (
-					rawUrl.startsWith("/") ||
 					rawUrl.startsWith("http://") ||
 					rawUrl.startsWith("https://") ||
 					rawUrl.startsWith("data:")
@@ -143,27 +267,41 @@ function remarkLocalSvgToPublic() {
 
 				const cleanUrl = rawUrl.split("?")[0].split("#")[0];
 				const cleanUrlLower = cleanUrl.toLowerCase();
+				if (cleanUrlLower.startsWith("/__local_svg/")) {
+					return;
+				}
+
 				const isSvg = cleanUrlLower.endsWith(".svg");
 				const isSvgExportPngName = cleanUrlLower.endsWith(".svg.png");
 
 				if (isSvg || isSvgExportPngName) {
-					const requestedAbs = path.resolve(mdDir, decodeURIComponent(cleanUrl));
+					const decodedUrl = decodeURIComponent(cleanUrl);
+					const requestedAbs = decodedUrl.startsWith("/")
+						? path.join(projectRoot, "public", decodedUrl.replace(/^\/+/, ""))
+						: path.resolve(mdDir, decodedUrl);
 					const svgFallbackAbs = isSvgExportPngName
 						? requestedAbs.replace(/\.png$/i, "")
 						: requestedAbs;
+					const drawioFallbackAbs = svgFallbackAbs.replace(/\.svg$/i, ".drawio.svg");
 					const srcAbs = fs.existsSync(requestedAbs)
 						? requestedAbs
-						: svgFallbackAbs;
+						: fs.existsSync(svgFallbackAbs)
+							? svgFallbackAbs
+							: drawioFallbackAbs;
 
 					if (!fs.existsSync(srcAbs)) {
 						console.warn(`[remarkLocalSvgToPublic] SVG not found: ${srcAbs}`);
 						return;
 					}
 
+					const effectivePadding = Math.max(
+						0,
+						padding - getSvgFilenamePadding(srcAbs),
+					);
 					const relPath = path.relative(projectRoot, srcAbs).replace(/\\/g, "/");
 					const hash = crypto
 						.createHash("sha256")
-						.update(`${relPath}:${padding}`)
+						.update(`${relPath}:${effectivePadding}:${SVG_INK_FILTER_VERSION}`)
 						.digest("hex")
 						.slice(0, 10);
 
@@ -175,7 +313,10 @@ function remarkLocalSvgToPublic() {
 					const outAbs = path.join(outDir, outName);
 
 					const svgContent = fs.readFileSync(srcAbs, "utf8");
-					fs.writeFileSync(outAbs, expandSvgViewBox(svgContent, padding), "utf8");
+					const outputSvg = normalizeSvgInk(
+						expandSvgViewBox(svgContent, effectivePadding),
+					);
+					fs.writeFileSync(outAbs, outputSvg, "utf8");
 
 					node.url = `/__local_svg/${outName}`;
 				}

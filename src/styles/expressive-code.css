@@ -1,6 +1,16 @@
 .expressive-code {
+  --ec-code-radius: 0.75rem;
+  --ec-collapse-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
   .frame {
     @apply shadow-none!;
+    border-radius: var(--ec-code-radius) !important;
+    overflow: hidden !important;
+    transform-origin: top center;
+    transition:
+      border-radius 0.25s ease,
+      filter 0.35s ease,
+      transform 0.42s var(--ec-collapse-ease) !important;
   }
 
   .title {
@@ -22,14 +32,92 @@
     color: var(--btn-content) !important;
     background-color: var(--btn-regular-bg) !important;
     border-color: var(--line-color) !important;
+    border-radius: 999px !important;
     opacity: var(--opacity-80) !important;
+    box-shadow: 0 8px 24px -18px color-mix(in oklch, var(--primary) 55%, transparent);
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.32s var(--ec-collapse-ease),
+      box-shadow 0.32s ease !important;
 
     &:hover {
       background-color: var(--btn-regular-bg-hover) !important;
+      opacity: 1 !important;
+      box-shadow: 0 10px 28px -18px color-mix(in oklch, var(--primary) 70%, transparent);
     }
 
     &:active {
       background-color: var(--btn-regular-bg-active) !important;
+    }
+  }
+
+  .ec-collapse {
+    border-radius: var(--ec-code-radius) !important;
+    overflow-anchor: none;
+  }
+
+  .ec-collapse__content {
+    border-radius: var(--ec-code-radius) !important;
+    overflow: hidden;
+    overflow-anchor: none;
+    transform-origin: top center;
+    transition:
+      max-height 0.48s var(--ec-collapse-ease),
+      clip-path 0.48s var(--ec-collapse-ease),
+      opacity 0.28s ease,
+      filter 0.35s ease !important;
+    will-change: max-height, clip-path, opacity;
+  }
+
+  .ec-collapse.ec-collapse--collapsed .ec-collapse__content {
+    clip-path: inset(0 0 0 0 round var(--ec-code-radius));
+    filter: saturate(0.96);
+  }
+
+  .ec-collapse.ec-collapse--expanded .ec-collapse__content {
+    clip-path: inset(0 0 0 0 round var(--ec-code-radius));
+    filter: saturate(1);
+  }
+
+  .ec-collapse__gradient {
+    height: 6rem !important;
+    border-radius: 0 0 var(--ec-code-radius) var(--ec-code-radius);
+    background:
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        color-mix(in oklch, var(--primary) 5%, transparent) 28%,
+        color-mix(in oklch, var(--primary) 12%, var(--card-bg)) 72%,
+        color-mix(in oklch, var(--primary) 18%, var(--card-bg)) 100%
+      ) !important;
+    transition:
+      opacity 0.24s ease,
+      transform 0.42s var(--ec-collapse-ease) !important;
+  }
+
+  .ec-collapse.ec-collapse--expanded .ec-collapse__gradient {
+    transform: translateY(0.75rem);
+  }
+
+  .ec-collapse__icon,
+  .ec-collapse__header-icon {
+    transition: transform 0.32s var(--ec-collapse-ease) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expressive-code {
+    .frame,
+    .ec-collapse__content,
+    .ec-collapse__gradient,
+    .ec-collapse__toggle,
+    .ec-collapse__icon,
+    .ec-collapse__header-icon {
+      animation: none !important;
+      transition: none !important;
     }
   }
 }
@@ -56,5 +144,16 @@ body.wallpaper-transparent .expressive-code .frame .ec-code__inner {
 body.wallpaper-transparent .expressive-code .frame {
   background-color: var(--card-bg-transparent) !important;
   background: var(--card-bg-transparent) !important;
+}
+
+body.wallpaper-transparent .expressive-code .ec-collapse__gradient {
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      color-mix(in oklch, var(--primary) 6%, transparent) 30%,
+      color-mix(in oklch, var(--primary) 12%, var(--card-bg-transparent)) 72%,
+      color-mix(in oklch, var(--primary) 18%, var(--card-bg-transparent)) 100%
+    ) !important;
 }
 

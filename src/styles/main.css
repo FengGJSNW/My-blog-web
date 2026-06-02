@@ -252,6 +252,14 @@ html {
     :root.dark .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
         backdrop-filter: blur(20px) !important;
     }
+
+    @media (max-width: 768px), (pointer: coarse) {
+        .wallpaper-transparent #navbar.navbar-sticky-shadow > div,
+        :root.dark .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+        }
+    }
     
     .wallpaper-transparent .btn-card {
         background-color: var(--card-bg-transparent) !important;
@@ -434,6 +442,16 @@ html {
 
 .custom-md img, #post-cover img {
     @apply cursor-zoom-in
+}
+
+.custom-md img[src^="/__local_svg/"] {
+    transition: filter 0.2s ease;
+}
+
+:root.dark .custom-md img[src^="/__local_svg/"],
+:root.dark img[src^="/__local_svg/"].fancybox-image,
+:root.dark .fancybox__image[src^="/__local_svg/"] {
+    filter: invert(1);
 }
 
 ::selection {

