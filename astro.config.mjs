@@ -52,6 +52,24 @@ const SVG_INK_FILTER_VERSION = "ink-v3";
 const SVG_STROKE_WIDTH = "1.35";
 const SVG_PADDING_OPEN_RE = /^<padding(?<attrs>(?:\s+[^>]*)?)>\s*$/i;
 const SVG_PADDING_CLOSE_RE = /^<\/padding>\s*$/i;
+const ASM_LANGUAGE_ALIASES = new Set([
+	"asm",
+	"assembly",
+	"assembler",
+	"nasm",
+	"masm",
+	"gas",
+	"gnuasm",
+	"x86asm",
+	"x86-asm",
+	"x86_asm",
+	"x86_64",
+	"x86-64",
+	"armasm",
+	"aarch64",
+	"riscv",
+	"risc-v",
+]);
 
 function expandSvgViewBox(svgContent, padding = SVG_VIEWBOX_PADDING) {
 	if (padding <= 0) return svgContent;
@@ -365,6 +383,29 @@ function remarkLocalSvgToPublic() {
 	};
 }
 
+function remarkNormalizeCodeLanguages() {
+	return (tree) => {
+		function walk(node) {
+			if (!node || typeof node !== "object") return;
+
+			if (node.type === "code" && typeof node.lang === "string") {
+				const normalizedLang = node.lang.trim().toLowerCase();
+				if (ASM_LANGUAGE_ALIASES.has(normalizedLang)) {
+					node.lang = "asm";
+				}
+			}
+
+			if (Array.isArray(node.children)) {
+				for (const child of node.children) {
+					walk(child);
+				}
+			}
+		}
+
+		walk(tree);
+	};
+}
+
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.site_url,
@@ -518,6 +559,7 @@ export default defineConfig({
 	markdown: {
 		remarkPlugins: [
 			remarkMath,
+			remarkNormalizeCodeLanguages,
 			remarkReadingTime,
 			remarkImageGrid,
 			remarkExcerpt,

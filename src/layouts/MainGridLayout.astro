@@ -1451,6 +1451,7 @@ const bannerCarouselInterval = Math.max(
       if (value.endsWith(".js") || value.endsWith(".mjs") || value.endsWith(".cjs")) return "javascript";
       if (value.endsWith(".ts")) return "typescript";
       if (value.endsWith(".cpp") || value.endsWith(".cc") || value.endsWith(".cxx")) return "cpp";
+      if (value.endsWith(".asm") || value.endsWith(".s") || value.endsWith(".nasm") || value.endsWith(".masm")) return "asm";
       if (value.endsWith(".c")) return "c";
       if (value.endsWith(".java")) return "java";
       if (value.endsWith(".sh") || value.endsWith(".bash")) return "bash";
