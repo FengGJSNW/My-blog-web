@@ -1,5 +1,0 @@
-2026/06/06-19:29:53.707 74b4 Creating DB F:\share_macos\Blog\Blog-New\Firefly\tmp\codex-perf-test\edge-profile\Default\Sync Data\LevelDB since it was missing.
-2026/06/06-19:29:53.719 74b4 Reusing MANIFEST F:\share_macos\Blog\Blog-New\Firefly\tmp\codex-perf-test\edge-profile\Default\Sync Data\LevelDB/MANIFEST-000001
-2026/06/06-19:30:59.880 979c Level-0 table #5: started
-2026/06/06-19:30:59.888 979c Level-0 table #5: 505490 bytes OK
-2026/06/06-19:30:59.891 979c Delete type=0 #3

@@ -2,6 +2,7 @@
 import { Image, Picture } from "astro:assets";
 import * as path from "node:path";
 import type { ImageMetadata } from "astro";
+import BlurImage from "@/components/BlurImage.astro";
 import type { ImageFormat, ResponsiveImageLayout } from "@/types/config";
 import {
 	getFallbackFormat,
@@ -132,6 +133,7 @@ const responsiveProps = {
 			class={imageClass}
 			style={imageStyle}
 			loading={loading}
+			decoding="async"
 			fetchpriority={fetchpriority}
 		/>
 	)}
@@ -143,6 +145,7 @@ const responsiveProps = {
 			class={imageClass}
 			style={imageStyle}
 			loading={loading}
+			decoding="async"
 			fetchpriority={fetchpriority}
 			formats={formats}
 			fallbackFormat={fallbackFormat}
@@ -157,18 +160,36 @@ const responsiveProps = {
 			class={imageClass}
 			style={imageStyle}
 			loading={loading}
+			decoding="async"
 			fetchpriority={fetchpriority}
 			{...responsiveProps}
 		/>
 	)}
 
-	{!isLocal && (
+	{isPublic && (
+		<BlurImage
+			src={src}
+			alt={alt || ""}
+			class="w-full h-full"
+			imageClass={imageClass}
+			position={position}
+			widths={widths}
+			sizes={sizes}
+			loading={loading}
+			fetchpriority={fetchpriority}
+			linkOriginal={false}
+			fill={true}
+		/>
+	)}
+
+	{!isLocal && !isPublic && (
 		<img
-			src={isPublic ? url(src) : src}
+			src={src}
 			alt={alt || ""}
 			class={imageClass}
 			style={imageStyle}
 			loading={loading}
+			decoding="async"
 			fetchpriority={fetchpriority}
 			referrerpolicy={referrerPolicy}
 		/>

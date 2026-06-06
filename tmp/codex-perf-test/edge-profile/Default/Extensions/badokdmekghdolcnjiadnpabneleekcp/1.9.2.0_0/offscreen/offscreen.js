@@ -1,1 +1,0 @@
-chrome.runtime.onMessage.addListener((b,d,c)=>{if("PLAY_SOUND"===b.type)return(async()=>{const a=new Audio(chrome.runtime.getURL(b.sound));a.volume=.7;await a.play();c({ok:!0})})().catch(a=>{c({ok:!1,error:String(a)})}),!0});

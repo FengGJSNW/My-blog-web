@@ -1,0 +1,127 @@
+.blur-image-link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+	cursor: zoom-in;
+}
+
+.blur-image-wrapper {
+	--blur-image-object-fit: cover;
+	--blur-image-object-position: center;
+	position: relative;
+	display: block;
+	width: 100%;
+	overflow: hidden;
+	background: var(--image-placeholder-bg, rgba(128, 128, 128, 0.08));
+	border-radius: inherit;
+	aspect-ratio: var(--blur-image-aspect-ratio, auto);
+}
+
+.blur-image-wrapper > picture {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.blur-image-placeholder {
+	position: absolute;
+	inset: 0;
+	display: none;
+	width: 100%;
+	height: 100%;
+	object-fit: var(--blur-image-object-fit);
+	object-position: var(--blur-image-object-position);
+	filter: blur(16px);
+	transform: scale(1.05);
+	opacity: 0;
+	transition: opacity 200ms ease;
+	pointer-events: none;
+}
+
+.blur-image-main {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: auto;
+	object-position: var(--blur-image-object-position);
+	opacity: 1;
+	transition: opacity 200ms ease;
+}
+
+.blur-image-wrapper[data-fill="true"] .blur-image-main {
+	height: 100%;
+	object-fit: var(--blur-image-object-fit);
+}
+
+.blur-image-wrapper.is-enhanced .blur-image-placeholder {
+	display: block;
+	opacity: 1;
+}
+
+.blur-image-wrapper.is-enhanced .blur-image-main {
+	opacity: 0;
+}
+
+.blur-image-wrapper.is-enhanced .blur-image-main.loaded {
+	opacity: 1;
+}
+
+.blur-image-wrapper.is-enhanced.blur-image-loaded .blur-image-placeholder {
+	opacity: 0;
+}
+
+.custom-md .blur-image-link,
+.custom-md .blur-image-wrapper {
+	max-width: 100%;
+}
+
+.custom-md p > .blur-image-link,
+.custom-md li > .blur-image-link,
+.custom-md center > .blur-image-link {
+	margin: 1rem auto;
+	border-radius: calc(var(--radius-large) - 0.35rem);
+	transform-origin: center center;
+	transition:
+		transform 0.34s var(--md-hover-scale-ease),
+		filter 0.2s ease;
+}
+
+.custom-md p > .blur-image-link:hover,
+.custom-md li > .blur-image-link:hover,
+.custom-md center > .blur-image-link:hover {
+	transform: scale(1.016);
+}
+
+.custom-md center > figure .blur-image-link {
+	margin: 0 auto;
+}
+
+.custom-md .blur-image-main {
+	margin: 0;
+	border-radius: inherit;
+}
+
+.custom-md .image-grid .blur-image-link,
+.custom-md .image-grid .blur-image-wrapper,
+.custom-md .image-grid .blur-image-main {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.blur-image-placeholder,
+	.blur-image-main,
+	.custom-md p > .blur-image-link,
+	.custom-md li > .blur-image-link,
+	.custom-md center > .blur-image-link {
+		transition: none !important;
+	}
+
+	.custom-md p > .blur-image-link:hover,
+	.custom-md li > .blur-image-link:hover,
+	.custom-md center > .blur-image-link:hover {
+		transform: none;
+	}
+}

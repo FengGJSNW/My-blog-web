@@ -1,1 +1,0 @@
-const ffmpegWorker=new Worker("ff.worker.js");ffmpegWorker.postMessage({cmd:"init",baseUrl:chrome.runtime.getURL("")});ffmpegWorker.onmessage=function(a){window.parent.postMessage(a.data,"*")};window.addEventListener("message",a=>{ffmpegWorker.postMessage(a.data)});

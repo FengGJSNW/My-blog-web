@@ -1,0 +1,164 @@
+---
+import {
+	buildSrcSet,
+	getAspectRatio,
+	getDisplaySource,
+	getGeneratedImage,
+	selectGeneratedSources,
+	stripImageUrl,
+} from "@/utils/generated-images.mjs";
+import { url } from "@/utils/url-utils";
+
+interface Props {
+	id?: string;
+	src: string;
+	alt?: string;
+	originalSrc?: string;
+	widths?: number[];
+	sizes?: string;
+	class?: string;
+	imageClass?: string;
+	basePath?: string;
+	position?: string;
+	loading?: "lazy" | "eager";
+	decoding?: "async" | "auto" | "sync";
+	fetchpriority?: "high" | "low" | "auto";
+	linkOriginal?: boolean;
+	fill?: boolean;
+	width?: number;
+	height?: number;
+	dataCoverImg?: boolean;
+}
+
+const {
+	id,
+	src,
+	alt = "",
+	originalSrc,
+	widths = [320, 640, 960, 1280],
+	sizes = "(max-width: 768px) 100vw, 760px",
+	basePath,
+	position = "center",
+	loading = "lazy",
+	decoding = "async",
+	fetchpriority,
+	linkOriginal = true,
+	fill = false,
+	width,
+	height,
+	dataCoverImg = false,
+} = Astro.props;
+
+const className = Astro.props.class;
+const imageClass = Astro.props.imageClass ?? "";
+const generated = getGeneratedImage(src, { basePath });
+const selectedSources = generated
+	? selectGeneratedSources(generated.sources, widths)
+	: [];
+const displaySource = getDisplaySource(selectedSources, widths?.[1] ?? 640);
+
+function withBase(value?: string) {
+	if (!value) return undefined;
+	if (value.startsWith("/")) return url(value);
+	return value;
+}
+
+const original = withBase(originalSrc ?? generated?.original ?? stripImageUrl(src));
+const displaySrc = withBase(displaySource?.src ?? src);
+const srcset = selectedSources.length > 0
+	? buildSrcSet(
+			selectedSources.map((source) => ({
+				...source,
+				src: withBase(source.src) ?? source.src,
+			})),
+		)
+	: undefined;
+const placeholder = withBase(generated?.placeholder);
+const aspectRatio = getAspectRatio(generated);
+const widthAttr = width ?? generated?.width;
+const heightAttr = height ?? generated?.height;
+const wrapperStyle = [
+	aspectRatio ? `--blur-image-aspect-ratio: ${aspectRatio}` : "",
+	`--blur-image-object-position: ${position}`,
+].filter(Boolean).join("; ");
+---
+
+{
+	linkOriginal && original ? (
+		<a
+			href={original}
+			rel="noopener"
+			class="blur-image-link"
+			data-fancybox="images"
+			data-src={original}
+			data-type="image"
+			data-thumb-src={displaySrc}
+		>
+			<span
+				id={id}
+				class:list={[className, "blur-image-wrapper"]}
+				style={wrapperStyle}
+				data-blur-image
+				data-fill={fill ? "true" : undefined}
+			>
+				{placeholder && (
+					<img
+						src={placeholder}
+						alt=""
+						aria-hidden="true"
+						class="blur-image-placeholder"
+						loading={loading}
+						decoding={decoding}
+					/>
+				)}
+				<img
+					src={displaySrc}
+					srcset={srcset}
+					sizes={srcset ? sizes : undefined}
+					alt={alt}
+					width={widthAttr}
+					height={heightAttr}
+					class:list={["blur-image-main", imageClass]}
+					loading={loading}
+					decoding={decoding}
+					fetchpriority={fetchpriority}
+					data-original-src={original}
+					data-cover-img={dataCoverImg ? true : undefined}
+				/>
+			</span>
+		</a>
+	) : (
+		<span
+			id={id}
+			class:list={[className, "blur-image-wrapper"]}
+			style={wrapperStyle}
+			data-blur-image
+			data-fill={fill ? "true" : undefined}
+		>
+			{placeholder && (
+				<img
+					src={placeholder}
+					alt=""
+					aria-hidden="true"
+					class="blur-image-placeholder"
+					loading={loading}
+					decoding={decoding}
+				/>
+			)}
+			<img
+				src={displaySrc}
+				srcset={srcset}
+				sizes={srcset ? sizes : undefined}
+				alt={alt}
+				width={widthAttr}
+				height={heightAttr}
+				class:list={["blur-image-main", imageClass]}
+				loading={loading}
+				decoding={decoding}
+				fetchpriority={fetchpriority}
+				data-original-src={original}
+				data-cover-img={dataCoverImg ? true : undefined}
+			/>
+		</span>
+	)
+}

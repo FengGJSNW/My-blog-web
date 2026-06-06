@@ -1,6 +1,7 @@
 # build output
 dist/
 public/__local_svg/
+public/assets/generated/
 
 # generated types
 .astro/
@@ -8,11 +9,33 @@ public/__local_svg/
 # dependencies
 node_modules/
 
+# temporary files
+tmp/
+temp/
+.tmp/
+debug/
+backup/
+backups/
+
 # logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# temporary backup files
+*.tmp
+*.bak
+*.backup
+*.old
+
+# cache
+.cache/
+*.cache
+generated-temp/
+image-cache/
+.image-cache/
 
 # environment variables
 .env
@@ -20,6 +43,7 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+Thumbs.db
 
 .vercel
 
@@ -28,6 +52,8 @@ bun.lockb
 yarn.lock
 
 # ide
+.vscode/*
+!.vscode/extensions.json
 .idea
 *.iml
 .claude

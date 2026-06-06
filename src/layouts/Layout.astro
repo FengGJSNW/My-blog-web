@@ -29,6 +29,7 @@ import { url } from "@/utils/url-utils";
 import "@/styles/main.css";
 import "@/styles/variables.styl";
 import "@/styles/markdown-extend.styl";
+import "@/styles/blur-image.css";
 import "@rehype-callouts-theme";
 
 interface Props {
@@ -592,6 +593,39 @@ const siteLang = lang.replace("_", "-");
 
     <!-- Fancybox Manager -->
     <FancyboxManager />
+
+    <script>
+      function initBlurImages(root: ParentNode = document) {
+        root.querySelectorAll("[data-blur-image]").forEach((wrapper) => {
+          if (!(wrapper instanceof HTMLElement)) return;
+          if (wrapper.dataset.blurReady === "true") return;
+          wrapper.dataset.blurReady = "true";
+          wrapper.classList.add("is-enhanced");
+
+          const img = wrapper.querySelector(".blur-image-main");
+          if (!(img instanceof HTMLImageElement)) return;
+
+          const markLoaded = () => {
+            img.classList.add("loaded");
+            wrapper.classList.add("blur-image-loaded");
+          };
+
+          if (img.complete) {
+            markLoaded();
+          } else {
+            img.addEventListener("load", markLoaded, { once: true });
+            img.addEventListener("error", markLoaded, { once: true });
+          }
+        });
+      }
+
+      initBlurImages();
+      document.addEventListener("astro:page-load", () => initBlurImages());
+      document.addEventListener("swup:content:replace", () => initBlurImages());
+      document.addEventListener("password:decrypted", () => {
+        window.setTimeout(() => initBlurImages(), 50);
+      });
+    </script>
   </body>
 </html>
 

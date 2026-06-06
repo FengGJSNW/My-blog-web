@@ -204,6 +204,7 @@
 
   .folded-block__body {
     @apply px-4 pb-4;
+    box-sizing: border-box;
     border-top: 1px dashed color-mix(in oklch, var(--primary) 24%, var(--line-color));
   }
 
@@ -215,14 +216,20 @@
     transform-origin: top center;
     transition:
       max-height 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
+      padding-bottom 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
+      border-top-width 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
+      border-top-color 0.24s ease,
       opacity 0.24s ease,
       filter 0.35s ease;
-    will-change: max-height, opacity;
+    will-change: max-height, padding-bottom, border-top-width, opacity;
   }
 
   .folded-block--style-3[open].folded-block--opening .folded-block__body,
   .folded-block--style-3[open].folded-block--closing .folded-block__body {
     max-height: 0;
+    padding-bottom: 0;
+    border-top-width: 0;
+    border-top-color: transparent;
     opacity: 0;
     overflow: hidden;
   }
@@ -266,7 +273,7 @@
   }
 
   .folded-block--style-3[open] .folded-block__body {
-    max-height: var(--folded-block-scroll-height, 28rem);
+    max-height: var(--folded-block-animated-height, var(--folded-block-scroll-height, 28rem));
     opacity: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

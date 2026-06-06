@@ -2,8 +2,10 @@
 import { Picture } from "astro:assets";
 import * as path from "node:path";
 import type { ImageMetadata } from "astro";
+import BlurImage from "@/components/BlurImage.astro";
 import { coverImageConfig } from "@/config";
 import type { ImageFormat, ResponsiveImageLayout } from "@/types/config";
+import { getGeneratedImage } from "@/utils/generated-images.mjs";
 import {
 	getFallbackFormat,
 	getImageFormats,
@@ -52,6 +54,8 @@ const isLocal = !(
 );
 const isPublic = src.startsWith("/");
 const isSvg = src.toLowerCase().split("?")[0].endsWith(".svg");
+const generatedCover = getGeneratedImage(src, { basePath });
+const useGeneratedCover = isPublic || !!generatedCover;
 
 // 动态导入本地图片
 let img: ImageMetadata | null = null;
@@ -72,7 +76,7 @@ if (isLocal && isSvg) {
 			`[ERROR] SVG cover not found: ${normalizedPath.replace("../../", "src/")}`,
 		);
 	}
-} else if (isLocal) {
+} else if (isLocal && !useGeneratedCover) {
 	const files = import.meta.glob<ImageMetadata>(
 		"../../**/*.{png,jpg,jpeg,webp,avif}",
 		{
@@ -117,7 +121,7 @@ const imageClass = "w-full h-full object-cover";
 const imageStyle = `object-position: ${position};`;
 
 // 响应式配置
-const widths = preview ? [320, 480, 640, 960] : [800, 1200, 1600, 2000];
+const widths = preview ? [320, 480, 640] : [640, 960, 1280];
 const sizes = preview
 	? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
 	: "(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px";
@@ -179,14 +183,17 @@ const remoteReferrerPolicy =
 	)}
 	{!fallbackImg && isFallbackPublic && fallbackPath && (
 		<div class="fallback-image absolute inset-0 hidden">
-			<img
-				src={url(fallbackPath)}
+			<BlurImage
+				src={fallbackPath}
 				alt="Fallback cover"
-				class={imageClass}
-				style={imageStyle}
+				class="w-full h-full"
+				imageClass={imageClass}
+				position={position}
 				loading="lazy"
-				decoding="async"
-				referrerpolicy={fallbackReferrerPolicy}
+				widths={widths}
+				sizes={sizes}
+				linkOriginal={false}
+				fill={true}
 			/>
 		</div>
 	)}
@@ -204,7 +211,24 @@ const remoteReferrerPolicy =
 		/>
 	)}
 
-	{isLocal && img && (
+	{useGeneratedCover && (
+		<BlurImage
+			src={src}
+			basePath={basePath}
+			alt={alt || ""}
+			class="w-full h-full"
+			imageClass={imageClass}
+			position={position}
+			widths={widths}
+			sizes={sizes}
+			loading={loading}
+			linkOriginal={false}
+			fill={true}
+			dataCoverImg={true}
+		/>
+	)}
+
+	{isLocal && !useGeneratedCover && img && (
 		<Picture
 			src={img}
 			alt={alt || ""}
@@ -224,9 +248,9 @@ const remoteReferrerPolicy =
 	)}
 
 	<!-- 远程图片 -->
-	{!isLocal && (
+	{!isLocal && !isPublic && (
 		<img
-			src={isPublic ? url(src) : src}
+			src={src}
 			alt={alt || ""}
 			class={imageClass}
 			style={imageStyle}

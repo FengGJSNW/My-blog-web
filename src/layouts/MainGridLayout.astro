@@ -363,7 +363,7 @@ const bannerCarouselInterval = Math.max(
                     class="object-cover h-full"
                     src={backgroundImages.desktop[0]}
                     position={backgroundWallpaper.banner?.position}
-                    widths={[1280, 1920, 2560]}
+                    widths={[1280, 1600, 1920]}
                     sizes="100vw"
                     loading="eager"
                     fetchpriority="high"
@@ -379,7 +379,7 @@ const bannerCarouselInterval = Math.max(
                     class="object-cover h-full"
                     src={src}
                     position={backgroundWallpaper.banner?.position}
-                    widths={[1280, 1920, 2560]}
+                    widths={[1280, 1600, 1920]}
                     sizes="100vw"
                     loading="eager"
                     fetchpriority="high"
@@ -1401,6 +1401,37 @@ const bannerCarouselInterval = Math.max(
       ((callback) =>
         window.setTimeout(() => callback({ timeRemaining: () => 0 }), 96));
 
+    const cssLengthToPx = (value, referenceElement) => {
+      const raw = String(value || "").trim();
+      if (!raw || raw === "none") return null;
+      if (raw.endsWith("px")) {
+        const px = Number.parseFloat(raw);
+        return Number.isFinite(px) ? px : null;
+      }
+
+      const probe = document.createElement("div");
+      probe.style.position = "absolute";
+      probe.style.visibility = "hidden";
+      probe.style.pointerEvents = "none";
+      probe.style.height = raw;
+      probe.style.width = "0";
+      (referenceElement || document.body).appendChild(probe);
+      const px = probe.getBoundingClientRect().height;
+      probe.remove();
+      return Number.isFinite(px) && px > 0 ? px : null;
+    };
+
+    const getFolderTargetHeight = (details, body) => {
+      const computedDetails = window.getComputedStyle(details);
+      const maxHeight =
+        computedDetails.getPropertyValue("--folded-block-scroll-height").trim() ||
+        "28rem";
+      const maxHeightPx = cssLengthToPx(maxHeight, details);
+      const scrollHeight = body.scrollHeight;
+      if (!Number.isFinite(maxHeightPx) || maxHeightPx <= 0) return scrollHeight;
+      return Math.max(0, Math.min(scrollHeight, maxHeightPx));
+    };
+
     const getCodeText = (owner) => {
       const copyCode = owner.querySelector(".copy button[data-code]")?.getAttribute("data-code");
       if (copyCode) return copyCode.replace(/\u007f/g, "\n");
@@ -1911,28 +1942,48 @@ const bannerCarouselInterval = Math.max(
 
       details.classList.add("folded-block--animating");
 
+      let animationFrame = 0;
       if (!isOpen) {
-        details.classList.add("folded-block--opening");
         details.setAttribute("open", "");
-        requestAnimationFrame(() => {
+        const targetHeight = getFolderTargetHeight(details, body);
+        details.classList.add("folded-block--opening");
+        details.style.setProperty(
+          "--folded-block-animated-height",
+          `${targetHeight}px`,
+        );
+        body.getBoundingClientRect();
+        animationFrame = requestAnimationFrame(() => {
           details.classList.remove("folded-block--opening");
         });
       } else {
-        body.scrollTop = 0;
-        details.classList.add("folded-block--closing");
+        const currentHeight =
+          body.getBoundingClientRect().height ||
+          getFolderTargetHeight(details, body);
+        details.style.setProperty(
+          "--folded-block-animated-height",
+          `${Math.max(0, currentHeight)}px`,
+        );
+        body.getBoundingClientRect();
+        animationFrame = requestAnimationFrame(() => {
+          details.classList.add("folded-block--closing");
+        });
       }
 
       let fallbackTimer;
       const cleanup = () => {
         body.removeEventListener("transitionend", onTransitionEnd);
+        window.cancelAnimationFrame(animationFrame);
         window.clearTimeout(fallbackTimer);
         activeAnimations.delete(body);
+        if (isOpen) {
+          details.removeAttribute("open");
+          body.scrollTop = 0;
+        }
         details.classList.remove("folded-block--animating");
         details.classList.remove("folded-block--opening");
         details.classList.remove("folded-block--closing");
-        if (isOpen) {
-          details.removeAttribute("open");
-        } else {
+        details.style.removeProperty("--folded-block-animated-height");
+        if (!isOpen) {
           window.setTimeout(
             () => scheduleDeferredCodeBlockEnhance(details),
             FOLDER_INNER_ENHANCE_DELAY_MS,

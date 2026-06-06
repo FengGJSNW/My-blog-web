@@ -7,11 +7,40 @@ import "@/styles/fancybox-custom.css";
 <script>
   let Fancybox: any;
 
+  function prepareBlurImageLinks() {
+    document.querySelectorAll<HTMLAnchorElement>(".blur-image-link").forEach((link) => {
+      const image = link.querySelector<HTMLImageElement>(
+        "img[data-original-src], img:not(.blur-image-placeholder)",
+      );
+      const original =
+        link.getAttribute("data-src") ||
+        image?.getAttribute("data-original-src") ||
+        link.getAttribute("href");
+
+      if (!original) return;
+
+      link.removeAttribute("target");
+      link.setAttribute("rel", "noopener");
+      link.setAttribute("data-fancybox", link.closest(".custom-md") ? "article-images" : "images");
+      link.setAttribute("data-src", original);
+      link.setAttribute("data-type", "image");
+
+      const thumb =
+        link.getAttribute("data-thumb-src") ||
+        image?.currentSrc ||
+        image?.getAttribute("src");
+      if (thumb) link.setAttribute("data-thumb-src", thumb);
+    });
+  }
+
   async function setup() {
+    prepareBlurImageLinks();
+
     const selectors = [
-      ".custom-md img, #post-cover img, .moment-images img",
+      ".custom-md .blur-image-link[data-fancybox]",
+      ".custom-md img:not(.blur-image-placeholder):not([data-responsive-image]), #post-cover img, .moment-images img",
       ".moment-images a[data-fancybox]",
-      "[data-fancybox]:not(.moment-images a)"
+      "[data-fancybox]:not(.moment-images a):not(.blur-image-link)"
     ];
 
     // 检查页面是否存在需要 Fancybox 的元素
@@ -70,8 +99,18 @@ import "@/styles/fancybox-custom.css";
     };
 
     // 绑定图片
-    Fancybox.bind(".custom-md img, #post-cover img, .moment-images img", {
+    Fancybox.bind(".custom-md .blur-image-link[data-fancybox]", {
       ...commonOptions,
+      groupAll: false,
+    });
+
+    Fancybox.bind(".custom-md img:not(.blur-image-placeholder):not([data-responsive-image]), #post-cover img, .moment-images img", {
+      ...commonOptions,
+      source: (el: any) =>
+        el.getAttribute("data-original-src") ||
+        el.closest("a")?.getAttribute("href") ||
+        el.currentSrc ||
+        el.src,
       groupAll: true,
       Carousel: {
         transition: "slide",
@@ -86,7 +125,7 @@ import "@/styles/fancybox-custom.css";
     });
 
     // 绑定其他
-    Fancybox.bind("[data-fancybox]:not(.moment-images a)", commonOptions);
+    Fancybox.bind("[data-fancybox]:not(.moment-images a):not(.blur-image-link)", commonOptions);
   }
 
   function cleanupFancybox() {
