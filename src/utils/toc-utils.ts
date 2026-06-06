@@ -23,12 +23,14 @@ export class TOCManager {
 	private indicatorId: string;
 	private scrollOffset: number;
 	private headings: HTMLElement[] = [];
-	private visibleHeadingIds = new Set<string>();
 	private activeItems: HTMLElement[] = [];
 	private pendingActiveUpdate: number | null = null;
 	private tocContent: HTMLElement | null = null;
 	private tocContainer: Element | null = null;
 	private indicator: HTMLElement | null = null;
+	private handleViewportChange = (): void => {
+		this.scheduleActiveUpdate();
+	};
 
 	constructor(config: TOCConfig) {
 		this.contentId = config.contentId;
@@ -83,6 +85,27 @@ export class TOCManager {
 		});
 	}
 
+	private getFilteredHeadings(): HTMLElement[] {
+		const headings = this.getAllHeadings();
+
+		if (headings.length === 0) {
+			this.headings = [];
+			return [];
+		}
+
+		this.minDepth = this.calculateMinDepth(headings);
+		this.headings = this.filterHeadings(headings);
+		return this.headings;
+	}
+
+	private scheduleActiveUpdate(): void {
+		if (this.pendingActiveUpdate !== null) return;
+		this.pendingActiveUpdate = window.requestAnimationFrame(() => {
+			this.pendingActiveUpdate = null;
+			this.updateActiveState();
+		});
+	}
+
 	/**
 	 * 获取标题的纯文本内容（排除 script/style 标签的文本）
 	 */
@@ -130,14 +153,7 @@ export class TOCManager {
 	 * 生成TOC HTML
 	 */
 	public generateTOCHTML(): string {
-		const headings = this.getAllHeadings();
-
-		if (headings.length === 0) {
-			return this.getEmptyStateHTML();
-		}
-
-		this.minDepth = this.calculateMinDepth(headings);
-		const filteredHeadings = this.filterHeadings(headings);
+		const filteredHeadings = this.getFilteredHeadings();
 
 		if (filteredHeadings.length === 0) {
 			return this.getEmptyStateHTML();
@@ -224,47 +240,37 @@ export class TOCManager {
 	}
 
 	/**
-	 * 获取可见的标题ID
+	 * 获取当前应该激活的标题ID
 	 */
-	private getVisibleHeadingIds(): string[] {
+	private getActiveHeadingIds(): string[] {
 		const headings =
-			this.headings.length > 0 ? this.headings : this.getAllHeadings();
-		const visibleHeadingIds: string[] = [];
+			this.headings.length > 0 ? this.headings : this.getFilteredHeadings();
+		if (headings.length === 0) return [];
 
-		headings.forEach((heading) => {
-			if (heading.id) {
-				const rect = heading.getBoundingClientRect();
-				const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+		const activationY = this.scrollOffset + 1;
+		let activeHeading: HTMLElement | null = null;
+		let closestHeading: HTMLElement | null = null;
+		let closestDistance = Number.POSITIVE_INFINITY;
 
-				if (isVisible) {
-					visibleHeadingIds.push(heading.id);
-				}
+		for (const heading of headings) {
+			if (!heading.id) continue;
+
+			const rect = heading.getBoundingClientRect();
+			const distance = Math.abs(rect.top - activationY);
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				closestHeading = heading;
 			}
-		});
 
-		// 如果没有可见标题，选择最接近屏幕顶部的标题
-		if (visibleHeadingIds.length === 0 && headings.length > 0) {
-			let closestHeading: string | null = null;
-			let minDistance = Number.POSITIVE_INFINITY;
-
-			headings.forEach((heading) => {
-				if (heading.id) {
-					const rect = heading.getBoundingClientRect();
-					const distance = Math.abs(rect.top);
-
-					if (distance < minDistance) {
-						minDistance = distance;
-						closestHeading = heading.id;
-					}
-				}
-			});
-
-			if (closestHeading) {
-				visibleHeadingIds.push(closestHeading);
+			if (rect.top <= activationY) {
+				activeHeading = heading;
+			} else {
+				break;
 			}
 		}
 
-		return visibleHeadingIds;
+		const selectedHeading = activeHeading ?? closestHeading;
+		return selectedHeading?.id ? [selectedHeading.id] : [];
 	}
 
 	/**
@@ -278,15 +284,12 @@ export class TOCManager {
 			item.classList.remove("visible");
 		});
 
-		const visibleHeadingIds =
-			this.visibleHeadingIds.size > 0
-				? Array.from(this.visibleHeadingIds)
-				: this.getVisibleHeadingIds();
+		const activeHeadingIds = this.getActiveHeadingIds();
 
 		// 找到对应的TOC项并添加活动状态
 		const activeItems = this.tocItems.filter((item) => {
 			const headingId = item.dataset.headingId;
-			return headingId && visibleHeadingIds.includes(headingId);
+			return headingId && activeHeadingIds.includes(headingId);
 		});
 
 		// 添加活动状态
@@ -395,9 +398,8 @@ export class TOCManager {
 	public handleClick(event: Event): void {
 		event.preventDefault();
 		const target = event.currentTarget as HTMLAnchorElement;
-		const id = decodeURIComponent(
-			target.getAttribute("href")?.substring(1) || "",
-		);
+		const hrefId = target.getAttribute("href")?.substring(1) || "";
+		const id = target.dataset.headingId || decodeURIComponent(hrefId);
 		const targetElement = document.getElementById(id);
 
 		if (targetElement) {
@@ -410,6 +412,8 @@ export class TOCManager {
 				top: targetTop,
 				behavior: "smooth",
 			});
+
+			this.scheduleActiveUpdate();
 		}
 	}
 
@@ -417,9 +421,7 @@ export class TOCManager {
 	 * 设置IntersectionObserver
 	 */
 	public setupObserver(): void {
-		const headings = this.getAllHeadings();
-		this.headings = headings;
-		this.visibleHeadingIds.clear();
+		const headings = this.getFilteredHeadings();
 		this.activeItems = [];
 
 		if (this.observer) {
@@ -427,25 +429,11 @@ export class TOCManager {
 		}
 
 		this.observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					const target = entry.target as HTMLElement;
-					if (!target.id) return;
-					if (entry.isIntersecting) {
-						this.visibleHeadingIds.add(target.id);
-					} else {
-						this.visibleHeadingIds.delete(target.id);
-					}
-				});
-
-				if (this.pendingActiveUpdate !== null) return;
-				this.pendingActiveUpdate = window.requestAnimationFrame(() => {
-					this.pendingActiveUpdate = null;
-					this.updateActiveState();
-				});
+			() => {
+				this.scheduleActiveUpdate();
 			},
 			{
-				rootMargin: "0px 0px 0px 0px",
+				rootMargin: `-${this.scrollOffset}px 0px -70% 0px`,
 				threshold: 0,
 			},
 		);
@@ -455,6 +443,11 @@ export class TOCManager {
 				this.observer?.observe(heading);
 			}
 		});
+
+		window.addEventListener("scroll", this.handleViewportChange, {
+			passive: true,
+		});
+		window.addEventListener("resize", this.handleViewportChange);
 	}
 
 	/**
@@ -482,8 +475,9 @@ export class TOCManager {
 			window.cancelAnimationFrame(this.pendingActiveUpdate);
 			this.pendingActiveUpdate = null;
 		}
+		window.removeEventListener("scroll", this.handleViewportChange);
+		window.removeEventListener("resize", this.handleViewportChange);
 		this.headings = [];
-		this.visibleHeadingIds.clear();
 		this.activeItems = [];
 		this.tocContent = null;
 		this.tocContainer = null;
