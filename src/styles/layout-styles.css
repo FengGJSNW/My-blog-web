@@ -296,7 +296,7 @@ html.is-page-transitioning .banner-home-text-overlay {
         transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease-out;
         transform-origin: top center;
         /* 纭欢鍔犻€熶紭鍖?*/
-        will-change: transform, opacity;
+        will-change: auto;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         transform: translateZ(0);
@@ -315,7 +315,7 @@ html.is-page-transitioning .banner-home-text-overlay {
     .absolute.w-full.z-30 {
         transition: top 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
         /* 纭欢鍔犻€熶紭鍖?*/
-        will-change: top;
+        will-change: auto;
         /* 绂佺敤transform浠ヤ繚璇乥ack to top 鎸夐挳鍙互鏄剧ず
         transform: translateZ(0);
         -webkit-transform: translateZ(0);
@@ -667,8 +667,16 @@ body.is-home #wallpaper-wrapper.wallpaper-overlay img {
 @media (max-width: 768px), (pointer: coarse) {
     body.is-home #wallpaper-wrapper.wallpaper-overlay img {
         transform: translateZ(0) scale(1.015);
-        will-change: filter;
+        will-change: auto;
     }
+}
+
+html.firefly-scroll-active body.is-home #wallpaper-wrapper.wallpaper-overlay img {
+    will-change: filter;
+}
+
+html.firefly-low-power body.is-home #wallpaper-wrapper.wallpaper-overlay img {
+    transform: translateZ(0) scale(1.01);
 }
 
 /* Overlay 妯″紡闅愯棌 Banner 涓撳睘鍏冪礌 */
@@ -812,6 +820,11 @@ html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .scroll-down-indicator {
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
 
+#wallpaper-wrapper .scroll-down-indicator.hide .scroll-down-text,
+#wallpaper-wrapper .scroll-down-indicator.hide .scroll-down-icon {
+    animation-play-state: paused;
+}
+
 #wallpaper-wrapper.wallpaper-overlay .scroll-down-indicator:hover,
 html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .scroll-down-indicator:hover {
     color: rgba(255, 255, 255, 1);
@@ -827,6 +840,15 @@ html[data-wallpaper-mode="overlay"] #wallpaper-wrapper .scroll-down-indicator:ho
 @keyframes scroll-down-text-shine {
     0% { background-position: 130% 0; }
     55%, 100% { background-position: -130% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #wallpaper-wrapper .scroll-down-indicator,
+    #wallpaper-wrapper .scroll-down-indicator .scroll-down-text,
+    #wallpaper-wrapper .scroll-down-indicator .scroll-down-icon {
+        transition: none !important;
+        animation: none !important;
+    }
 }
 
 /* 鐐瑰嚮婊氬姩鎸囩ず鍣ㄨ烦杞埌鏂囩珷鍒楄〃鏃讹紝閬垮厤琚浐瀹氬鑸爮閬尅 */

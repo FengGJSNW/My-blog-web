@@ -1,0 +1,1661 @@
+{
+   "ajax_data_get_error": {
+      "message": "データを取得できませんでした。しばらくしてから再度お試し下さい。"
+   },
+   "ajax_data_get_pixiv_error": {
+      "message": "正常なデータを取得できませんでした。Pixivの仕様が変更された可能性があります。"
+   },
+   "alldl_already": {
+      "message": "すでに一括ダウンロードを開始しています"
+   },
+   "alldl_append_msg": {
+      "message": "\n\nダウンロード履歴を保存している場合、途中からダウンロードの再開ができます。\n再開時にダウンロード済みをスキップを選択して下さい。"
+   },
+   "alldl_caution_msg": {
+      "message": "【注意】\nファイルのダウンロード時に保存場所を確認する設定にしていた場合、ダウンロードのたびに保存先を指定するダイアログが表示され、途中で終了できなくなる可能性があります。\nブラウザや拡張機能の設定を確認いただき、問題がなければOKボタンを押してダウンロードを開始して下さい。"
+   },
+   "alldl_confirmation": {
+      "description": "ダウンロード確認メッセージ",
+      "message": "$numItems$項目すべてをダウンロードしますか？",
+      "placeholders": {
+         "numItems": {
+            "content": "$1"
+         }
+      }
+   },
+   "alldl_downloadbutton": {
+      "message": "ダウンロード"
+   },
+   "alldl_errskip": {
+      "message": "一括ダウンロード中にダウンロードが失敗した際も処理を継続"
+   },
+   "apng_comp_org": {
+      "message": "ブラウザ内蔵エンコーダ（高速）"
+   },
+   "apng_comp_org_readme": {
+      "message": "生成サイズはブラウザ実装に依存します。組み込み処理のため処理が速い反面、圧縮率の調整はできません。 \u003Cbr>画質はオリジナルと同等で劣化しません。"
+   },
+   "apng_comp_pako": {
+      "message": "専用エンコーダ（pako 使用・低速）"
+   },
+   "apng_comp_pako_before_mes": {
+      "message": "圧縮レベル（0～9で指定）"
+   },
+   "apng_comp_pako_readme": {
+      "message": "値を上げるほどファイルサイズは小さくなりやすい反面、処理時間は長くなります。画質はどの圧縮率でも変わりはありません。 \u003Cbr>画質はオリジナルと同等で劣化しません。\u003Cbr>圧縮レベルの推奨は6-7です。"
+   },
+   "apng_comp_select": {
+      "message": "エンコーダーを選択"
+   },
+   "apng_resize_chk": {
+      "message": "リサイズを行う"
+   },
+   "apng_resize_mes": {
+      "message": "リサイズ（%かpxで指定）"
+   },
+   "arrowup": {
+      "message": "ここにピン留め"
+   },
+   "auto_dl_wait_l": {
+      "message": "一括ダウンロード時のDL間隔"
+   },
+   "auto_dl_wait_r": {
+      "message": "ミリ秒待つ"
+   },
+   "avi_ecomode": {
+      "message": "フレームレートを削減する"
+   },
+   "avi_readme": {
+      "message": "この形式のファイルは、Windows 11 の標準プレーヤーでの再生やサムネイル表示が乱れる場合があります。\u003Cbr>ファイル自体は正常ですので、MPC-HC、MPC-BE、VLC など、MJPG 形式の AVI ファイルを再生できるプレーヤーをご利用ください。"
+   },
+   "back_setting": {
+      "message": "前の設定へ"
+   },
+   "before_license_help_message": {
+      "message": "ライセンス認証について、わからない点などがございましたらお問い合わせください"
+   },
+   "benri": {
+      "message": "■便利な利用方法（年月日の桁揃え、ディレクトリの設定、正規表現の使用方法など）"
+   },
+   "bookmark_disp": {
+      "message": "イラストページでブックマーク数を表示"
+   },
+   "bookmark_illust_button": {
+      "message": "ブックマークに追加"
+   },
+   "cannot_close_during_download": {
+      "message": "ダウンロード中は閉じることが出来ません"
+   },
+   "captionDL": {
+      "message": "キャプションやコメント等の情報をテキストファイルで保存"
+   },
+   "captionDLZIP": {
+      "message": "ZIPでダウンロードする時、このファイルも格納する"
+   },
+   "caption_file_txt": {
+      "message": "テキスト : "
+   },
+   "caption_filename_txt": {
+      "message": "ファイル名（末尾に追加されます） ： "
+   },
+   "change_sync_id_prompt": {
+      "message": "SyncIDを変更しますか？"
+   },
+   "clear_download_history_failed": {
+      "message": "ダウンロード履歴の消去に失敗しました。開発者にご連絡をお願いします。"
+   },
+   "comment_open": {
+      "message": "コメント欄を自動で開く"
+   },
+   "computer_offline": {
+      "message": "コンピューターがオフラインの可能性があります。"
+   },
+   "confirm_final_trial_end": {
+      "message": "最終確認です。トライアルを終了してもよろしいですか？\n（この操作は取り消せません）"
+   },
+   "confirm_trial_end_and_payment": {
+      "message": "一度トライアルを終了すると、再度ご利用いただくことはできません。\nトライアルを終了してお支払いを行いますか？\n（この操作は取り消せません）"
+   },
+   "connection_timeout": {
+      "message": "通信がタイムアウトしました。時間を置いて再度お試しください。"
+   },
+   "create_now": {
+      "message": "ファイルを作成しています"
+   },
+   "db_broken_mes": {
+      "message": "ダウンロード履歴が破損している可能性があります。ブラウザを再起動しても解決しない場合は、オプションからダウンロード履歴のリカバリ、または初期化を行ってください。"
+   },
+   "db_clear_mes": {
+      "message": "データベースが破損していたため、データベースを初期化しました。拡張機能を再起動します。"
+   },
+   "def_dl_wait_l": {
+      "message": "ダウンロードの間隔"
+   },
+   "def_dl_wait_l_not_zip": {
+      "message": "ダウンロードの間隔"
+   },
+   "def_dl_wait_r": {
+      "message": "ミリ秒待つ"
+   },
+   "delete_completed": {
+      "message": "削除が完了しました。"
+   },
+   "delete_failed": {
+      "message": "削除に失敗しました。"
+   },
+   "design_override_complete_text": {
+      "message": "デザイン設定を上書きしました。ページ下部のボタンから設定を保存してください。"
+   },
+   "design_override_confirmation_text": {
+      "message": "現在設定されている小説のデザインを、このテンプレートのデザインで上書きします。"
+   },
+   "dir_hint": {
+      "message": "・ブラウザで設定しているフォルダからの相対パスになります\u003Cbr>・フォルダの区切りはスラッシュ(/)を使用して下さい"
+   },
+   "dirname": {
+      "message": "ダウンロードするディレクトリ"
+   },
+   "dl_alert": {
+      "message": "保存済みの作品は再保存時に確認画面を表示する"
+   },
+   "dl_error_retry": {
+      "message": "通信エラーが発生したためリトライします"
+   },
+   "dl_history": {
+      "message": "ダウンロード履歴を記憶する(推奨)"
+   },
+   "dl_history_erase": {
+      "message": "DL履歴が多すぎる場合は古い順に削除(推奨)"
+   },
+   "dl_history_export": {
+      "message": "ダウンロード履歴をエクスポート"
+   },
+   "dl_history_export_confirm": {
+      "message": "ダウンロード履歴をエクスポートしますか？\n（履歴数が多い場合は処理に時間がかかる場合があります）"
+   },
+   "dl_history_import": {
+      "message": "ダウンロード履歴をインポート"
+   },
+   "dl_history_import_add_conf": {
+      "message": "ダウンロード履歴のインポートを開始しますか？\n【注意】\n*現在のダウンロード履歴に追記されます\n*この操作は元に戻せません"
+   },
+   "dl_history_import_add_flag": {
+      "message": "現在のダウンロード履歴に追記する形でインポート"
+   },
+   "dl_history_import_comp": {
+      "message": "ダウンロード履歴の読み込みが完了しました"
+   },
+   "dl_history_import_conf": {
+      "message": "ダウンロード履歴のインポートを開始しますか？\n【注意】\n*現在保存されている履歴を削除し、新しいデータに置き換えます。\n*この操作は元に戻せません"
+   },
+   "dl_history_max": {
+      "message": "最大保存件数"
+   },
+   "dl_history_recovery": {
+      "message": "ダウンロード履歴の修復"
+   },
+   "dl_history_recovery_mes": {
+      "message": "ダウンロード履歴を修復しますか？\n（履歴が表示されなくなった場合など、データベースの破損時のみ実行してください。履歴数が多い場合は処理に時間がかかる場合があります）"
+   },
+   "dl_message": {
+      "message": "作品のページに保存済みのラベルを表示"
+   },
+   "dl_now": {
+      "message": "ファイルをダウンロードしています"
+   },
+   "dl_old_history_clear": {
+      "message": "Illust Downloaderのバージョン1.8.6.0以前に保存されたダウンロード履歴を削除してもよろしいですか？\n【注意】\n*この操作は元に戻せません"
+   },
+   "dl_rireki": {
+      "message": "ダウンロード履歴を閲覧・編集"
+   },
+   "dl_rireki_clear": {
+      "message": "ダウンロード履歴を初期化"
+   },
+   "dl_select_0": {
+      "message": "設定に従ってフォルダへ保存する"
+   },
+   "dl_select_1": {
+      "message": "ファイルの保存場所を毎回選択する"
+   },
+   "dl_select_2": {
+      "message": "ブラウザ標準の保存機能を使用"
+   },
+   "dl_shortcut_on": {
+      "message": "ダウンロードボタンのショートカット登録"
+   },
+   "dl_sippai": {
+      "message": "ダウンロードに失敗しました。しばらくしてからもう一度お試しください。"
+   },
+   "dl_timeout": {
+      "message": "接続がタイムアウトしました。サイトからの応答がありません、しばらくしてからもう一度お試しください。"
+   },
+   "dl_ugoira_0": {
+      "message": "ZIPデータをそのまま保存"
+   },
+   "dl_ugoira_1": {
+      "message": "画像を１コマずつ保存"
+   },
+   "dl_ugoira_10": {
+      "message": "カスタムして保存（FFMPEGを使用）"
+   },
+   "dl_ugoira_2": {
+      "message": "専用プレイヤーで再生可能なZIPを保存"
+   },
+   "dl_ugoira_3": {
+      "message": "単体再生可能なHTMLファイルを保存"
+   },
+   "dl_ugoira_4": {
+      "message": "AVI形式(.avi)で保存"
+   },
+   "dl_ugoira_5": {
+      "message": "GIFアニメ形式(.gif)で保存"
+   },
+   "dl_ugoira_6": {
+      "message": "APNG画像形式(.png)で保存"
+   },
+   "dl_ugoira_7": {
+      "message": "XNG画像形式(.svg、.xng)で保存"
+   },
+   "dl_ugoira_8": {
+      "message": "WebM形式(.webm)で保存"
+   },
+   "dl_ugoira_9": {
+      "message": "MP4形式(.mp4)で保存"
+   },
+   "download_all_download_cancel": {
+      "message": "ダウンロードを中止しますか？"
+   },
+   "download_all_download_comp": {
+      "message": "ダウンロードが完了しました！"
+   },
+   "download_all_download_ikkatsu": {
+      "message": "ページ上のイラスト・小説を一括ダウンロードしますか？"
+   },
+   "download_all_download_start": {
+      "message": "ダウンロードを開始します。途中で終了したい場合は中止ボタンを押すか、ページをリロードまたは閉じてください。"
+   },
+   "download_all_download_zumi": {
+      "message": "既にダウンロード済みの項目をスキップしますか？\n(キャンセルを選択するとすべての項目をダウンロードします)"
+   },
+   "download_all_noitem": {
+      "message": "ダウンロードできる項目がありません"
+   },
+   "download_button_relocation": {
+      "message": "ダウンロードボタンが通常の場所に設置できなかったためページの下部に表示しています。Pixivの仕様変更かページの表示が遅延している可能性があります。Pixivの仕様変更が原因の場合は新しいIllust Downloaderがリリースされ次第、元の位置に戻ります。"
+   },
+   "download_button_title": {
+      "message": "この作品をダウンロード"
+   },
+   "download_in_progress": {
+      "message": "形式を指定してダウンロードしている最中は、他のダウンロードは行えません。\nダウンロード完了までしばらくお待ち下さい"
+   },
+   "download_interval_default": {
+      "message": "一括ダウンロード時のDL間隔が設定されていないため初期値の1500msに設定しました"
+   },
+   "download_interval_limit": {
+      "message": "ダウンロードの間隔は、サイトへの負荷を避けるために、1秒（1000ミリ秒）以上に設定してください"
+   },
+   "editout": {
+      "message": "保存して戻る"
+   },
+   "encode_now": {
+      "message": "エンコードしています"
+   },
+   "erase_emoji": {
+      "message": "ファイル名から絵文字を除去する"
+   },
+   "error_during_recovery_check_console": {
+      "message": "リカバリー中にエラーが発生しました。詳細はコンソールを確認してください。"
+   },
+   "ext_load_error": {
+      "message": "ファイルの拡張子が読み込めませんでした。Pixivが仕様変更をした可能性があります。"
+   },
+   "extentionDescription": {
+      "message": "pixiv.netの画像や漫画、小説を簡単にダウンロード"
+   },
+   "extentionTitle": {
+      "message": "Illust Downloader EX for pixiv.net"
+   },
+   "extentionTitleFree": {
+      "message": "Illust Downloader for pixiv.net"
+   },
+   "ffmpeg_processing_error": {
+      "message": "エンコード中にエラーが発生しました。コマンドを見直しても改善されない場合は開発者にお問い合わせください。"
+   },
+   "file_create_start": {
+      "message": "ファイルの作成を開始しました"
+   },
+   "file_dl_start": {
+      "message": "ファイルが完成しました。ダウンロードを開始します"
+   },
+   "file_empty_error": {
+      "message": "ファイル名を空で保存することは出来ません\n\"ダウンロードするファイル名\"の設定を見直して下さい"
+   },
+   "file_extension": {
+      "message": "拡張子"
+   },
+   "file_overwrite_0": {
+      "message": "保存ダイアログを表示する"
+   },
+   "file_overwrite_1": {
+      "message": "上書きしないよう数字を追加して保存する"
+   },
+   "file_overwrite_2": {
+      "message": "上書き保存する"
+   },
+   "filename": {
+      "message": "ダウンロードするファイル名  "
+   },
+   "filename_rewrite_error": {
+      "message": "ダウンロードに失敗しました。ファイル名が不正、またはディレクトリの指定がおかしい場合があります（ファイル名に使用できない文字、絶対パス、空のパス、「.」「..」などの相対参照は使用できません）"
+   },
+   "filename_rewrite_kakunin": {
+      "message": "ファイル名を修正し、ダウンロードを行いますか？"
+   },
+   "filename_rewrite_message": {
+      "message": "ファイル名またはディレクトリパスが不正な為、修正してダウンロードします\u003Cbr>（ファイル名に使用できない文字、絶対パス、空のパス、「.」「..」などの相対参照は使用できません）\u003Cbr>（ダウンロードエラーではないため無視していただいても問題ありません）"
+   },
+   "filename_txt": {
+      "message": "ファイル名"
+   },
+   "footer_trademark": {
+      "message": "当拡張機能は非公式のものであり、ピクシブ株式会社とは関係ありません。「pixiv」はピクシブ株式会社の登録商標です。"
+   },
+   "free_download_mode_0": {
+      "message": "ダウンローダーの保存機能を使用"
+   },
+   "free_download_mode_1": {
+      "message": "ファイルの保存場所を毎回選択する"
+   },
+   "free_download_mode_2": {
+      "message": "ブラウザ標準の保存機能を使用"
+   },
+   "frt_day": {
+      "message": "日"
+   },
+   "frt_days": {
+      "message": "日"
+   },
+   "frt_expired": {
+      "message": "期限切れ"
+   },
+   "frt_hour": {
+      "message": "時間"
+   },
+   "frt_hours": {
+      "message": "時間"
+   },
+   "full_ugoira": {
+      "message": "原寸大のうごくイラストをダウンロード"
+   },
+   "gif_quality": {
+      "message": "品質（1～20で指定）"
+   },
+   "gif_readme": {
+      "message": "品質：1が最も高品質ですが作成に時間がかかります\u003Cbr>スレッド数：同時に処理する画像枚数です。増やし過ぎると処理が重くなります。\u003Cbr>リサイズ：100%と入力するとそのままのサイズで保存できます\u003Cbr>\u003Cb>■色がおかしくなる場合はリサイズの値を変更すると改善する可能性があります\u003C/b>"
+   },
+   "gif_resize": {
+      "message": "リサイズ（%かpxで指定）"
+   },
+   "gif_thread": {
+      "message": "スレッド数（1～10で指定）"
+   },
+   "hint": {
+      "message": "漫画を別フォルダにまとめて保存するには"
+   },
+   "history_category_i": {
+      "message": "イラスト"
+   },
+   "history_category_m": {
+      "message": "漫画・複数イラスト"
+   },
+   "history_category_n": {
+      "message": "小説"
+   },
+   "history_category_u": {
+      "message": "うごイラ"
+   },
+   "history_category_unknown": {
+      "message": "これは1.8.5.0以前のバージョンで記録されたダウンロード履歴です"
+   },
+   "history_clear_search_string": {
+      "message": "検索文字列をクリア"
+   },
+   "history_cnt": {
+      "message": "履歴数"
+   },
+   "history_data_loading_failed": {
+      "message": "データの読み込みに失敗しました"
+   },
+   "history_delete_all_download_history_message": {
+      "message": "検索ワードが空のため、全てのダウンロード履歴を削除します。\n本当によろしいですか？\n削除対象: $deleteCount$件\n【注意】\n*この操作は元に戻せません",
+      "placeholders": {
+         "deleteCount": {
+            "content": "$1"
+         }
+      }
+   },
+   "history_delete_all_matched_items_message": {
+      "message": "検索条件に一致する項目（検索結果に表示される項目）を全て削除しても良いですか？\n削除対象: $deleteCount$件\n【注意】\n*この操作は元に戻せません",
+      "placeholders": {
+         "deleteCount": {
+            "content": "$1"
+         }
+      }
+   },
+   "history_delete_all_matching_items": {
+      "message": "検索条件に一致する項目をすべて削除"
+   },
+   "history_delete_process_error": {
+      "message": "削除中にエラーが発生しました。"
+   },
+   "history_delete_target_count_error": {
+      "message": "削除対象件数の取得中にエラーが発生しました。"
+   },
+   "history_erase_icon": {
+      "message": "この項目を削除"
+   },
+   "history_final_confirmation_message": {
+      "message": "最終確認です、本当に削除してもよろしいですか？\n削除対象: $deleteCount$件\n【注意】\n*この操作は元に戻せません",
+      "placeholders": {
+         "deleteCount": {
+            "content": "$1"
+         }
+      }
+   },
+   "history_invalid_regex": {
+      "message": "正規表現の書式が不正です"
+   },
+   "history_no_deletion_history_found": {
+      "message": "削除対象の履歴が見つかりませんでした。"
+   },
+   "history_no_history": {
+      "message": "ダウンロード履歴がありません"
+   },
+   "history_no_matching_history": {
+      "message": "「$query$」に一致する履歴が見つかりませんでした",
+      "placeholders": {
+         "query": {
+            "content": "$1"
+         }
+      }
+   },
+   "history_no_search_result": {
+      "message": "検索結果がありません"
+   },
+   "history_reload": {
+      "message": "リロード"
+   },
+   "history_seach_regex": {
+      "message": "正規表現で検索"
+   },
+   "history_seach_regex_title": {
+      "message": "検索時に正規表現を有効にします。わからない場合はオフにしてください"
+   },
+   "history_search_error": {
+      "message": "検索中にエラーが発生しました"
+   },
+   "history_search_placeholder": {
+      "message": "タイトルまたはユーザー名で検索"
+   },
+   "history_setting": {
+      "message": "設定"
+   },
+   "history_thumb_min": {
+      "message": "サムネイルを詳細表示に切り替え"
+   },
+   "history_thumb_normal": {
+      "message": "サムネイルを拡大表示に切り替え"
+   },
+   "history_title_label": {
+      "message": "ダウンロード履歴"
+   },
+   "hozon_zumi": {
+      "message": "保存済み"
+   },
+   "hozon_zumi_alert": {
+      "message": "既に保存済みのファイルです。再度ダウンロードを行いますか？"
+   },
+   "hozonzi": {
+      "message": "保存時の処理"
+   },
+   "hozonzi_free": {
+      "message": "保存時の処理(フリー版)"
+   },
+   "http_and_net_error": {
+      "message": "インターネットに接続されていないか、サーバーに問題が発生しています。時間を置いて再度お試しください。問題が解決しない場合はお手数ですが、お問い合わせください。"
+   },
+   "http_error": {
+      "message": "認証サーバーに問題が発生しています。時間を置いて再度お試しください。問題が解決しない場合はお手数ですが、お問い合わせください。"
+   },
+   "hyoka": {
+      "message": "評価で自動保存:"
+   },
+   "hyoka0": {
+      "message": "評価をしても自動保存しない"
+   },
+   "hyoka1": {
+      "message": "評価を1点以上付けると自動保存"
+   },
+   "hyoka10": {
+      "message": "評価に満点を付けると自動保存"
+   },
+   "hyoka2": {
+      "message": "評価を2点以上付けると自動保存"
+   },
+   "hyoka3": {
+      "message": "評価を3点以上付けると自動保存"
+   },
+   "hyoka4": {
+      "message": "評価を4点以上付けると自動保存"
+   },
+   "hyoka5": {
+      "message": "評価を5点以上付けると自動保存"
+   },
+   "hyoka6": {
+      "message": "評価を6点以上付けると自動保存"
+   },
+   "hyoka7": {
+      "message": "評価を7点以上付けると自動保存"
+   },
+   "hyoka8": {
+      "message": "評価を8点以上付けると自動保存"
+   },
+   "hyoka9": {
+      "message": "評価を9点以上付けると自動保存"
+   },
+   "hyosi": {
+      "message": "表紙の保存"
+   },
+   "hyosi_html": {
+      "message": "表紙の保存（HTML形式）"
+   },
+   "hyosi_txt": {
+      "message": "表紙の保存（テキスト形式）"
+   },
+   "iine_dl": {
+      "message": "いいねを押したときに作品をダウンロード"
+   },
+   "illustZIP": {
+      "message": "イラストをZIPにまとめて保存する"
+   },
+   "illust_downloaded": {
+      "message": "DL済イラストのサムネイルを強調"
+   },
+   "illust_hozon": {
+      "message": "イラストの保存設定"
+   },
+   "illust_popup": {
+      "message": "オンマウスでサムネイルに拡大ボタンを表示"
+   },
+   "illust_popup_select_0": {
+      "message": "うごイラと画像で動作を振り分け"
+   },
+   "illust_popup_select_1": {
+      "message": "拡大画像を表示"
+   },
+   "illust_popup_select_2": {
+      "message": "リンク先ページを表示"
+   },
+   "illust_rireki": {
+      "message": "イラストダウンロード履歴の編集(保存されている番号は”illust_id=○○○”の部分です)"
+   },
+   "illust_zoom_bm_win": {
+      "message": "ブックマークをウィンドウで表示"
+   },
+   "illust_zoom_select": {
+      "message": "イラスト"
+   },
+   "illust_zoom_select0": {
+      "message": "拡大表示(高速)"
+   },
+   "illust_zoom_select1": {
+      "message": "拡大表示(高画質)"
+   },
+   "illust_zoom_select2": {
+      "message": "リンク先を表示"
+   },
+   "img_dl_error": {
+      "message": "一部の画像のダウンロードに失敗しました。再度お試しください"
+   },
+   "img_load_error": {
+      "message": "画像データが読み込めませんでした。しばらく時間をおいて再度お試しください。"
+   },
+   "initialize_sync_data_prompt": {
+      "message": "同期用のデータを初期化しますか？"
+   },
+   "invalid_mail_address": {
+      "message": "何らかのエラーが発生しました。時間を置いて再度お試しください。問題が解決しない場合はお手数ですが、お問い合わせください。"
+   },
+   "invalid_sync_id": {
+      "message": "SyncIDが不正です。もう一度お確かめ下さい。"
+   },
+   "issued_id": {
+      "message": "過去にトライアルをお試しいただいている可能性があります。心当たりがない場合は、お手数ですがお問い合わせよりご連絡ください。トライアル用のデータを発行いたします。"
+   },
+   "jump_illust_button": {
+      "message": "イラストページへ"
+   },
+   "kengen_kyoka_seiko": {
+      "message": "権限の許可に成功しました。\n正常に動作しない場合はブラウザの再起動をお願い致します。"
+   },
+   "license_account_henko": {
+      "message": "Googleアカウントを変更"
+   },
+   "license_background_mes": {
+      "message": "認証画面を呼び出しています。\u003Cbr>認証画面が表示されない場合は、ウィンドウの下に認証画面が潜り込んでいないかご確認ください。"
+   },
+   "license_browser_old": {
+      "message": "ブラウザのGoogleアカウント情報が古くなっている可能性があります。一度ログインしなおして下さい"
+   },
+   "license_button": {
+      "message": "ライセンスを取得する"
+   },
+   "license_gentei": {
+      "message": "※フリートライアル期間終了後は機能制限版として機能します"
+   },
+   "license_kounyuzumi": {
+      "message": "このGoogleアカウントは既にIllust Downloader EXを購入済みです。\u003Cbr>お買い上げありがとうございます。"
+   },
+   "license_mininsyoji": {
+      "message": "※未認証時は機能制限版として機能します"
+   },
+   "license_no_licence_mes": {
+      "message": "ライセンスが存在しませんでした。\u003Cbr>ライセンスを取得できるのは本アプリをWebStoreからダウンロードした時にログインしていたアカウントのみです。\u003Cbr>別のアカウントで認証する場合は、まずWebStoreに該当アカウントでログインし、本アプリの紹介ページ右上のインストールボタン（試用ボタン）を押してから、再度このページで認証を行って下さい\u003Cbr>\u003Ca href=\"https://chrome.google.com/webstore/detail/$runtimeid$\" target=\"_blank\">アプリの紹介ページヘ\u003C/a>",
+      "placeholders": {
+         "runtimeid": {
+            "content": "$1"
+         }
+      }
+   },
+   "license_no_login": {
+      "message": "このブラウザはGoogleアカウントにログインしていません\u003Cbr>\"ライセンスを取得する\"ボタンをクリックしログインして下さい"
+   },
+   "license_no_syutoku": {
+      "message": "このGoogleアカウントはまだライセンスを取得していません"
+   },
+   "license_nokori_nissu": {
+      "message": "フリートライアル残り日数：$nokori$日\u003Cbr>フリートライアル終了後はWebStoreにて購入することが出来ます。\u003Cbr>\u003Ca href=\"https://chrome.google.com/webstore/detail/$runtimeid$\" target=\"_blank\">Illust Downloader EXを購入\u003C/a>",
+      "placeholders": {
+         "nokori": {
+            "content": "$1"
+         },
+         "runtimeid": {
+            "content": "$2"
+         }
+      }
+   },
+   "license_nokori_wazuka": {
+      "message": "まもなくフリートライアルが終了します。\u003Cbr>すべての機能を継続してご利用頂く場合は、WebStoreからご購入をお願い致します。\u003Cbr>\u003Ca href=\"https://chrome.google.com/webstore/detail/$runtimeid$\" target=\"_blank\">Illust Downloader EXを購入\u003C/a>",
+      "placeholders": {
+         "runtimeid": {
+            "content": "$1"
+         }
+      }
+   },
+   "license_page_browser_alert": {
+      "message": "Google Chrome以外のブラウザではライセンス認証機能が正常に動作しない場合がございます。\u003Cbr>ライセンス認証機能が動作しない場合は、この画面を閉じて認証せずにご利用頂くか、Google Chromeをご利用ください。"
+   },
+   "license_page_text": {
+      "message": "\u003Cdiv style=\"font-size:14px;margin-bottom:5px;font-weight:bold;text-align:center;color:#0b3f85;\">Illust Downloaderのすべての機能をご利用いただくには、ライセンスのご購入が必要です。\u003C/div>"
+   },
+   "license_page_text_old": {
+      "message": "\u003Cdiv style=\"font-size:14px;margin-bottom:5px;font-weight:bold;\">Illust Downloaderの機能を全てご利用いただくには、ライセンスを購入する必要があります。\u003C/div>\u003Cspan style=\"color:blue;font-weight:bold;\">ライセンスを購入した後、1ヶ月間は無料でお試しいただくことが可能です。\u003C/span>\u003Cbr>※無料の試用期間が終了しますと自動的に課金が開始されます。お支払いをキャンセルいただく場合は\u003Ca href=\"https://orca-soft.net/chrome/pd/html/faq.html\" target=\"_blank\">よくあるご質問（FAQ）\u003C/a>をご覧の上、お支払いの停止をお願いいたします。"
+   },
+   "license_retry_mes": {
+      "message": "アカウント権限の許可を行ったあと、\nもう一度\"ライセンスを取得する\"ボタンを押してください"
+   },
+   "license_saininsyo": {
+      "message": "再認証する"
+   },
+   "license_syutoku_cancel": {
+      "message": "ライセンスの取得をキャンセルしました"
+   },
+   "license_syutoku_ok": {
+      "message": "ライセンスを取得しました。\nIllust Downloader EXをご使用いただけます。"
+   },
+   "license_trial_end": {
+      "message": "フリートライアル期間が終了しました。\u003Cbr>フリートライアル終了後はWebStoreにて購入することが出来ます。\u003Cbr>\u003Ca href=\"https://chrome.google.com/webstore/detail/$runtimeid$\" target=\"_blank\">Illust Downloader EXを購入\u003C/a>\u003Cbr>\u003Cbr>既にご購入済みの場合は以下をご確認下さい：\u003Cbr>・クレジットカードの有効期限が切れている場合は、新しいクレジットカードの登録をお願い致します。\u003Cbr>・正常に決済されていても、このメッセージが表示される場合は、認証後に拡張機能を再読込して下さい。\u003Cbr>",
+      "placeholders": {
+         "runtimeid": {
+            "content": "$1"
+         }
+      }
+   },
+   "license_yobidashi": {
+      "message": "呼び出し中"
+   },
+   "license_yomikomi": {
+      "message": "認証データを読込中です\u003Cbr>\u003Cbr>しばらくしても接続できない場合は\u003Cbr>インターネットに接続されていないか、認証サーバーがメンテナンス中の可能性があります。"
+   },
+   "license_yomikomi_button": {
+      "message": "読み込み中"
+   },
+   "loadingOverlay_mes": {
+      "message": "現在処理中です。\u003Cbr>この画面を表示したまま、しばらくお待ち下さい。"
+   },
+   "manga_dir_cl": {
+      "message": "フォルダを作成し、その中にファイルを格納する"
+   },
+   "manga_hozon": {
+      "message": "漫画や複数イラストの保存設定"
+   },
+   "manga_hozon_free": {
+      "message": "漫画の保存設定(フリー版)"
+   },
+   "manga_renban": {
+      "message": "ファイル名をページ番号にする（例: 0.jpg, 1.jpg, 2.jpg...）"
+   },
+   "manga_renban_nozip": {
+      "message": "ファイル名をページ番号にする（例: 0.jpg, 1.jpg, 2.jpg...）"
+   },
+   "manga_select_0": {
+      "message": "ZIPファイルにせずそのまま保存する"
+   },
+   "manga_select_1": {
+      "message": "ZIPファイルにまとめて保存する"
+   },
+   "manga_sjis": {
+      "message": "ファイル名の文字コードをSJISにする"
+   },
+   "manga_st_one": {
+      "message": "連番を1から開始する（例: 1.jpg, 2.jpg, 3.jpg...）"
+   },
+   "manga_st_one_nozip": {
+      "message": "連番を1から開始する（例: 1.jpg, 2.jpg, 3.jpg...）"
+   },
+   "manga_zoom_select": {
+      "message": "漫画"
+   },
+   "manga_zoom_select0": {
+      "message": "拡大表示(高速)"
+   },
+   "manga_zoom_select1": {
+      "message": "拡大表示(高画質)"
+   },
+   "manga_zoom_select2": {
+      "message": "リンク先を表示"
+   },
+   "manga_zoom_select3": {
+      "message": "漫画を表示"
+   },
+   "max_download_history_must_be_numeric": {
+      "message": "ダウンロード履歴の最大件数には数値以外入力できません。"
+   },
+   "memoized_list": {
+      "message": "?memoized-name?の置換リストを編集"
+   },
+   "memoized_name_reset_message": {
+      "message": "?memoized-name?の置換リストが破損していたため、初期化を行いました。"
+   },
+   "memozed_list_url": {
+      "message": "memozed_list.html"
+   },
+   "min_pages_to_zip": {
+      "message": "一定ページ数以上の作品をZIP化する"
+   },
+   "min_pages_to_zip_mes": {
+      "message": "ZIP化する最小ページ数"
+   },
+   "murekka": {
+      "message": "この形式は無劣化で保存が可能です"
+   },
+   "new_license_auth_confirm": {
+      "message": "ライセンスを解除しますか？\n\n【注意】\nライセンスを解除しても、メールアドレスをご入力いただくことで再度ライセンス認証が可能です。\nライセンスそのものを停止する場合は、よくあるご質問（FAQ）をご覧ください\n(お支払いの停止後、有効期限が過ぎるとライセンスが停止されます)"
+   },
+   "new_license_auth_connecting_error": {
+      "message": "認証サーバーに接続できませんでした。\n少し時間を置いてから、もう一度お試しください。\nまた、インターネットに接続していることをご確認ください。"
+   },
+   "new_license_auth_connecting_error_html": {
+      "message": "\u003Cb style='color:#f00;'>認証サーバーへの接続に失敗しました。\u003Cbr>インターネットに接続していないか、認証サーバーに不具合が発生している可能性があります。\u003C/b>"
+   },
+   "new_license_auth_error": {
+      "message": "認証に失敗しました"
+   },
+   "new_license_auth_error_html": {
+      "message": "認証に失敗しました。ライセンスの有効期限が切れた可能性があります。\u003Cbr>\u003Ca href='https://orca-soft.net/info/auth_error.php' target='_blank'>詳細を表示\u003C/a>・\u003Ca href='#' id='alert_close'>閉じる\u003C/a>"
+   },
+   "new_license_auth_loading": {
+      "message": "ライセンスを確認しています"
+   },
+   "new_license_auth_release_message": {
+      "message": "ライセンス認証を解除しました。\n\n【注意】\nライセンス認証を解除してもお支払いは停止しません。\nお支払いを停止する場合は、よくあるご質問（FAQ）をご覧ください。"
+   },
+   "new_license_auth_success_html": {
+      "message": "\u003Cdiv style='margin:20px;'>\u003Cdiv style='font-weight:bold;text-align:center;font-size: 14px;color: #0000ff;border: 2px solid #8292bf;border-radius: 10px;background: #dce3ff;padding: 10px;max-width: 500px;margin: auto;margin-bottom: 13px;line-height: 19px;'>ライセンス認証済みです\u003Cbr>Illust Downloaderのすべての機能が使用できます\u003Cbr>\u003Cbr>\u003Cspan style='color:#202020;font-size:12px;'>※お支払いは\u003Cspan style='color:#892323;text-decoration:underline;'>ORCASOFT\u003C/span>という名称で明細書に表記されます\u003C/span>\u003C/div>\u003Cb style='color:blue;'>認証済み:\u003C/b>\u003Cb>$mail_decode$\u003C/b>様\u003Cbr>\u003Ca href='#' id='ninsyo_clear'>ライセンス認証を解除\u003C/a>\u003Cbr>\u003Cbr>\u003Ca href='$support_url$'>ライセンス認証についてお問い合わせ\u003C/a>\u003C/div>",
+      "placeholders": {
+         "mail_decode": {
+            "content": "$1"
+         },
+         "support_url": {
+            "content": "$2"
+         }
+      }
+   },
+   "new_license_auth_success_message": {
+      "message": "認証に成功しました\n\n【注意】\nこのメールアドレスを複数人で共有した場合は、ライセンス認証ができなくなる場合がございますのでご遠慮ください。"
+   },
+   "new_license_base64_error": {
+      "message": "メールアドレスに不正な文字列が含まれている可能性があります。この問題が続く場合はサポートにご連絡をお願いいたします。"
+   },
+   "new_license_mail_address_error": {
+      "message": "メールアドレスを入力してください"
+   },
+   "new_license_mailbox_placeholder": {
+      "message": "ここにPaypalかStripeのメールアドレスを入力"
+   },
+   "new_license_main_label": {
+      "message": "- ライセンス認証 -"
+   },
+   "new_license_main_message": {
+      "message": "すべての機能を利用するにはライセンス購入が必要です。\u003Cbr>ライセンスを購入しない場合も、基本的な機能は永続的にお使いいただけます。"
+   },
+   "new_license_main_message_free": {
+      "message": "ライセンスを購入するとIllust Downloader EXにアップデートされ、\u003Cbr>更に便利な機能をご利用いただくことが可能です。"
+   },
+   "new_license_procedure": {
+      "message": "※日本以外に在住の場合はその国の通貨に変換されます\u003Cbr>\u003Cb style='color:red;'>※既にライセンスを購入しており、定期支払いを解除せずに新たにライセンスを購入した場合、\u003Cbr>二重支払いになる可能性がございますのでご注意ください。\u003C/b>\u003C/div>\u003Cdiv style='font-size: 14px;padding-top: 10px;padding-bottom: 10px;margin: 25px 0px 25px 0px;background: #c6e2ff;border-radius: 40px;background: linear-gradient(#cbe0ff, #a6ccff);color: #313131;font-weight: bold;'>▼ライセンス購入後、決済に使用したメールアドレスを入力して、認証を行ってください▼\u003C/div>\u003Cbr>\u003Cdiv style='color:blue;font-weight:bold;'>ライセンスを購入した際に入力した、PaypalまたはStripeのメールアドレスを入力して認証してください。\u003C/div>※ライセンス認証が可能になるまで購入後1時間程度お時間がかかる場合がございます。"
+   },
+   "new_license_procedure_money": {
+      "message": "\u003Cdiv style='color: #333;'>\u003Cb>月額195円(初月無料)\u003C/b>\u003Cbr>"
+   },
+   "new_license_procedure_money2": {
+      "message": "\u003Cdiv style='color: #333;'>\u003Cb>月額195円\u003C/b>\u003Cbr>\u003Cb style='color:#00f;'>※既に試用期間をお試しいただいているため初月から料金がかかります\u003C/b>\u003Cbr>"
+   },
+   "new_license_submit_button": {
+      "message": "認証"
+   },
+   "next_setting": {
+      "message": "次の設定へ"
+   },
+   "no_download_history_before_1_8_6_0": {
+      "message": "1.8.6.0以前に保存されたダウンロード履歴は存在しませんでした。"
+   },
+   "no_licence": {
+      "message": "この機能を利用するにはライセンス登録が必要です\n（既に認証完了していても表示される場合はページを再読込して下さい）"
+   },
+   "no_new_history_found_in_sync": {
+      "message": "同期で新規に追加する履歴は見つかりませんでした。"
+   },
+   "notification_filename_rewrite": {
+      "message": "ファイル名の書き換えに失敗しました"
+   },
+   "notification_filename_rewrite_button": {
+      "message": "解決策を表示"
+   },
+   "novel_bottom": {
+      "message": "小説の末尾に書き込む(ﾃﾞﾌｫﾙﾄは先頭)"
+   },
+   "novel_captionDL": {
+      "message": "小説に情報を書き込む(キャプションやコメント等)"
+   },
+   "novel_caption_footer_txt": {
+      "message": "末尾に書き込み : "
+   },
+   "novel_caption_header_txt": {
+      "message": "先頭に書き込み : "
+   },
+   "novel_cover_savedir": {
+      "message": "表紙をフォルダに格納する"
+   },
+   "novel_def": {
+      "message": "デフォルトの表紙の場合はダウンロードしない"
+   },
+   "novel_design_apply": {
+      "message": "このデザインを使用"
+   },
+   "novel_design_html": {
+      "message": "小説全体のレイアウトデザインHTML"
+   },
+   "novel_design_html_newpage": {
+      "message": "改ページ時に挿入するHTML"
+   },
+   "novel_design_html_newpage_tokusyu": {
+      "message": "\u003Cdiv style=\"font-weight: bold;display: block;\">特殊置換文字一覧\u003C/div>\n?novel-page-no? : 現在のページ番号\u003Cbr>\n?novel-url? : 小説のURL\u003Cbr>\n\u003Cbr>\n※ファイル名の設定に使用できる特殊タグ（?title?など）も全て使用可能です。"
+   },
+   "novel_design_html_tokusyu": {
+      "message": "\u003Cdiv style=\"font-weight: bold;display: block;\">特殊置換文字一覧\u003C/div>\n?novel-title? : 小説のタイトル\u003Cbr>\n?if cover?～?endif? : 表紙が存在した場合にのみ書き込まれる文字列\u003Cbr>\n?novel-header? : ヘッダー\u003Cbr>\n?novel-cover? : 小説の表紙画像\u003Cbr>\n?novel-content? : 小説本文\u003Cbr>\n?novel-footer? : フッター\u003Cbr>\n?novel-url? : 小説のURL\u003Cbr>\n\u003Cbr>\n※ヘッダー、フッターは「$novel_caption_dl$」の項目で設定された文章が適用されます。\n※ファイル名の設定に使用できる特殊タグ（?title?など）も全て使用可能です。",
+      "placeholders": {
+         "novel_caption_dl": {
+            "content": "$1"
+         }
+      }
+   },
+   "novel_design_sample": {
+      "message": "サンプルを表示"
+   },
+   "novel_design_send": {
+      "message": "作成したデザインを公開"
+   },
+   "novel_design_send_con_error": {
+      "message": "通信エラーが発生しました。しばらく待ってから再度送信をお願いします。"
+   },
+   "novel_design_send_confirm": {
+      "message": "作成したデザインデータは、他のユーザーも利用できるテンプレートとして追加できます。\n審査完了後に公開されますので、ぜひお気軽にお送りください。送信しますか？\n\n※テンプレートは一度審査を行い、細部を修正したうえで公開いたします。個人情報などが送信されることは一切ありませんので、ご安心ください。"
+   },
+   "novel_design_send_error": {
+      "message": "送信に失敗しました。しばらく待ってから再度送信をお願いします。"
+   },
+   "novel_design_send_thankyou": {
+      "message": "ありがとうございます\n\nデザインを送信しました。審査には数週間かかる場合がございます。テンプレートに登録されるかどうかは保証しかねますのでご了承ください。デザインについて問題がございましたらお問い合わせをお願いします"
+   },
+   "novel_design_template": {
+      "message": "デザインテンプレート"
+   },
+   "novel_design_test": {
+      "message": "現在のデザインをテスト"
+   },
+   "novel_dl_0": {
+      "message": "挿絵をHTML内に含める"
+   },
+   "novel_dl_1": {
+      "message": "挿絵を別ファイルで保存"
+   },
+   "novel_dl_2": {
+      "message": "挿絵を保存しない"
+   },
+   "novel_ext_0": {
+      "message": "挿絵がある場合のみHTML形式で保存"
+   },
+   "novel_ext_1": {
+      "message": "HTML形式で保存"
+   },
+   "novel_ext_2": {
+      "message": "テキスト形式で保存"
+   },
+   "novel_filename_def_dir": {
+      "message": "ブラウザ既定の保存先を基準にする"
+   },
+   "novel_html_br_txt": {
+      "message": "HTML形式で改ページ時に挿入する文字列[?] : "
+   },
+   "novel_html_css_txt": {
+      "message": "HTML形式で適用するCSS[?] : "
+   },
+   "novel_html_design_txt": {
+      "message": "デザイン（HTML形式）"
+   },
+   "novel_illust_savedir": {
+      "message": "挿絵をフォルダに格納する"
+   },
+   "novel_tag": {
+      "message": "使用しない特殊タグを消去する"
+   },
+   "novel_top_0": {
+      "message": "表紙をHTML内に含める"
+   },
+   "novel_top_1": {
+      "message": "表紙を別ファイルで保存"
+   },
+   "novel_top_2": {
+      "message": "表紙を保存しない"
+   },
+   "novel_txtimg": {
+      "message": "テキスト形式の場合は別ファイルで保存"
+   },
+   "old_dl_history_del": {
+      "message": "1.8.5.0以前のダウンロード履歴を全て削除する"
+   },
+   "old_dl_history_import": {
+      "message": "1.8.5.0以前のダウンロード履歴を再度インポートする"
+   },
+   "old_dl_history_import_conf": {
+      "message": "IllustDownloader1.8.6.0以前に保存されたダウンロード履歴を再度インポートしますか？\n【注意】\n*この操作は元に戻せません"
+   },
+   "old_history_import_comp_mes": {
+      "message": "インポートが完了しました。\n合計 $numbersArrayLength$ 件中 $lastIndex$ 件を処理しました。",
+      "placeholders": {
+         "lastIndex": {
+            "content": "$2"
+         },
+         "numbersArrayLength": {
+            "content": "$1"
+         }
+      }
+   },
+   "one_click_bm_dl": {
+      "message": "ブックマーク時に作品をダウンロード"
+   },
+   "oneclick_dl": {
+      "message": "サムネイルにワンクリックダウンロードボタンを追加"
+   },
+   "option_dirname_error": {
+      "message": "フォルダ名に \\:*?\"\u003C>| は使用出来ません\nまたは?タグの記述が間違っています"
+   },
+   "option_filename_error": {
+      "message": "ファイル名に \\/:*?\"\u003C>| は使用出来ません\nまたは?タグの記述が間違っています"
+   },
+   "option_ninsyogo": {
+      "message": "このページの機能はライセンス認証後に利用できます"
+   },
+   "option_pass_error": {
+      "message": "フォルダ名には、絶対パス、空のパス、「.」「..」などの相対参照は使用できません。"
+   },
+   "option_reset_confirm": {
+      "message": "現在の設定を消去してインストール時の設定に戻しますか？\n【注意】\n*ダウンロード履歴は削除されません\n*この操作は元に戻せません"
+   },
+   "option_reset_ok": {
+      "message": "設定を初期化しました"
+   },
+   "option_rireki_reset_confirm": {
+      "message": "ダウンロード履歴を初期化しますか？\n【注意】\nダウンロード履歴を初期化した場合、保存済みかどうかの判定が消去されます。"
+   },
+   "option_rireki_reset_ok": {
+      "message": "ダウンロード履歴を初期化しました"
+   },
+   "option_save_ok": {
+      "message": "\u003Cb>設定を保存しました\u003C/b>\u003Cbr>設定が反映されない場合はPixivを開いているタブを再読み込みして下さい"
+   },
+   "options_copy": {
+      "message": "設定データの保存"
+   },
+   "options_copy_conf": {
+      "message": "設定データをクリップボードにコピーしますか？"
+   },
+   "options_copy_error": {
+      "message": "原因不明のエラーが発生しました。開発者に連絡をお願いいたします。"
+   },
+   "options_copy_mes": {
+      "message": "設定データをクリップボードにコピーしました。\n文字列をバックアップしておくことで再インストール時に設定を一括で反映することができます。"
+   },
+   "options_copy_mes2": {
+      "message": "ダウンロード履歴は保存されないため、別途バックアップをお願いいたします。"
+   },
+   "options_dl_conf_file_select": {
+      "message": "Illust Downloaderの設定ファイルを選択してください"
+   },
+   "options_dl_conf_filename": {
+      "message": "IllustDownloader設定データ.bak"
+   },
+   "options_dl_conf_new": {
+      "message": "設定のバックアップデータをダウンロードしますか？"
+   },
+   "options_dl_history_file_select": {
+      "message": "Illust Downloaderのダウンロード履歴ファイルを選択してください"
+   },
+   "options_dl_history_filename": {
+      "message": "IllustDownloaderダウンロード履歴.bak"
+   },
+   "options_dl_illust_bak_new": {
+      "message": "ダウンロード履歴もバックアップしますか？"
+   },
+   "options_read": {
+      "message": "設定の読込(旧仕様)"
+   },
+   "options_read_conf": {
+      "message": "入力した設定データを設定に反映させますか？\n【注意】\n*この操作は元に戻せません"
+   },
+   "options_read_error": {
+      "message": "入力した設定データが誤っている可能性があります。"
+   },
+   "options_read_error_new": {
+      "message": "ファイルが間違っているか、設定データが壊れています。エラーが直らない場合は開発者に連絡をお願いします。"
+   },
+   "options_read_illust_ref_new": {
+      "message": "ダウンロード履歴を反映しますか？"
+   },
+   "options_read_mes": {
+      "message": "設定データを反映しました。\n正常に動作しない場合はブラウザを再起動してください。"
+   },
+   "options_read_new": {
+      "message": "設定データの読込・復元"
+   },
+   "options_read_prom": {
+      "message": "設定データを入力して下さい"
+   },
+   "orig_img": {
+      "message": "原寸大のイラスト・漫画をダウンロードする"
+   },
+   "outou_machi": {
+      "message": "サーバーからの応答を待っています…"
+   },
+   "p_not_jump": {
+      "message": "このページからは移動できません"
+   },
+   "p_top_page_jump": {
+      "message": "作者のトップページで再度実行してください。\n\n作者のトップページに自動移動しますか？\n（現在開いているページによっては誤った作者のページに移動する場合があります）"
+   },
+   "page_load_error": {
+      "message": "ページの読み込みに失敗しました。\nしばらくしてから再度お試しください。"
+   },
+   "permission_button": {
+      "message": "権限を許可する"
+   },
+   "permission_page_text": {
+      "message": "ブラウザによってIllust Downloaderの一部の機能が制限されています。正常に動作させるために新しい権限の許可が必要です"
+   },
+   "permission_title_label": {
+      "message": "Illust Downloaderを利用するには、新しい権限を許可する必要があります。"
+   },
+   "pivex_error": {
+      "message": "Illust Downloaderが正常に動作していません。\nブラウザを再起動するか、拡張機能のページでIllust Downloaderを再読み込みして下さい"
+   },
+   "pixiv_downloader_history_recovery_message": {
+      "message": "ダウンロード履歴が破損している可能性があります。ブラウザを再起動しても解決しない場合は、オプションからダウンロード履歴のリカバリ、または初期化を行ってください。"
+   },
+   "pixiv_downloader_multiple_instances_message": {
+      "message": "Illust Downloaderが複数起動しています。拡張機能の管理ページから、使用していない古いIllust Downloaderを停止してください。"
+   },
+   "pixiv_downloader_settings_reset_message": {
+      "message": "Illust Downloaderの設定データが破損していたため、設定の初期化を行いました。"
+   },
+   "player_dl": {
+      "message": "うごくイラストプレイヤーをダウンロード"
+   },
+   "player_dl_error": {
+      "message": "プレイヤーデータの取得に失敗しました。しばらくしてからもう一度お試しください。"
+   },
+   "popup_author_download_all": {
+      "message": "この作者の作品を一括ダウンロード"
+   },
+   "popup_dllist": {
+      "message": "ダウンロード履歴"
+   },
+   "popup_illust_download": {
+      "message": "このページの作品をダウンロード"
+   },
+   "popup_illust_download_all": {
+      "message": "このページにある作品を一括ダウンロード"
+   },
+   "popup_illust_download_all_error": {
+      "message": "イラスト・小説の一覧ページで実行してください"
+   },
+   "popup_illust_download_error": {
+      "message": "イラスト・小説を表示しているページで実行してください"
+   },
+   "popup_no_licence": {
+      "message": "この機能を利用するにはライセンス登録が必要です\n（既にライセンス認証済みの場合はページを再読込して下さい）"
+   },
+   "popup_setting": {
+      "message": "設定"
+   },
+   "pxvdwn_alldl_dlsort_new": {
+      "message": "ページの先頭から"
+   },
+   "pxvdwn_alldl_dlsort_old": {
+      "message": "ページの末尾から"
+   },
+   "pxvdwn_expand": {
+      "message": "拡大"
+   },
+   "pxvdwn_reload": {
+      "message": "Illust Downloaderを再起動"
+   },
+   "recovery_failed_mes": {
+      "message": "データの救出ができませんでした。データベースは初期化されました。"
+   },
+   "recovery_mes_bottom": {
+      "message": "■ $tableName$： $rescuedCount$ / $total$ 件救出\n",
+      "placeholders": {
+         "rescuedCount": {
+            "content": "$2"
+         },
+         "tableName": {
+            "content": "$1"
+         },
+         "total": {
+            "content": "$3"
+         }
+      }
+   },
+   "recovery_mes_top": {
+      "message": "データベースの修復が完了しました。\n\n"
+   },
+   "recovery_success_mes": {
+      "message": "データベースは正常です"
+   },
+   "report_button": {
+      "message": "お問い合わせはこちら\u003Cbr>（ご意見、ご要望、不具合報告、ご質問など）"
+   },
+   "reset": {
+      "message": "設定の初期化"
+   },
+   "resetting_sync_id_message": {
+      "message": "SyncIDを再設定しています..."
+   },
+   "restart_pixiv_downloader": {
+      "message": "Illust Downloaderを再起動します。"
+   },
+   "restart_pixiv_downloader_prompt": {
+      "message": "Illust Downloaderを再起動しますか？"
+   },
+   "sasie_hozon": {
+      "message": "挿絵の保存"
+   },
+   "sasie_hozon_html": {
+      "message": "挿絵の保存（HTML形式）"
+   },
+   "sasie_hozon_txt": {
+      "message": "挿絵の保存（テキスト形式）"
+   },
+   "save": {
+      "message": "設定の保存"
+   },
+   "scoped_odf": {
+      "message": "他の拡張機能によるファイル名の変更を防ぐ(推奨)"
+   },
+   "select_button_manga_title": {
+      "message": "ページを選択してダウンロード"
+   },
+   "select_button_ugoira_title": {
+      "message": "ファイル形式を選択してダウンロード"
+   },
+   "select_dl_already": {
+      "message": "すでにダウンロードを開始しています。"
+   },
+   "select_illust_day": {
+      "message": "投稿した日"
+   },
+   "select_illust_day_p": {
+      "message": "投稿した日(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_illust_hour": {
+      "message": "投稿した時"
+   },
+   "select_illust_hour_p": {
+      "message": "投稿した時(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_illust_id": {
+      "message": "イラストID（小説ID）"
+   },
+   "select_illust_minute": {
+      "message": "投稿した分"
+   },
+   "select_illust_minute_p": {
+      "message": "投稿した分(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_illust_month": {
+      "message": "投稿した月"
+   },
+   "select_illust_month_p": {
+      "message": "投稿した月(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_illust_second": {
+      "message": "投稿した秒"
+   },
+   "select_illust_second_p": {
+      "message": "投稿した秒(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_illust_week": {
+      "message": "投稿した曜日"
+   },
+   "select_illust_year": {
+      "message": "投稿した年"
+   },
+   "select_language": {
+      "message": "拡張機能で使用する言語"
+   },
+   "select_language0": {
+      "message": "ブラウザで指定した言語"
+   },
+   "select_language1": {
+      "message": "日本語"
+   },
+   "select_language2": {
+      "message": "English"
+   },
+   "select_mat": {
+      "message": "指定した文字列が含まれているかどうかチェックします。（例：?mat{'?tags?','漫画','manga','not manga'}?で?tags?に\"漫画\"が含まれていた場合は\"manga\"を出力、\"漫画\"を含んでいない場合は\"not manga\"を出力）"
+   },
+   "select_mat_str": {
+      "message": "?mat{'検索対象の文字列','検索する文字列','文字列が含まれていた場合','文字列を含んでいない場合'}?"
+   },
+   "select_member_id": {
+      "message": "作者ID"
+   },
+   "select_member_name": {
+      "message": "作者名"
+   },
+   "select_memoized_name": {
+      "message": "置換リストに登録された文字列"
+   },
+   "select_mozi": {
+      "message": "漫画や複数枚のイラストを保存する際、ZIPファイル名を除き、各ファイル名にのみ追加する文字列 (例：?[ページ]?) (例：?[?pixiv-id?]?)"
+   },
+   "select_mozi_a": {
+      "message": "AI作品を保存するときにだけ追加する文字列 (例：?a[AI作品]?) (例：?a[?pixiv-id?]?)"
+   },
+   "select_mozi_a_str": {
+      "message": "?a[文字列]?"
+   },
+   "select_mozi_i": {
+      "message": "通常イラストを保存するときにだけ追加する文字列 (例：?i[イラスト]?) (例：?i[?pixiv-id?]?)"
+   },
+   "select_mozi_i_str": {
+      "message": "?i[文字列]?"
+   },
+   "select_mozi_m": {
+      "message": "漫画や複数枚のイラストを保存するときにだけ追加する文字列 (例：?m[漫画]?) (例：?m[?pixiv-id?]?)"
+   },
+   "select_mozi_m_str": {
+      "message": "?m[文字列]?"
+   },
+   "select_mozi_n": {
+      "message": "小説を保存するときにだけ追加する文字列 (例：?n[小説]?) (例：?n[?pixiv-id?]?)"
+   },
+   "select_mozi_n_str": {
+      "message": "?n[文字列]?"
+   },
+   "select_mozi_o": {
+      "message": "オリジナル作品を保存するときにだけ追加する文字列 (例：?o[オリジナル作品]?) (例：?o[?pixiv-id?]?)"
+   },
+   "select_mozi_o_str": {
+      "message": "?o[文字列]?"
+   },
+   "select_mozi_r": {
+      "message": "R-18作品を保存するときにだけ追加する文字列 (例：?r[R-18作品]?) (例：?r[?pixiv-id?]?)"
+   },
+   "select_mozi_r_str": {
+      "message": "?r[文字列]?"
+   },
+   "select_mozi_str": {
+      "message": "?[文字列]?"
+   },
+   "select_mozi_u": {
+      "message": "うごイラを保存するときにだけ追加する文字列 (例：?u[うごイラ]?) (例：?u[?pixiv-id?]?)"
+   },
+   "select_mozi_u_str": {
+      "message": "?u[文字列]?"
+   },
+   "select_novel_cnt": {
+      "message": "小説の文字数(小説の場合のみ表示)"
+   },
+   "select_novel_page_all": {
+      "message": "総ページ数(小説の場合のみ表示)"
+   },
+   "select_novel_rtime_min": {
+      "message": "小説の読了時間を分単位で表示(小説の場合のみ表示)"
+   },
+   "select_novel_rtime_sec": {
+      "message": "小説の読了時間を秒単位で表示(小説の場合のみ表示)"
+   },
+   "select_novel_wcnt": {
+      "message": "小説のワード数(小説の場合のみ表示)"
+   },
+   "select_page": {
+      "message": "ページ番号(漫画の場合のみ表示　連番は1から開始)"
+   },
+   "select_page_all": {
+      "message": "総ページ数(漫画の場合のみ表示)"
+   },
+   "select_page_original": {
+      "message": "ページ番号(漫画の場合のみ表示　連番は0から開始)"
+   },
+   "select_page_zeroformat": {
+      "message": "ページ番号(漫画の場合のみ表示　枚数が多い場合は先頭にゼロを付けます、連番は1から開始)"
+   },
+   "select_page_zeroformat_original": {
+      "message": "ページ番号(漫画の場合のみ表示　枚数が多い場合は先頭にゼロを付けます、連番は0から開始)"
+   },
+   "select_pixiv_id": {
+      "message": "PixivID"
+   },
+   "select_reg": {
+      "message": "文字列を正規表現で置換します。オプション修飾子は空欄可能。(例：?reg{'?tags?','漫画','manga','g'}?を使うと?tags?内の\"漫画\"を\"manga\"に置換）"
+   },
+   "select_reg_str": {
+      "message": "?reg{'置換対象の文字列','正規表現','置換後の文字列','オプション修飾子(空欄可)'}?"
+   },
+   "select_regmat": {
+      "message": "入力した文字列に指定した文字列が含まれているかどうか正規表現でチェックします。オプション修飾子は空欄可能。（例：?regmat{'?tags?','漫画','manga','not manga',''}?で?tags?に\"漫画\"が含まれていた場合は\"manga\"を出力、\"漫画\"を含んでいない場合は\"not manga\"を出力）"
+   },
+   "select_regmat_str": {
+      "message": "?regmat{'検索対象の文字列','正規表現','文字列が含まれていた場合','文字列を含んでいない場合','オプション修飾子(空欄可)'}?"
+   },
+   "select_rep": {
+      "message": "文字列を置換します。（例：?rep{'?tags?','漫画','manga'}?を使うと?tags?内の\"漫画\"を\"manga\"に置換）$$1を使った部分置換にも対応しています。"
+   },
+   "select_rep_str": {
+      "message": "?rep{'置換対象の文字列','検索する文字列','置換後の文字列'}?"
+   },
+   "select_saved_day": {
+      "message": "保存した日"
+   },
+   "select_saved_day_p": {
+      "message": "保存した日(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_saved_hour": {
+      "message": "保存した時"
+   },
+   "select_saved_hour_p": {
+      "message": "保存した時(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_saved_minute": {
+      "message": "保存した分"
+   },
+   "select_saved_minute_p": {
+      "message": "保存した分(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_saved_month": {
+      "message": "保存した月"
+   },
+   "select_saved_month_p": {
+      "message": "保存した月(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_saved_week": {
+      "message": "保存した曜日"
+   },
+   "select_saved_year": {
+      "message": "保存した年"
+   },
+   "select_second": {
+      "message": "保存した秒"
+   },
+   "select_second_p": {
+      "message": "保存した秒(先頭にゼロを付けて2桁に揃えます)"
+   },
+   "select_series": {
+      "message": "シリーズ名"
+   },
+   "select_series_id": {
+      "message": "シリーズID"
+   },
+   "select_series_no": {
+      "message": "シリーズ内の作品番号(#○○)"
+   },
+   "select_short_tags": {
+      "message": "短いタグ（長いタグは無視）"
+   },
+   "select_suuzi": {
+      "message": "数字の先頭にゼロを追加して、指定した桁数に揃えます。（例：?{123,5}? → 00123）"
+   },
+   "select_suuzi_str": {
+      "message": "?{数字,桁数}?"
+   },
+   "select_tags": {
+      "message": "タグ"
+   },
+   "select_title": {
+      "message": "タイトル"
+   },
+   "select_tools": {
+      "message": "使用ツール"
+   },
+   "server_returned_error": {
+      "message": "トライアルの開始に失敗しました。時間を置いて再度お試しください。問題が解決しない場合はお手数ですが、お問い合わせください。"
+   },
+   "server_returned_invalid": {
+      "message": "トライアルの開始に失敗しました。時間を置いて再度お試しいただくか、拡張機能またはブラウザを再起動してください。問題が解決しない場合はお手数ですが、お問い合わせください。"
+   },
+   "setting_button_title": {
+      "message": "設定"
+   },
+   "setting_more": {
+      "message": "さらに表示"
+   },
+   "sonohoka": {
+      "message": "その他の設定"
+   },
+   "sudeni": {
+      "message": "既にファイルが存在した時の処理"
+   },
+   "syncPC": {
+      "message": "他のPCとダウンロード履歴を同期する"
+   },
+   "sync_blink_str": {
+      "message": "●同期が有効になっています"
+   },
+   "sync_caution_mes": {
+      "message": "【注意事項】\u003Cbr>・最短10分毎に自動的に同期が行われます。\u003Cbr>・差分同期の為、同期を有効にする前のダウンロード履歴は同期されません。\u003Cbr>・ダウンロード履歴のインポートや初期化時の処理は同期されません。\u003Cbr>・同期機能を使用しない場合はオフにしてください。"
+   },
+   "sync_data_initialization_failed": {
+      "message": "同期用のデータの初期化に失敗しました。しばらくしてから再度お試しください。"
+   },
+   "sync_data_initialized": {
+      "message": "同期用のデータを初期化しました。"
+   },
+   "sync_error": {
+      "message": "同期処理に失敗しました"
+   },
+   "sync_error_retry_or_initialize": {
+      "message": "同期中に何らかのエラーが発生しました。\nしばらくしてから再度お試しください。\nどうしても解決しない場合は、同期データを初期化してください。"
+   },
+   "sync_force_button": {
+      "message": "いますぐ同期する"
+   },
+   "sync_history_add_only": {
+      "message": "履歴の削除は同期せず、追加のみを同期"
+   },
+   "sync_history_added_count": {
+      "message": "同期処理に成功しました！\n追加/削除レコード数：$addcnt$\n\n【注意】\n差分同期のためSyncID設定前のデータは同期されません。",
+      "placeholders": {
+         "addcnt": {
+            "content": "$1"
+         }
+      }
+   },
+   "sync_id_changed": {
+      "message": "SyncIDを変更しました。"
+   },
+   "sync_id_copy": {
+      "message": "コピー"
+   },
+   "sync_id_copy_mes": {
+      "message": "SyncIDをコピーしました"
+   },
+   "sync_id_error": {
+      "message": "SyncIDが不正です。設定を変更して下さい"
+   },
+   "sync_idcl_button": {
+      "message": "SyncIDを再発行する"
+   },
+   "sync_readme": {
+      "message": "詳しい設定方法はこちら"
+   },
+   "sync_red_str": {
+      "message": "*このSyncIDを同期したい別のブラウザのSyncIDの欄に上書きして下さい"
+   },
+   "sync_reset_button": {
+      "message": "同期データを初期化する"
+   },
+   "syosetu_hozon": {
+      "message": "小説の保存設定"
+   },
+   "thumbnail_fetch_error": {
+      "message": "サムネイルの取得中にエラーが発生しました。しばらくしてから再度お試しください。"
+   },
+   "thumbnail_load_error": {
+      "message": "サムネイルを読み込めませんでした"
+   },
+   "thumbnail_loading": {
+      "message": "サムネイル一覧を取得しています..."
+   },
+   "thumbnail_loading_in_progress": {
+      "message": "サムネイルの読み込み処理が終了するまで操作ができません"
+   },
+   "tokusyu": {
+      "message": "\u003Cdiv style=\"font-weight: bold;display: block;\">特殊置換文字一覧\u003C/div>\n?caption? : キャプション\u003Cbr>\n?caption-html? : HTMLタグ付きキャプション\u003Cbr>\n?comment?:コメント\u003Cbr>\n?comment-rep? : コメント(返信を含める)\u003Cbr>\n?comment-csv? : コメント(CSV形式)\u003Cbr>\n?comment-repcsv? : コメント(返信を含める)(CSV形式)\u003Cbr>\n※ファイル名の設定に使用できる特殊タグ（?title?など）も全て使用可能です。"
+   },
+   "tokusyu_css": {
+      "message": "\u003Cdiv style=\"font-weight: bold;display: block;\">特殊置換文字一覧\u003C/div>\n?novel-page-no? : ページ番号\u003Cbr>\n※ファイル名の設定に使用できる特殊タグ（?title?など）も全て使用可能です。"
+   },
+   "tokusyu_novel_cover_filename": {
+      "message": "ファイル名の設定に使用できる特殊タグ（?title?など）は全て使用可能です。「/」を使用するとフォルダを作成できます。"
+   },
+   "tokusyu_novel_illust_filename": {
+      "message": "\u003Cdiv style=\"font-weight: bold;display: block;\">特殊置換文字一覧\u003C/div>?novel-illust-id? : 挿絵ID\u003Cbr>※ファイル名の設定に使用できる特殊タグ（?title?など）も全て使用可能です。「/」を使用するとフォルダを作成できます。"
+   },
+   "trial_active_message_html": {
+      "message": "\u003Cdiv style=\"margin:20px;\">\u003Cdiv style=\"font-weight:bold;text-align:center;font-size: 14px;color: #0000ff;border: 2px solid #8292bf;border-radius: 10px;background: #dce3ff;padding: 10px;max-width: 500px;margin: auto;margin-bottom: 13px;line-height: 19px;\">現在、トライアル期間です\u003Cbr>Illust Downloaderのすべての機能が使用できます\u003Cbr>\u003Cbr>\u003Cspan style=\"color:#202020;font-size:12px;\" id=\"expiration_date\">\u003C/span>\u003Ca href=\"#\" id=\"ninsyo_clear\" style=\"display:none;\">ライセンス認証を解除\u003C/a>\u003C/div>\u003C/div>\u003Ca href='$support_url$'>ライセンス認証(トライアル)についてお問い合わせ\u003C/a>\u003Cbr>\u003Cbr>\u003Ca href=\"#\" id=\"trial_end\">トライアルを終了してお支払いを行う\u003C/a>",
+      "placeholders": {
+         "support_url": {
+            "content": "$1"
+         }
+      }
+   },
+   "trial_already_used_notice": {
+      "message": "過去にトライアルをお試しいただいている可能性があります。心当たりがない場合は、お手数ですがお問い合わせよりご連絡ください。トライアル用のデータを発行いたします。"
+   },
+   "trial_days_remaining": {
+      "message": "トライアル残り日数"
+   },
+   "trial_end": {
+      "message": "フリートライアル期間が終了しました。\n継続してご利用頂く場合は購入して頂く必要があります\n（既にご購入済みでも表示される場合は認証後ページを再読込して下さい）"
+   },
+   "trial_end_message": {
+      "message": "\u003Cdiv id=\"trial_container\">\u003Cdiv id=\"trial_midashi\">トライアル期間が終了しました。\u003C/div>1ヶ月間お試しいただき、誠にありがとうございました！\u003Cbr>引き続きプレミアム機能をご利用いただくには、以下よりライセンスをご購入ください。基本機能につきましては、今後も完全無料でご利用いただけます。\u003C/div>"
+   },
+   "trial_ended_alert": {
+      "message": "トライアルを終了しました。"
+   },
+   "trial_near_end_notice": {
+      "message": "まもなくトライアル期間が終了します。"
+   },
+   "trial_start_alert": {
+      "message": "トライアルを開始しました！本日より1ヶ月間、すべての機能を無料でご利用いただけます。ぜひお試しください。"
+   },
+   "trial_start_message": {
+      "message": "\u003Cdiv  id=\"trial_container\">\u003Cdiv id=\"trial_midashi\">無料でトライアルをはじめる\u003C/div>1ヶ月間、無料ですべての機能をお試しいただけます。\u003Cdiv>\u003Cbutton id=\"trial_start_button\">無料で1ヶ月トライアルを開始する\u003C/button>\u003Cdiv>トライアルを利用せず、ライセンスをご購入いただく場合は、以下にお進みください\u003C/div>\u003C/div>\u003C/div>"
+   },
+   "ugoira_hozon": {
+      "message": "うごくイラストの保存設定"
+   },
+   "ugoira_type_recommended": {
+      "message": " ※おすすめ設定"
+   },
+   "ugoira_zoom_select": {
+      "message": "うごイラ : リンク先を表示"
+   },
+   "unknown_error": {
+      "message": "不明なエラーが発生しました。問題が解決しない場合はお手数ですが、お問い合わせください。"
+   },
+   "web_worker_load_error": {
+      "message": "プログラムの呼び出しに失敗しました。再度実行してもエラーが出る場合は制作者に連絡して下さい。"
+   },
+   "welcome_button": {
+      "message": "Illust Downloader EXの設定はこちらから"
+   },
+   "welcome_mes": {
+      "message": "この度は、Illust Downloader EXをダウンロードして頂きありがとうございます。\u003Cbr>快適に使用するため、一度Illust Downloader EXの設定をおすすめします。\u003Cbr>それでは快適なPixivライフをお過ごし下さい。"
+   },
+   "welcome_message": {
+      "message": "Illust Downloader をインストールいただき、まことにありがとうございます。\u003Cbr>一部の機能はブラウザアイコンから実行可能です、拡張機能のアイコンをツールバーにピン留めすると便利です。\u003Cimg src=\"assets/request_icon_pin_ja.png\" class=\"image\">❶ ブラウザの拡張機能アイコン（ジグソーパズルのマーク）をクリックします。\u003Cbr>※ Google Chrome の場合\u003Cbr>\u003Cbr>❷ ピン留めアイコンをクリックし、Illust Downloader をツールバーに固定します。\u003Cbr>\u003Cbr>\u003Chr>\u003Cbr>作品のダウンロードは、各作品ページに表示されるダウンロードボタンから行えます。\u003Cbr>また、より快適にご利用いただくために、最初に Illust Downloader の設定を行うことをおすすめします。\u003Cbr>"
+   },
+   "zenpan1": {
+      "message": "全般設定1"
+   },
+   "zenpan2": {
+      "message": "全般設定2"
+   },
+   "zenpan_dl": {
+      "message": "ダウンロード履歴の設定"
+   },
+   "zenpan_etc": {
+      "message": "その他の設定"
+   },
+   "zip_auto_change_caution": {
+      "message": "ページ数に応じて、ZIP化するかどうかを自動で切り替えます。ZIP化した場合とZIP化しない場合の動作は、それぞれの保存設定に従います。"
+   },
+   "zip_filename_conflict": {
+      "message": "すでに同じファイル名が格納先に存在するため、\u003Cbr>重複ファイルの後ろに連番を付与して「$newFileName$」として保存します。\u003Cbr>この問題を回避するには設定でファイル名に?page?などのタグを設定してください",
+      "placeholders": {
+         "newFileName": {
+            "content": "$1"
+         }
+      }
+   },
+   "zip_sjis_caution": {
+      "message": "※ZIPファイルの解凍時に文字化けが発生する場合はチェックしてください"
+   }
+}

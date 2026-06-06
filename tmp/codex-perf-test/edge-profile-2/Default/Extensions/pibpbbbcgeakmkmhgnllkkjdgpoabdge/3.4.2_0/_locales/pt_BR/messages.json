@@ -1,0 +1,259 @@
+{
+   "InappropriateContent": {
+      "message": "Conteúdo impróprio"
+   },
+   "WhatsWrong": {
+      "message": "O que há de errado?"
+   },
+   "agree": {
+      "message": "aceita"
+   },
+   "allOtherStyles": {
+      "message": "Todos os outros estilos"
+   },
+   "appDesc": {
+      "message": "Com centenas de milhares de temas, skins e planos de fundo gratuitos, você pode personalizar qualquer site com seu próprio esquema de cores com um só clique"
+   },
+   "appName": {
+      "message": "Stylish – temas personalizados para qualquer site"
+   },
+   "browseMore": {
+      "message": "Navegue mais!"
+   },
+   "cancel": {
+      "message": "cancelar"
+   },
+   "createNewStyle": {
+      "message": "Crie um novo estilo"
+   },
+   "currentWebsite": {
+      "message": "Site atual"
+   },
+   "didNotFind": {
+      "message": "Não encontrei o que estava procurando"
+   },
+   "editedStyleLabel": {
+      "message": "Editado"
+   },
+   "editor": {
+      "message": "Editor"
+   },
+   "editorNewStyle": {
+      "message": "Novo estilo"
+   },
+   "editorPreview": {
+      "message": "prévia"
+   },
+   "editorRollback": {
+      "message": "Reversão"
+   },
+   "editorRollbackTooltip": {
+      "message": "Reverter para a última versão salva"
+   },
+   "editorSave": {
+      "message": "Salvar"
+   },
+   "editorStyleNamePlaceholder": {
+      "message": "Dê um nome ao seu estilo"
+   },
+   "enableAllStyles": {
+      "message": "Habilitar todos os estilos"
+   },
+   "enjoyingStylish": {
+      "message": "Gostando de Stylish?"
+   },
+   "gallery": {
+      "message": "Galeria"
+   },
+   "generalError": {
+      "message": "Ocorreu um erro, tente mais tarde"
+   },
+   "getHelp": {
+      "message": "Obtenha ajuda"
+   },
+   "getStylesFromUserStyles": {
+      "message": "Obtenha estilos em userstyles.org"
+   },
+   "howCanWeBetter": {
+      "message": "Como podemos fazer melhor..."
+   },
+   "iKnowCSS": {
+      "message": "Eu conheço CSS"
+   },
+   "login": {
+      "message": "Iniciar sessão"
+   },
+   "logout": {
+      "message": "Sair"
+   },
+   "meaning": {
+      "message": "sentido"
+   },
+   "menuShowBadge": {
+      "message": "Mostrar contagem de estilos ativos"
+   },
+   "myStyles": {
+      "message": "Meus estilos"
+   },
+   "noStylesFoundSubtitle1": {
+      "message": "Mas não fique aí parado."
+   },
+   "noStylesFoundSubtitle2": {
+      "message": "FAÇA UM!"
+   },
+   "noStylesFoundTitle1": {
+      "message": "SEM ESTILOS"
+   },
+   "noStylesFoundTitle2": {
+      "message": "PARA *ESTE* SITE"
+   },
+   "noStylesMessage": {
+      "message": "Nenhum estilo instalado"
+   },
+   "off": {
+      "message": "Fora"
+   },
+   "on": {
+      "message": "Em"
+   },
+   "oneClickWidgetCheckThisOne": {
+      "message": "Confira este!"
+   },
+   "oneClickWidgetDoNotShowAgain": {
+      "message": "Não mostre isso novamente"
+   },
+   "oneClickWidgetGood": {
+      "message": "booooooo"
+   },
+   "oneClickWidgetIsThere": {
+      "message": "está lá"
+   },
+   "oneClickWidgetLooking": {
+      "message": "Olhando"
+   },
+   "oneClickWidgetLooks": {
+      "message": "Parece"
+   },
+   "oneClickWidgetMenuTitle": {
+      "message": "Configurações de sugestões"
+   },
+   "oneClickWidgetMuteForPeriod": {
+      "message": "Silencie por duas semanas"
+   },
+   "oneClickWidgetMuteForSite": {
+      "message": "Silenciar este site"
+   },
+   "oneClickWidgetNewDay": {
+      "message": "Um novo dia"
+   },
+   "oneClickWidgetNewStyle": {
+      "message": "Um novo estilo!"
+   },
+   "oneClickWidgetSeeWhatElse": {
+      "message": "Veja o que mais"
+   },
+   "oneClickWidgetShowMeMore": {
+      "message": "Mostre-me mais"
+   },
+   "oneClickWidgetStyleUp": {
+      "message": "Estilize"
+   },
+   "oneClickWidgetThisPage": {
+      "message": "esta página!"
+   },
+   "oneClickWidgetTryItOut": {
+      "message": "Teste agora"
+   },
+   "optInDisclaimer": {
+      "message": "Se você clicar em cancelar, ainda poderá usar estilos estilosos e de instalação, mas somente por meio de nosso "
+   },
+   "optInMsg": {
+      "message": "Somos os *MELHORES em mostrar estilos para sites *QUANDO* você os visita"
+   },
+   "optInMsg2": {
+      "message": "precisamos ter acesso a essas informações. "
+   },
+   "optInMsg3": {
+      "message": "precisaremos do seu acordo"
+   },
+   "privateStyleLabel": {
+      "message": "Particular"
+   },
+   "rateStylish": {
+      "message": "Classifique Stylish"
+   },
+   "rateUs": {
+      "message": "Avalie-nos"
+   },
+   "readPrivacy": {
+      "message": "Leia a política de privacidade"
+   },
+   "seeAllStyles": {
+      "message": "Veja todos os estilos"
+   },
+   "sendBrowsingDataToStylish": {
+      "message": "Envie dados de navegação não identificados para o Stylish para acessar sugestões de estilo por meio do menu da barra de ferramentas"
+   },
+   "settings": {
+      "message": "Configurações"
+   },
+   "showMe": {
+      "message": "Mostre-me!"
+   },
+   "showNumberOfStylesBadge": {
+      "message": "Mostrar o número de estilos ativos para o site atual no botão da barra de ferramentas"
+   },
+   "showOneClickInstallWidget": {
+      "message": "Mostrar widget de sugestões do site"
+   },
+   "spreadTheWord": {
+      "message": "Espalhe a palavra, por que não conversar"
+   },
+   "styleNotWorking": {
+      "message": "O estilo não funciona"
+   },
+   "stylishExtensionStatus": {
+      "message": "Extensão elegante - $status$",
+      "placeholders": {
+         "status": {
+            "content": "$1"
+         }
+      }
+   },
+   "stylishOptions": {
+      "message": "Opções elegantes"
+   },
+   "submitFeedback": {
+      "message": "Enviar feedback"
+   },
+   "thankYou": {
+      "message": "Obrigado"
+   },
+   "thankYouText": {
+      "message": "Estamos fazendo tudo o que podemos para melhorar o estilo da comunidade"
+   },
+   "thanks": {
+      "message": "Obrigado!"
+   },
+   "thereIsBug": {
+      "message": "Há um bug"
+   },
+   "tooComplicated": {
+      "message": "Muito complicado"
+   },
+   "turnStyleOn": {
+      "message": "Adicionar estilo"
+   },
+   "unsupportedButtonText": {
+      "message": "Homens"
+   },
+   "unsupportedViewSubtitle": {
+      "message": "*Não você. Cromo. *\u003Cbr/>Stylish não aparece em\u003Cbr/>algumas páginas, parece que\u003Cbr/>essa é uma delas."
+   },
+   "unsupportedViewTitle": {
+      "message": "Ah. Party Poopers"
+   },
+   "website": {
+      "message": "Site"
+   }
+}

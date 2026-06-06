@@ -30,7 +30,9 @@
     border-radius: inherit;
     scale: 0.85;
     z-index: -10;
-    transition: all 0.15s ease-out;
+    transition:
+      scale 0.15s ease-out,
+      background-color 0.15s ease-out;
   }
   &:hover::before {
     background-color: var(--btn-plain-bg-hover);
@@ -59,7 +61,9 @@ html {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0.15) 60%, rgba(255, 255, 255, 0.05) 80%, transparent 100%);
     pointer-events: none;
     z-index: 20;
-    transition: all var(--duration-medium) var(--ease-standard);
+    transition:
+        opacity var(--duration-medium) var(--ease-standard),
+        background-color var(--duration-medium) var(--ease-standard);
 }
 
 /* 暗色主题下的渐变高光效果 */
@@ -245,12 +249,18 @@ html {
 
     /* Overlay 模式下，滚动后提高导航栏背景模糊度，增强与正文区分 */
     .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
-        backdrop-filter: blur(20px) !important;
+        backdrop-filter: blur(14px) !important;
      
     }
 
     :root.dark .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
-        backdrop-filter: blur(20px) !important;
+        backdrop-filter: blur(14px) !important;
+    }
+
+    html.firefly-low-power .wallpaper-transparent #navbar.navbar-sticky-shadow > div,
+    html.firefly-low-power:root.dark .wallpaper-transparent #navbar.navbar-sticky-shadow > div {
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
     }
 
     @media (max-width: 768px), (pointer: coarse) {
@@ -444,6 +454,27 @@ html {
     @apply cursor-zoom-in
 }
 
+html.firefly-page-hidden .typewriter::after,
+html.firefly-page-hidden #progress-bar.loading,
+html.firefly-page-hidden .spinner,
+html.firefly-page-hidden .scroll-down-indicator *,
+html.firefly-page-hidden .waves > .parallax use,
+html.firefly-page-hidden .widget-loading::before,
+html.firefly-page-hidden .music-player *,
+html.firefly-scroll-active .scroll-down-indicator * {
+    animation-play-state: paused !important;
+}
+
+@supports (content-visibility: auto) {
+    @media screen {
+        .post-card-wrapper,
+        .widget-container {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 15rem;
+        }
+    }
+}
+
 .custom-md img[src^="/__local_svg/"] {
     transition: filter 0.2s ease;
 }
@@ -470,7 +501,9 @@ html {
     left: calc(50% - 1px);
     border-left: 2px dashed var(--line-color);
     pointer-events: none;
-    transition: all 0.3s;
+    transition:
+        transform 0.3s,
+        border-color 0.3s;
     transform: translateY(-50%);
 }
 

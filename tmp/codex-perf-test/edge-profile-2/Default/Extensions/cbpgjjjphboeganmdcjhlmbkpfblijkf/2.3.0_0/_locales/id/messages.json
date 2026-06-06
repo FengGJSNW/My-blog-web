@@ -1,0 +1,196 @@
+{
+   "about": {
+      "description": "About menu item",
+      "message": "Tentang"
+   },
+   "cancel": {
+      "description": "Cancel button text",
+      "message": "Batal"
+   },
+   "captureError": {
+      "description": "Generic capture error message",
+      "message": "Gagal menangkap halaman"
+   },
+   "clientSide": {
+      "description": "Client-side PDF generation option",
+      "message": "Sisi-klien (lebih cepat, bekerja offline)"
+   },
+   "createdBy": {
+      "description": "Created by text",
+      "message": "Dibuat oleh"
+   },
+   "currentVersion": {
+      "description": "Current version display text",
+      "message": "Versi saat ini: $VERSION$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "developer": {
+      "description": "Developer section title",
+      "message": "Pengembang"
+   },
+   "donate": {
+      "description": "Donate button text",
+      "message": "Donasi"
+   },
+   "extDescription": {
+      "description": "Extension description",
+      "message": "Halaman web ke gambar dan PDF dengan dukungan halaman penuh dan mode pembaca."
+   },
+   "extName": {
+      "description": "Extension name",
+      "message": "PageSaver - Halaman Web ke PDF atau Gambar"
+   },
+   "extShortName": {
+      "description": "Extension short name",
+      "message": "PageSaver"
+   },
+   "extractTextFromImage": {
+      "description": "Menu item to extract text from an image",
+      "message": "Ekstrak Teks dari Gambar"
+   },
+   "height": {
+      "description": "Height input label",
+      "message": "Tinggi:"
+   },
+   "inReaderMode": {
+      "description": "Reader mode indicator",
+      "message": "dalam Mode Pembaca"
+   },
+   "lockAspectRatio": {
+      "description": "Lock aspect ratio checkbox label",
+      "message": "Kunci Rasio Aspek"
+   },
+   "multiPage": {
+      "description": "Multi-page PDF option",
+      "message": "Multi-Halaman"
+   },
+   "pdfPaginationMode": {
+      "description": "PDF pagination preference label",
+      "message": "Mode Halaman PDF"
+   },
+   "pdfReaderMode": {
+      "description": "PDF reader mode generation preference label",
+      "message": "Pembuatan PDF Mode Pembaca"
+   },
+   "reportIssue": {
+      "description": "Report issue menu item text",
+      "message": "Laporkan Masalah"
+   },
+   "save": {
+      "description": "Save button text",
+      "message": "Simpan"
+   },
+   "saveAsImage": {
+      "description": "Menu item to save as image",
+      "message": "Simpan sebagai Gambar"
+   },
+   "saveAsMarkdown": {
+      "description": "Menu item to save as Markdown in reader mode",
+      "message": "Simpan sebagai Markdown"
+   },
+   "saveAsPDF": {
+      "description": "Menu item to save as PDF",
+      "message": "Simpan sebagai PDF"
+   },
+   "saveAsPDFReader": {
+      "description": "Menu item to save as PDF in reader mode",
+      "message": "Simpan sebagai PDF (Mode Pembaca)"
+   },
+   "screenshotElement": {
+      "description": "DOM element screenshot context menu item",
+      "message": "Pilih elemen"
+   },
+   "screenshotMenu": {
+      "description": "Screenshot context menu parent",
+      "message": "Ambil Tangkapan Layar"
+   },
+   "screenshotSelection": {
+      "description": "Selected area screenshot context menu item",
+      "message": "Pilih area"
+   },
+   "screenshotVisible": {
+      "description": "Visible viewport screenshot context menu item",
+      "message": "Area yang terlihat"
+   },
+   "serverSide": {
+      "description": "Server-side PDF generation option",
+      "message": "Sisi-server (kualitas lebih baik)"
+   },
+   "singlePage": {
+      "description": "Single page PDF option",
+      "message": "Halaman Tunggal (default)"
+   },
+   "statusCapturing": {
+      "description": "Status message while capturing",
+      "message": "Menangkap halaman sebagai $FORMAT$$READER$...",
+      "placeholders": {
+         "format": {
+            "content": "$1"
+         },
+         "reader": {
+            "content": "$2"
+         }
+      }
+   },
+   "statusError": {
+      "description": "Status message on error",
+      "message": "Kesalahan: $ERROR$",
+      "placeholders": {
+         "error": {
+            "content": "$1"
+         }
+      }
+   },
+   "statusSuccess": {
+      "description": "Status message on successful save",
+      "message": "Halaman berhasil disimpan!"
+   },
+   "submitLink": {
+      "description": "Menu item to submit current tab link to Pixelstech",
+      "message": "Simpan untuk Nanti"
+   },
+   "summarizePage": {
+      "description": "Menu item to summarize current page using AI",
+      "message": "Ringkas Halaman"
+   },
+   "supportDevelopment": {
+      "description": "Support card title",
+      "message": "Dukung pengembangan"
+   },
+   "translateTo": {
+      "description": "Parent menu for translation",
+      "message": "Terjemahkan ke"
+   },
+   "translateToChineseSimplified": {
+      "description": "Translate target language Chinese Simplified",
+      "message": "Bahasa Mandarin (Sederhana)"
+   },
+   "translateToChineseTraditional": {
+      "description": "Translate target language Chinese Traditional",
+      "message": "Bahasa Mandarin (Tradisional)"
+   },
+   "translateToEnglish": {
+      "description": "Translate target language English",
+      "message": "Bahasa Inggris"
+   },
+   "translateToJapanese": {
+      "description": "Translate target language Japanese",
+      "message": "Bahasa Jepang"
+   },
+   "translateToVietnamese": {
+      "description": "Translate target language Vietnamese",
+      "message": "Bahasa Vietnam"
+   },
+   "version": {
+      "description": "Version menu item",
+      "message": "Versi"
+   },
+   "width": {
+      "description": "Width input label",
+      "message": "Lebar:"
+   }
+}

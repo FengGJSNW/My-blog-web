@@ -200,3 +200,14 @@ html[data-waves-enabled="true"] #wallpaper-gradient {
 html[data-wallpaper-mode="none"] #wallpaper-gradient {
     display: none !important;
 }
+
+html.firefly-page-hidden .waves > .parallax use,
+html.firefly-scroll-active.firefly-low-power .waves > .parallax use {
+    animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .waves > .parallax use {
+        animation: none !important;
+    }
+}

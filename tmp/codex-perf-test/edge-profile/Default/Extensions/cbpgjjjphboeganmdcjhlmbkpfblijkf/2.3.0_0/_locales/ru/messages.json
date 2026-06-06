@@ -1,0 +1,196 @@
+{
+   "about": {
+      "description": "About menu item",
+      "message": "О расширении"
+   },
+   "cancel": {
+      "description": "Cancel button text",
+      "message": "Отмена"
+   },
+   "captureError": {
+      "description": "Generic capture error message",
+      "message": "Не удалось захватить страницу"
+   },
+   "clientSide": {
+      "description": "Client-side PDF generation option",
+      "message": "На стороне клиента (быстрее, работает офлайн)"
+   },
+   "createdBy": {
+      "description": "Created by text",
+      "message": "Создано"
+   },
+   "currentVersion": {
+      "description": "Current version display text",
+      "message": "Текущая версия: $VERSION$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "developer": {
+      "description": "Developer section title",
+      "message": "Разработчик"
+   },
+   "donate": {
+      "description": "Donate button text",
+      "message": "Пожертвовать"
+   },
+   "extDescription": {
+      "description": "Extension description",
+      "message": "Конвертер веб-страниц в изображения и PDF с поддержкой полной страницы и режимом чтения."
+   },
+   "extName": {
+      "description": "Extension name",
+      "message": "PageSaver - Веб-страница в PDF или изображение"
+   },
+   "extShortName": {
+      "description": "Extension short name",
+      "message": "PageSaver"
+   },
+   "extractTextFromImage": {
+      "description": "Menu item to extract text from an image",
+      "message": "Извлечь текст из изображения"
+   },
+   "height": {
+      "description": "Height input label",
+      "message": "Высота:"
+   },
+   "inReaderMode": {
+      "description": "Reader mode indicator",
+      "message": "в режиме чтения"
+   },
+   "lockAspectRatio": {
+      "description": "Lock aspect ratio checkbox label",
+      "message": "Сохранить пропорции"
+   },
+   "multiPage": {
+      "description": "Multi-page PDF option",
+      "message": "Многостраничный"
+   },
+   "pdfPaginationMode": {
+      "description": "PDF pagination preference label",
+      "message": "Режим страниц PDF"
+   },
+   "pdfReaderMode": {
+      "description": "PDF reader mode generation preference label",
+      "message": "Генерация PDF в режиме чтения"
+   },
+   "reportIssue": {
+      "description": "Report issue menu item text",
+      "message": "Сообщить о проблеме"
+   },
+   "save": {
+      "description": "Save button text",
+      "message": "Сохранить"
+   },
+   "saveAsImage": {
+      "description": "Menu item to save as image",
+      "message": "Сохранить как изображение"
+   },
+   "saveAsMarkdown": {
+      "description": "Menu item to save as Markdown in reader mode",
+      "message": "Сохранить как Markdown"
+   },
+   "saveAsPDF": {
+      "description": "Menu item to save as PDF",
+      "message": "Сохранить как PDF"
+   },
+   "saveAsPDFReader": {
+      "description": "Menu item to save as PDF in reader mode",
+      "message": "Сохранить как PDF (Режим чтения)"
+   },
+   "screenshotElement": {
+      "description": "DOM element screenshot context menu item",
+      "message": "Выбрать элемент"
+   },
+   "screenshotMenu": {
+      "description": "Screenshot context menu parent",
+      "message": "Сделать снимок экрана"
+   },
+   "screenshotSelection": {
+      "description": "Selected area screenshot context menu item",
+      "message": "Выбрать область"
+   },
+   "screenshotVisible": {
+      "description": "Visible viewport screenshot context menu item",
+      "message": "Видимая область"
+   },
+   "serverSide": {
+      "description": "Server-side PDF generation option",
+      "message": "На стороне сервера (лучшее качество)"
+   },
+   "singlePage": {
+      "description": "Single page PDF option",
+      "message": "Одностраничный (по умолчанию)"
+   },
+   "statusCapturing": {
+      "description": "Status message while capturing",
+      "message": "Захват страницы в формате $FORMAT$$READER$...",
+      "placeholders": {
+         "format": {
+            "content": "$1"
+         },
+         "reader": {
+            "content": "$2"
+         }
+      }
+   },
+   "statusError": {
+      "description": "Status message on error",
+      "message": "Ошибка: $ERROR$",
+      "placeholders": {
+         "error": {
+            "content": "$1"
+         }
+      }
+   },
+   "statusSuccess": {
+      "description": "Status message on successful save",
+      "message": "Страница успешно сохранена!"
+   },
+   "submitLink": {
+      "description": "Menu item to submit current tab link to Pixelstech",
+      "message": "Сохранить на потом"
+   },
+   "summarizePage": {
+      "description": "Menu item to summarize current page using AI",
+      "message": "Резюмировать страницу"
+   },
+   "supportDevelopment": {
+      "description": "Support card title",
+      "message": "Поддержать разработку"
+   },
+   "translateTo": {
+      "description": "Parent menu for translation",
+      "message": "Перевести на"
+   },
+   "translateToChineseSimplified": {
+      "description": "Translate target language Chinese Simplified",
+      "message": "Китайский (упрощённый)"
+   },
+   "translateToChineseTraditional": {
+      "description": "Translate target language Chinese Traditional",
+      "message": "Китайский (традиционный)"
+   },
+   "translateToEnglish": {
+      "description": "Translate target language English",
+      "message": "Английский"
+   },
+   "translateToJapanese": {
+      "description": "Translate target language Japanese",
+      "message": "Японский"
+   },
+   "translateToVietnamese": {
+      "description": "Translate target language Vietnamese",
+      "message": "Вьетнамский"
+   },
+   "version": {
+      "description": "Version menu item",
+      "message": "Версия"
+   },
+   "width": {
+      "description": "Width input label",
+      "message": "Ширина:"
+   }
+}

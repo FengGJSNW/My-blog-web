@@ -1,0 +1,196 @@
+{
+   "about": {
+      "description": "About menu item",
+      "message": "Giới thiệu"
+   },
+   "cancel": {
+      "description": "Cancel button text",
+      "message": "Hủy"
+   },
+   "captureError": {
+      "description": "Generic capture error message",
+      "message": "Không thể chụp trang"
+   },
+   "clientSide": {
+      "description": "Client-side PDF generation option",
+      "message": "Phía máy khách (nhanh hơn, hoạt động ngoại tuyến)"
+   },
+   "createdBy": {
+      "description": "Created by text",
+      "message": "Được tạo bởi"
+   },
+   "currentVersion": {
+      "description": "Current version display text",
+      "message": "Phiên bản hiện tại: $VERSION$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "developer": {
+      "description": "Developer section title",
+      "message": "Nhà phát triển"
+   },
+   "donate": {
+      "description": "Donate button text",
+      "message": "Ủng hộ"
+   },
+   "extDescription": {
+      "description": "Extension description",
+      "message": "Chuyển đổi trang web thành hình ảnh và PDF với hỗ trợ trang đầy đủ và chế độ đọc."
+   },
+   "extName": {
+      "description": "Extension name",
+      "message": "PageSaver - Chuyển Trang Web thành PDF hoặc Hình Ảnh"
+   },
+   "extShortName": {
+      "description": "Extension short name",
+      "message": "PageSaver"
+   },
+   "extractTextFromImage": {
+      "description": "Menu item to extract text from an image",
+      "message": "Trích xuất Văn bản từ Hình ảnh"
+   },
+   "height": {
+      "description": "Height input label",
+      "message": "Chiều cao:"
+   },
+   "inReaderMode": {
+      "description": "Reader mode indicator",
+      "message": "trong Chế độ Đọc"
+   },
+   "lockAspectRatio": {
+      "description": "Lock aspect ratio checkbox label",
+      "message": "Khóa Tỷ lệ Khung hình"
+   },
+   "multiPage": {
+      "description": "Multi-page PDF option",
+      "message": "Nhiều Trang"
+   },
+   "pdfPaginationMode": {
+      "description": "PDF pagination preference label",
+      "message": "Chế độ Trang PDF"
+   },
+   "pdfReaderMode": {
+      "description": "PDF reader mode generation preference label",
+      "message": "Tạo PDF Chế độ Đọc"
+   },
+   "reportIssue": {
+      "description": "Report issue menu item text",
+      "message": "Báo lỗi"
+   },
+   "save": {
+      "description": "Save button text",
+      "message": "Lưu"
+   },
+   "saveAsImage": {
+      "description": "Menu item to save as image",
+      "message": "Lưu dưới dạng Hình ảnh"
+   },
+   "saveAsMarkdown": {
+      "description": "Menu item to save as Markdown in reader mode",
+      "message": "Lưu dưới dạng Markdown"
+   },
+   "saveAsPDF": {
+      "description": "Menu item to save as PDF",
+      "message": "Lưu dưới dạng PDF"
+   },
+   "saveAsPDFReader": {
+      "description": "Menu item to save as PDF in reader mode",
+      "message": "Lưu dưới dạng PDF (Chế độ Đọc)"
+   },
+   "screenshotElement": {
+      "description": "DOM element screenshot context menu item",
+      "message": "Chọn phần tử"
+   },
+   "screenshotMenu": {
+      "description": "Screenshot context menu parent",
+      "message": "Chụp ảnh màn hình"
+   },
+   "screenshotSelection": {
+      "description": "Selected area screenshot context menu item",
+      "message": "Chọn vùng"
+   },
+   "screenshotVisible": {
+      "description": "Visible viewport screenshot context menu item",
+      "message": "Vùng hiển thị"
+   },
+   "serverSide": {
+      "description": "Server-side PDF generation option",
+      "message": "Phía máy chủ (chất lượng tốt hơn)"
+   },
+   "singlePage": {
+      "description": "Single page PDF option",
+      "message": "Một Trang (mặc định)"
+   },
+   "statusCapturing": {
+      "description": "Status message while capturing",
+      "message": "Đang chụp trang dưới dạng $FORMAT$$READER$...",
+      "placeholders": {
+         "format": {
+            "content": "$1"
+         },
+         "reader": {
+            "content": "$2"
+         }
+      }
+   },
+   "statusError": {
+      "description": "Status message on error",
+      "message": "Lỗi: $ERROR$",
+      "placeholders": {
+         "error": {
+            "content": "$1"
+         }
+      }
+   },
+   "statusSuccess": {
+      "description": "Status message on successful save",
+      "message": "Trang đã được lưu thành công!"
+   },
+   "submitLink": {
+      "description": "Menu item to submit current tab link to Pixelstech",
+      "message": "Lưu để đọc sau"
+   },
+   "summarizePage": {
+      "description": "Mục menu để tóm tắt trang hiện tại bằng AI",
+      "message": "Tóm tắt trang"
+   },
+   "supportDevelopment": {
+      "description": "Support card title",
+      "message": "Hỗ trợ phát triển"
+   },
+   "translateTo": {
+      "description": "Parent menu for translation",
+      "message": "Dịch sang"
+   },
+   "translateToChineseSimplified": {
+      "description": "Translate target language Chinese Simplified",
+      "message": "Tiếng Trung (Giản thể)"
+   },
+   "translateToChineseTraditional": {
+      "description": "Translate target language Chinese Traditional",
+      "message": "Tiếng Trung (Phồn thể)"
+   },
+   "translateToEnglish": {
+      "description": "Translate target language English",
+      "message": "Tiếng Anh"
+   },
+   "translateToJapanese": {
+      "description": "Translate target language Japanese",
+      "message": "Tiếng Nhật"
+   },
+   "translateToVietnamese": {
+      "description": "Translate target language Vietnamese",
+      "message": "Tiếng Việt"
+   },
+   "version": {
+      "description": "Version menu item",
+      "message": "Phiên bản"
+   },
+   "width": {
+      "description": "Width input label",
+      "message": "Chiều rộng:"
+   }
+}

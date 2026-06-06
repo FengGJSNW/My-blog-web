@@ -261,6 +261,10 @@ const remoteReferrerPolicy =
 		pointer-events: none;
 	}
 
+	.cover-image-container[data-loading="false"] .spinner {
+		animation: none;
+	}
+
 	/* 错误状态隐藏加载动画 */
 	.cover-image-container[data-error="true"] .loading-spinner {
 		display: none;
@@ -294,6 +298,14 @@ const remoteReferrerPolicy =
 		to {
 			transform: rotate(360deg);
 		}
+	}
+
+	:global(html.firefly-page-hidden) .spinner {
+		animation-play-state: paused;
+	}
+
+	:global(html.firefly-low-power) .spinner {
+		animation-duration: 1.2s;
 	}
 
 	/* 图片样式 */

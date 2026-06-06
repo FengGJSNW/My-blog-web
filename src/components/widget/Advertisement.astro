@@ -253,14 +253,18 @@ const paddingClass = getPaddingStyle();
     border-radius: var(--radius-large);
     color: var(--primary-text-color);
     /* padding由配置控制，不在CSS中设置 */
-    transition: all 0.3s ease;
+    transition:
+      transform 0.24s ease,
+      box-shadow 0.24s ease,
+      background-color 0.24s ease,
+      border-color 0.24s ease;
 
     /* 阴影效果跟随主题 */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
     /* 深色模式下的特殊处理 */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
 
   /* 深色模式阴影 */
@@ -293,8 +297,8 @@ const paddingClass = getPaddingStyle();
 
   .close-ad-btn {
     opacity: 0;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(8px);
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    backdrop-filter: blur(6px);
   }
 
   .advertisement-widget:hover .close-ad-btn {
@@ -304,7 +308,7 @@ const paddingClass = getPaddingStyle();
   /* 主题色按钮效果 */
   .advertisement-widget a[class*="bg-[oklch"] {
     background: oklch(0.75 0.14 var(--hue));
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
   .advertisement-widget a[class*="bg-[oklch"]:hover {
@@ -315,7 +319,7 @@ const paddingClass = getPaddingStyle();
 
   /* 图片悬停效果 */
   .advertisement-widget img {
-    transition: all 0.3s ease;
+    transition: filter 0.24s ease;
   }
 
   .advertisement-widget:hover img {
@@ -332,7 +336,8 @@ const paddingClass = getPaddingStyle();
       margin: 0; /* 与其他组件保持一致的边距（由外层布局控制） */
       border-radius: var(--radius-large);
       /* 保持左右边框，避免与其他卡片不一致 */
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
 
     .advertisement-widget:hover {
@@ -347,6 +352,12 @@ const paddingClass = getPaddingStyle();
         0 2px 12px rgba(0, 0, 0, 0.2),
         0 0 0 1px oklch(0.75 0.14 var(--hue));
     }
+  }
+
+  :global(html.firefly-low-power) .advertisement-widget,
+  :global(html.firefly-low-power) .close-ad-btn {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   /* 高对比度模式支持 */

@@ -1,0 +1,16 @@
+{
+    "selectors": {
+      "chatContainer": "div[role=\"presentation\"]",
+      "messageAuthorRole": "div[data-message-author-role]",
+      "userMessage": "div[data-message-author-role=\"user\"]",
+      "assistantMessage": "div[data-message-author-role=\"assistant\"]",
+      "codeBlock": "PRE",
+      "codeLanguage": "div > div",
+      "codeContent": "code",
+      "activeChatTitle": "li.relative a",
+      "activeChatTitleDiv": "div"
+    },
+    "config": {
+      "reverseMessageOrder": false
+    }
+  }

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>__MSG_extName__</title>
+  <style>
+    body {
+      width: 250px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+    }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 8px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    .status {
+      margin-top: 10px;
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      max-width: 100%;
+    }
+    .divider {
+      margin: 15px 0;
+      border-top: 1px solid #eee;
+    }
+    .about {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.4;
+    }
+    .about h3 {
+      color: #333;
+      margin: 10px 0 5px 0;
+      font-size: 14px;
+    }
+    .about a {
+      color: #4CAF50;
+      text-decoration: none;
+    }
+    .about a:hover {
+      text-decoration: underline;
+    }
+    .separator {
+      color: #bbb;
+      margin: 0 6px;
+    }
+    /* ===== Support Card ===== */
+    .support-card {
+      margin-top: 8px;
+      padding: 6px 8px;
+      background: #fff5f5;
+      border: 1px solid #ffd6d6;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #444;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .support-card .title {
+      font-weight: 600;
+      color: #cc3b3b;
+      margin: 0;
+      font-size: 12px;
+    }
+    .support-card .actions { margin: 0; }
+    .donate-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background-color: #ff6b6b;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .donate-button:hover { background-color: #ff5252; }
+    .donate-icon { width: 12px; height: 12px; display: inline-block; }
+    /* Ensure link color inside the about section doesn't override donate button */
+    .about a.donate-button,
+    .about a.donate-button:hover,
+    .about a.donate-button span { color: #ffffff !important; text-decoration: none; }
+    .preference-group {
+      margin-top: 10px;
+      padding: 8px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .preference-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .preference-group select {
+      width: 100%;
+      padding: 4px;
+      border-radius: 3px;
+      border: 1px solid #ddd;
+    }
+    .donate-link {
+      color: #4CAF50;
+      text-decoration: none;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      font-size: 12px;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    .donate-link:hover {
+      text-decoration: underline;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="button-group">
+    <button id="pdfReaderBtn">__MSG_saveAsPDFReader__</button>
+    <button id="pdfBtn">__MSG_saveAsPDF__</button>
+    <button id="pngBtn">__MSG_saveAsImage__</button>
+    <button id="markdownBtn">__MSG_saveAsMarkdown__</button>
+  </div>
+  <div id="status" class="status"></div>
+
+  <div class="preference-group">
+    <label for="pdfPaginationMode">__MSG_pdfPaginationMode__:</label>
+    <select id="pdfPaginationMode">
+      <option value="single">__MSG_singlePage__</option>
+      <option value="multi">__MSG_multiPage__</option>
+    </select>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="about">    
+    <h3>__MSG_developer__</h3>
+    <p>__MSG_createdBy__ <a href="https://www.pixelstech.net" target="_blank">PixelsTech</a><span class="separator" aria-hidden="true">|</span><span>__MSG_version__ <span id="version"></span></span></p>
+    <div class="support-card" role="group" aria-label="Support">
+      <span class="title">__MSG_supportDevelopment__</span>
+      <div class="actions">
+        <a href="#" id="donateCtaBtn" class="donate-button">
+          <svg class="donate-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#fff" d="M12.1 21.35l-1.1-1.02C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.74 0 3.41.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18 4 20 6 20 8.5c0 3.78-3.4 6.86-8.9 11.83l-1 1.02z"/></svg>
+          <span>__MSG_donate__</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PageSaver Screenshot Editor</title>
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="icons/logo.png" alt="PageSaver">
+      <div>
+        <h1>PageSaver Screenshot</h1>
+        <p id="source-label">Loading capture</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <select id="export-format" aria-label="Export format">
+        <option value="png">PNG</option>
+        <option value="jpg">JPG</option>
+        <option value="webp">WebP</option>
+        <option value="pdf">PDF</option>
+      </select>
+      <button id="download-btn" type="button" class="primary">Download</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="toolrail" aria-label="Editing tools">
+      <button type="button" class="tool active" data-tool="pen" title="Pen">Pen</button>
+      <button type="button" class="tool" data-tool="highlight" title="Highlighter">Mark</button>
+      <button type="button" class="tool" data-tool="rect" title="Rectangle">Box</button>
+      <button type="button" class="tool" data-tool="arrow" title="Arrow">Arrow</button>
+      <button type="button" class="tool" data-tool="text" title="Text">Text</button>
+      <button type="button" class="tool" data-tool="blur" title="Blur">Blur</button>
+      <button type="button" class="tool" data-tool="pixelate" title="Pixelate">Pixel</button>
+      <button type="button" class="tool" data-tool="crop" title="Crop">Crop</button>
+
+      <div class="tool-group">
+        <label for="color-input">Color</label>
+        <input id="color-input" type="color" value="#2f8f3a">
+      </div>
+      <div class="tool-group">
+        <label for="size-input">Size</label>
+        <input id="size-input" type="range" min="2" max="30" step="1" value="5">
+      </div>
+      <div class="tool-group split">
+        <button id="undo-btn" type="button" title="Undo">Undo</button>
+        <button id="redo-btn" type="button" title="Redo">Redo</button>
+      </div>
+      <div class="tool-group split">
+        <button id="zoom-out-btn" type="button" title="Zoom out">-</button>
+        <button id="zoom-in-btn" type="button" title="Zoom in">+</button>
+      </div>
+      <button id="reset-zoom-btn" type="button" class="rail-action">Fit</button>
+      <button id="reset-image-btn" type="button" class="rail-action">Reset</button>
+    </aside>
+
+    <section class="workspace" aria-label="Screenshot workspace">
+      <div class="canvas-scroll" id="canvas-scroll">
+        <div class="canvas-stage" id="canvas-stage">
+          <canvas id="editor-canvas"></canvas>
+          <div id="redaction-overlay" class="redaction-overlay"></div>
+          <div id="drag-preview" class="drag-preview"></div>
+        </div>
+      </div>
+      <div class="statusbar">
+        <span id="status-text">Preparing editor</span>
+        <span id="meta-text"></span>
+        <span id="zoom-label">100%</span>
+      </div>
+    </section>
+
+    <aside class="sidepanel">
+      <div class="panel-head">
+        <h2>Redaction</h2>
+        <button id="apply-all-redactions" type="button">Apply all</button>
+      </div>
+      <div id="redaction-list" class="redaction-list"></div>
+      <footer class="editor-about" aria-label="Editor information">
+        <div>
+          <span class="about-label">Developer</span>
+          <a id="developer-link" href="https://pagesaver.pixelstech.net" target="_blank" rel="noopener">PixelsTech</a>
+        </div>
+        <div>
+          <span class="about-label">Version</span>
+          <strong id="extension-version">2.4.0</strong>
+        </div>
+        <button id="donate-btn" type="button" class="donate-btn">Donate</button>
+      </footer>
+    </aside>
+  </main>
+
+  <script src="jspdf.umd.min.js"></script>
+  <script src="editor.js"></script>
+</body>
+</html>

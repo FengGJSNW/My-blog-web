@@ -237,6 +237,17 @@ const descriptionText = description || remarkPluginFrontmatter.excerpt || "";
 </div>
 
 <style define:vars={{ coverWidth, descriptionClampLines }}>
+  .post-card-wrapper {
+    contain: layout style paint;
+  }
+
+  @supports (content-visibility: auto) {
+    .post-card-wrapper {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 15rem;
+    }
+  }
+
   .description-clamped {
     display: -webkit-box;
     -webkit-box-orient: vertical;

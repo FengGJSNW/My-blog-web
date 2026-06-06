@@ -253,6 +253,15 @@ const config = sakuraConfig;
 
 				const animate = () => {
 					if (!this.ctx || !this.canvas || !this.sakuraList) return;
+					const root = document.documentElement;
+					if (
+						document.hidden ||
+						(root.classList.contains('firefly-low-power') &&
+							root.classList.contains('firefly-scroll-active'))
+					) {
+						this.animationId = requestAnimationFrame(animate);
+						return;
+					}
 
 					this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 					this.sakuraList.update();

@@ -1,0 +1,196 @@
+{
+   "about": {
+      "description": "About menu item",
+      "message": "概要"
+   },
+   "cancel": {
+      "description": "Cancel button text",
+      "message": "キャンセル"
+   },
+   "captureError": {
+      "description": "Generic capture error message",
+      "message": "ページのキャプチャに失敗しました"
+   },
+   "clientSide": {
+      "description": "Client-side PDF generation option",
+      "message": "クライアント側（高速、オフライン対応）"
+   },
+   "createdBy": {
+      "description": "Created by text",
+      "message": "作成者"
+   },
+   "currentVersion": {
+      "description": "Current version display text",
+      "message": "現在のバージョン：$VERSION$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "developer": {
+      "description": "Developer section title",
+      "message": "開発者"
+   },
+   "donate": {
+      "description": "Donate button text",
+      "message": "寄付"
+   },
+   "extDescription": {
+      "description": "Extension description",
+      "message": "ウェブページを画像やPDFに変換し、全ページ対応とリーダーモードをサポートします。"
+   },
+   "extName": {
+      "description": "Extension name",
+      "message": "PageSaver - ウェブページをPDFまたは画像に変換"
+   },
+   "extShortName": {
+      "description": "Extension short name",
+      "message": "PageSaver"
+   },
+   "extractTextFromImage": {
+      "description": "Menu item to extract text from an image",
+      "message": "画像からテキストを抽出"
+   },
+   "height": {
+      "description": "Height input label",
+      "message": "高さ："
+   },
+   "inReaderMode": {
+      "description": "Reader mode indicator",
+      "message": "リーダーモードで"
+   },
+   "lockAspectRatio": {
+      "description": "Lock aspect ratio checkbox label",
+      "message": "アスペクト比を固定"
+   },
+   "multiPage": {
+      "description": "Multi-page PDF option",
+      "message": "複数ページ"
+   },
+   "pdfPaginationMode": {
+      "description": "PDF pagination preference label",
+      "message": "PDFページモード"
+   },
+   "pdfReaderMode": {
+      "description": "PDF reader mode generation preference label",
+      "message": "PDFリーダーモード生成"
+   },
+   "reportIssue": {
+      "description": "Report issue menu item text",
+      "message": "問題を報告"
+   },
+   "save": {
+      "description": "Save button text",
+      "message": "保存"
+   },
+   "saveAsImage": {
+      "description": "Menu item to save as image",
+      "message": "画像として保存"
+   },
+   "saveAsMarkdown": {
+      "description": "Menu item to save as Markdown in reader mode",
+      "message": "Markdownとして保存"
+   },
+   "saveAsPDF": {
+      "description": "Menu item to save as PDF",
+      "message": "PDFとして保存"
+   },
+   "saveAsPDFReader": {
+      "description": "Menu item to save as PDF in reader mode",
+      "message": "PDFとして保存（リーダーモード）"
+   },
+   "screenshotElement": {
+      "description": "DOM element screenshot context menu item",
+      "message": "要素を選択"
+   },
+   "screenshotMenu": {
+      "description": "Screenshot context menu parent",
+      "message": "スクリーンショットを撮影"
+   },
+   "screenshotSelection": {
+      "description": "Selected area screenshot context menu item",
+      "message": "範囲を選択"
+   },
+   "screenshotVisible": {
+      "description": "Visible viewport screenshot context menu item",
+      "message": "表示範囲"
+   },
+   "serverSide": {
+      "description": "Server-side PDF generation option",
+      "message": "サーバー側（高品質）"
+   },
+   "singlePage": {
+      "description": "Single page PDF option",
+      "message": "単一ページ（デフォルト）"
+   },
+   "statusCapturing": {
+      "description": "Status message while capturing",
+      "message": "$FORMAT$$READER$としてページをキャプチャ中...",
+      "placeholders": {
+         "format": {
+            "content": "$1"
+         },
+         "reader": {
+            "content": "$2"
+         }
+      }
+   },
+   "statusError": {
+      "description": "Status message on error",
+      "message": "エラー：$ERROR$",
+      "placeholders": {
+         "error": {
+            "content": "$1"
+         }
+      }
+   },
+   "statusSuccess": {
+      "description": "Status message on successful save",
+      "message": "ページの保存に成功しました！"
+   },
+   "submitLink": {
+      "description": "Menu item to submit current tab link to Pixelstech",
+      "message": "あとで読む"
+   },
+   "summarizePage": {
+      "description": "AIを使用して現在のページを要約するメニュー項目",
+      "message": "ページを要約"
+   },
+   "supportDevelopment": {
+      "description": "Support card title",
+      "message": "開発を応援する"
+   },
+   "translateTo": {
+      "description": "Parent menu for translation",
+      "message": "翻訳"
+   },
+   "translateToChineseSimplified": {
+      "description": "Translate target language Chinese Simplified",
+      "message": "中国語（簡体）"
+   },
+   "translateToChineseTraditional": {
+      "description": "Translate target language Chinese Traditional",
+      "message": "中国語（繁体）"
+   },
+   "translateToEnglish": {
+      "description": "Translate target language English",
+      "message": "英語"
+   },
+   "translateToJapanese": {
+      "description": "Translate target language Japanese",
+      "message": "日本語"
+   },
+   "translateToVietnamese": {
+      "description": "Translate target language Vietnamese",
+      "message": "ベトナム語"
+   },
+   "version": {
+      "description": "Version menu item",
+      "message": "バージョン"
+   },
+   "width": {
+      "description": "Width input label",
+      "message": "幅："
+   }
+}

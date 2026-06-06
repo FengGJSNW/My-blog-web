@@ -1,0 +1,35 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "icon.png",
+         "16": "icon.png",
+         "48": "icon.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "js": [ "html2pdf.bundle.min.js", "turndown.js", "content.js" ],
+      "matches": [ "https://chatgpt.com/*" ],
+      "run_at": "document_end"
+   } ],
+   "default_locale": "zh",
+   "description": "__MSG_appDescription__",
+   "icons": {
+      "128": "icon.png",
+      "16": "icon.png",
+      "48": "icon.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkWPAEymQG5rSTy6jLzvNpLAw1pPim/1e2LtNPzecD12kngcss475+90xO8vWgAWfdaYDWC+2Gc1lGlrzVrELocwXTAY7IIy+GplHgAs8TQ2UT9oWNaifloXxnczDTFhOscpZgSswUo6LZEpSE8OblvW8C2andW4i7Ci0aJsZDTfU1nbIP3SYh1fx3h5sKYphDrjJiXP5BNpCmbREOCt95iu1WVHmCsgMCrC1eNqiBdREWjoqtHwzPtK/VfBgZ/FtBv32xl4q8fbP9dLDMwWbFoINE9v6dtwr4778Hmbf1DAWJdwUv7J95/jt9eZuzYHwOm7yFNR0EFdTlRu0ouyrCwIDAQAB",
+   "manifest_version": 3,
+   "name": "Chat Exporter",
+   "permissions": [ "activeTab", "scripting", "downloads", "storage" ],
+   "update_url": "https://edge.microsoft.com/extensionwebstorebase/v1/crx",
+   "version": "1.0.1",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "rules.json" ]
+   } ]
+}

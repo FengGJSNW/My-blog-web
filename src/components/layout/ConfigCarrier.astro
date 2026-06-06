@@ -9,3 +9,54 @@ import { backgroundWallpaper, siteConfig } from "@/config";
   data-wallpaper-mode={backgroundWallpaper.mode}
 >
 </div>
+
+<script is:inline>
+  (function initFireflyPerformanceState() {
+    if (window.__fireflyPerformanceStateInit) return;
+    window.__fireflyPerformanceStateInit = true;
+
+    var root = document.documentElement;
+    var scrollTimer = 0;
+    var coarsePointer = window.matchMedia("(pointer: coarse)");
+    var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function isLowPowerDevice() {
+      var nav = navigator || {};
+      return (
+        coarsePointer.matches ||
+        window.innerWidth < 768 ||
+        reducedMotion.matches ||
+        (typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency <= 4) ||
+        (typeof nav.deviceMemory === "number" && nav.deviceMemory <= 4)
+      );
+    }
+
+    function updatePowerClass() {
+      root.classList.toggle("firefly-low-power", isLowPowerDevice());
+    }
+
+    function updateVisibilityClass() {
+      root.classList.toggle("firefly-page-hidden", document.hidden);
+    }
+
+    function markScrolling() {
+      root.classList.add("firefly-scroll-active");
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(function () {
+        root.classList.remove("firefly-scroll-active");
+      }, 180);
+    }
+
+    updatePowerClass();
+    updateVisibilityClass();
+    window.addEventListener("resize", updatePowerClass, { passive: true });
+    if (typeof reducedMotion.addEventListener === "function") {
+      reducedMotion.addEventListener("change", updatePowerClass);
+    }
+    if (typeof coarsePointer.addEventListener === "function") {
+      coarsePointer.addEventListener("change", updatePowerClass);
+    }
+    document.addEventListener("visibilitychange", updateVisibilityClass);
+    window.addEventListener("scroll", markScrolling, { passive: true });
+  })();
+</script>

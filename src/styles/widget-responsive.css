@@ -34,15 +34,23 @@
 /* 基础侧边栏样式 */
 #dynamic-sidebar {
   width: var(--sidebar-width-desktop);
-  transition: all var(--widget-animation-duration) var(--widget-animation-timing);
+  transition:
+    width var(--widget-animation-duration) var(--widget-animation-timing),
+    padding var(--widget-animation-duration) var(--widget-animation-timing);
   position: relative;
 }
 
 /* 组件容器基础样式 */
 .widget-container {
   min-height: var(--widget-min-height);
-  transition: all var(--widget-animation-duration) var(--widget-animation-timing);
+  transition:
+    transform var(--widget-animation-duration) var(--widget-animation-timing),
+    opacity var(--widget-animation-duration) var(--widget-animation-timing),
+    box-shadow var(--widget-animation-duration) var(--widget-animation-timing),
+    background-color var(--widget-animation-duration) var(--widget-animation-timing),
+    border-color var(--widget-animation-duration) var(--widget-animation-timing);
   overflow: hidden;
+  contain: layout style paint;
 }
 
 /* 组件悬停效果 */

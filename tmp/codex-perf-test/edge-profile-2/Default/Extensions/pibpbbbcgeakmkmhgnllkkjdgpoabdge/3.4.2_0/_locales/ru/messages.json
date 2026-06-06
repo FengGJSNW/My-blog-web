@@ -1,0 +1,259 @@
+{
+   "InappropriateContent": {
+      "message": "Неприемлемый контент"
+   },
+   "WhatsWrong": {
+      "message": "В чем дело?"
+   },
+   "agree": {
+      "message": "Принимаю"
+   },
+   "allOtherStyles": {
+      "message": "Все остальные стили"
+   },
+   "appDesc": {
+      "message": "С сотнями тысяч тем, скинов и бесплатных фонов вы можете настраивать любой сайт с собственной цветовой схемой в один клик."
+   },
+   "appName": {
+      "message": "Stylish — настраиваемые темы для любого сайта"
+   },
+   "browseMore": {
+      "message": "Просмотр больше!"
+   },
+   "cancel": {
+      "message": "Отменить"
+   },
+   "createNewStyle": {
+      "message": "Создать новый стиль"
+   },
+   "currentWebsite": {
+      "message": "Текущий веб-сайт"
+   },
+   "didNotFind": {
+      "message": "Не нашел то, что искал"
+   },
+   "editedStyleLabel": {
+      "message": "Отредактировано"
+   },
+   "editor": {
+      "message": "редактор"
+   },
+   "editorNewStyle": {
+      "message": "Новый стиль"
+   },
+   "editorPreview": {
+      "message": "Предварительный просмотр"
+   },
+   "editorRollback": {
+      "message": "Откат"
+   },
+   "editorRollbackTooltip": {
+      "message": "Откат к последней сохраненной версии"
+   },
+   "editorSave": {
+      "message": "Сохранить"
+   },
+   "editorStyleNamePlaceholder": {
+      "message": "Назовите свой стиль"
+   },
+   "enableAllStyles": {
+      "message": "Включить все стили"
+   },
+   "enjoyingStylish": {
+      "message": "Наслаждаетесь стильным?"
+   },
+   "gallery": {
+      "message": "Галерея"
+   },
+   "generalError": {
+      "message": "Произошла ошибка, попробуйте позже"
+   },
+   "getHelp": {
+      "message": "Получить помощь"
+   },
+   "getStylesFromUserStyles": {
+      "message": "Получить стили на userstyles.org"
+   },
+   "howCanWeBetter": {
+      "message": "Как нам лучше..."
+   },
+   "iKnowCSS": {
+      "message": "Я знаю CSS"
+   },
+   "login": {
+      "message": "Войти"
+   },
+   "logout": {
+      "message": "Выйти"
+   },
+   "meaning": {
+      "message": "значение"
+   },
+   "menuShowBadge": {
+      "message": "Показать количество активных стилей"
+   },
+   "myStyles": {
+      "message": "Мои стили"
+   },
+   "noStylesFoundSubtitle1": {
+      "message": "Но не просто стоять там."
+   },
+   "noStylesFoundSubtitle2": {
+      "message": "СДЕЛАЙ ОДИН!"
+   },
+   "noStylesFoundTitle1": {
+      "message": "НЕТ СТИЛЕЙ"
+   },
+   "noStylesFoundTitle2": {
+      "message": "ДЛЯ *ЭТОГО* САЙТА"
+   },
+   "noStylesMessage": {
+      "message": "Стили не установлены"
+   },
+   "off": {
+      "message": "ВЫКЛЮЧЕННЫЙ"
+   },
+   "on": {
+      "message": "На"
+   },
+   "oneClickWidgetCheckThisOne": {
+      "message": "Проверьте это!"
+   },
+   "oneClickWidgetDoNotShowAgain": {
+      "message": "Больше не показывай это"
+   },
+   "oneClickWidgetGood": {
+      "message": "хорошоооооо"
+   },
+   "oneClickWidgetIsThere": {
+      "message": "есть"
+   },
+   "oneClickWidgetLooking": {
+      "message": "Смотрящий"
+   },
+   "oneClickWidgetLooks": {
+      "message": "Выглядит"
+   },
+   "oneClickWidgetMenuTitle": {
+      "message": "Настройки предложений"
+   },
+   "oneClickWidgetMuteForPeriod": {
+      "message": "Заглушить на две недели"
+   },
+   "oneClickWidgetMuteForSite": {
+      "message": "Отключить звук для этого сайта"
+   },
+   "oneClickWidgetNewDay": {
+      "message": "Новый день"
+   },
+   "oneClickWidgetNewStyle": {
+      "message": "Новый стиль!"
+   },
+   "oneClickWidgetSeeWhatElse": {
+      "message": "Посмотрите, что еще"
+   },
+   "oneClickWidgetShowMeMore": {
+      "message": "Покажи мне больше"
+   },
+   "oneClickWidgetStyleUp": {
+      "message": "Стиль вверх"
+   },
+   "oneClickWidgetThisPage": {
+      "message": "эта страница!"
+   },
+   "oneClickWidgetTryItOut": {
+      "message": "Попробуйте"
+   },
+   "optInDisclaimer": {
+      "message": "Если вы нажмете «Отмена», вы по-прежнему сможете использовать Stylish и устанавливать стили, но только через наш "
+   },
+   "optInMsg": {
+      "message": "Мы *ЛУЧШЕ* показываем вам стили для сайтов, *КОГДА* вы их посещаете"
+   },
+   "optInMsg2": {
+      "message": "нам нужен доступ к этой информации. "
+   },
+   "optInMsg3": {
+      "message": "нам понадобится ваше согласие"
+   },
+   "privateStyleLabel": {
+      "message": "Частный"
+   },
+   "rateStylish": {
+      "message": "Оцените стильный"
+   },
+   "rateUs": {
+      "message": "Оцените нас"
+   },
+   "readPrivacy": {
+      "message": "Ознакомьтесь с политикой конфиденциальности"
+   },
+   "seeAllStyles": {
+      "message": "Посмотреть все стили"
+   },
+   "sendBrowsingDataToStylish": {
+      "message": "Отправьте деидентифицированные данные просмотра в Stylish, чтобы получить доступ к предложениям стиля через меню панели инструментов."
+   },
+   "settings": {
+      "message": "Настройки"
+   },
+   "showMe": {
+      "message": "Покажите мне!"
+   },
+   "showNumberOfStylesBadge": {
+      "message": "Показать количество стилей, активных для текущего сайта, на кнопке панели инструментов"
+   },
+   "showOneClickInstallWidget": {
+      "message": "Показать виджет предложений веб-сайтов"
+   },
+   "spreadTheWord": {
+      "message": "Распространяйте информацию, почему бы и нет"
+   },
+   "styleNotWorking": {
+      "message": "Не работает стиль"
+   },
+   "stylishExtensionStatus": {
+      "message": "Стильное расширение - $status$",
+      "placeholders": {
+         "status": {
+            "content": "1 $"
+         }
+      }
+   },
+   "stylishOptions": {
+      "message": "Стильные варианты"
+   },
+   "submitFeedback": {
+      "message": "Отправить отзыв"
+   },
+   "thankYou": {
+      "message": "Спасибо"
+   },
+   "thankYouText": {
+      "message": "Мы делаем все возможное, чтобы улучшить стиль для сообщества"
+   },
+   "thanks": {
+      "message": "Спасибо!"
+   },
+   "thereIsBug": {
+      "message": "есть ошибка"
+   },
+   "tooComplicated": {
+      "message": "Слишком сложно"
+   },
+   "turnStyleOn": {
+      "message": "Добавить стиль"
+   },
+   "unsupportedButtonText": {
+      "message": "Мех"
+   },
+   "unsupportedViewSubtitle": {
+      "message": "*Не вы. Хром.*\u003Cbr/>Стильный не может работать\u003Cbr/>несколько страниц, похоже\u003Cbr/>Это один из них."
+   },
+   "unsupportedViewTitle": {
+      "message": "Ой. тусовщики"
+   },
+   "website": {
+      "message": "Веб-сайт"
+   }
+}

@@ -79,14 +79,14 @@ const sidebarPosition = sidebarLayoutConfig.position;
 	position: absolute
 	bottom: calc(100% + 1rem)
 	right: 0
-	transition: all 0.3s ease
+	transition: transform 0.24s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, visibility 0.2s ease
 	transform: translateY(20px)
 	opacity: 0
 	pointer-events: none
 	overflow: hidden
 	box-sizing: border-box
-	backdrop-filter: blur(20px)
-	-webkit-backdrop-filter: blur(20px)
+	backdrop-filter: blur(14px)
+	-webkit-backdrop-filter: blur(14px)
 	z-index: 1001
 	
 	&.show
@@ -127,8 +127,17 @@ const sidebarPosition = sidebarLayoutConfig.position;
 
 /* 暗色主题半透明效果 */
 :global(.dark) .floating-toc-panel
-	backdrop-filter: blur(20px)
-	-webkit-backdrop-filter: blur(20px)
+	backdrop-filter: blur(14px)
+	-webkit-backdrop-filter: blur(14px)
+
+:global(html.firefly-low-power) .floating-toc-panel
+	backdrop-filter: blur(8px)
+	-webkit-backdrop-filter: blur(8px)
+
+@media (max-width: 768px), (pointer: coarse)
+	.floating-toc-panel
+		backdrop-filter: blur(8px)
+		-webkit-backdrop-filter: blur(8px)
 </style>
 
 <script>

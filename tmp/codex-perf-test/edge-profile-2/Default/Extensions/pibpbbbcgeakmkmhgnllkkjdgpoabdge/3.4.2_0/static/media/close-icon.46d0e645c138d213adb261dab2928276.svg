@@ -1,0 +1,13 @@
+<svg width="24" height="24" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="Group 1004">
+        <path id="Vector"
+              d="M0.673218 10.7393C0.673218 5.21641 5.15037 0.739258 10.6732 0.739258C16.1961 0.739258 20.6732 5.21641 20.6732 10.7393C20.6732 16.2621 16.1961 20.7393 10.6732 20.7393C5.15037 20.7393 0.673218 16.2621 0.673218 10.7393Z"
+              fill="#323232"/>
+        <g id="Group 1003">
+            <path id="Vector_2" d="M7.56982 7.63574L13.7767 13.8426" stroke="#FAF9F8" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="Vector_3" d="M13.7767 7.63574L7.56982 13.8426" stroke="#FAF9F8" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,38 @@
+Copyright Notice / 著作権表示
+
+[日本語]
+本拡張機能「Illust Downloader」および「Illust Downloader EX」に含まれる
+独自に作成したプログラム、画像、文章その他のコンテンツの著作権は、
+ORCA-SOFT に帰属します。
+
+権利者の事前の明示的な許諾なく、転載、複製、改変、再配布
+その他これらに類する行為を行うことを固く禁じます。
+
+[English]
+The copyright to the original programs, images, text, and other content
+included in these extensions, “Illust Downloader” and “Illust Downloader EX,”
+belongs to ORCA-SOFT.
+
+Any acts such as reproduction, copying, modification, redistribution,
+or other similar actions are strictly prohibited without the prior explicit
+permission of the rights holder.
+
+Copyright © 2010–2026 ORCA-SOFT. All rights reserved.
+
+Credits / Special Thanks / 謝辞
+敬称略・順不同 / In no particular order
+
+Johan Nordberg
+jQuery Foundation, Inc.
+polygon planet
+Satoshi Ueyama
+Stuart Knightley
+yurydelendik
+antimatter15 / whammy
+noru
+
+Third-Party Libraries / サードパーティ製ライブラリ
+Third-party libraries and materials are subject to the copyrights and licenses
+of their respective authors.
+サードパーティ製ライブラリおよび素材には、各権利者の著作権および
+ライセンス条件が適用されます。

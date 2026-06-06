@@ -1,0 +1,11 @@
+<svg width="40" height="40" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g id="arrow-up-right-circle">
+        <path id="Vector"
+              d="M20.2424 12.4333C20.5217 16.4276 17.5101 19.892 13.5158 20.1713C9.52147 20.4507 6.05702 17.4391 5.77771 13.4447C5.4984 9.45043 8.51 5.98598 12.5043 5.70667C16.4986 5.42736 19.9631 8.43896 20.2424 12.4333Z"
+              stroke="current" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="Vector_2" d="M15.3417 14.0291L15.0976 10.5376L11.6061 10.7817" stroke="current" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="Vector_3" d="M14.8656 10.8041L10.9224 15.3402" stroke="current" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+</svg>

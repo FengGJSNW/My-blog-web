@@ -1,0 +1,196 @@
+{
+   "about": {
+      "description": "About menu item",
+      "message": "关于"
+   },
+   "cancel": {
+      "description": "Cancel button text",
+      "message": "取消"
+   },
+   "captureError": {
+      "description": "Generic capture error message",
+      "message": "页面保存失败"
+   },
+   "clientSide": {
+      "description": "Client-side PDF generation option",
+      "message": "客户端（更快，支持离线使用）"
+   },
+   "createdBy": {
+      "description": "Created by text",
+      "message": "开发者："
+   },
+   "currentVersion": {
+      "description": "Current version display text",
+      "message": "当前版本：$VERSION$",
+      "placeholders": {
+         "version": {
+            "content": "$1"
+         }
+      }
+   },
+   "developer": {
+      "description": "Developer section title",
+      "message": "开发者"
+   },
+   "donate": {
+      "description": "Donate button text",
+      "message": "捐赠"
+   },
+   "extDescription": {
+      "description": "Extension description",
+      "message": "网页转图片和PDF，支持全页面捕获和阅读模式。"
+   },
+   "extName": {
+      "description": "Extension name",
+      "message": "PageSaver - 网页转PDF或图片"
+   },
+   "extShortName": {
+      "description": "Extension short name",
+      "message": "PageSaver"
+   },
+   "extractTextFromImage": {
+      "description": "Menu item to extract text from an image",
+      "message": "提取图片文字"
+   },
+   "height": {
+      "description": "Height input label",
+      "message": "高度："
+   },
+   "inReaderMode": {
+      "description": "Reader mode indicator",
+      "message": "（阅读模式）"
+   },
+   "lockAspectRatio": {
+      "description": "Lock aspect ratio checkbox label",
+      "message": "锁定宽高比"
+   },
+   "multiPage": {
+      "description": "Multi-page PDF option",
+      "message": "多页"
+   },
+   "pdfPaginationMode": {
+      "description": "PDF pagination preference label",
+      "message": "PDF页面模式"
+   },
+   "pdfReaderMode": {
+      "description": "PDF reader mode generation preference label",
+      "message": "PDF阅读模式生成方式"
+   },
+   "reportIssue": {
+      "description": "Report issue menu item text",
+      "message": "报告问题"
+   },
+   "save": {
+      "description": "Save button text",
+      "message": "保存"
+   },
+   "saveAsImage": {
+      "description": "Menu item to save as image",
+      "message": "保存为图片"
+   },
+   "saveAsMarkdown": {
+      "description": "Menu item to save as Markdown in reader mode",
+      "message": "保存为 Markdown"
+   },
+   "saveAsPDF": {
+      "description": "Menu item to save as PDF",
+      "message": "保存为PDF"
+   },
+   "saveAsPDFReader": {
+      "description": "Menu item to save as PDF in reader mode",
+      "message": "保存为PDF（阅读模式）"
+   },
+   "screenshotElement": {
+      "description": "DOM element screenshot context menu item",
+      "message": "选择元素"
+   },
+   "screenshotMenu": {
+      "description": "Screenshot context menu parent",
+      "message": "截取屏幕截图"
+   },
+   "screenshotSelection": {
+      "description": "Selected area screenshot context menu item",
+      "message": "选择区域"
+   },
+   "screenshotVisible": {
+      "description": "Visible viewport screenshot context menu item",
+      "message": "可见区域"
+   },
+   "serverSide": {
+      "description": "Server-side PDF generation option",
+      "message": "服务器端（更好的质量）"
+   },
+   "singlePage": {
+      "description": "Single page PDF option",
+      "message": "单页（默认）"
+   },
+   "statusCapturing": {
+      "description": "Status message while capturing",
+      "message": "正在将页面保存为$FORMAT$$READER$...",
+      "placeholders": {
+         "format": {
+            "content": "$1"
+         },
+         "reader": {
+            "content": "$2"
+         }
+      }
+   },
+   "statusError": {
+      "description": "Status message on error",
+      "message": "错误：$ERROR$",
+      "placeholders": {
+         "error": {
+            "content": "$1"
+         }
+      }
+   },
+   "statusSuccess": {
+      "description": "Status message on successful save",
+      "message": "页面保存成功！"
+   },
+   "submitLink": {
+      "description": "Menu item to submit current tab link to Pixelstech",
+      "message": "稍后阅读"
+   },
+   "summarizePage": {
+      "description": "使用AI总结当前页面的菜单项",
+      "message": "总结页面"
+   },
+   "supportDevelopment": {
+      "description": "Support card title",
+      "message": "支持我们的开发"
+   },
+   "translateTo": {
+      "description": "Parent menu for translation",
+      "message": "翻译成"
+   },
+   "translateToChineseSimplified": {
+      "description": "Translate target language Chinese Simplified",
+      "message": "简体中文"
+   },
+   "translateToChineseTraditional": {
+      "description": "Translate target language Chinese Traditional",
+      "message": "繁體中文"
+   },
+   "translateToEnglish": {
+      "description": "Translate target language English",
+      "message": "英语"
+   },
+   "translateToJapanese": {
+      "description": "Translate target language Japanese",
+      "message": "日语"
+   },
+   "translateToVietnamese": {
+      "description": "Translate target language Vietnamese",
+      "message": "越南语"
+   },
+   "version": {
+      "description": "Version menu item",
+      "message": "版本"
+   },
+   "width": {
+      "description": "Width input label",
+      "message": "宽度："
+   }
+}

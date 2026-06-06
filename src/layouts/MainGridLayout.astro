@@ -709,6 +709,7 @@ const bannerCarouselInterval = Math.max(
             function isLowPowerVisualDevice() {
                 var nav = navigator || {};
                 return (
+                    document.documentElement.classList.contains('firefly-low-power') ||
                     window.matchMedia('(pointer: coarse)').matches ||
                     window.innerWidth < 768 ||
                     (typeof nav.hardwareConcurrency === 'number' && nav.hardwareConcurrency <= 4) ||
@@ -718,7 +719,7 @@ const bannerCarouselInterval = Math.max(
             }
 
             function getBlurStep() {
-                return isLowPowerVisualDevice() ? 1 : 0.25;
+                return isLowPowerVisualDevice() ? 2 : 0.75;
             }
 
             function refreshCachedElements() {
@@ -737,9 +738,9 @@ const bannerCarouselInterval = Math.max(
                     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                         overlayTargetBlur = 0;
                     } else if (isLowPowerVisualDevice()) {
-                        overlayTargetBlur = Math.min(overlayTargetBlur, 5);
+                        overlayTargetBlur = Math.min(overlayTargetBlur, 4);
                     } else {
-                        overlayTargetBlur = Math.min(overlayTargetBlur, 14);
+                        overlayTargetBlur = Math.min(overlayTargetBlur, 11);
                     }
                 } else {
                     overlayTargetBlur = 0;
@@ -1388,51 +1389,28 @@ const bannerCarouselInterval = Math.max(
     const reducedMotion = () =>
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const activeAnimations = new WeakMap();
+    const enhancedCodeBlocks = new WeakSet();
+    let codeEnhanceObserver = null;
     const COLLAPSE_LINE_THRESHOLD = 10;
     const EXPANDED_CODE_VIEWPORT_LINES = 30;
+    const CODE_TRANSITION_MS = 460;
+    const FOLDER_TRANSITION_MS = 460;
+    const FOLDER_INNER_ENHANCE_DELAY_MS = 360;
+    const requestIdle =
+      window.requestIdleCallback ||
+      ((callback) =>
+        window.setTimeout(() => callback({ timeRemaining: () => 0 }), 96));
 
-    const forceScrollBy = (delta) => {
-      const root = document.documentElement;
-      const previousScrollBehavior = root.style.scrollBehavior;
-      root.style.scrollBehavior = "auto";
-      window.scrollTo(0, (window.scrollY || root.scrollTop || 0) + delta);
-      root.style.scrollBehavior = previousScrollBehavior;
-    };
+    const getCodeText = (owner) => {
+      const copyCode = owner.querySelector(".copy button[data-code]")?.getAttribute("data-code");
+      if (copyCode) return copyCode.replace(/\u007f/g, "\n");
 
-    const createScrollStabilizer = (anchor) => {
-      if (!anchor) return () => {};
-
-      let running = true;
-      let animationFrame = 0;
-      let lastTop = anchor.getBoundingClientRect().top;
-
-      const keepStable = () => {
-        if (!running) return;
-
-        const nextTop = anchor.getBoundingClientRect().top;
-        const delta = nextTop - lastTop;
-        if (Math.abs(delta) > 0.5) {
-          forceScrollBy(delta);
-        }
-
-        lastTop = anchor.getBoundingClientRect().top;
-        animationFrame = window.requestAnimationFrame(keepStable);
-      };
-
-      animationFrame = window.requestAnimationFrame(keepStable);
-
-      return () => {
-        running = false;
-        window.cancelAnimationFrame(animationFrame);
-      };
+      const pre = owner.querySelector("pre");
+      return pre?.querySelector("code")?.textContent || pre?.textContent || "";
     };
 
     const getCodeLineCount = (owner) => {
-      const lineNodes = owner.querySelectorAll(".ec-line, .code .line, code .line");
-      if (lineNodes.length > 0) return lineNodes.length;
-
-      const pre = owner.querySelector("pre");
-      const rawCode = pre?.querySelector("code")?.textContent || pre?.textContent || "";
+      const rawCode = getCodeText(owner);
       const normalized = rawCode.replace(/\n$/, "");
       return normalized ? normalized.split(/\r?\n/).length : 0;
     };
@@ -1487,170 +1465,57 @@ const bannerCarouselInterval = Math.max(
       Math.max(1, Math.floor(Math.log2(Math.max(1, lineCount - 9)) + 6));
 
     const getCodeLineHeight = (owner) => {
-      const line = owner.querySelector(".ec-line, .code .line, code .line");
-      const lineRect = line?.getBoundingClientRect();
-      if (lineRect && lineRect.height > 0) return lineRect.height;
-
       const pre = owner.querySelector("pre");
       const parsed = pre ? Number.parseFloat(getComputedStyle(pre).lineHeight) : NaN;
       return Number.isFinite(parsed) && parsed > 0 ? parsed : 24;
     };
 
-    const getCodePreviewHeight = (wrapper, lineCount) => {
+    const getCodeContentMetrics = (wrapper) => {
       const content = wrapper.querySelector(".ec-collapse__content") || wrapper;
-      const lines = Array.from(
-        content.querySelectorAll(".ec-line, .code .line, code .line"),
-      ).filter((line) => !line.classList.contains("ec-code-title-line"));
-      const previewLines = getCollapsedPreviewLines(lineCount);
-      const targetLine = lines[Math.min(previewLines, lines.length) - 1];
-      if (targetLine) {
-        const contentTop = content.getBoundingClientRect().top;
-        const lineBottom = targetLine.getBoundingClientRect().bottom;
-        const pre = content.querySelector("pre");
-        const paddingBottom = pre
-          ? Number.parseFloat(getComputedStyle(pre).paddingBottom) || 0
-          : 0;
-        const measuredHeight = lineBottom - contentTop + paddingBottom + 2;
-        if (measuredHeight > 0) return Math.ceil(measuredHeight);
-      }
-
       const pre = content.querySelector("pre");
       const styles = pre ? getComputedStyle(pre) : null;
       const paddingTop = styles ? Number.parseFloat(styles.paddingTop) || 0 : 0;
       const paddingBottom = styles ? Number.parseFloat(styles.paddingBottom) || 0 : 0;
       const frameHeader = content.querySelector(".header")?.getBoundingClientRect().height || 0;
+      return {
+        lineHeight: getCodeLineHeight(content),
+        paddingTop,
+        paddingBottom,
+        frameHeader,
+      };
+    };
+
+    const getCodePreviewHeight = (wrapper, lineCount) => {
+      const previewLines = getCollapsedPreviewLines(lineCount);
+      const { lineHeight, paddingTop, paddingBottom, frameHeader } =
+        getCodeContentMetrics(wrapper);
       return Math.ceil(
         frameHeader +
-          getCodeLineHeight(content) * previewLines +
+          lineHeight * previewLines +
           paddingTop +
-          paddingBottom,
+          paddingBottom +
+          2,
       );
     };
 
     const getCodeViewportHeight = (wrapper, lineCount, lineLimit) => {
-      const content = wrapper.querySelector(".ec-collapse__content") || wrapper;
-      const lines = Array.from(
-        content.querySelectorAll(".ec-line, .code .line, code .line"),
-      ).filter((line) => !line.classList.contains("ec-code-title-line"));
-      const targetLineCount = Math.min(lineLimit, lineCount, lines.length);
-      const targetLine = lines[Math.max(0, targetLineCount - 1)];
-      if (targetLine) {
-        const contentTop = content.getBoundingClientRect().top;
-        const lineBottom = targetLine.getBoundingClientRect().bottom;
-        const pre = content.querySelector("pre");
-        const paddingBottom = pre
-          ? Number.parseFloat(getComputedStyle(pre).paddingBottom) || 0
-          : 0;
-        const measuredHeight = lineBottom - contentTop + paddingBottom + 2;
-        if (measuredHeight > 0) return Math.ceil(measuredHeight);
-      }
-
-      const pre = content.querySelector("pre");
-      const styles = pre ? getComputedStyle(pre) : null;
-      const paddingTop = styles ? Number.parseFloat(styles.paddingTop) || 0 : 0;
-      const paddingBottom = styles ? Number.parseFloat(styles.paddingBottom) || 0 : 0;
+      const { lineHeight, paddingTop, paddingBottom, frameHeader } =
+        getCodeContentMetrics(wrapper);
       return Math.ceil(
-        getCodeLineHeight(content) * Math.min(lineLimit, lineCount) +
+        frameHeader +
+          lineHeight * Math.min(lineLimit, lineCount) +
           paddingTop +
-          paddingBottom,
+          paddingBottom +
+          2,
       );
     };
 
-    const getExpandedHeight = (wrapper) => {
-      const rawHeight = wrapper.style.getPropertyValue("--ec-collapse-expanded-height");
-      const parsedHeight = Number.parseFloat(rawHeight);
-      if (Number.isFinite(parsedHeight) && parsedHeight > 0) return parsedHeight;
-      return wrapper.querySelector(".ec-collapse__content")?.scrollHeight || 0;
-    };
-
-    const getPreviewHeight = (wrapper) => {
-      const styles = getComputedStyle(wrapper);
-      const rawHeight = styles.getPropertyValue("--ec-collapse-preview-height").trim();
-      const parsedHeight = Number.parseFloat(rawHeight);
-      if (Number.isFinite(parsedHeight) && parsedHeight > 0) return parsedHeight;
-
-      const lineCount = Number.parseInt(wrapper.dataset.ecLineCount || "", 10);
-      if (Number.isFinite(lineCount) && lineCount > COLLAPSE_LINE_THRESHOLD) {
-        return getCodePreviewHeight(wrapper, lineCount);
-      }
-
-      return 280;
-    };
-
-    const normalizeCodeWheelDelta = (event, owner, value) => {
-      if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
-        const lineHeight = Number.parseFloat(getComputedStyle(owner).lineHeight);
-        return value * (Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight : 18);
-      }
-      if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-        return value * owner.clientHeight;
-      }
-      return value;
-    };
-
-    const isActiveCodeScroller = (content) =>
-      content?.closest(".ec-collapse--expanded.ec-collapse--scrollable");
-
-    const handleContainedCodeWheel = (event) => {
-      const content = event.currentTarget;
-      if (!isActiveCodeScroller(content)) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-
-      const shiftHorizontal = event.shiftKey && Math.abs(event.deltaY) >= Math.abs(event.deltaX);
-      const deltaX = normalizeCodeWheelDelta(
-        event,
-        content,
-        event.deltaX + (shiftHorizontal ? event.deltaY : 0),
-      );
-      const deltaY = shiftHorizontal ? 0 : normalizeCodeWheelDelta(event, content, event.deltaY);
-      content.scrollLeft += deltaX;
-      content.scrollTop += deltaY;
-    };
-
-    const handleContainedCodeTouchStart = (event) => {
-      const touch = event.touches?.[0];
-      if (!touch) return;
-      event.currentTarget.dataset.ecContainTouchY = String(touch.clientY);
-      event.currentTarget.dataset.ecContainTouchX = String(touch.clientX);
-    };
-
-    const handleContainedCodeTouchMove = (event) => {
-      const content = event.currentTarget;
-      const touch = event.touches?.[0];
-      if (!touch || !isActiveCodeScroller(content)) return;
-
-      const previousY = Number.parseFloat(content.dataset.ecContainTouchY || "");
-      const previousX = Number.parseFloat(content.dataset.ecContainTouchX || "");
-      content.dataset.ecContainTouchY = String(touch.clientY);
-      content.dataset.ecContainTouchX = String(touch.clientX);
-      if (!Number.isFinite(previousY) || !Number.isFinite(previousX)) return;
-
-      const deltaY = previousY - touch.clientY;
-      const deltaX = previousX - touch.clientX;
-      if (Math.abs(deltaX) > Math.abs(deltaY)) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-      content.scrollTop += deltaY;
-    };
-
-    const bindContainedCodeScroll = (content) => {
-      if (!content || content.dataset.ecContainedScrollInit === "true") return;
-      content.dataset.ecContainedScrollInit = "true";
-      content.addEventListener("wheel", handleContainedCodeWheel, { passive: false });
-      content.addEventListener("touchstart", handleContainedCodeTouchStart, { passive: true });
-      content.addEventListener("touchmove", handleContainedCodeTouchMove, { passive: false });
-    };
-
-    const runCodeHeightAnimation = (content, fromHeight, toHeight, finish) => {
+    const runCodeStateAnimation = (wrapper, content, expanded, finish = () => {}) => {
       const previousCleanup = activeAnimations.get(content);
       if (previousCleanup) previousCleanup();
 
       let fallbackTimer;
-      let frameOne = 0;
-      let frameTwo = 0;
+      let frame = 0;
       let done = false;
 
       const cleanup = () => {
@@ -1658,34 +1523,35 @@ const bannerCarouselInterval = Math.max(
         done = true;
         content.removeEventListener("transitionend", onTransitionEnd);
         window.clearTimeout(fallbackTimer);
-        if (frameOne) cancelAnimationFrame(frameOne);
-        if (frameTwo) cancelAnimationFrame(frameTwo);
+        if (frame) cancelAnimationFrame(frame);
+        wrapper.classList.remove("ec-collapse--animating");
         activeAnimations.delete(content);
         finish();
       };
       const onTransitionEnd = (event) => {
-        if (event.propertyName === "height") cleanup();
+        if (event.target === content && event.propertyName === "max-height") cleanup();
       };
 
-      content.style.setProperty("transition", "none", "important");
-      content.style.setProperty("height", `${Math.max(0, fromHeight)}px`, "important");
-      content.style.setProperty("max-height", "none", "important");
-      content.style.setProperty("overflow-y", "hidden", "important");
+      content.style.removeProperty("height");
+      content.style.removeProperty("max-height");
+      content.style.removeProperty("overflow-y");
+      syncCodeToggleState(wrapper, expanded);
 
-      if (reducedMotion() || Math.abs(toHeight - fromHeight) <= 1) {
+      if (reducedMotion()) {
+        wrapper.classList.toggle("ec-collapse--expanded", expanded);
+        wrapper.classList.toggle("ec-collapse--collapsed", !expanded);
         cleanup();
         return;
       }
 
+      wrapper.classList.add("ec-collapse--animating");
       activeAnimations.set(content, cleanup);
       content.addEventListener("transitionend", onTransitionEnd);
-      frameOne = requestAnimationFrame(() => {
-        content.style.removeProperty("transition");
-        frameTwo = requestAnimationFrame(() => {
-          content.style.setProperty("height", `${Math.max(0, toHeight)}px`, "important");
-        });
+      frame = requestAnimationFrame(() => {
+        wrapper.classList.toggle("ec-collapse--expanded", expanded);
+        wrapper.classList.toggle("ec-collapse--collapsed", !expanded);
       });
-      fallbackTimer = window.setTimeout(cleanup, 680);
+      fallbackTimer = window.setTimeout(cleanup, CODE_TRANSITION_MS + 180);
     };
 
     const blockWheelEvents = (duration) => {
@@ -1792,8 +1658,19 @@ const bannerCarouselInterval = Math.max(
           );
         });
     };
-    const enhanceCodeBlocks = () => {
-      document.querySelectorAll(".expressive-code").forEach((block) => {
+    const isRendered = (element) =>
+      Boolean(element?.offsetWidth || element?.offsetHeight || element?.getClientRects().length);
+
+    const isNearViewport = (element) => {
+      if (!isRendered(element)) return false;
+      const rect = element.getBoundingClientRect();
+      const margin = Math.min(1000, Math.max(420, window.innerHeight * 0.75));
+      return rect.top < window.innerHeight + margin && rect.bottom > -margin;
+    };
+
+    const enhanceCodeBlock = (block) => {
+      if (!(block instanceof Element) || enhancedCodeBlocks.has(block)) return;
+
         const wrapper = block.querySelector(".ec-collapse");
         const owner = wrapper || block;
         const rawLineCount = getCodeLineCount(owner);
@@ -1819,7 +1696,6 @@ const bannerCarouselInterval = Math.max(
           wrapper.dataset.collapsePreviewLines = String(previewLines);
           wrapper.dataset.heightInit = "firefly";
           wrapper.classList.toggle("ec-collapse--scrollable", scrollableExpanded);
-          bindContainedCodeScroll(content);
           wrapper.style.setProperty(
             "--ec-collapse-preview-height",
             `${getCodePreviewHeight(wrapper, lineCount)}px`,
@@ -1907,16 +1783,79 @@ const bannerCarouselInterval = Math.max(
         if (collapsible) {
           syncCodeToggleState(wrapper, wrapper.classList.contains("ec-collapse--expanded"));
         }
+        enhancedCodeBlocks.add(block);
+    };
+
+    const enhanceVisibleCodeBlocks = (scope = document) => {
+      scope.querySelectorAll(".expressive-code").forEach((block) => {
+        if (isNearViewport(block)) enhanceCodeBlock(block);
       });
     };
 
-    const scheduleCodeBlockEnhance = () => {
-      requestAnimationFrame(enhanceCodeBlocks);
-      window.setTimeout(enhanceCodeBlocks, 80);
-      window.setTimeout(enhanceCodeBlocks, 260);
+    const enhanceCodeBlocksIdle = (blocks, index = 0) => {
+      requestIdle((deadline) => {
+        let cursor = index;
+        while (cursor < blocks.length) {
+          const block = blocks[cursor];
+          if (isNearViewport(block)) enhanceCodeBlock(block);
+          cursor += 1;
+
+          if (deadline.timeRemaining && deadline.timeRemaining() < 4) break;
+          if (cursor - index >= 3) break;
+        }
+
+        if (cursor < blocks.length) {
+          enhanceCodeBlocksIdle(blocks, cursor);
+        }
+      });
+    };
+
+    const scheduleCodeBlockEnhance = (scope = document) => {
+      const root = scope instanceof Element || scope === document ? scope : document;
+      const blocks = Array.from(root.querySelectorAll(".expressive-code")).filter(
+        (block) => !enhancedCodeBlocks.has(block),
+      );
+
+      requestAnimationFrame(() => enhanceVisibleCodeBlocks(root));
+      window.setTimeout(() => enhanceVisibleCodeBlocks(root), 120);
+
+      if ("IntersectionObserver" in window) {
+        if (codeEnhanceObserver) codeEnhanceObserver.disconnect();
+        codeEnhanceObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              codeEnhanceObserver?.unobserve(entry.target);
+              enhanceCodeBlock(entry.target);
+            }
+          },
+          { rootMargin: "520px 0px 520px 0px", threshold: 0.01 },
+        );
+
+        for (const block of blocks) {
+          if (isRendered(block)) {
+            codeEnhanceObserver.observe(block);
+          }
+        }
+        return;
+      }
+
+      enhanceCodeBlocksIdle(blocks);
+    };
+
+    const scheduleDeferredCodeBlockEnhance = (scope = document) => {
+      const root = scope instanceof Element || scope === document ? scope : document;
+      const blocks = Array.from(root.querySelectorAll(".expressive-code")).filter(
+        (block) => !enhancedCodeBlocks.has(block),
+      );
+
+      enhanceCodeBlocksIdle(blocks);
     };
 
     const animateCodeCollapse = (button) => {
+      const block = button.closest(".expressive-code");
+      if (block) enhanceCodeBlock(block);
+
       const wrapper = button.closest(".ec-collapse");
       const content = wrapper?.querySelector(".ec-collapse__content");
       if (!wrapper || !content) return;
@@ -1938,70 +1877,14 @@ const bannerCarouselInterval = Math.max(
       }
 
       if (!willExpand) {
-        const fromHeight = wrapper.classList.contains("ec-collapse--scrollable")
-          ? getExpandedHeight(wrapper)
-          : content.getBoundingClientRect().height;
-        const toHeight = getPreviewHeight(wrapper);
         content.scrollTop = 0;
-        wrapper.classList.remove("ec-collapse--expanded");
-        wrapper.classList.add("ec-collapse--collapsed");
-        syncCodeToggleState(wrapper, false);
-
-        runCodeHeightAnimation(content, fromHeight, toHeight, () => {
+        runCodeStateAnimation(wrapper, content, false, () => {
           content.scrollTop = 0;
-          content.style.removeProperty("height");
-          content.style.removeProperty("max-height");
-          content.style.removeProperty("overflow-y");
         });
         return;
       }
 
-      const scrollableWillExpand = wrapper.classList.contains("ec-collapse--scrollable");
-      const fromHeight = getPreviewHeight(wrapper);
-      const toHeight = scrollableWillExpand ? getExpandedHeight(wrapper) : content.scrollHeight;
-      wrapper.classList.remove("ec-collapse--collapsed");
-      wrapper.classList.add("ec-collapse--expanded");
-      syncCodeToggleState(wrapper, true);
-
-      runCodeHeightAnimation(content, fromHeight, toHeight, () => {
-        content.style.removeProperty("height");
-        if (scrollableWillExpand) {
-          content.style.setProperty(
-            "max-height",
-            `${getExpandedHeight(wrapper)}px`,
-            "important",
-          );
-          content.style.removeProperty("overflow-y");
-        } else {
-          content.style.setProperty("max-height", "none", "important");
-          content.style.removeProperty("overflow-y");
-        }
-      });
-    };
-
-    const resolveCssLength = (value, owner) => {
-      const trimmed = String(value || "").trim();
-      const parsed = Number.parseFloat(trimmed);
-      if (!trimmed || !Number.isFinite(parsed)) return null;
-      if (trimmed.endsWith("px") || /^\d+(?:\.\d+)?$/.test(trimmed)) return parsed;
-
-      const probe = document.createElement("div");
-      probe.style.position = "absolute";
-      probe.style.visibility = "hidden";
-      probe.style.pointerEvents = "none";
-      probe.style.height = trimmed;
-      owner.appendChild(probe);
-      const height = probe.getBoundingClientRect().height;
-      probe.remove();
-      return height > 0 ? height : null;
-    };
-
-    const getFolderTargetHeight = (details, body) => {
-      const styles = getComputedStyle(details);
-      const rawHeight =
-        styles.getPropertyValue("--folded-block-scroll-height").trim() || "28rem";
-      const configuredHeight = resolveCssLength(rawHeight, details);
-      return Math.min(body.scrollHeight, configuredHeight || body.scrollHeight);
+      runCodeStateAnimation(wrapper, content, true);
     };
 
     const animateStyle3Folder = (summary) => {
@@ -2018,47 +1901,42 @@ const bannerCarouselInterval = Math.max(
           details.removeAttribute("open");
         } else {
           details.setAttribute("open", "");
+          window.setTimeout(
+            () => scheduleDeferredCodeBlockEnhance(details),
+            FOLDER_INNER_ENHANCE_DELAY_MS,
+          );
         }
         return true;
       }
 
-      const stopScrollStabilizer = createScrollStabilizer(details);
       details.classList.add("folded-block--animating");
 
       if (!isOpen) {
+        details.classList.add("folded-block--opening");
         details.setAttribute("open", "");
-        body.style.setProperty("max-height", "0px");
-        body.style.setProperty("opacity", "0");
-        body.getBoundingClientRect();
-
-        const targetHeight = getFolderTargetHeight(details, body);
         requestAnimationFrame(() => {
-          body.style.setProperty("max-height", `${targetHeight}px`);
-          body.style.setProperty("opacity", "1");
+          details.classList.remove("folded-block--opening");
         });
       } else {
-        const fromHeight = body.getBoundingClientRect().height;
-        body.style.setProperty("max-height", `${fromHeight}px`);
-        body.style.setProperty("opacity", "1");
-        body.getBoundingClientRect();
-
-        requestAnimationFrame(() => {
-          body.style.setProperty("max-height", "0px");
-          body.style.setProperty("opacity", "0");
-        });
+        body.scrollTop = 0;
+        details.classList.add("folded-block--closing");
       }
 
       let fallbackTimer;
       const cleanup = () => {
         body.removeEventListener("transitionend", onTransitionEnd);
         window.clearTimeout(fallbackTimer);
-        stopScrollStabilizer();
         activeAnimations.delete(body);
         details.classList.remove("folded-block--animating");
-        body.style.removeProperty("max-height");
-        body.style.removeProperty("opacity");
+        details.classList.remove("folded-block--opening");
+        details.classList.remove("folded-block--closing");
         if (isOpen) {
           details.removeAttribute("open");
+        } else {
+          window.setTimeout(
+            () => scheduleDeferredCodeBlockEnhance(details),
+            FOLDER_INNER_ENHANCE_DELAY_MS,
+          );
         }
       };
       const onTransitionEnd = (event) => {
@@ -2067,7 +1945,7 @@ const bannerCarouselInterval = Math.max(
 
       activeAnimations.set(body, cleanup);
       body.addEventListener("transitionend", onTransitionEnd);
-      fallbackTimer = window.setTimeout(cleanup, 620);
+      fallbackTimer = window.setTimeout(cleanup, FOLDER_TRANSITION_MS + 180);
       return true;
     };
 
@@ -2083,6 +1961,9 @@ const bannerCarouselInterval = Math.max(
         if (folderSummary) {
           event.preventDefault();
           event.stopPropagation();
+          if (typeof event.stopImmediatePropagation === "function") {
+            event.stopImmediatePropagation();
+          }
           animateStyle3Folder(folderSummary);
           return;
         }
@@ -2094,6 +1975,9 @@ const bannerCarouselInterval = Math.max(
 
         event.preventDefault();
         event.stopPropagation();
+        if (typeof event.stopImmediatePropagation === "function") {
+          event.stopImmediatePropagation();
+        }
         animateCodeCollapse(button);
       },
       true,
