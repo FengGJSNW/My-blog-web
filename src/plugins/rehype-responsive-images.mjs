@@ -1,4 +1,5 @@
 import path from "node:path";
+import fs from "node:fs";
 import { h } from "hastscript";
 import { visit } from "unist-util-visit";
 import {
@@ -40,6 +41,44 @@ function isRemote(src) {
 
 function isSvg(src) {
 	return stripImageUrl(src).toLowerCase().endsWith(".svg");
+}
+
+function parseSvgIntrinsicSize(svgContent) {
+	const svgOpenTagMatch = svgContent.match(/<svg\b[^>]*>/i);
+	if (!svgOpenTagMatch) return null;
+
+	const svgOpenTag = svgOpenTagMatch[0];
+	const widthMatch = svgOpenTag.match(/\swidth=(["'])([\d.]+)(?:px)?\1/i);
+	const heightMatch = svgOpenTag.match(/\sheight=(["'])([\d.]+)(?:px)?\1/i);
+	const width = widthMatch ? Number(widthMatch[2]) : NaN;
+	const height = heightMatch ? Number(heightMatch[2]) : NaN;
+	if (Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0) {
+		return {
+			width: Math.ceil(width),
+			height: Math.ceil(height),
+		};
+	}
+
+	const viewBoxMatch = svgOpenTag.match(/\sviewBox=(["'])([^"']+)\1/i);
+	if (!viewBoxMatch) return null;
+
+	const values = viewBoxMatch[2].trim().split(/[\s,]+/).map(Number);
+	if (values.length !== 4 || !values.every(Number.isFinite)) return null;
+
+	return {
+		width: Math.ceil(values[2]),
+		height: Math.ceil(values[3]),
+	};
+}
+
+function getLocalSvgDimensions(src) {
+	const cleanSrc = decodePath(stripImageUrl(src));
+	if (!cleanSrc.startsWith("/__local_svg/")) return null;
+
+	const absPath = path.join(process.cwd(), "public", cleanSrc.replace(/^\/+/, ""));
+	if (!fs.existsSync(absPath)) return null;
+
+	return parseSvgIntrinsicSize(fs.readFileSync(absPath, "utf8"));
 }
 
 function resolveFromMarkdownFile(src, file, manifest) {
@@ -185,8 +224,15 @@ function createLinkedOriginalNode(node, parent) {
 		return null;
 	}
 
+	const svgDimensions = isSvg(src) ? getLocalSvgDimensions(src) : null;
 	node.properties = withNoReferrer({
 		...node.properties,
+		...(svgDimensions
+			? {
+					width: node.properties?.width ?? svgDimensions.width,
+					height: node.properties?.height ?? svgDimensions.height,
+				}
+			: {}),
 		loading: node.properties?.loading ?? "lazy",
 		decoding: node.properties?.decoding ?? "async",
 		"data-original-src": src,
@@ -219,6 +265,12 @@ export default function rehypeResponsiveImages() {
 			const src = String(properties.src ?? "");
 			if (!src) return;
 
+			const svgDimensions = isSvg(src) ? getLocalSvgDimensions(src) : null;
+			if (svgDimensions) {
+				properties.width = properties.width ?? svgDimensions.width;
+				properties.height = properties.height ?? svgDimensions.height;
+			}
+
 			const classes = classNames(properties);
 			if (classes.includes("plantuml-image")) return;
 
@@ -233,6 +285,7 @@ export default function rehypeResponsiveImages() {
 				return;
 			}
 
+			node.properties = properties;
 			const linkedNode = createLinkedOriginalNode(node, parent);
 			if (linkedNode) {
 				parent.children[index] = linkedNode;

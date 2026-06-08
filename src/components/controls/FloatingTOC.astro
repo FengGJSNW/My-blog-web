@@ -182,6 +182,9 @@ const sidebarPosition = sidebarLayoutConfig.position;
 
   // 设置自动关闭功能
   function setupAutoClose() {
+    if (window.floatingTOCAutoCloseInitialized) return;
+    window.floatingTOCAutoCloseInitialized = true;
+
     // 监听页面卸载和隐藏
     window.addEventListener("beforeunload", closeTOC);
     window.addEventListener("pagehide", closeTOC);

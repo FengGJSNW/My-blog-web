@@ -41,7 +41,7 @@ const archivePath = url("/archive/");
         <ButtonLink
             url={c.url}
             badge={String(c.count)}
-            label={`View all posts in the ${c.name.trim()} category`}
+            label={`${c.name.trim()} ${c.count} articles`}
         >
             {c.name.trim()}
         </ButtonLink>

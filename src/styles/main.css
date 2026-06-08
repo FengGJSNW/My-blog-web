@@ -454,6 +454,10 @@ html {
     @apply cursor-zoom-in
 }
 
+.custom-md img[data-responsive-image="fallback"] {
+    min-height: 1.75rem;
+}
+
 html.firefly-page-hidden .typewriter::after,
 html.firefly-page-hidden #progress-bar.loading,
 html.firefly-page-hidden .spinner,

@@ -123,6 +123,34 @@ function expandSvgViewBox(svgContent, padding = SVG_VIEWBOX_PADDING) {
 	return svgContent.replace(svgOpenTag, expandedSvgOpenTag);
 }
 
+function parseSvgIntrinsicSize(svgContent) {
+	const svgOpenTagMatch = svgContent.match(/<svg\b[^>]*>/i);
+	if (!svgOpenTagMatch) return null;
+
+	const svgOpenTag = svgOpenTagMatch[0];
+	const widthMatch = svgOpenTag.match(/\swidth=(["'])([\d.]+)(?:px)?\1/i);
+	const heightMatch = svgOpenTag.match(/\sheight=(["'])([\d.]+)(?:px)?\1/i);
+	const width = widthMatch ? Number(widthMatch[2]) : NaN;
+	const height = heightMatch ? Number(heightMatch[2]) : NaN;
+	if (Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0) {
+		return {
+			width: Math.ceil(width),
+			height: Math.ceil(height),
+		};
+	}
+
+	const viewBoxMatch = svgOpenTag.match(/\sviewBox=(["'])([^"']+)\1/i);
+	if (!viewBoxMatch) return null;
+
+	const values = viewBoxMatch[2].trim().split(/[\s,]+/).map(Number);
+	if (values.length !== 4 || !values.every(Number.isFinite)) return null;
+
+	return {
+		width: Math.ceil(values[2]),
+		height: Math.ceil(values[3]),
+	};
+}
+
 function resolveSvgPadding(value = "") {
 	const expandMatch = value.match(
 		/\sexpand(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/i,
@@ -338,6 +366,15 @@ function remarkLocalSvgToPublic() {
 					fs.writeFileSync(outAbs, outputSvg, "utf8");
 
 					node.url = `/__local_svg/${outName}`;
+					const intrinsicSize = parseSvgIntrinsicSize(outputSvg);
+					if (intrinsicSize) {
+						node.data = node.data || {};
+						node.data.hProperties = {
+							...(node.data.hProperties || {}),
+							width: intrinsicSize.width,
+							height: intrinsicSize.height,
+						};
+					}
 				}
 			}
 		}
@@ -378,6 +415,50 @@ function remarkLocalSvgToPublic() {
 			}
 
 			processSvgImage(node, activePadding);
+		}
+
+		walk(tree);
+	};
+}
+
+function getPublicLocalSvgDimensions(src) {
+	const rawSrc = String(src || "").split("#")[0].split("?")[0];
+	let cleanSrc = rawSrc;
+	try {
+		cleanSrc = decodeURIComponent(rawSrc);
+	} catch {
+		// Keep the raw path when it is not valid percent-encoding.
+	}
+	if (!cleanSrc.startsWith("/__local_svg/")) return null;
+
+	const absPath = path.join(process.cwd(), "public", cleanSrc.replace(/^\/+/, ""));
+	if (!fs.existsSync(absPath)) return null;
+
+	return parseSvgIntrinsicSize(fs.readFileSync(absPath, "utf8"));
+}
+
+function rehypeLocalSvgDimensions() {
+	return (tree) => {
+		function walk(node) {
+			if (!node || typeof node !== "object") return;
+
+			if (node.type === "element" && node.tagName === "img") {
+				const properties = node.properties || {};
+				const dimensions = getPublicLocalSvgDimensions(properties.src);
+				if (dimensions) {
+					node.properties = {
+						...properties,
+						width: properties.width ?? dimensions.width,
+						height: properties.height ?? dimensions.height,
+					};
+				}
+			}
+
+			if (Array.isArray(node.children)) {
+				for (const child of node.children) {
+					walk(child);
+				}
+			}
 		}
 
 		walk(tree);
@@ -614,6 +695,7 @@ export default defineConfig({
 					},
 				},
 			],
+			rehypeLocalSvgDimensions,
 		],
 	},
 	vite: {

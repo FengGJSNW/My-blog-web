@@ -14,7 +14,13 @@ const {
 	pauseTime = 2000,
 	class: className = "",
 } = Astro.props;
+const textItems = Array.isArray(text) ? text : [text];
 const textData = Array.isArray(text) ? JSON.stringify(text) : text;
+const initialText = textItems[0] ?? "";
+const maxTextLength = Math.max(
+	1,
+	...textItems.map((item) => Array.from(item).length),
+);
 ---
 
 <span
@@ -22,7 +28,8 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
   data-text={textData}
   data-speed={speed}
   data-delete-speed={deleteSpeed}
-  data-pause-time={pauseTime}></span>
+  data-pause-time={pauseTime}
+  style={`--typewriter-min-width: ${maxTextLength}em;`}>{initialText}</span>
 
 <script>
   class TypewriterEffect {
@@ -255,7 +262,8 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
   .typewriter {
     display: inline-block;
     position: relative;
-    min-width: 1ch;
+    min-width: var(--typewriter-min-width, 1ch);
+    min-height: 1lh;
     text-rendering: optimizeSpeed;
   }
 

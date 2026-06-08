@@ -16,7 +16,7 @@ const sourceDirs = [
 	{ dir: path.join(projectRoot, "src", "content"), public: false },
 ];
 const placeholderWidth = 64;
-const candidateWidths = [256, 320, 512, 640, 960, 1280, 1920];
+const candidateWidths = [192, 240, 256, 320, 384, 512, 640, 960, 1280, 1920];
 
 function toPosix(value) {
 	return value.replace(/\\/g, "/");

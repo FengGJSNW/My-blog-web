@@ -1394,7 +1394,7 @@ const bannerCarouselInterval = Math.max(
     const COLLAPSE_LINE_THRESHOLD = 10;
     const EXPANDED_CODE_VIEWPORT_LINES = 30;
     const CODE_TRANSITION_MS = 460;
-    const FOLDER_TRANSITION_MS = 460;
+    const FOLDER_TRANSITION_MS = 480;
     const FOLDER_INNER_ENHANCE_DELAY_MS = 360;
     const requestIdle =
       window.requestIdleCallback ||
@@ -1843,35 +1843,14 @@ const bannerCarouselInterval = Math.max(
 
     const scheduleCodeBlockEnhance = (scope = document) => {
       const root = scope instanceof Element || scope === document ? scope : document;
-      const blocks = Array.from(root.querySelectorAll(".expressive-code")).filter(
-        (block) => !enhancedCodeBlocks.has(block),
-      );
 
       requestAnimationFrame(() => enhanceVisibleCodeBlocks(root));
       window.setTimeout(() => enhanceVisibleCodeBlocks(root), 120);
 
-      if ("IntersectionObserver" in window) {
-        if (codeEnhanceObserver) codeEnhanceObserver.disconnect();
-        codeEnhanceObserver = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              codeEnhanceObserver?.unobserve(entry.target);
-              enhanceCodeBlock(entry.target);
-            }
-          },
-          { rootMargin: "520px 0px 520px 0px", threshold: 0.01 },
-        );
-
-        for (const block of blocks) {
-          if (isRendered(block)) {
-            codeEnhanceObserver.observe(block);
-          }
-        }
-        return;
+      if (codeEnhanceObserver) {
+        codeEnhanceObserver.disconnect();
+        codeEnhanceObserver = null;
       }
-
-      enhanceCodeBlocksIdle(blocks);
     };
 
     const scheduleDeferredCodeBlockEnhance = (scope = document) => {

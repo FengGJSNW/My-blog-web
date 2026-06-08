@@ -14,6 +14,7 @@ let result: SearchResult[] = [];
 let isSearching = false;
 let initialized = false;
 let debounceTimer: NodeJS.Timeout;
+let pagefindLoadPromise: Promise<void> | null = null;
 
 // --- Mocks for Dev Mode ---
 const fakeResult: SearchResult[] = [
@@ -63,12 +64,62 @@ const handleResultClick = (event: Event, url: string): void => {
 	navigateToPage(url);
 };
 
+const initializePagefind = (): void => {
+	if (initialized) return;
+	initialized = true;
+	if (keywordDesktop) search(keywordDesktop, true);
+	if (keywordMobile) search(keywordMobile, false);
+};
+
+const loadPagefind = async (): Promise<void> => {
+	if (initialized) return;
+
+	if (import.meta.env.DEV) {
+		console.log("Pagefind mock enabled in development mode.");
+		initializePagefind();
+		return;
+	}
+
+	if (window.pagefind) {
+		initializePagefind();
+		return;
+	}
+
+	if (!pagefindLoadPromise) {
+		pagefindLoadPromise = (async () => {
+			const scriptUrl = formatUrl("/pagefind/pagefind.js");
+			try {
+				const pagefind = await import(/* @vite-ignore */ scriptUrl);
+				await pagefind.options({
+					excerptLength: 20,
+				});
+				window.pagefind = pagefind;
+				document.dispatchEvent(new CustomEvent("pagefindready"));
+			} catch (error) {
+				console.error("Failed to load Pagefind:", error);
+				window.pagefind = {
+					search: () => Promise.resolve({ results: [] }),
+					options: () => Promise.resolve(),
+				};
+				document.dispatchEvent(new CustomEvent("pagefindloaderror"));
+			} finally {
+				initializePagefind();
+			}
+		})();
+	}
+
+	await pagefindLoadPromise;
+};
+
 // --- Core Search Logic ---
 const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 	if (!keyword) {
 		setPanelVisibility(false, isDesktop);
 		result = [];
 		return;
+	}
+	if (!initialized) {
+		await loadPagefind();
 	}
 	if (!initialized) return;
 
@@ -100,38 +151,25 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 	}, 300); // 300ms debounce
 };
 
-// --- Initialization onMount ---
 onMount(() => {
-	const initializePagefind = () => {
-		initialized = true;
-		if (keywordDesktop) search(keywordDesktop, true);
-		if (keywordMobile) search(keywordMobile, false);
-	};
-
 	if (import.meta.env.DEV) {
-		console.log("Pagefind mock enabled in development mode.");
 		initializePagefind();
-	} else {
-		if (window.pagefind) {
-			// If script already loaded
-			initializePagefind();
-		} else {
-			// Listen for the event
-			document.addEventListener("pagefindready", initializePagefind, {
-				once: true,
-			});
-			document.addEventListener("pagefindloaderror", initializePagefind, {
-				once: true,
-			});
-		}
+		return;
 	}
+
+	document.addEventListener("pagefindready", initializePagefind, {
+		once: true,
+	});
+	document.addEventListener("pagefindloaderror", initializePagefind, {
+		once: true,
+	});
 });
 
 // --- Reactive Statements ---
-$: if (initialized && (keywordDesktop || keywordDesktop === "")) {
+$: if (keywordDesktop || initialized) {
 	search(keywordDesktop, true);
 }
-$: if (initialized && (keywordMobile || keywordMobile === "")) {
+$: if (keywordMobile || initialized) {
 	search(keywordMobile, false);
 }
 </script>

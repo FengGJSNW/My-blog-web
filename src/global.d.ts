@@ -11,9 +11,11 @@ declare global {
 		live2dModelInitialized?: boolean;
 		spineModelInitialized?: boolean;
 		floatingTOCListenersInitialized?: boolean;
+		floatingTOCAutoCloseInitialized?: boolean;
 		// biome-ignore lint/suspicious/noExplicitAny: External library
 		spinePlayerInstance?: any;
 		pagefind: {
+			options?: (options: { excerptLength?: number }) => Promise<void>;
 			search: (query: string) => Promise<{
 				results: Array<{
 					data: () => Promise<SearchResult>;

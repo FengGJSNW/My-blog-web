@@ -2,6 +2,7 @@
 
 .custom-md {
   --md-hover-scale-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --md-anchor-scroll-margin: 5.5rem;
   overflow-wrap: break-word;
 
   :root:not(.dark) & {
@@ -10,10 +11,8 @@
     color: var(--tw-prose-body);
   }
 
-  body.sticky-navbar & {
-    [id] {
-      scroll-margin-top: 5.5rem;
-    }
+  [id] {
+    scroll-margin-top: var(--md-anchor-scroll-margin);
   }
 
   h1 {
@@ -218,13 +217,21 @@
       max-height 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
       padding-bottom 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
       border-top-width 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
-      border-top-color 0.24s ease,
-      opacity 0.24s ease,
+      border-top-color 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
+      opacity 0.48s cubic-bezier(0.22, 0.61, 0.36, 1),
       filter 0.35s ease;
     will-change: max-height, padding-bottom, border-top-width, opacity;
   }
 
-  .folded-block--style-3[open].folded-block--opening .folded-block__body,
+  .folded-block--style-3[open].folded-block--opening .folded-block__body {
+    max-height: 0;
+    padding-bottom: 0;
+    border-top-width: 0;
+    border-top-color: transparent;
+    opacity: 0;
+    overflow: hidden;
+  }
+
   .folded-block--style-3[open].folded-block--closing .folded-block__body {
     max-height: 0;
     padding-bottom: 0;
@@ -497,20 +504,3 @@ body.wallpaper-transparent .custom-md {
     background-color: color-mix(in oklch, var(--btn-plain-bg-active) 68%, transparent);
   }
 }
-
-@supports (content-visibility: auto) {
-  @media screen {
-    .custom-md {
-      .expressive-code,
-      .folded-block,
-      .horizontal-scroll-container,
-      .image-grid,
-      .plantuml-diagram-container,
-      .mermaid-diagram-container {
-        content-visibility: auto;
-        contain-intrinsic-size: auto 18rem;
-      }
-    }
-  }
-}
-

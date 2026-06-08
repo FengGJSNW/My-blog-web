@@ -25,10 +25,10 @@ import { url } from "@/utils/url-utils";
       src={profileConfig.avatar || ""}
       alt="Profile Image of the Author"
       class="mx-auto lg:w-full h-full lg:mt-0"
-      loading="eager"
-      fetchpriority="high"
-      widths={[256, 512]}
-      sizes="(max-width: 1024px) 192px, 256px"
+      loading="lazy"
+      fetchpriority="auto"
+      widths={[192, 256, 320, 384]}
+      sizes="(max-width: 767px) 168px, (max-width: 1024px) 192px, 256px"
     />
   </a>
   <div class="px-2">
@@ -41,7 +41,7 @@ import { url } from "@/utils/url-utils";
       class="h-1 w-5 bg-(--primary) mx-auto rounded-full mb-2 transition"
     >
     </div>
-    <div class="text-center text-neutral-400 mb-2.5 transition">
+    <div class="text-center text-neutral-600 dark:text-neutral-300 mb-2.5 transition">
       {profileConfig.bio}
     </div>
         <div class="flex flex-wrap gap-2 justify-center mb-1">

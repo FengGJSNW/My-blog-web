@@ -18,7 +18,6 @@ export class TOCManager {
 	private observer: IntersectionObserver | null = null;
 	private minDepth = 10;
 	private maxLevel: number;
-	private scrollTimeout: number | null = null;
 	private contentId: string;
 	private indicatorId: string;
 	private scrollOffset: number;
@@ -28,8 +27,18 @@ export class TOCManager {
 	private tocContent: HTMLElement | null = null;
 	private tocContainer: Element | null = null;
 	private indicator: HTMLElement | null = null;
+	private headingMetrics = new Map<string, number>();
+	private headingMetricsDirty = true;
+	private headingMetricsFrame: number | null = null;
+	private headingMetricsResizeObserver: ResizeObserver | null = null;
+	private headingMetricsMutationObserver: MutationObserver | null = null;
+	private headingMetricsContent: Element | null = null;
 	private handleViewportChange = (): void => {
 		this.scheduleActiveUpdate();
+	};
+	private handleHeadingMetricsChanged = (): void => {
+		this.headingMetricsDirty = true;
+		this.scheduleHeadingMetricsRefresh();
 	};
 
 	constructor(config: TOCConfig) {
@@ -104,6 +113,141 @@ export class TOCManager {
 			this.pendingActiveUpdate = null;
 			this.updateActiveState();
 		});
+	}
+
+	private scheduleHeadingMetricsRefresh(): void {
+		if (this.headingMetricsFrame !== null) return;
+		this.headingMetricsFrame = window.requestAnimationFrame(() => {
+			this.headingMetricsFrame = null;
+			this.refreshHeadingMetrics();
+		});
+	}
+
+	private refreshHeadingMetrics(force = false): void {
+		if (!force && !this.headingMetricsDirty) return;
+
+		const contentContainer = this.getContentContainer();
+		if (!contentContainer) {
+			this.headingMetrics.clear();
+			this.headingMetricsContent = null;
+			this.headingMetricsDirty = false;
+			return;
+		}
+
+		const headings =
+			this.headings.length > 0 ? this.headings : this.getFilteredHeadings();
+		const contentTop = contentContainer.getBoundingClientRect().top;
+		const nextMetrics = new Map<string, number>();
+
+		for (const heading of headings) {
+			if (!heading.id || !heading.isConnected) continue;
+			nextMetrics.set(
+				heading.id,
+				Math.round(heading.getBoundingClientRect().top - contentTop),
+			);
+		}
+
+		this.headingMetrics = nextMetrics;
+		this.headingMetricsContent = contentContainer;
+		this.headingMetricsDirty = false;
+	}
+
+	private disconnectHeadingMetricsMonitor(): void {
+		if (this.headingMetricsFrame !== null) {
+			window.cancelAnimationFrame(this.headingMetricsFrame);
+			this.headingMetricsFrame = null;
+		}
+		this.headingMetricsResizeObserver?.disconnect();
+		this.headingMetricsMutationObserver?.disconnect();
+		this.headingMetricsResizeObserver = null;
+		this.headingMetricsMutationObserver = null;
+		this.headingMetricsContent = null;
+	}
+
+	private setupHeadingMetricsMonitor(): void {
+		this.disconnectHeadingMetricsMonitor();
+
+		const contentContainer = this.getContentContainer();
+		if (!contentContainer) return;
+
+		this.headingMetricsContent = contentContainer;
+		this.headingMetricsDirty = true;
+		this.refreshHeadingMetrics(true);
+
+		if ("ResizeObserver" in window) {
+			this.headingMetricsResizeObserver = new ResizeObserver(
+				this.handleHeadingMetricsChanged,
+			);
+			this.headingMetricsResizeObserver.observe(contentContainer);
+			this.headings.forEach((heading) => {
+				this.headingMetricsResizeObserver?.observe(heading);
+			});
+		}
+
+		if ("MutationObserver" in window) {
+			this.headingMetricsMutationObserver = new MutationObserver(
+				this.handleHeadingMetricsChanged,
+			);
+			this.headingMetricsMutationObserver.observe(contentContainer, {
+				attributes: true,
+				childList: true,
+				subtree: true,
+			});
+		}
+	}
+
+	private getHeadingScrollOffset(heading: HTMLElement): number {
+		const scrollMarginTop = Number.parseFloat(
+			window.getComputedStyle(heading).scrollMarginTop,
+		);
+		return Number.isFinite(scrollMarginTop) && scrollMarginTop > 0
+			? scrollMarginTop
+			: this.scrollOffset;
+	}
+
+	private getHeadingActivationY(heading: HTMLElement): number {
+		return this.getHeadingScrollOffset(heading) + 1;
+	}
+
+	private getHeadingTargetTop(heading: HTMLElement): number {
+		return Math.max(
+			0,
+			Math.round(
+				heading.getBoundingClientRect().top +
+					window.pageYOffset -
+					this.getHeadingScrollOffset(heading),
+			),
+		);
+	}
+
+	private getArticleRelativeTargetTop(heading: HTMLElement): number {
+		const contentContainer =
+			this.headingMetricsContent ?? this.getContentContainer();
+		if (!contentContainer || !heading.id) return this.getHeadingTargetTop(heading);
+
+		this.refreshHeadingMetrics(this.headingMetricsDirty);
+
+		const relativeTop = this.headingMetrics.get(heading.id);
+		if (!Number.isFinite(relativeTop)) return this.getHeadingTargetTop(heading);
+
+		const contentPageTop =
+			contentContainer.getBoundingClientRect().top + window.pageYOffset;
+		return Math.max(
+			0,
+			Math.round(
+				contentPageTop + Number(relativeTop) - this.getHeadingScrollOffset(heading),
+			),
+		);
+	}
+
+	private scrollToHeading(heading: HTMLElement): void {
+		window.scrollTo({
+			top: this.getArticleRelativeTargetTop(heading),
+			behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+				? "auto"
+				: "smooth",
+		});
+		this.scheduleActiveUpdate();
 	}
 
 	/**
@@ -247,7 +391,6 @@ export class TOCManager {
 			this.headings.length > 0 ? this.headings : this.getFilteredHeadings();
 		if (headings.length === 0) return [];
 
-		const activationY = this.scrollOffset + 1;
 		let activeHeading: HTMLElement | null = null;
 		let closestHeading: HTMLElement | null = null;
 		let closestDistance = Number.POSITIVE_INFINITY;
@@ -256,6 +399,7 @@ export class TOCManager {
 			if (!heading.id) continue;
 
 			const rect = heading.getBoundingClientRect();
+			const activationY = this.getHeadingActivationY(heading);
 			const distance = Math.abs(rect.top - activationY);
 			if (distance < closestDistance) {
 				closestDistance = distance;
@@ -342,54 +486,6 @@ export class TOCManager {
 		if (indicator.style.opacity !== "1") {
 			indicator.style.opacity = "1";
 		}
-
-		// 自动滚动到活动项
-		if (firstActive) {
-			this.scrollToActiveItem(firstActive);
-		}
-	}
-
-	/**
-	 * 滚动到活动项
-	 */
-	private scrollToActiveItem(activeItem: HTMLElement): void {
-		if (!activeItem) return;
-
-		const tocContainer =
-			this.tocContainer ??
-			document.querySelector(`#${this.contentId}`)?.closest(".toc-scroll-container");
-		if (!tocContainer) return;
-
-		// 清除之前的定时器
-		if (this.scrollTimeout) {
-			clearTimeout(this.scrollTimeout);
-		}
-
-		// 使用节流机制
-		this.scrollTimeout = window.setTimeout(() => {
-			const containerRect = tocContainer.getBoundingClientRect();
-			const itemRect = activeItem.getBoundingClientRect();
-
-			// 只在元素不在可视区域时才滚动
-			const isVisible =
-				itemRect.top >= containerRect.top &&
-				itemRect.bottom <= containerRect.bottom;
-
-			if (!isVisible) {
-				const itemOffsetTop = (activeItem as HTMLElement).offsetTop;
-				const containerHeight = tocContainer.clientHeight;
-				const itemHeight = activeItem.clientHeight;
-
-				// 计算目标滚动位置，将元素居中显示
-				const targetScroll =
-					itemOffsetTop - containerHeight / 2 + itemHeight / 2;
-
-				tocContainer.scrollTo({
-					top: targetScroll,
-					behavior: "auto",
-				});
-			}
-		}, 100);
 	}
 
 	/**
@@ -403,17 +499,7 @@ export class TOCManager {
 		const targetElement = document.getElementById(id);
 
 		if (targetElement) {
-			const targetTop =
-				targetElement.getBoundingClientRect().top +
-				window.pageYOffset -
-				this.scrollOffset;
-
-			window.scrollTo({
-				top: targetTop,
-				behavior: "smooth",
-			});
-
-			this.scheduleActiveUpdate();
+			this.scrollToHeading(targetElement);
 		}
 	}
 
@@ -443,6 +529,7 @@ export class TOCManager {
 				this.observer?.observe(heading);
 			}
 		});
+		this.setupHeadingMetricsMonitor();
 
 		window.addEventListener("scroll", this.handleViewportChange, {
 			passive: true,
@@ -467,18 +554,17 @@ export class TOCManager {
 			this.observer.disconnect();
 			this.observer = null;
 		}
-		if (this.scrollTimeout) {
-			clearTimeout(this.scrollTimeout);
-			this.scrollTimeout = null;
-		}
 		if (this.pendingActiveUpdate !== null) {
 			window.cancelAnimationFrame(this.pendingActiveUpdate);
 			this.pendingActiveUpdate = null;
 		}
+		this.disconnectHeadingMetricsMonitor();
 		window.removeEventListener("scroll", this.handleViewportChange);
 		window.removeEventListener("resize", this.handleViewportChange);
 		this.headings = [];
 		this.activeItems = [];
+		this.headingMetrics.clear();
+		this.headingMetricsDirty = true;
 		this.tocContent = null;
 		this.tocContainer = null;
 		this.indicator = null;

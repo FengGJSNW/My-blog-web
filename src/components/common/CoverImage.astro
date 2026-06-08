@@ -121,9 +121,9 @@ const imageClass = "w-full h-full object-cover";
 const imageStyle = `object-position: ${position};`;
 
 // 响应式配置
-const widths = preview ? [320, 480, 640] : [640, 960, 1280];
+const widths = preview ? [240, 320, 384, 512, 640] : [640, 960, 1280];
 const sizes = preview
-	? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+	? "(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 240px"
 	: "(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px";
 const quality = preview ? Math.round(configQuality * 0.9) : configQuality;
 
