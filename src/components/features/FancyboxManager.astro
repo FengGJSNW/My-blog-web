@@ -1,14 +1,73 @@
 ---
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import "@/styles/fancybox-custom.css";
-// Fancybox 管理器组件
 ---
 
 <script>
   let Fancybox: any;
+  let setupToken = 0;
+
+  const blurLinkSelector = ".blur-image-link";
+  const blurBoundSelector = ".blur-image-link[data-fancybox]";
+  const rawImageSelector =
+    ".custom-md img:not(.blur-image-placeholder):not([data-responsive-image]), #post-cover img, .moment-images img";
+  const momentLinkSelector = ".moment-images a[data-fancybox]";
+  const otherFancyboxSelector =
+    "[data-fancybox]:not(.moment-images a):not(.blur-image-link)";
+
+  const commonOptions = {
+    Thumbs: {
+      autoStart: true,
+      showOnStart: "yes",
+    },
+    Toolbar: {
+      display: {
+        left: ["infobar"],
+        middle: [
+          "zoomIn",
+          "zoomOut",
+          "toggle1to1",
+          "rotateCCW",
+          "rotateCW",
+          "flipX",
+          "flipY",
+        ],
+        right: ["slideshow", "thumbs", "close"],
+      },
+    },
+    animated: true,
+    dragToClose: true,
+    keyboard: {
+      Escape: "close",
+      Delete: "close",
+      Backspace: "close",
+      PageUp: "next",
+      PageDown: "prev",
+      ArrowUp: "next",
+      ArrowDown: "prev",
+      ArrowRight: "next",
+      ArrowLeft: "prev",
+    },
+    fitToView: true,
+    preload: 3,
+    infinite: true,
+    Panzoom: {
+      maxScale: 3,
+      minScale: 1,
+    },
+    caption: false,
+  };
+
+  async function ensureFancybox() {
+    if (!Fancybox) {
+      const mod = await import("@fancyapps/ui");
+      Fancybox = mod.Fancybox;
+    }
+    return Fancybox;
+  }
 
   function prepareBlurImageLinks() {
-    document.querySelectorAll<HTMLAnchorElement>(".blur-image-link").forEach((link) => {
+    document.querySelectorAll<HTMLAnchorElement>(blurLinkSelector).forEach((link) => {
       const image = link.querySelector<HTMLImageElement>(
         "img[data-original-src], img:not(.blur-image-placeholder)",
       );
@@ -33,78 +92,115 @@ import "@/styles/fancybox-custom.css";
     });
   }
 
+  function getBlurImageOriginal(link: HTMLAnchorElement) {
+    const image = link.querySelector<HTMLImageElement>(
+      "img[data-original-src], img:not(.blur-image-placeholder)",
+    );
+    return (
+      link.getAttribute("data-src") ||
+      image?.getAttribute("data-original-src") ||
+      link.getAttribute("href") ||
+      image?.currentSrc ||
+      image?.src ||
+      ""
+    );
+  }
+
+  function getBlurImageThumb(link: HTMLAnchorElement) {
+    const image = link.querySelector<HTMLImageElement>(
+      "img:not(.blur-image-placeholder)",
+    );
+    return (
+      link.getAttribute("data-thumb-src") ||
+      image?.currentSrc ||
+      image?.getAttribute("src") ||
+      getBlurImageOriginal(link)
+    );
+  }
+
+  function getBlurImageSlides(clickedLink: HTMLAnchorElement) {
+    const scope = clickedLink.closest(".custom-md") || document;
+    const group = clickedLink.getAttribute("data-fancybox");
+    const links = Array.from(scope.querySelectorAll<HTMLAnchorElement>(blurLinkSelector))
+      .filter((link) => {
+        const original = getBlurImageOriginal(link);
+        if (!original) return false;
+        if (!group) return true;
+        return link.getAttribute("data-fancybox") === group;
+      });
+    const activeIndex = Math.max(0, links.indexOf(clickedLink));
+    const slides = links.map((link) => ({
+      src: getBlurImageOriginal(link),
+      type: "image",
+      thumbSrc: getBlurImageThumb(link),
+      triggerEl: link,
+    }));
+
+    return { slides, activeIndex };
+  }
+
+  async function openBlurImageLink(link: HTMLAnchorElement) {
+    const original = getBlurImageOriginal(link);
+    if (!original) return;
+
+    prepareBlurImageLinks();
+    const mod = await ensureFancybox();
+    const { slides, activeIndex } = getBlurImageSlides(link);
+
+    mod.show(slides.length > 0 ? slides : [{ src: original, type: "image" }], {
+      ...commonOptions,
+      startIndex: activeIndex,
+      triggerEl: link,
+      Carousel: {
+        transition: "slide",
+        preload: 2,
+      },
+    });
+  }
+
+  function handleBlurImageClick(event: MouseEvent) {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+
+    const link = target.closest<HTMLAnchorElement>(blurLinkSelector);
+    if (!link) return;
+
+    const original = getBlurImageOriginal(link);
+    if (!original) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    void openBlurImageLink(link);
+  }
+
   async function setup() {
+    const currentToken = ++setupToken;
     prepareBlurImageLinks();
 
     const selectors = [
-      ".custom-md .blur-image-link[data-fancybox]",
-      ".custom-md img:not(.blur-image-placeholder):not([data-responsive-image]), #post-cover img, .moment-images img",
-      ".moment-images a[data-fancybox]",
-      "[data-fancybox]:not(.moment-images a):not(.blur-image-link)"
+      blurBoundSelector,
+      rawImageSelector,
+      momentLinkSelector,
+      otherFancyboxSelector,
     ];
-
-    // 检查页面是否存在需要 Fancybox 的元素
-    const hasElements = selectors.some(selector => document.querySelector(selector));
+    const hasElements = selectors.some((selector) => document.querySelector(selector));
 
     if (!hasElements) return;
 
-    // 动态导入资源
-    if (!Fancybox) {
-      const mod = await import("@fancyapps/ui");
-      Fancybox = mod.Fancybox;
-    }
+    const mod = await ensureFancybox();
+    if (currentToken !== setupToken) return;
 
-    // 通用配置
-    const commonOptions = {
-      Thumbs: {
-        autoStart: true,
-        showOnStart: "yes",
-      },
-      Toolbar: {
-        display: {
-          left: ["infobar"],
-          middle: [
-            "zoomIn",
-            "zoomOut",
-            "toggle1to1",
-            "rotateCCW",
-            "rotateCW",
-            "flipX",
-            "flipY",
-          ],
-          right: ["slideshow", "thumbs", "close"],
-        },
-      },
-      animated: true,
-      dragToClose: true,
-      keyboard: {
-        Escape: "close",
-        Delete: "close",
-        Backspace: "close",
-        PageUp: "next",
-        PageDown: "prev",
-        ArrowUp: "next",
-        ArrowDown: "prev",
-        ArrowRight: "next",
-        ArrowLeft: "prev",
-      },
-      fitToView: true,
-      preload: 3,
-      infinite: true,
-      Panzoom: {
-        maxScale: 3,
-        minScale: 1,
-      },
-      caption: false,
-    };
+    mod.unbind(blurBoundSelector);
+    mod.unbind(rawImageSelector);
+    mod.unbind(momentLinkSelector);
+    mod.unbind(otherFancyboxSelector);
 
-    // 绑定图片
-    Fancybox.bind(".custom-md .blur-image-link[data-fancybox]", {
+    mod.bind(blurBoundSelector, {
       ...commonOptions,
       groupAll: false,
     });
 
-    Fancybox.bind(".custom-md img:not(.blur-image-placeholder):not([data-responsive-image]), #post-cover img, .moment-images img", {
+    mod.bind(rawImageSelector, {
       ...commonOptions,
       source: (el: any) =>
         el.getAttribute("data-original-src") ||
@@ -118,32 +214,37 @@ import "@/styles/fancybox-custom.css";
       },
     });
 
-    // 绑定链接
-    Fancybox.bind(".moment-images a[data-fancybox]", {
+    mod.bind(momentLinkSelector, {
       ...commonOptions,
       source: (el: any) => el.getAttribute("data-src") || el.getAttribute("href"),
     });
 
-    // 绑定其他
-    Fancybox.bind("[data-fancybox]:not(.moment-images a):not(.blur-image-link)", commonOptions);
+    mod.bind(otherFancyboxSelector, commonOptions);
   }
 
   function cleanupFancybox() {
     if (Fancybox) {
       Fancybox.close();
-      Fancybox.unbind(document.body);
     }
   }
 
-  // 初始化
-  setup();
+  function scheduleSetup() {
+    window.setTimeout(() => void setup(), 0);
+  }
 
-  // Swup 生命周期整合
-  document.addEventListener("swup:content:replace", setup);
+  scheduleSetup();
+  if (!(window as any).__fireflyBlurImageClickBound) {
+    (window as any).__fireflyBlurImageClickBound = true;
+    document.addEventListener("click", handleBlurImageClick, true);
+  }
+
+  document.addEventListener("astro:page-load", scheduleSetup);
+  document.addEventListener("swup:content:replace", scheduleSetup);
+  document.addEventListener("swup:contentReplaced", scheduleSetup);
+  document.addEventListener("swup:page:view", scheduleSetup);
   document.addEventListener("swup:visit:start", cleanupFancybox);
 
-  // 加密文章解密后重新绑定灯箱
   document.addEventListener("password:decrypted", () => {
-    setTimeout(setup, 200);
+    setTimeout(scheduleSetup, 200);
   });
 </script>

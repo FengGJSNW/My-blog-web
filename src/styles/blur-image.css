@@ -77,7 +77,8 @@
 
 .custom-md p > .blur-image-link,
 .custom-md li > .blur-image-link,
-.custom-md center > .blur-image-link {
+.custom-md center > .blur-image-link,
+.custom-md figure .blur-image-link {
 	margin: 1rem auto;
 	border-radius: calc(var(--radius-large) - 0.35rem);
 	transform-origin: center center;
@@ -88,7 +89,8 @@
 
 .custom-md p > .blur-image-link:hover,
 .custom-md li > .blur-image-link:hover,
-.custom-md center > .blur-image-link:hover {
+.custom-md center > .blur-image-link:hover,
+.custom-md figure .blur-image-link:hover {
 	transform: scale(1.016);
 }
 
@@ -99,6 +101,13 @@
 .custom-md .blur-image-main {
 	margin: 0;
 	border-radius: inherit;
+}
+
+.custom-md figure > .blur-image-link > img[data-responsive-image="fallback"],
+.custom-md figure > a > img[data-responsive-image="fallback"] {
+	display: block;
+	margin: 0 auto;
+	border-radius: calc(var(--radius-large) - 0.35rem);
 }
 
 .custom-md .image-grid .blur-image-link,
@@ -115,13 +124,15 @@
 	.blur-image-main,
 	.custom-md p > .blur-image-link,
 	.custom-md li > .blur-image-link,
-	.custom-md center > .blur-image-link {
+	.custom-md center > .blur-image-link,
+	.custom-md figure .blur-image-link {
 		transition: none !important;
 	}
 
 	.custom-md p > .blur-image-link:hover,
 	.custom-md li > .blur-image-link:hover,
-	.custom-md center > .blur-image-link:hover {
+	.custom-md center > .blur-image-link:hover,
+	.custom-md figure .blur-image-link:hover {
 		transform: none;
 	}
 }
