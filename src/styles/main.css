@@ -479,13 +479,17 @@ html.firefly-scroll-active .scroll-down-indicator * {
     }
 }
 
-.custom-md img[src^="/__local_svg/"] {
+.custom-md img[data-local-svg="true"],
+.custom-md img[src^="/__local_svg/"],
+.custom-md img[src*="/__local_svg/"],
+.custom-md img[src*="/assets/local-svg/"] {
     transition: filter 0.2s ease;
 }
 
+:root.dark .custom-md img[data-local-svg="true"],
 :root.dark .custom-md img[src^="/__local_svg/"],
-:root.dark img[src^="/__local_svg/"].fancybox-image,
-:root.dark .fancybox__image[src^="/__local_svg/"] {
+:root.dark .custom-md img[src*="/__local_svg/"],
+:root.dark .custom-md img[src*="/assets/local-svg/"] {
     filter: invert(1);
 }
 

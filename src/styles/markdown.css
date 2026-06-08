@@ -55,6 +55,21 @@
     }
   }
 
+  a.blur-image-link:not(.no-styling) {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+    background: transparent;
+    border-bottom: 0;
+  }
+
+  a.blur-image-link:not(.no-styling):hover,
+  a.blur-image-link:not(.no-styling):active {
+    background: transparent;
+    border-bottom: 0;
+    text-decoration: none;
+  }
+
   code {
     @apply bg-(--inline-code-bg) text-(--inline-code-color) px-1 py-0.5 rounded-md overflow-hidden;
 

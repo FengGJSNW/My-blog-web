@@ -8,6 +8,7 @@ const projectRoot = process.cwd();
 const generatedDir = path.join(projectRoot, "public", "assets", "generated");
 const originalDir = path.join(generatedDir, "original");
 const manifestPath = path.join(generatedDir, "manifest.json");
+const aliasManifestPath = path.join(projectRoot, "scripts", "generated-image-aliases.json");
 const generatedUrlBase = "/assets/generated";
 
 const rasterImageExts = new Set([".avif", ".jpeg", ".jpg", ".png", ".webp"]);
@@ -17,6 +18,16 @@ const sourceDirs = [
 ];
 const placeholderWidth = 64;
 const candidateWidths = [192, 240, 256, 320, 384, 512, 640, 960, 1280, 1920];
+const legacyGeneratedAliasSeeds = [
+	{
+		sourceSuffix: "misc/picture/Challenge.png",
+		hashes: ["43ead8cd13dc"],
+	},
+	{
+		sourceSuffix: "web/HiddenSecret/flag.png",
+		hashes: ["0a40b46b5e84"],
+	},
+];
 
 function toPosix(value) {
 	return value.replace(/\\/g, "/");
@@ -118,13 +129,25 @@ async function copyOriginal(absPath, outPath) {
 	return true;
 }
 
+async function readJsonFile(absPath, fallback) {
+	try {
+		return JSON.parse(await fs.readFile(absPath, "utf8"));
+	} catch {
+		return fallback;
+	}
+}
+
 function generatedUrlToPath(url) {
 	if (!url?.startsWith(`${generatedUrlBase}/`)) return null;
 	return path.join(projectRoot, "public", url.replace(/^\/+/, ""));
 }
 
-function collectExpectedFiles(manifest) {
-	const expected = new Set([manifestPath]);
+function isGeneratedUrl(url) {
+	return typeof url === "string" && url.startsWith(`${generatedUrlBase}/`);
+}
+
+function collectExpectedFiles(manifest, aliasRecords = []) {
+	const expected = new Set([manifestPath, aliasManifestPath]);
 	for (const entry of Object.values(manifest)) {
 		const urls = [
 			entry.placeholder,
@@ -136,19 +159,240 @@ function collectExpectedFiles(manifest) {
 			if (absPath) expected.add(absPath);
 		}
 	}
+	for (const record of aliasRecords) {
+		const absPath = generatedUrlToPath(record.aliasUrl);
+		if (absPath) expected.add(absPath);
+	}
 	return expected;
 }
 
-async function cleanupStaleGeneratedFiles(manifest) {
-	const expected = collectExpectedFiles(manifest);
+async function cleanupStaleGeneratedFiles(manifest, aliasRecords = []) {
+	const expected = collectExpectedFiles(manifest, aliasRecords);
 	const files = await listAllFiles(generatedDir);
 	await Promise.all(
 		files.map(async (file) => {
-			if (file === manifestPath || file === `${manifestPath}.tmp`) return;
+			if (
+				file === manifestPath ||
+				file === `${manifestPath}.tmp` ||
+				file === aliasManifestPath ||
+				file === `${aliasManifestPath}.tmp`
+			) return;
 			if (expected.has(file)) return;
 			await fs.rm(file, { force: true });
 		}),
 	);
+}
+
+function replaceGeneratedHash(fileName, hash) {
+	return fileName.replace(/-[0-9a-f]{12}-(\d+\.webp|original\.[^.]+)$/i, `-${hash}-$1`);
+}
+
+function replaceGeneratedHashInUrl(url, hash) {
+	const slashIndex = url.lastIndexOf("/");
+	const dir = slashIndex >= 0 ? url.slice(0, slashIndex + 1) : "";
+	const fileName = slashIndex >= 0 ? url.slice(slashIndex + 1) : url;
+	return `${dir}${replaceGeneratedHash(fileName, hash)}`;
+}
+
+function getEntryDescriptors(entry) {
+	const descriptors = [];
+	if (isGeneratedUrl(entry?.placeholder)) {
+		descriptors.push({
+			kind: "placeholder",
+			aliasUrl: entry.placeholder,
+		});
+	}
+
+	for (const source of entry?.sources ?? []) {
+		if (!isGeneratedUrl(source.src)) continue;
+		descriptors.push({
+			kind: "source",
+			width: source.width,
+			aliasUrl: source.src,
+		});
+	}
+
+	if (isGeneratedUrl(entry?.original)) {
+		descriptors.push({
+			kind: "original",
+			aliasUrl: entry.original,
+		});
+	}
+
+	return descriptors;
+}
+
+function getSourceForAlias(entry, record) {
+	if (!entry) return null;
+	if (record.kind === "placeholder") return entry.placeholder;
+	if (record.kind === "original") return entry.original;
+	if (record.kind !== "source") return null;
+
+	const sources = Array.isArray(entry.sources)
+		? [...entry.sources].sort((a, b) => a.width - b.width)
+		: [];
+	if (sources.length === 0) return null;
+
+	const width = Number(record.width);
+	const source =
+		sources.find((item) => item.width === width) ??
+		sources.find((item) => item.width >= width) ??
+		sources[sources.length - 1];
+
+	return source?.src ?? null;
+}
+
+function canAliasUrl(sourceUrl, aliasUrl) {
+	if (!isGeneratedUrl(sourceUrl) || !isGeneratedUrl(aliasUrl)) return false;
+	if (sourceUrl === aliasUrl) return false;
+
+	const sourcePath = generatedUrlToPath(sourceUrl);
+	const aliasPath = generatedUrlToPath(aliasUrl);
+	if (!sourcePath || !aliasPath) return false;
+
+	return path.extname(sourcePath).toLowerCase() === path.extname(aliasPath).toLowerCase();
+}
+
+function normalizeAliasRecord(record) {
+	if (!record || typeof record !== "object") return null;
+	if (typeof record.key !== "string" || typeof record.aliasUrl !== "string") return null;
+	if (!["placeholder", "source", "original"].includes(record.kind)) return null;
+
+	return {
+		key: toPosix(record.key),
+		kind: record.kind,
+		...(record.kind === "source" ? { width: Number(record.width) } : {}),
+		aliasUrl: record.aliasUrl,
+	};
+}
+
+function addAliasRecord(records, record) {
+	const normalized = normalizeAliasRecord(record);
+	if (!normalized) return;
+	if (normalized.kind === "source" && !Number.isFinite(normalized.width)) return;
+
+	const id = [
+		normalized.key,
+		normalized.kind,
+		normalized.width ?? "",
+		normalized.aliasUrl,
+	].join("|");
+
+	if (records.has(id)) return;
+	records.set(id, normalized);
+}
+
+function inferAliasRecordsFromPreviousManifest(manifest, previousManifest) {
+	const records = new Map();
+
+	for (const [key, entry] of Object.entries(manifest)) {
+		const previousEntry = previousManifest?.[key];
+		if (!previousEntry) continue;
+
+		for (const descriptor of getEntryDescriptors(previousEntry)) {
+			const sourceUrl = getSourceForAlias(entry, descriptor);
+			if (!canAliasUrl(sourceUrl, descriptor.aliasUrl)) continue;
+			addAliasRecord(records, { key, ...descriptor });
+		}
+	}
+
+	return records;
+}
+
+function createManifestSnapshot(manifest) {
+	const snapshot = {};
+
+	for (const [key, entry] of Object.entries(manifest)) {
+		snapshot[key] = {
+			placeholder: entry.placeholder,
+			sources: (entry.sources ?? []).map((source) => ({
+				width: source.width,
+				src: source.src,
+			})),
+			original: entry.original,
+			source: entry.source,
+		};
+	}
+
+	return snapshot;
+}
+
+function findManifestKeyBySuffix(manifest, sourceSuffix) {
+	const normalizedSuffix = toPosix(sourceSuffix);
+	for (const [key, entry] of Object.entries(manifest)) {
+		const source = toPosix(entry?.source ?? key);
+		if (source.endsWith(normalizedSuffix)) return key;
+	}
+	return null;
+}
+
+function inferAliasRecordsFromSeeds(manifest) {
+	const records = new Map();
+
+	for (const seed of legacyGeneratedAliasSeeds) {
+		const key = findManifestKeyBySuffix(manifest, seed.sourceSuffix);
+		if (!key) continue;
+
+		const entry = manifest[key];
+		for (const descriptor of getEntryDescriptors(entry)) {
+			for (const hash of seed.hashes) {
+				const aliasUrl = replaceGeneratedHashInUrl(descriptor.aliasUrl, hash);
+				const sourceUrl = getSourceForAlias(entry, descriptor);
+				if (!canAliasUrl(sourceUrl, aliasUrl)) continue;
+				addAliasRecord(records, { key, ...descriptor, aliasUrl });
+			}
+		}
+	}
+
+	return records;
+}
+
+function buildAliasRecords(manifest, previousManifests, previousAliasManifest) {
+	const records = new Map();
+
+	for (const record of previousAliasManifest?.records ?? []) {
+		const normalized = normalizeAliasRecord(record);
+		if (!normalized) continue;
+		const sourceUrl = getSourceForAlias(manifest[normalized.key], normalized);
+		if (!canAliasUrl(sourceUrl, normalized.aliasUrl)) continue;
+		addAliasRecord(records, normalized);
+	}
+
+	for (const previousManifest of previousManifests) {
+		if (!previousManifest || typeof previousManifest !== "object") continue;
+		for (const record of inferAliasRecordsFromPreviousManifest(manifest, previousManifest).values()) {
+			addAliasRecord(records, record);
+		}
+	}
+
+	for (const record of inferAliasRecordsFromSeeds(manifest).values()) {
+		addAliasRecord(records, record);
+	}
+
+	return [...records.values()].sort((a, b) => {
+		const aId = `${a.key}|${a.kind}|${a.width ?? ""}|${a.aliasUrl}`;
+		const bId = `${b.key}|${b.kind}|${b.width ?? ""}|${b.aliasUrl}`;
+		return aId.localeCompare(bId);
+	});
+}
+
+async function createGeneratedAliases(manifest, records) {
+	let aliases = 0;
+
+	for (const record of records) {
+		const sourceUrl = getSourceForAlias(manifest[record.key], record);
+		if (!canAliasUrl(sourceUrl, record.aliasUrl)) continue;
+
+		const sourceAbs = generatedUrlToPath(sourceUrl);
+		const aliasAbs = generatedUrlToPath(record.aliasUrl);
+		if (!sourceAbs || !aliasAbs) continue;
+
+		await ensureDir(path.dirname(aliasAbs));
+		await fs.copyFile(sourceAbs, aliasAbs);
+		aliases += 1;
+	}
+
+	return aliases;
 }
 
 async function listAllFiles(dir) {
@@ -248,6 +492,10 @@ async function processOriginalOnlyImage(absPath, isPublic, reason) {
 async function main() {
 	await ensureDir(generatedDir);
 	await ensureDir(originalDir);
+	await ensureDir(path.dirname(aliasManifestPath));
+
+	const previousManifest = await readJsonFile(manifestPath, {});
+	const previousAliasManifest = await readJsonFile(aliasManifestPath, { records: [] });
 
 	const sourceFiles = new Map();
 	for (const source of sourceDirs) {
@@ -261,6 +509,7 @@ async function main() {
 	let processed = 0;
 	let skipped = 0;
 	let fallback = 0;
+	let aliases = 0;
 
 	for (const [absPath, isPublic] of sourceFiles) {
 		try {
@@ -288,12 +537,31 @@ async function main() {
 		}
 	}
 
-	await cleanupStaleGeneratedFiles(manifest);
+	const aliasRecords = buildAliasRecords(
+		manifest,
+		[previousAliasManifest.entries, previousManifest],
+		previousAliasManifest,
+	);
+	await cleanupStaleGeneratedFiles(manifest, aliasRecords);
+	aliases = await createGeneratedAliases(manifest, aliasRecords);
 	await fs.writeFile(`${manifestPath}.tmp`, `${JSON.stringify(manifest, null, 2)}\n`);
 	await fs.rename(`${manifestPath}.tmp`, manifestPath);
+	await fs.writeFile(
+		`${aliasManifestPath}.tmp`,
+		`${JSON.stringify(
+			{
+				version: 1,
+				records: aliasRecords,
+				entries: createManifestSnapshot(manifest),
+			},
+			null,
+			2,
+		)}\n`,
+	);
+	await fs.rename(`${aliasManifestPath}.tmp`, aliasManifestPath);
 
 	console.log(
-		`[generate-images] processed ${processed} images, fallback ${fallback}, skipped ${skipped}, manifest: ${toPosix(path.relative(projectRoot, manifestPath))}`,
+		`[generate-images] processed ${processed} images, fallback ${fallback}, skipped ${skipped}, aliases ${aliases}, alias records ${aliasRecords.length}, manifest: ${toPosix(path.relative(projectRoot, manifestPath))}`,
 	);
 }
 

@@ -15,6 +15,43 @@ import "@/styles/fancybox-custom.css";
   const otherFancyboxSelector =
     "[data-fancybox]:not(.moment-images a):not(.blur-image-link)";
 
+  function isLocalSvgUrl(value?: string | null) {
+    if (!value) return false;
+    const src = value.toLowerCase();
+    return (
+      src.includes("/__local_svg/") ||
+      src.includes("/assets/local-svg/") ||
+      /\.svg(?:[?#]|$)/i.test(src)
+    );
+  }
+
+  function markLocalSvgFancybox() {
+    document.querySelectorAll<HTMLImageElement>(".fancybox__container img").forEach((image) => {
+      const src =
+        image.currentSrc ||
+        image.src ||
+        image.getAttribute("data-lazy-src") ||
+        image.getAttribute("src") ||
+        "";
+
+      if (!isLocalSvgUrl(src)) return;
+
+      image.setAttribute("data-firefly-local-svg", "true");
+      image
+        .closest<HTMLElement>(".f-carousel__slide, .fancybox__slide")
+        ?.classList.add("firefly-fancybox-svg-slide");
+      image
+        .closest<HTMLElement>(".f-panzoom__viewport, .f-panzoom__wrapper")
+        ?.classList.add("firefly-fancybox-svg-frame");
+    });
+  }
+
+  function scheduleLocalSvgFancyboxMark() {
+    requestAnimationFrame(markLocalSvgFancybox);
+    window.setTimeout(markLocalSvgFancybox, 120);
+    window.setTimeout(markLocalSvgFancybox, 600);
+  }
+
   const commonOptions = {
     Thumbs: {
       autoStart: true,
@@ -56,6 +93,12 @@ import "@/styles/fancybox-custom.css";
       minScale: 1,
     },
     caption: false,
+    on: {
+      ready: scheduleLocalSvgFancyboxMark,
+      "Carousel.change": scheduleLocalSvgFancyboxMark,
+      "Carousel.contentReady": scheduleLocalSvgFancyboxMark,
+      "Carousel.render": scheduleLocalSvgFancyboxMark,
+    },
   };
 
   async function ensureFancybox() {
@@ -83,6 +126,13 @@ import "@/styles/fancybox-custom.css";
       link.setAttribute("data-fancybox", link.closest(".custom-md") ? "article-images" : "images");
       link.setAttribute("data-src", original);
       link.setAttribute("data-type", "image");
+      if (isLocalSvgUrl(original)) {
+        link.setAttribute("data-local-svg", "true");
+        image?.setAttribute("data-local-svg", "true");
+      } else {
+        link.removeAttribute("data-local-svg");
+        image?.removeAttribute("data-local-svg");
+      }
 
       const thumb =
         link.getAttribute("data-thumb-src") ||
@@ -129,12 +179,16 @@ import "@/styles/fancybox-custom.css";
         return link.getAttribute("data-fancybox") === group;
       });
     const activeIndex = Math.max(0, links.indexOf(clickedLink));
-    const slides = links.map((link) => ({
-      src: getBlurImageOriginal(link),
-      type: "image",
-      thumbSrc: getBlurImageThumb(link),
-      triggerEl: link,
-    }));
+    const slides = links.map((link) => {
+      const src = getBlurImageOriginal(link);
+      return {
+        src,
+        type: "image",
+        thumbSrc: getBlurImageThumb(link),
+        triggerEl: link,
+        class: isLocalSvgUrl(src) ? "firefly-fancybox-svg-slide" : undefined,
+      };
+    });
 
     return { slides, activeIndex };
   }
@@ -156,6 +210,7 @@ import "@/styles/fancybox-custom.css";
         preload: 2,
       },
     });
+    scheduleLocalSvgFancyboxMark();
   }
 
   function handleBlurImageClick(event: MouseEvent) {

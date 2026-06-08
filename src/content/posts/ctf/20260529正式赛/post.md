@@ -8,31 +8,31 @@ draft: false
 image: "/assets/images/1778682116401.jpeg"
 ---
 
-
 # 题目列表
 
-| 题目类型 | 题目名 | 难度 |
-| :--- | :--- | :--- |
-| Misc | AAA 真·签到 | 签到 |
-| Misc | 我是谁? | Easy |
-| Misc | 新年快乐 | Normal |
-| Misc | 猜猜数字喵 | Hard |
-| Reverse | 入 | Easy |
-| Reverse | Assembly_recovery | Normal |
-| Reverse | nyah | Normal |
-| Pwn | ezstack | Easy |
-| Pwn | ezstring | Easy |
-| Pwn | baseh | Normal |
-| Pwn | nopnopnop | Normal |
-| Crypto | BAGUA | Easy |
-| Crypto | double_crypto | Easy |
-| Crypto | dlp | Normal |
-| Web | Hidden Secret | Easy |
-| Web | CVE-2025-55182 | Normal |
-| Blockchain | WEBWEBWEB | Normal |
-| Forensics | Secret in Chatting | Hard |
+| 题目类型       | 题目名                | 难度     |
+|:---------- |:------------------ |:------ |
+| Misc       | AAA 真·签到           | 签到     |
+| Misc       | 我是谁?               | Easy   |
+| Misc       | 新年快乐               | Normal |
+| Misc       | 猜猜数字喵              | Hard   |
+| Reverse    | 入                  | Easy   |
+| Reverse    | Assembly_recovery  | Normal |
+| Reverse    | nyah               | Normal |
+| Pwn        | ezstack            | Easy   |
+| Pwn        | ezstring           | Easy   |
+| Pwn        | baseh              | Normal |
+| Pwn        | nopnopnop          | Normal |
+| Crypto     | BAGUA              | Easy   |
+| Crypto     | double_crypto      | Easy   |
+| Crypto     | dlp                | Normal |
+| Web        | Hidden Secret      | Easy   |
+| Web        | CVE-2025-55182     | Normal |
+| Blockchain | WEBWEBWEB          | Normal |
+| Forensics  | Secret in Chatting | Hard   |
 
 ---
+
 ## Misc
 
 ### AAA 真签到
@@ -107,6 +107,7 @@ flag{937ec5ec-c857-49b8-be97-6a50e0e232d1}
 那只需要将网站上所有图片的svg下载下来，编码过后存储为字符串，然后连接靶机后根据靶机的字符串匹配即可回答问题。
 
 脚本：
+
 ```python
 import socket
 import base64
@@ -247,10 +248,10 @@ if __name__ == "__main__":
 ![flag](./misc/whoami/flag-whoami.png)
 
 flag:
+
 ```
 flag{7489925c-6bdd-4ad1-bb20-eb3751524c1b}
 ```
-
 
 ---
 
@@ -288,13 +289,14 @@ flag{7489925c-6bdd-4ad1-bb20-eb3751524c1b}
 ![图片属性中藏得备注](./misc/picture/Part3.png)
 
 使用十六进制编码并转ASCII，得到了：
+
 ```
 50 61 72 74 33 3a 20 48 33 70 70 69
  P  a  r  t  3  :     H  3  p  p  i
 ```
 
-
 根据文章，并问了一下AI，我继续总结了一下文件头：
+
 ```
 89 50 4E 47 0D 0A 1A 0A => PNG 文件头，用于识别这个文件为PNG类型
 00 00 00 0D => chunk数据长度，which = 13,故IHDR 数据区长度为13字节
@@ -316,6 +318,7 @@ flag{7489925c-6bdd-4ad1-bb20-eb3751524c1b}
 ![?!❄️雪花❄️!?](./misc/picture/none.png)
 
 我估计是我初步弄的太过了，由于文章提到了 CRC 的值和长宽高有关，同时还给出了一个爆破代码：
+
 ```python
 import zlib
 import struct
@@ -342,16 +345,18 @@ with open(filename, 'rb') as f:
                 print("高为：", end = '')
                 print(height, end = ' ')
                 print(int.from_bytes(height, byteorder='big'))
-
 ```
 
 不妨先尝试一下？这里替换一下
+
 ```python
 if crc32result == 0xE14A4C0B
 为
 if crc32result == 0x09B9A038
 ```
+
 输出：
+
 ```bash
 E:\ctf\20260529\misc\新年快乐\201813_2026NewYearChallenge>py test.py
 宽为：bytearray(b'\x00\x00\x02X') 600
@@ -370,27 +375,31 @@ E:\ctf\20260529\misc\新年快乐\201813_2026NewYearChallenge>py test.py
 ![文件尾](./misc/picture/back.png)
 
 我查询到PNG 正常结尾是 IEND chunk。它长这样：
+
 ```
 00 00 00 00 49 45 4E 44 AE 42 60 82
 ```
+
 显然我们文件尾部还多了一串内容，且右边也能看到 **UGFydDI6IEQ0eURheQ==** 这样的字符。
 
 询问AI，这是一个Base64,解码后得到
+
 ```
 Part2: D4yDay
 ```
 
 组合起来，得到
+
 ```
 flag{2026D4yDayH3ppi}
 ```
 
 ---
 
-
 ### 猜猜数字喵
 
 题目给出了judge的代码：
+
 ```c
 #define _GNU_SOURCE
 #include <err.h>
@@ -621,10 +630,10 @@ int main() {
         }
     }
 }
-
 ```
 
 先看随机数生成代码，看一下是否能找到漏洞：
+
 ```c
 static randval_t getrand() {
     randval_t val;
@@ -646,6 +655,7 @@ static randval_t getrand() {
     return val;
 }
 ```
+
 这里发现本轮需要猜中的随机数 expect，是在 main() 中通过 /dev/urandom 生成的，显然不可能通过伪随机数预测去输出答案。
 
 继续看整个代码设计，可以看到程序中有许多“进程”和“管道”的设计：
@@ -655,7 +665,6 @@ static randval_t getrand() {
 ```text
 program -> proxy -> main judger
 ```
-
 
 在浏览的过程中，不难发现 expect = getrand() 发生在 fork() 之前，因此后续 fork 出来的子进程会继承当时的地址空间，即 medium 进程中会存在一份 main() 栈的副本，其中就包含本轮随机数 expect。
 
@@ -670,6 +679,7 @@ program -> proxy -> main judger
 具体做法是从 proxy 当前的 rbp 开始，沿着栈帧链向上回溯，找到 medium() 返回到 main() 的那一层栈帧。根据反汇编可知，expect 位于 main_rbp - 0x20，于是读取该地址即可得到本轮正确随机数。
 
 具体代码：
+
 ```c
 #define _GNU_SOURCE
 #include <ctype.h>
@@ -802,11 +812,9 @@ int main(void) {
     write(STDOUT_FILENO, &answer, sizeof(answer));
     return 0;
 }
-
 ```
 
 ---
-
 
 ## Reverse
 
@@ -826,6 +834,7 @@ int main(void) {
 ![编译zako.zo](./reverse/zako/compile.png)
 
 下面运行一些命令检查编译产物：
+
 ```bash
 feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/reverse/zako$ echo $?
 ls -lh decompiled-linklet.rkt err.txt
@@ -1004,12 +1013,14 @@ feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/r
 ```
 
 其中有一个：
+
 ```bash
 (if (equal? (meow (string->bytes/utf-8 (read-line)) chao_da_mao) mao)
   (displayln '"meow~")
 ```
 
 大概意思是：
+
 ```
 读取你输入的一行
 转成 UTF-8 bytes
@@ -1025,11 +1036,13 @@ feng-gjsnw@feng-gjsnw-VMware-Virtual-Platform:/mnt/hgfs/linux_share/ctf-260528/r
 其中 chao_da_mao = r1ckY_15_4_n3k0!
 
 mao则是上面命令行输出的最后一坨东西：
+
 ```
 0xa3, 0xc0, 0xfc, 0xb3, 0xc8, 0xd6, 0xfa, 0xba, 0x65, 0x39, 0x26, 0x88, 0xc4, 0x99, 0x3f, 0x2a, 0x65, 0xbb, 0x75, 0x0a, 0x7a, 0x12, 0xac, 0xe3, 0xa0, 0x15, 0x32, 0x4c, 0xe9, 0x2d, 0xc4, 0xd6, 0x91, 0xf6, 0x0a, 0x9d, 0x92, 0xa3, 0x57, 0x51, 0x22, 0xf7, 0xf0, 0x81, 0x55, 0xa9, 0xba, 0x87, 0x21, 0x13, 0xf9, 0x49, 0xca, 0x02, 0x8f, 0x41, 
 ```
 
 然后写python脚本解密：
+
 ```python
 key = b"r1ckY_15_4_n3k0!"
 
@@ -1084,12 +1097,6 @@ print(flag.decode())
 
 flag:
 ![flag](./reverse/zako/flag.png)
-
-
-
-
-
-
 
 ### Assembly_recovery
 
@@ -1482,10 +1489,12 @@ off_070F:
 跟着AI的思路：
 
 程序类别：
+
 ```
 BITS 16
 ORG 100h
 ```
+
 这是一个16位DOS.com程序
 
 .com程序默认加载到CS:0100h开始执行
@@ -1497,14 +1506,17 @@ off_0100:
     push    cs
     pop     es
 ```
+
 这里应该是~栈初始化~
 
 问了AI后，得知：
+
 ```
 意思是把代码段 CS 赋给数据段 DS 和附加段 ES。因为 .COM 文件通常代码和数据都在同一个段里，所以这样做之后，程序访问 off_xxxx 数据时就能正常读写。这个是判断它“真正在初始化运行环境”的一个信号。
 ```
 
 然后有一段较长但是不知所以得代码
+
 ```
 mov     ax, 0x1337
 mov     bx, 0x0DEF
@@ -1519,9 +1531,11 @@ xor     bx, bx
 xor     cx, cx
 xor     dx, dx
 ```
+
 最后都跟自己异或了，归0了，应该是来混淆的
 
 再到：
+
 ```
     mov     al, 0x37
 
@@ -1536,6 +1550,7 @@ xor     dx, dx
 ```
 
 意思是：
+
 ```
 al = 0x37
 al = al + 0x13 = 0x4A
@@ -1545,6 +1560,7 @@ bl = al = 0x55
 ```
 
 函数 off_063B:
+
 ```
 off_063B:
     mov     si, off_06AB
@@ -1605,6 +1621,7 @@ off_063B:
 ```
 
 开头三行代码暴露了数据：
+
 ```
 SI = 源数据地址 ==> off_06AB 密文区
 DI = 目标缓冲区地址 ==> off_06CF 解密输出缓冲区
@@ -1612,6 +1629,7 @@ CX = 循环次数 ==> flag_len 解密长度
 ```
 
 密文：
+
 ```
 off_06AB:
     db  0x33
@@ -1653,6 +1671,7 @@ off_06AB:
 ```
 
 然后需要找解密的方法：
+
 ```
 .decode_loop:
     lodsb           // mov al, [si] 从DS:SI指向的位置读取1字节到AL
@@ -1675,8 +1694,8 @@ off_06AB:
     loop    .decode_loop
 ```
 
-
 Python代码：
+
 ```
 enc = [
     0x33, 0x3A, 0x36, 0x3F, 0x22, 0x62, 0x6B, 0x64,
@@ -1698,13 +1717,10 @@ print(bytes(out[:35]).decode())
 ```
 
 flag
+
 ```
 flag{8086_r3ver5e_15_a_b@s1c_sk1ll}
 ```
-
-
-
-
 
 ### nyah
 
@@ -1723,6 +1739,7 @@ flag{8086_r3ver5e_15_a_b@s1c_sk1ll}
 ![加密](./reverse/nyah/加密.png)
 
 整个加密流程可以概括为：
+
 ```
 程序先生成了一个表v5(我命名为table了)，并使用delta_time对table洗牌
 
@@ -1730,6 +1747,7 @@ flag{8086_r3ver5e_15_a_b@s1c_sk1ll}
 ```
 
 再根据delta_time应该为259200,便有了以下解密脚本：
+
 ```python
 cipher = bytes.fromhex(
     "61 6e 64 cd 7f 68 c1 e6"
@@ -1796,6 +1814,7 @@ flag:
 ![evil的地址](./pwm/ezstack/400507.png)
 
 于是有了以下代码：
+
 ```python
 import socket
 import struct
@@ -1860,7 +1879,6 @@ flag截图：
 
 ![flag](./pwm/ezstack/ezstack_flag.png)
 
-
 ### ezstring
 
 本题的漏洞是格式化字符串漏洞
@@ -1892,27 +1910,30 @@ flag截图：
 此时还需要伪造参数并写入数据
 
 即：
+
 ```
 %1$48879c + {%参数1的位置$hn} + %1$8126c + {%参数2的位置$hn}
 ```
 
 这里还需定位printf参数的位置。一般字符串不长，估计参数也就两位数，先不如写成：
+
 ```
 %1$48879c + {%xx$hn} + %1$8126c + {%xx的位置$hn}
 
 %1$48879c%xx$hn%1$8126c%xx$hn
 ```
+
 共计29字节，
 
 在 64 位 Linux 程序中，前几个参数会优先通过寄存器传递，而本题测试发现，buf + 0x00 对应 printf 的第 6 个参数。由于 64 位地址占 8 字节，因此后续每 8 字节对应一个参数位置：
 
 ```
-buf + 0x00	→	第 6 个参数
-buf + 0x08	→	第 7 个参数
-buf + 0x10	→	第 8 个参数
-buf + 0x18	→	第 9 个参数
-buf + 0x20	→	第 10 个参数
-buf + 0x28	→	第 11 个参数
+buf + 0x00    →    第 6 个参数
+buf + 0x08    →    第 7 个参数
+buf + 0x10    →    第 8 个参数
+buf + 0x18    →    第 9 个参数
+buf + 0x20    →    第 10 个参数
+buf + 0x28    →    第 11 个参数
 ```
 
 于是向上补齐到32字节，此时[buf + 0]to[buf + 31] 为格式化字符串，占用了参数6到参数9的位置
@@ -1920,11 +1941,13 @@ buf + 0x28	→	第 11 个参数
 那么只需再加两个参数10,11用于存放[check + 0]和[check + 2]的地址
 
 于是得到
+
 ```
 %1$48879c%10$hn%1$8126c%11$hnAAA + p64(0x4040cc) + p64(0x4040ce)
 ```
 
 所以有了以下代码：
+
 ```python
 import socket
 import struct
@@ -1976,7 +1999,6 @@ else:
 flag:
 ![flag](./pwm/ezstring/flag.png)
 
-
 ### baseh
 
 本题的思路：
@@ -2002,6 +2024,7 @@ flag:
 即可让程序在main执行ret后，让esp指向input假栈中的correct地址，从而让eip跳转correct，即执行correct函数
 
 代码：
+
 ```python
 import socket
 import struct
@@ -2057,6 +2080,7 @@ except:
 这一题也是栈溢出，程序会输出Target,解析后向Buffer输入字符覆盖返回地址跳转即可，代码如下：
 
 代码：
+
 ```python
 import socket
 import struct
@@ -2124,13 +2148,12 @@ s.close()
 
 ![flag](./pwm/nopnopnop/flag.png)
 
-
-
 ## Crypto
 
 ### BAGUA
 
 题目引言：
+
 ```
 西方的二进制数学的发明者莱布尼茨，从中国的八卦图当中受到启发，演绎并推论出了数学矩阵，
 最后创造的二进制数学。二进制数学的诞生为计算机的发明奠定了理论基础。而计算机现在改变了
@@ -2139,6 +2162,7 @@ s.close()
 ```
 
 附件密文：
+
 ```
 兑震艮 兑兑坤 兑坤坎 兑震巽 兑巽巽 坎坤艮 震艮坎 兑兑艮 震离坤 兑艮艮 兑巽坎 坎乾巽 坎坤艮 震离坤 兑震巽 兑离坎 兑坤坎 坎乾巽 坎兑坤 震艮巽 兑坎坎 兑坤艮 兑兑艮 震艮坎 兑巽艮 坎乾巽 震艮坎 震离艮 震巽坤 震离巽 兑乾坎
 ```
@@ -2147,6 +2171,7 @@ s.close()
 
 这里找了一个八卦图，尝试编码：
 ![八卦图](./crypto/bagua/gua.jpg)
+
 ```
 乾 = 111
 兑 = 011
@@ -2159,11 +2184,13 @@ s.close()
 ```
 
 得到
+
 ```
 011001100 011011000 011000010 011001110 011110110 010000100 001100010 011011100 001101000 011100100 011110010 010111110 010000100 001101000 011001110 011101010 011000010 010111110 010011000 001100110 011010010 011000100 011011100 001100010 011110100 010111110 001100010 001101100 001110000 001101110 011111010
 ```
 
 注意到所有情况下结尾，头部都有0，如果是ASCII编码，那大概率其中有一个是用于补位的，于是尝试
+
 ```python
 cipher = """兑震艮 兑兑坤 兑坤坎 兑震巽 兑巽巽 坎坤艮 震艮坎 兑兑艮 震离坤 兑艮艮 兑巽坎 坎乾巽 坎坤艮 震离坤 兑震巽 兑离坎 兑坤坎 坎乾巽 坎兑坤 震艮巽 兑坎坎 兑坤艮 兑兑艮 震艮坎 兑巽艮 坎乾巽 震艮坎 震离艮 震巽坤 震离巽 兑乾坎"""
 
@@ -2201,11 +2228,13 @@ for bits in groups:
     res2 += chr(int(b, 2))
 print(res2)
 ```
+
 最后得到：
 
 ```text
 flag{B1n4ry_B4gua_L3ibn1z_1687}
 ```
+
 ![](./crypto/bagua/flag.png)
 
 ---
@@ -2213,6 +2242,7 @@ flag{B1n4ry_B4gua_L3ibn1z_1687}
 ### dlp
 
 题目:
+
 ```python
 from Crypto.Util.number import *
 import math
@@ -2282,6 +2312,7 @@ m ≡ xq mod q - 1
 对于 (1):
 
 使用 p-adic log:
+
 ```
 先求：
 7^x0 ≡ c mod p
@@ -2293,6 +2324,7 @@ m = x0 + (p - 1)t
 之后对(1),(2)使用CRT合并，再进行解码得到结果：
 
 脚本：
+
 ```
 import sympy as sp
 from math import lcm
@@ -2386,6 +2418,7 @@ print(flag)
 ### double_crypto
 
 题目：
+
 ```python
 #caesar_13_iv
 import os
@@ -2429,19 +2462,24 @@ print(f"[AES] ct  = {c_aes.hex()}")
 ```
 
 观察整个加密流程，应该是
+
 ```
 flag -> RSA -> c_rsa -> 转bytes -> AES-CBC -> ciphertext
 ```
+
 那么倒着来即可得到flag
 
 先AES解密：
 
 题目给了：
+
 ```
 key = 8c0c5db5efdd4505b1cd88569b6bf8f5
 IV  = 6144s1oo1s1p7osq442p6qsr5733701p
 ```
+
 这里IV有混淆，题目给了`caesar_13_iv`,于是使用 ROT13对字母做偏移
+
 ```
 a <-> n
 b <-> o
@@ -2456,6 +2494,7 @@ f <-> s
 题目给了n，且p,q只有128bit
 
 所以能很快分解出p,q:
+
 ```
 p = 319604865451981917438227037590936720137
 q = 339357623313190301253627442856667763273
@@ -2464,6 +2503,7 @@ q = 339357623313190301253627442856667763273
 然后按RSA解密流程就能得到flag了。
 
 破译脚本：
+
 ```python
 import codecs
 from Crypto.Cipher import AES
@@ -2511,10 +2551,10 @@ else:
 
 flag:
 ![flag](./crypto/double-crypto/flag.png)
+
 ```
 flag{crypto_1s_fun}
 ```
-
 
 ## Web
 
@@ -2533,6 +2573,7 @@ curl.exe -i https://bili33.top/robots.txt
 ```
 
 输出
+
 ```
 PS C:\Users\ZhangZhiyuan> curl.exe -i https://bili33.top/robots.txt
 HTTP/1.1 200 Connection established
@@ -2568,6 +2609,7 @@ Sitemap: https://bili33.top/sitemap.xml
 ```
 
 根据提示访问：
+
 ```
 curl.exe -i https://bili33.top/fLaG-15-hERe_lol
 ```
@@ -2577,7 +2619,6 @@ curl.exe -i https://bili33.top/fLaG-15-hERe_lol
 
 然后解码后得到flag
 ![解码](./web/HiddenSecret/flagencode.png)
-
 
 ```
 flag{weIC0Me_to-gDUTcscTf-ZOZ6_ENjoy-THE_gaME}
@@ -2596,6 +2637,7 @@ flag{weIC0Me_to-gDUTcscTf-ZOZ6_ENjoy-THE_gaME}
 其中浏览器中有提示：尝试从.Git目录泄露的数据中查找信息
 
 根据漏洞信息写脚本：
+
 ```python
 #!/usr/bin/env python3
 import base64
@@ -2702,12 +2744,12 @@ if __name__ == "__main__":
 然后继续查找flag并读取
 ![flag](./web/CVE/flag.png)
 
-
 ## Blockchain
 
 ### WEBWEBWEB
 
 获取到靶机地址后尝试curl,获得了以下内容：
+
 ```
 {
   "address":"0x41414114641838DE9b0be74fdF5f6492d5e97F94",
@@ -2727,6 +2769,7 @@ if __name__ == "__main__":
 这里我先去看了**3B1B**的视频[【官方双语】想知道比特币（和其他加密货币）的原理吗？](https://www.bilibili.com/video/BV11x411i72w/?spm_id_from=333.337.search-card.all.click&vd_source=9a12fa4360c14cdf5412031aa7c3d044)，了解了加密货币的原理。
 
 将curl出的json文件扔给GPT，GPT指出:
+
 ```
 address <=> 钱包地址，也叫EOA（Externally Owned Account）
 privateKey <=> 控制该钱包的私钥
@@ -2738,6 +2781,7 @@ chainId <=> 本地链
 #### 先说合约：
 
 所谓合约，其实是一种代码，如：
+
 ```
 甲方付款
 ↓
@@ -2745,11 +2789,13 @@ chainId <=> 本地链
 ↓
 乙方收款
 ```
+
 这种代码使用的语言叫做**Solidity**,它其实是：给 EVM（以太坊虚拟机）编程的语言。
 
 CTF 中，通常提供“挑战合约”：
 
 挑战合约一般形如：
+
 ```
 contract Setup {
     Challenge public challenge;
@@ -2765,6 +2811,7 @@ contract Setup {
 ```
 
 其中胜利条件为:
+
 ```
 function isSolved()
 或
@@ -2774,6 +2821,7 @@ bool public solved;
 例子：
 
 签到题：
+
 ```
 bool public solved;
 
@@ -2783,6 +2831,7 @@ function solve() public {
 ```
 
 把 Challenge 钱转空：
+
 ```
 function isSolved() public view returns(bool){
     return address(challenge).balance == 0;
@@ -2790,6 +2839,7 @@ function isSolved() public view returns(bool){
 ```
 
 拿到 owner 权限：
+
 ```
 function isSolved() public view returns(bool){
     return owner == msg.sender;
@@ -2805,6 +2855,7 @@ ChatGPT指出：
 > RPC 就是：数据库API
 
 我们可以发送如：
+
 ```
 {
   "jsonrpc":"2.0",
@@ -2816,15 +2867,19 @@ ChatGPT指出：
   ]
 }
 ```
+
 返回
+
 ```
 {
   "result":"0xde0b6b3a7640000"
 }
 ```
+
 表示 1 ETH
 
 就像使用 SQL 查询一样:
+
 ```
 SELECT balance
 FROM users
@@ -2832,6 +2887,7 @@ WHERE address='0x4141...';
 ```
 
 这里附上一些常见RPC代码形式：
+
 ```python
 eth_getBalance # 查询余额
 
@@ -2878,8 +2934,8 @@ print(r.json())
 
 #### 对于数据存储，我查了一下资料：
 
-
 经典以太坊区块结构图：
+
 ```
 Block N
 │
@@ -2905,6 +2961,7 @@ Block N
 ```
 
 合约结构图
+
 ```
 Contract
 │
@@ -2928,6 +2985,7 @@ Contract
 ```
 
 以太坊存储模型：
+
 ```
 State
 │
@@ -2967,6 +3025,7 @@ Contract
 所以要区分开：Block记录操作日志，Storage保存合约状态
 
 也就是定位一个数据需要：
+
 ```
 (合约地址, slot编号)
 ==>
@@ -2979,9 +3038,11 @@ eth_getStorageAt(
 </folder>
 
 本题的解题思路可以概括为：
+
 > 开发者把秘密存进了一个全世界都能读取的公开数据库(区块链)，然后误以为 private 能隐藏它；而我们只是按照区块链规则把它读了出来。
 
 从攻击视角来看，甚至没有"攻击"任何东西,因为：
+
 ```
 区块链 = 公开数据库
 私钥 = 修改权限
@@ -2992,12 +3053,14 @@ private ≠ 保密
 那只要尝试读取区块链数据就可以找到flag了：
 
 题目已经给出challenge地址，所以利用
+
 ```python
 eth_getStorageAt(
     chalAddress,
     0
 )
 ```
+
 读取到了 slot 0，结果是 0x55 = 85 = 42 * 2 + 1，这和区块链存储有关
 
 （吐槽ChatGPT的一段原话：大家都会想到：42来自《银河系漫游指南》。The Hitchhiker's Guide to the Galaxy）我就问，谁想得到。
@@ -3009,6 +3072,7 @@ eth_getStorageAt(
 其真实位置 = keccak256(0)开始的位置
 
 综上，有了访问代码：
+
 ```python
 import math
 import requests
@@ -3076,6 +3140,7 @@ else:
 ### Secret in Chatting
 
 通过查询Minecraft的服务器端口，使用过滤器：
+
 ```
 tcp.port == 25565 && tcp.len > 0
 ```
@@ -3097,6 +3162,7 @@ tcp.port == 25565 && tcp.len > 0
 尝试交给ai总结消息包体规律，发现它们在具体消息前面都有 00 09 这两个十六进制数
 
 于是过滤规则变为：
+
 ```
 tcp.dstport == 25565 && tcp.len > 0 && tcp.payload[1:2] == 00:09
 ```
@@ -3104,6 +3170,7 @@ tcp.dstport == 25565 && tcp.len > 0 && tcp.payload[1:2] == 00:09
 然后将过滤出的内容打包为chatting.txt，并利用python脚本编写相关代码解密，得到：
 
 chatting.txt内容：
+
 ```
 No.     Time           Source                Destination           Protocol Length Info
    1101 19.296809      192.168.88.233        192.168.88.179        TCP      82     5856 → 25565 [PSH, ACK] Seq=29 Ack=1 Win=65280 Len=28
@@ -3453,10 +3520,10 @@ No.     Time           Source                Destination           Protocol Leng
 0030  03 ff 8b f8 00 00 21 00 09 08 4f 4b 4f 4b 20 e6   ......!...OKOK .
 0040  8b 9c 00 00 01 9d cf 42 d4 ac 91 f7 50 d2 0a be   .......B....P...
 0050  86 ed 00 00 00 00 00 01                           ........
-
 ```
 
 脚本：
+
 ```
 # mc_chat_extract.py
 # 功能：
@@ -3708,6 +3775,7 @@ if __name__ == "__main__":
 ![完整对话](./forensics/完整对话.png)
 
 详细对话：
+
 ```
 [1] offset=0xa6, len=18
 text: 你啥时候来的
@@ -3827,6 +3895,7 @@ hex : 4f4b4f4b20e68b9c
 ```
 
 此时关键内容为：
+
 ```
 [17] offset=0x97b, len=26
 text: key=9oRMfzcUbDhJUzfayDmLbD
@@ -3857,6 +3926,7 @@ STD  = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 然后利用base58对key编码，用Atom128对iv换表编码，最后的密文用base64编码
 
 得到脚本：
+
 ```python
 import base64
 from Crypto.Cipher import AES
@@ -3888,8 +3958,8 @@ flag = unpad(cipher.decrypt(ct), 16)
 print(flag.decode())
 ```
 
-
 flag
+
 ```
 flag{Min3cr@ft_1s-int3res71n9}ss
 ```

@@ -1,0 +1,6205 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "original",
+      "aliasUrl": "/assets/generated/original/Challenge-43ead8cd13dc-original.png"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "placeholder",
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-64.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 192,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-192.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 240,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-240.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 256,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-256.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 320,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-320.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 384,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-384.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 512,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-512.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 640,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-640.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png",
+      "kind": "source",
+      "width": 672,
+      "aliasUrl": "/assets/generated/Challenge-43ead8cd13dc-672.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "original",
+      "aliasUrl": "/assets/generated/original/flag-0a40b46b5e84-original.png"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "placeholder",
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-64.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 1280,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-1280.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 1717,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-1717.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 192,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-192.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 240,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-240.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 256,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-256.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 320,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-320.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 384,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-384.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 512,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-512.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 640,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-640.webp"
+    },
+    {
+      "key": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png",
+      "kind": "source",
+      "width": 960,
+      "aliasUrl": "/assets/generated/flag-0a40b46b5e84-960.webp"
+    }
+  ],
+  "entries": {
+    "/assets/images/1777709745837.jpeg": {
+      "placeholder": "/assets/generated/1777709745837-e2da03c8732a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-1280.webp"
+        },
+        {
+          "width": 1500,
+          "src": "/assets/generated/1777709745837-e2da03c8732a-1500.webp"
+        }
+      ],
+      "original": "/assets/images/1777709745837.jpeg",
+      "source": "public/assets/images/1777709745837.jpeg"
+    },
+    "/assets/images/1778295899244.jpeg": {
+      "placeholder": "/assets/generated/1778295899244-f0533ff4e3ba-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-1280.webp"
+        },
+        {
+          "width": 1500,
+          "src": "/assets/generated/1778295899244-f0533ff4e3ba-1500.webp"
+        }
+      ],
+      "original": "/assets/images/1778295899244.jpeg",
+      "source": "public/assets/images/1778295899244.jpeg"
+    },
+    "/assets/images/1778681506692.jpeg": {
+      "placeholder": "/assets/generated/1778681506692-a6f83a3ba7dd-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-1280.webp"
+        },
+        {
+          "width": 1500,
+          "src": "/assets/generated/1778681506692-a6f83a3ba7dd-1500.webp"
+        }
+      ],
+      "original": "/assets/images/1778681506692.jpeg",
+      "source": "public/assets/images/1778681506692.jpeg"
+    },
+    "/assets/images/1778681551730.jpeg": {
+      "placeholder": "/assets/generated/1778681551730-70fdf1acf4e0-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-1280.webp"
+        },
+        {
+          "width": 1500,
+          "src": "/assets/generated/1778681551730-70fdf1acf4e0-1500.webp"
+        }
+      ],
+      "original": "/assets/images/1778681551730.jpeg",
+      "source": "public/assets/images/1778681551730.jpeg"
+    },
+    "/assets/images/1778681561927.jpeg": {
+      "placeholder": "/assets/generated/1778681561927-4a925ced293a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778681561927-4a925ced293a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778681561927-4a925ced293a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778681561927-4a925ced293a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778681561927-4a925ced293a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778681561927-4a925ced293a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778681561927-4a925ced293a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778681561927-4a925ced293a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778681561927-4a925ced293a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778681561927-4a925ced293a-1280.webp"
+        },
+        {
+          "width": 1500,
+          "src": "/assets/generated/1778681561927-4a925ced293a-1500.webp"
+        }
+      ],
+      "original": "/assets/images/1778681561927.jpeg",
+      "source": "public/assets/images/1778681561927.jpeg"
+    },
+    "/assets/images/1778682116401.jpeg": {
+      "placeholder": "/assets/generated/1778682116401-fcedd0fd974e-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-1280.webp"
+        },
+        {
+          "width": 1440,
+          "src": "/assets/generated/1778682116401-fcedd0fd974e-1440.webp"
+        }
+      ],
+      "original": "/assets/images/1778682116401.jpeg",
+      "source": "public/assets/images/1778682116401.jpeg"
+    },
+    "/assets/images/1778818731740.png": {
+      "placeholder": "/assets/generated/1778818731740-cb121b30c56b-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/1778818731740-cb121b30c56b-1920.webp"
+        }
+      ],
+      "original": "/assets/images/1778818731740.png",
+      "source": "public/assets/images/1778818731740.png"
+    },
+    "/assets/images/1778820185016.png": {
+      "placeholder": "/assets/generated/1778820185016-7a519f69869a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778820185016-7a519f69869a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778820185016-7a519f69869a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778820185016-7a519f69869a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778820185016-7a519f69869a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778820185016-7a519f69869a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778820185016-7a519f69869a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778820185016-7a519f69869a-640.webp"
+        },
+        {
+          "width": 912,
+          "src": "/assets/generated/1778820185016-7a519f69869a-912.webp"
+        }
+      ],
+      "original": "/assets/images/1778820185016.png",
+      "source": "public/assets/images/1778820185016.png"
+    },
+    "/assets/images/1778820197099.png": {
+      "placeholder": "/assets/generated/1778820197099-a01d5eeaf171-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-640.webp"
+        },
+        {
+          "width": 912,
+          "src": "/assets/generated/1778820197099-a01d5eeaf171-912.webp"
+        }
+      ],
+      "original": "/assets/images/1778820197099.png",
+      "source": "public/assets/images/1778820197099.png"
+    },
+    "/assets/images/1778820255121.jpeg": {
+      "placeholder": "/assets/generated/1778820255121-4f8bf30d8944-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/1778820255121-4f8bf30d8944-1920.webp"
+        }
+      ],
+      "original": "/assets/images/1778820255121.jpeg",
+      "source": "public/assets/images/1778820255121.jpeg"
+    },
+    "/assets/images/1778842983666.png": {
+      "placeholder": "/assets/generated/1778842983666-d6d371b6d54a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-640.webp"
+        },
+        {
+          "width": 944,
+          "src": "/assets/generated/1778842983666-d6d371b6d54a-944.webp"
+        }
+      ],
+      "original": "/assets/images/1778842983666.png",
+      "source": "public/assets/images/1778842983666.png"
+    },
+    "/assets/images/1778842991421.jpeg": {
+      "placeholder": "/assets/generated/1778842991421-690aeb112784-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778842991421-690aeb112784-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778842991421-690aeb112784-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778842991421-690aeb112784-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778842991421-690aeb112784-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778842991421-690aeb112784-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778842991421-690aeb112784-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778842991421-690aeb112784-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778842991421-690aeb112784-960.webp"
+        },
+        {
+          "width": 1080,
+          "src": "/assets/generated/1778842991421-690aeb112784-1080.webp"
+        }
+      ],
+      "original": "/assets/images/1778842991421.jpeg",
+      "source": "public/assets/images/1778842991421.jpeg"
+    },
+    "/assets/images/1778843807821.jpeg": {
+      "placeholder": "/assets/generated/1778843807821-58dc9c7d68e7-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/1778843807821-58dc9c7d68e7-1920.webp"
+        }
+      ],
+      "original": "/assets/images/1778843807821.jpeg",
+      "source": "public/assets/images/1778843807821.jpeg"
+    },
+    "/assets/images/1778848462894.png": {
+      "placeholder": "/assets/generated/1778848462894-dfa117642762-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778848462894-dfa117642762-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778848462894-dfa117642762-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778848462894-dfa117642762-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778848462894-dfa117642762-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778848462894-dfa117642762-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778848462894-dfa117642762-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778848462894-dfa117642762-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1778848462894-dfa117642762-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1778848462894-dfa117642762-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/1778848462894-dfa117642762-1920.webp"
+        }
+      ],
+      "original": "/assets/images/1778848462894.png",
+      "source": "public/assets/images/1778848462894.png"
+    },
+    "/assets/images/1778982625765.jpeg": {
+      "placeholder": "/assets/generated/1778982625765-dfe8ed5cc0a5-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-640.webp"
+        },
+        {
+          "width": 896,
+          "src": "/assets/generated/1778982625765-dfe8ed5cc0a5-896.webp"
+        }
+      ],
+      "original": "/assets/images/1778982625765.jpeg",
+      "source": "public/assets/images/1778982625765.jpeg"
+    },
+    "/assets/images/1778990291431.png": {
+      "placeholder": "/assets/generated/1778990291431-4481fd307cf5-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-640.webp"
+        },
+        {
+          "width": 912,
+          "src": "/assets/generated/1778990291431-4481fd307cf5-912.webp"
+        }
+      ],
+      "original": "/assets/images/1778990291431.png",
+      "source": "public/assets/images/1778990291431.png"
+    },
+    "/assets/images/1779024411160.jpeg": {
+      "placeholder": "/assets/generated/1779024411160-6eb29e7e70e6-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-640.webp"
+        },
+        {
+          "width": 896,
+          "src": "/assets/generated/1779024411160-6eb29e7e70e6-896.webp"
+        }
+      ],
+      "original": "/assets/images/1779024411160.jpeg",
+      "source": "public/assets/images/1779024411160.jpeg"
+    },
+    "/assets/images/1779065406638.jpeg": {
+      "placeholder": "/assets/generated/1779065406638-a8991c1664dc-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-960.webp"
+        },
+        {
+          "width": 993,
+          "src": "/assets/generated/1779065406638-a8991c1664dc-993.webp"
+        }
+      ],
+      "original": "/assets/images/1779065406638.jpeg",
+      "source": "public/assets/images/1779065406638.jpeg"
+    },
+    "/assets/images/1779111323978.png": {
+      "placeholder": "/assets/generated/1779111323978-1d3a4c40b3ae-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-640.webp"
+        },
+        {
+          "width": 832,
+          "src": "/assets/generated/1779111323978-1d3a4c40b3ae-832.webp"
+        }
+      ],
+      "original": "/assets/images/1779111323978.png",
+      "source": "public/assets/images/1779111323978.png"
+    },
+    "/assets/images/73624836.webp": {
+      "placeholder": "/assets/generated/73624836-d1f0432897d2-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/73624836-d1f0432897d2-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/73624836-d1f0432897d2-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/73624836-d1f0432897d2-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/73624836-d1f0432897d2-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/73624836-d1f0432897d2-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/73624836-d1f0432897d2-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/73624836-d1f0432897d2-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/73624836-d1f0432897d2-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/73624836-d1f0432897d2-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/73624836-d1f0432897d2-1920.webp"
+        }
+      ],
+      "original": "/assets/images/73624836.webp",
+      "source": "public/assets/images/73624836.webp"
+    },
+    "/assets/images/a0.png": {
+      "placeholder": "/assets/generated/a0-7f0b8fcd0513-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/a0-7f0b8fcd0513-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/a0-7f0b8fcd0513-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/a0-7f0b8fcd0513-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/a0-7f0b8fcd0513-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/a0-7f0b8fcd0513-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/a0-7f0b8fcd0513-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/a0-7f0b8fcd0513-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/a0-7f0b8fcd0513-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/a0-7f0b8fcd0513-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/a0-7f0b8fcd0513-1536.webp"
+        }
+      ],
+      "original": "/assets/images/a0.png",
+      "source": "public/assets/images/a0.png"
+    },
+    "/assets/images/a1.png": {
+      "placeholder": "/assets/generated/a1-ef927a6897a9-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/a1-ef927a6897a9-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/a1-ef927a6897a9-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/a1-ef927a6897a9-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/a1-ef927a6897a9-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/a1-ef927a6897a9-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/a1-ef927a6897a9-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/a1-ef927a6897a9-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/a1-ef927a6897a9-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/a1-ef927a6897a9-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/a1-ef927a6897a9-1536.webp"
+        }
+      ],
+      "original": "/assets/images/a1.png",
+      "source": "public/assets/images/a1.png"
+    },
+    "/assets/images/a2.png": {
+      "placeholder": "/assets/generated/a2-c54c8b5bd848-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/a2-c54c8b5bd848-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/a2-c54c8b5bd848-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/a2-c54c8b5bd848-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/a2-c54c8b5bd848-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/a2-c54c8b5bd848-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/a2-c54c8b5bd848-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/a2-c54c8b5bd848-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/a2-c54c8b5bd848-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/a2-c54c8b5bd848-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/a2-c54c8b5bd848-1536.webp"
+        }
+      ],
+      "original": "/assets/images/a2.png",
+      "source": "public/assets/images/a2.png"
+    },
+    "/assets/images/a3.png": {
+      "placeholder": "/assets/generated/a3-2590e47e6c83-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/a3-2590e47e6c83-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/a3-2590e47e6c83-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/a3-2590e47e6c83-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/a3-2590e47e6c83-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/a3-2590e47e6c83-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/a3-2590e47e6c83-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/a3-2590e47e6c83-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/a3-2590e47e6c83-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/a3-2590e47e6c83-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/a3-2590e47e6c83-1536.webp"
+        }
+      ],
+      "original": "/assets/images/a3.png",
+      "source": "public/assets/images/a3.png"
+    },
+    "/assets/images/a4.png": {
+      "placeholder": "/assets/generated/a4-aafe0761fc4e-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/a4-aafe0761fc4e-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/a4-aafe0761fc4e-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/a4-aafe0761fc4e-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/a4-aafe0761fc4e-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/a4-aafe0761fc4e-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/a4-aafe0761fc4e-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/a4-aafe0761fc4e-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/a4-aafe0761fc4e-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/a4-aafe0761fc4e-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/a4-aafe0761fc4e-1536.webp"
+        }
+      ],
+      "original": "/assets/images/a4.png",
+      "source": "public/assets/images/a4.png"
+    },
+    "/assets/images/aa30.png": {
+      "placeholder": "/assets/generated/aa30-ea7a56c19096-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/aa30-ea7a56c19096-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/aa30-ea7a56c19096-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/aa30-ea7a56c19096-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/aa30-ea7a56c19096-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/aa30-ea7a56c19096-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/aa30-ea7a56c19096-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/aa30-ea7a56c19096-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/aa30-ea7a56c19096-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/aa30-ea7a56c19096-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/aa30-ea7a56c19096-1536.webp"
+        }
+      ],
+      "original": "/assets/images/aa30.png",
+      "source": "public/assets/images/aa30.png"
+    },
+    "/assets/images/avatar.webp": {
+      "placeholder": "/assets/generated/avatar-00873a03a58a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/avatar-00873a03a58a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/avatar-00873a03a58a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/avatar-00873a03a58a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/avatar-00873a03a58a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/avatar-00873a03a58a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/avatar-00873a03a58a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/avatar-00873a03a58a-640.webp"
+        },
+        {
+          "width": 940,
+          "src": "/assets/generated/avatar-00873a03a58a-940.webp"
+        }
+      ],
+      "original": "/assets/images/avatar.webp",
+      "source": "public/assets/images/avatar.webp"
+    },
+    "/assets/images/ChatGPT Image 2026年5月24日 21_43_17 (1).png": {
+      "placeholder": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/ChatGPT-Image-2026-5-24-21_43_17-1-31e0ee098cd2-1920.webp"
+        }
+      ],
+      "original": "/assets/images/ChatGPT Image 2026年5月24日 21_43_17 (1).png",
+      "source": "public/assets/images/ChatGPT Image 2026年5月24日 21_43_17 (1).png"
+    },
+    "/assets/images/cover/cover.webp": {
+      "placeholder": "/assets/generated/cover-6d6758e87e55-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/cover-6d6758e87e55-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/cover-6d6758e87e55-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/cover-6d6758e87e55-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/cover-6d6758e87e55-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/cover-6d6758e87e55-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/cover-6d6758e87e55-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/cover-6d6758e87e55-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/cover-6d6758e87e55-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/cover-6d6758e87e55-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/cover-6d6758e87e55-1920.webp"
+        }
+      ],
+      "original": "/assets/images/cover/cover.webp",
+      "source": "public/assets/images/cover/cover.webp"
+    },
+    "/assets/images/cover.webp": {
+      "placeholder": "/assets/generated/cover-6d6758e87e55-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/cover-6d6758e87e55-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/cover-6d6758e87e55-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/cover-6d6758e87e55-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/cover-6d6758e87e55-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/cover-6d6758e87e55-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/cover-6d6758e87e55-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/cover-6d6758e87e55-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/cover-6d6758e87e55-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/cover-6d6758e87e55-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/cover-6d6758e87e55-1920.webp"
+        }
+      ],
+      "original": "/assets/images/cover.webp",
+      "source": "public/assets/images/cover.webp"
+    },
+    "/assets/images/d1.webp": {
+      "placeholder": "/assets/generated/d1-45a9a0d7d8c1-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/d1-45a9a0d7d8c1-1920.webp"
+        }
+      ],
+      "original": "/assets/images/d1.webp",
+      "source": "public/assets/images/d1.webp"
+    },
+    "/assets/images/d2.webp": {
+      "placeholder": "/assets/generated/d2-44710125ddfa-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/d2-44710125ddfa-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/d2-44710125ddfa-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/d2-44710125ddfa-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/d2-44710125ddfa-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/d2-44710125ddfa-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/d2-44710125ddfa-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/d2-44710125ddfa-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/d2-44710125ddfa-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/d2-44710125ddfa-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/d2-44710125ddfa-1920.webp"
+        }
+      ],
+      "original": "/assets/images/d2.webp",
+      "source": "public/assets/images/d2.webp"
+    },
+    "/assets/images/d5.webp": {
+      "placeholder": "/assets/generated/d5-498e5812c7d3-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/d5-498e5812c7d3-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/d5-498e5812c7d3-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/d5-498e5812c7d3-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/d5-498e5812c7d3-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/d5-498e5812c7d3-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/d5-498e5812c7d3-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/d5-498e5812c7d3-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/d5-498e5812c7d3-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/d5-498e5812c7d3-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/d5-498e5812c7d3-1920.webp"
+        }
+      ],
+      "original": "/assets/images/d5.webp",
+      "source": "public/assets/images/d5.webp"
+    },
+    "/assets/images/e10.jpeg": {
+      "placeholder": "/assets/generated/e10-643d22a02304-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e10-643d22a02304-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e10-643d22a02304-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e10-643d22a02304-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e10-643d22a02304-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e10-643d22a02304-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e10-643d22a02304-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e10-643d22a02304-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e10-643d22a02304-960.webp"
+        },
+        {
+          "width": 1080,
+          "src": "/assets/generated/e10-643d22a02304-1080.webp"
+        }
+      ],
+      "original": "/assets/images/e10.jpeg",
+      "source": "public/assets/images/e10.jpeg"
+    },
+    "/assets/images/e11.jpeg": {
+      "placeholder": "/assets/generated/e11-a59361645b9a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e11-a59361645b9a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e11-a59361645b9a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e11-a59361645b9a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e11-a59361645b9a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e11-a59361645b9a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e11-a59361645b9a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e11-a59361645b9a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e11-a59361645b9a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e11-a59361645b9a-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/e11-a59361645b9a-1920.webp"
+        }
+      ],
+      "original": "/assets/images/e11.jpeg",
+      "source": "public/assets/images/e11.jpeg"
+    },
+    "/assets/images/e12.png": {
+      "placeholder": "/assets/generated/e12-acc9f04eb614-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e12-acc9f04eb614-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e12-acc9f04eb614-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e12-acc9f04eb614-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e12-acc9f04eb614-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e12-acc9f04eb614-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e12-acc9f04eb614-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e12-acc9f04eb614-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e12-acc9f04eb614-960.webp"
+        },
+        {
+          "width": 1216,
+          "src": "/assets/generated/e12-acc9f04eb614-1216.webp"
+        }
+      ],
+      "original": "/assets/images/e12.png",
+      "source": "public/assets/images/e12.png"
+    },
+    "/assets/images/e15.png": {
+      "placeholder": "/assets/generated/e15-4211c53b336f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e15-4211c53b336f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e15-4211c53b336f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e15-4211c53b336f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e15-4211c53b336f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e15-4211c53b336f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e15-4211c53b336f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e15-4211c53b336f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e15-4211c53b336f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e15-4211c53b336f-1280.webp"
+        },
+        {
+          "width": 1344,
+          "src": "/assets/generated/e15-4211c53b336f-1344.webp"
+        }
+      ],
+      "original": "/assets/images/e15.png",
+      "source": "public/assets/images/e15.png"
+    },
+    "/assets/images/e16.png": {
+      "placeholder": "/assets/generated/e16-5b4befea7a19-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e16-5b4befea7a19-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e16-5b4befea7a19-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e16-5b4befea7a19-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e16-5b4befea7a19-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e16-5b4befea7a19-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e16-5b4befea7a19-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e16-5b4befea7a19-640.webp"
+        },
+        {
+          "width": 896,
+          "src": "/assets/generated/e16-5b4befea7a19-896.webp"
+        }
+      ],
+      "original": "/assets/images/e16.png",
+      "source": "public/assets/images/e16.png"
+    },
+    "/assets/images/e17.png": {
+      "placeholder": "/assets/generated/e17-791064c174a4-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e17-791064c174a4-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e17-791064c174a4-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e17-791064c174a4-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e17-791064c174a4-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e17-791064c174a4-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e17-791064c174a4-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e17-791064c174a4-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e17-791064c174a4-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e17-791064c174a4-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/e17-791064c174a4-1920.webp"
+        }
+      ],
+      "original": "/assets/images/e17.png",
+      "source": "public/assets/images/e17.png"
+    },
+    "/assets/images/e23.jpg": {
+      "placeholder": "/assets/generated/e23-5c43dd62de61-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e23-5c43dd62de61-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e23-5c43dd62de61-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e23-5c43dd62de61-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e23-5c43dd62de61-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e23-5c43dd62de61-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e23-5c43dd62de61-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e23-5c43dd62de61-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e23-5c43dd62de61-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e23-5c43dd62de61-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/e23-5c43dd62de61-1920.webp"
+        }
+      ],
+      "original": "/assets/images/e23.jpg",
+      "source": "public/assets/images/e23.jpg"
+    },
+    "/assets/images/e25.png": {
+      "placeholder": "/assets/generated/e25-30311d6d5021-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e25-30311d6d5021-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e25-30311d6d5021-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e25-30311d6d5021-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e25-30311d6d5021-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e25-30311d6d5021-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e25-30311d6d5021-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e25-30311d6d5021-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e25-30311d6d5021-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e25-30311d6d5021-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/e25-30311d6d5021-1920.webp"
+        }
+      ],
+      "original": "/assets/images/e25.png",
+      "source": "public/assets/images/e25.png"
+    },
+    "/assets/images/e7.png": {
+      "placeholder": "/assets/generated/e7-5cafa8350c02-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e7-5cafa8350c02-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e7-5cafa8350c02-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e7-5cafa8350c02-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e7-5cafa8350c02-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e7-5cafa8350c02-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e7-5cafa8350c02-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e7-5cafa8350c02-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e7-5cafa8350c02-960.webp"
+        },
+        {
+          "width": 1080,
+          "src": "/assets/generated/e7-5cafa8350c02-1080.webp"
+        }
+      ],
+      "original": "/assets/images/e7.png",
+      "source": "public/assets/images/e7.png"
+    },
+    "/assets/images/e8.jpeg": {
+      "placeholder": "/assets/generated/e8-b1cf7533c6cc-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e8-b1cf7533c6cc-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e8-b1cf7533c6cc-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e8-b1cf7533c6cc-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e8-b1cf7533c6cc-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e8-b1cf7533c6cc-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e8-b1cf7533c6cc-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e8-b1cf7533c6cc-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e8-b1cf7533c6cc-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e8-b1cf7533c6cc-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/e8-b1cf7533c6cc-1536.webp"
+        }
+      ],
+      "original": "/assets/images/e8.jpeg",
+      "source": "public/assets/images/e8.jpeg"
+    },
+    "/assets/images/e9.jpeg": {
+      "placeholder": "/assets/generated/e9-3728ddd9df28-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/e9-3728ddd9df28-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/e9-3728ddd9df28-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/e9-3728ddd9df28-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/e9-3728ddd9df28-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/e9-3728ddd9df28-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/e9-3728ddd9df28-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/e9-3728ddd9df28-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/e9-3728ddd9df28-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/e9-3728ddd9df28-1280.webp"
+        },
+        {
+          "width": 1536,
+          "src": "/assets/generated/e9-3728ddd9df28-1536.webp"
+        }
+      ],
+      "original": "/assets/images/e9.jpeg",
+      "source": "public/assets/images/e9.jpeg"
+    },
+    "/assets/images/image.png": {
+      "placeholder": "/assets/generated/image-0dbb56c675b6-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-0dbb56c675b6-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-0dbb56c675b6-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-0dbb56c675b6-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-0dbb56c675b6-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-0dbb56c675b6-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-0dbb56c675b6-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-0dbb56c675b6-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-0dbb56c675b6-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-0dbb56c675b6-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-0dbb56c675b6-1920.webp"
+        }
+      ],
+      "original": "/assets/images/image.png",
+      "source": "public/assets/images/image.png"
+    },
+    "/assets/images/meow.png": {
+      "placeholder": "/assets/generated/meow-8776e7daa4bb-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/meow-8776e7daa4bb-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/meow-8776e7daa4bb-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/meow-8776e7daa4bb-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/meow-8776e7daa4bb-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/meow-8776e7daa4bb-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/meow-8776e7daa4bb-512.webp"
+        }
+      ],
+      "original": "/assets/images/meow.png",
+      "source": "public/assets/images/meow.png"
+    },
+    "/assets/images/sakura.png": {
+      "placeholder": "/assets/generated/sakura-427f7a363b07-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/sakura-427f7a363b07-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/sakura-427f7a363b07-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/sakura-427f7a363b07-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/sakura-427f7a363b07-320.webp"
+        },
+        {
+          "width": 328,
+          "src": "/assets/generated/sakura-427f7a363b07-328.webp"
+        }
+      ],
+      "original": "/assets/images/sakura.png",
+      "source": "public/assets/images/sakura.png"
+    },
+    "/assets/images/sponsor/alipay.png": {
+      "placeholder": "/assets/generated/alipay-2a2fb3ea51c5-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/alipay-2a2fb3ea51c5-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/alipay-2a2fb3ea51c5-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/alipay-2a2fb3ea51c5-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/alipay-2a2fb3ea51c5-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/alipay-2a2fb3ea51c5-384.webp"
+        },
+        {
+          "width": 400,
+          "src": "/assets/generated/alipay-2a2fb3ea51c5-400.webp"
+        }
+      ],
+      "original": "/assets/images/sponsor/alipay.png",
+      "source": "public/assets/images/sponsor/alipay.png"
+    },
+    "/assets/images/sponsor/wechat.png": {
+      "placeholder": "/assets/generated/wechat-60e765eea270-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/wechat-60e765eea270-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/wechat-60e765eea270-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/wechat-60e765eea270-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/wechat-60e765eea270-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/wechat-60e765eea270-384.webp"
+        },
+        {
+          "width": 400,
+          "src": "/assets/generated/wechat-60e765eea270-400.webp"
+        }
+      ],
+      "original": "/assets/images/sponsor/wechat.png",
+      "source": "public/assets/images/sponsor/wechat.png"
+    },
+    "/assets/images/z0.jpeg": {
+      "placeholder": "/assets/generated/z0-b5687a22965d-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/z0-b5687a22965d-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/z0-b5687a22965d-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/z0-b5687a22965d-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/z0-b5687a22965d-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/z0-b5687a22965d-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/z0-b5687a22965d-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/z0-b5687a22965d-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/z0-b5687a22965d-960.webp"
+        },
+        {
+          "width": 1080,
+          "src": "/assets/generated/z0-b5687a22965d-1080.webp"
+        }
+      ],
+      "original": "/assets/images/z0.jpeg",
+      "source": "public/assets/images/z0.jpeg"
+    },
+    "/assets/images/z1.jpeg": {
+      "placeholder": "/assets/generated/z1-52d9480ca7d3-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/z1-52d9480ca7d3-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/z1-52d9480ca7d3-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/z1-52d9480ca7d3-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/z1-52d9480ca7d3-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/z1-52d9480ca7d3-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/z1-52d9480ca7d3-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/z1-52d9480ca7d3-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/z1-52d9480ca7d3-960.webp"
+        },
+        {
+          "width": 1080,
+          "src": "/assets/generated/z1-52d9480ca7d3-1080.webp"
+        }
+      ],
+      "original": "/assets/images/z1.jpeg",
+      "source": "public/assets/images/z1.jpeg"
+    },
+    "/assets/images/z2.jpeg": {
+      "placeholder": "/assets/generated/z2-c6efa8c729f6-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/z2-c6efa8c729f6-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/z2-c6efa8c729f6-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/z2-c6efa8c729f6-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/z2-c6efa8c729f6-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/z2-c6efa8c729f6-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/z2-c6efa8c729f6-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/z2-c6efa8c729f6-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/z2-c6efa8c729f6-960.webp"
+        },
+        {
+          "width": 1080,
+          "src": "/assets/generated/z2-c6efa8c729f6-1080.webp"
+        }
+      ],
+      "original": "/assets/images/z2.jpeg",
+      "source": "public/assets/images/z2.jpeg"
+    },
+    "/assets/images/z3.jpeg": {
+      "placeholder": "/assets/generated/z3-c4da597c8419-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/z3-c4da597c8419-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/z3-c4da597c8419-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/z3-c4da597c8419-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/z3-c4da597c8419-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/z3-c4da597c8419-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/z3-c4da597c8419-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/z3-c4da597c8419-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/z3-c4da597c8419-960.webp"
+        },
+        {
+          "width": 1024,
+          "src": "/assets/generated/z3-c4da597c8419-1024.webp"
+        }
+      ],
+      "original": "/assets/images/z3.jpeg",
+      "source": "public/assets/images/z3.jpeg"
+    },
+    "src/content/posts/code/competition/ACM_ICPC_log.webp": {
+      "placeholder": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-512.webp"
+        },
+        {
+          "width": 536,
+          "src": "/assets/generated/ACM_ICPC_log-a6c0ca56c0fd-536.webp"
+        }
+      ],
+      "original": "/assets/generated/original/ACM_ICPC_log-a6c0ca56c0fd-original.webp",
+      "source": "src/content/posts/code/competition/ACM_ICPC_log.webp"
+    },
+    "src/content/posts/ctf/20260527热身赛/Ccode-origin.png": {
+      "placeholder": "/assets/generated/Ccode-origin-dc772772013f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/Ccode-origin-dc772772013f-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/Ccode-origin-dc772772013f-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/Ccode-origin.png"
+    },
+    "src/content/posts/ctf/20260527热身赛/chal_function_win.png": {
+      "placeholder": "/assets/generated/chal_function_win-4591c38683a9-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/chal_function_win-4591c38683a9-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/chal_function_win-4591c38683a9-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/chal_function_win.png"
+    },
+    "src/content/posts/ctf/20260527热身赛/chal_game_start.png": {
+      "placeholder": "/assets/generated/chal_game_start-a1fc2d745f26-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/chal_game_start-a1fc2d745f26-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/chal_game_start-a1fc2d745f26-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/chal_game_start.png"
+    },
+    "src/content/posts/ctf/20260527热身赛/chal_play.png": {
+      "placeholder": "/assets/generated/chal_play-185c699cee7d-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/chal_play-185c699cee7d-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/chal_play-185c699cee7d-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/chal_play-185c699cee7d-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/chal_play-185c699cee7d-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/chal_play-185c699cee7d-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/chal_play-185c699cee7d-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/chal_play-185c699cee7d-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/chal_play-185c699cee7d-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/chal_play-185c699cee7d-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/chal_play-185c699cee7d-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/chal_play-185c699cee7d-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/chal_play.png"
+    },
+    "src/content/posts/ctf/20260527热身赛/encrypted_flag.png": {
+      "placeholder": "/assets/generated/encrypted_flag-de676a626ba1-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/encrypted_flag-de676a626ba1-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/encrypted_flag-de676a626ba1-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/encrypted_flag.png"
+    },
+    "src/content/posts/ctf/20260527热身赛/LocateWindow.png": {
+      "placeholder": "/assets/generated/LocateWindow-58f11afcb1d7-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/LocateWindow-58f11afcb1d7-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/LocateWindow-58f11afcb1d7-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/LocateWindow.png"
+    },
+    "src/content/posts/ctf/20260527热身赛/StringsWindow.png": {
+      "placeholder": "/assets/generated/StringsWindow-bc2b25540135-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/StringsWindow-bc2b25540135-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/StringsWindow-bc2b25540135-original.png",
+      "source": "src/content/posts/ctf/20260527热身赛/StringsWindow.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/blockchain/flag.png": {
+      "placeholder": "/assets/generated/flag-f3a30ad28c87-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-f3a30ad28c87-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-f3a30ad28c87-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-f3a30ad28c87-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-f3a30ad28c87-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-f3a30ad28c87-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-f3a30ad28c87-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-f3a30ad28c87-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-f3a30ad28c87-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-f3a30ad28c87-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-f3a30ad28c87-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-f3a30ad28c87-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/blockchain/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/crypto/bagua/flag.png": {
+      "placeholder": "/assets/generated/flag-3b43d0a13703-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-3b43d0a13703-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-3b43d0a13703-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-3b43d0a13703-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-3b43d0a13703-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-3b43d0a13703-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-3b43d0a13703-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-3b43d0a13703-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-3b43d0a13703-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-3b43d0a13703-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-3b43d0a13703-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-3b43d0a13703-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/crypto/bagua/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/crypto/bagua/gua.jpg": {
+      "placeholder": "/assets/generated/gua-dcde0090d525-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/gua-dcde0090d525-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/gua-dcde0090d525-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/gua-dcde0090d525-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/gua-dcde0090d525-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/gua-dcde0090d525-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/gua-dcde0090d525-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/gua-dcde0090d525-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/gua-dcde0090d525-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/gua-dcde0090d525-1280.webp"
+        },
+        {
+          "width": 1366,
+          "src": "/assets/generated/gua-dcde0090d525-1366.webp"
+        }
+      ],
+      "original": "/assets/generated/original/gua-dcde0090d525-original.jpg",
+      "source": "src/content/posts/ctf/20260529正式赛/crypto/bagua/gua.jpg"
+    },
+    "src/content/posts/ctf/20260529正式赛/crypto/double-crypto/flag.png": {
+      "placeholder": "/assets/generated/flag-987e4901259c-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-987e4901259c-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-987e4901259c-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-987e4901259c-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-987e4901259c-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-987e4901259c-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-987e4901259c-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-987e4901259c-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-987e4901259c-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-987e4901259c-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-987e4901259c-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-987e4901259c-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/crypto/double-crypto/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/forensics/iv.png": {
+      "placeholder": "/assets/generated/iv-617204845fed-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/iv-617204845fed-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/iv-617204845fed-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/iv-617204845fed-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/iv-617204845fed-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/iv-617204845fed-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/iv-617204845fed-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/iv-617204845fed-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/iv-617204845fed-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/iv-617204845fed-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/iv-617204845fed-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/iv-617204845fed-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/forensics/iv.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/forensics/key.png": {
+      "placeholder": "/assets/generated/key-b4661224c5fc-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/key-b4661224c5fc-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/key-b4661224c5fc-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/key-b4661224c5fc-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/key-b4661224c5fc-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/key-b4661224c5fc-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/key-b4661224c5fc-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/key-b4661224c5fc-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/key-b4661224c5fc-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/key-b4661224c5fc-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/key-b4661224c5fc-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/key-b4661224c5fc-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/forensics/key.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/forensics/keyiv.png": {
+      "placeholder": "/assets/generated/keyiv-2bf562aea738-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/keyiv-2bf562aea738-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/keyiv-2bf562aea738-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/keyiv-2bf562aea738-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/keyiv-2bf562aea738-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/keyiv-2bf562aea738-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/keyiv-2bf562aea738-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/keyiv-2bf562aea738-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/keyiv-2bf562aea738-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/keyiv-2bf562aea738-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/keyiv-2bf562aea738-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/keyiv-2bf562aea738-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/forensics/keyiv.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/forensics/完整对话.png": {
+      "placeholder": "/assets/generated/image-f2a98a341f57-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-f2a98a341f57-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-f2a98a341f57-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-f2a98a341f57-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-f2a98a341f57-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-f2a98a341f57-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-f2a98a341f57-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-f2a98a341f57-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-f2a98a341f57-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-f2a98a341f57-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-f2a98a341f57-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-f2a98a341f57-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/forensics/完整对话.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/forensics/对话片段.png": {
+      "placeholder": "/assets/generated/image-f003b9074d2f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-f003b9074d2f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-f003b9074d2f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-f003b9074d2f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-f003b9074d2f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-f003b9074d2f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-f003b9074d2f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-f003b9074d2f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-f003b9074d2f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-f003b9074d2f-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-f003b9074d2f-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-f003b9074d2f-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/forensics/对话片段.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/forensics/端口.png": {
+      "placeholder": "/assets/generated/image-c5ba8822cc87-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-c5ba8822cc87-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-c5ba8822cc87-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-c5ba8822cc87-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-c5ba8822cc87-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-c5ba8822cc87-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-c5ba8822cc87-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-c5ba8822cc87-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-c5ba8822cc87-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-c5ba8822cc87-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-c5ba8822cc87-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-c5ba8822cc87-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/forensics/端口.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/caimiao/flag.png": {
+      "placeholder": "/assets/generated/flag-0b2661435b35-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-0b2661435b35-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-0b2661435b35-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-0b2661435b35-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-0b2661435b35-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-0b2661435b35-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-0b2661435b35-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-0b2661435b35-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-0b2661435b35-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-0b2661435b35-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-0b2661435b35-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-0b2661435b35-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/caimiao/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/check_in/flag01.png": {
+      "placeholder": "/assets/generated/flag01-f1a26782e34b-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag01-f1a26782e34b-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag01-f1a26782e34b-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag01-f1a26782e34b-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag01-f1a26782e34b-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag01-f1a26782e34b-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag01-f1a26782e34b-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag01-f1a26782e34b-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag01-f1a26782e34b-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag01-f1a26782e34b-1280.webp"
+        },
+        {
+          "width": 1728,
+          "src": "/assets/generated/flag01-f1a26782e34b-1728.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag01-f1a26782e34b-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/check_in/flag01.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/check_in/发送短信.jpg": {
+      "placeholder": "/assets/generated/image-f9c851e29a74-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-f9c851e29a74-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-f9c851e29a74-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-f9c851e29a74-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-f9c851e29a74-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-f9c851e29a74-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-f9c851e29a74-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-f9c851e29a74-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-f9c851e29a74-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-f9c851e29a74-1280.webp"
+        },
+        {
+          "width": 1440,
+          "src": "/assets/generated/image-f9c851e29a74-1440.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-f9c851e29a74-original.jpg",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/check_in/发送短信.jpg"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/check_in/签到题提示.png": {
+      "placeholder": "/assets/generated/image-24562f16ea4b-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-24562f16ea4b-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-24562f16ea4b-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-24562f16ea4b-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-24562f16ea4b-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-24562f16ea4b-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-24562f16ea4b-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-24562f16ea4b-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-24562f16ea4b-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-24562f16ea4b-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/image-24562f16ea4b-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-24562f16ea4b-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/check_in/签到题提示.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/adobe.png": {
+      "placeholder": "/assets/generated/adobe-259664695c8a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/adobe-259664695c8a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/adobe-259664695c8a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/adobe-259664695c8a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/adobe-259664695c8a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/adobe-259664695c8a-384.webp"
+        },
+        {
+          "width": 410,
+          "src": "/assets/generated/adobe-259664695c8a-410.webp"
+        }
+      ],
+      "original": "/assets/generated/original/adobe-259664695c8a-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/adobe.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/back.png": {
+      "placeholder": "/assets/generated/back-f9aab5c70049-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/back-f9aab5c70049-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/back-f9aab5c70049-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/back-f9aab5c70049-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/back-f9aab5c70049-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/back-f9aab5c70049-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/back-f9aab5c70049-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/back-f9aab5c70049-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/back-f9aab5c70049-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/back-f9aab5c70049-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/back-f9aab5c70049-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/back-f9aab5c70049-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/back.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png": {
+      "placeholder": "/assets/generated/Challenge-e77347a617f4-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/Challenge-e77347a617f4-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/Challenge-e77347a617f4-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/Challenge-e77347a617f4-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/Challenge-e77347a617f4-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/Challenge-e77347a617f4-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/Challenge-e77347a617f4-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/Challenge-e77347a617f4-640.webp"
+        },
+        {
+          "width": 672,
+          "src": "/assets/generated/Challenge-e77347a617f4-672.webp"
+        }
+      ],
+      "original": "/assets/generated/original/Challenge-e77347a617f4-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/Challenge.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/none.png": {
+      "placeholder": "/assets/generated/none-cc91a1d9f373-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/none-cc91a1d9f373-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/none-cc91a1d9f373-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/none-cc91a1d9f373-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/none-cc91a1d9f373-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/none-cc91a1d9f373-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/none-cc91a1d9f373-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/none-cc91a1d9f373-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/none-cc91a1d9f373-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/none-cc91a1d9f373-1280.webp"
+        },
+        {
+          "width": 1898,
+          "src": "/assets/generated/none-cc91a1d9f373-1898.webp"
+        }
+      ],
+      "original": "/assets/generated/original/none-cc91a1d9f373-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/none.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/part1.png": {
+      "placeholder": "/assets/generated/part1-3f54506c3adf-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/part1-3f54506c3adf-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/part1-3f54506c3adf-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/part1-3f54506c3adf-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/part1-3f54506c3adf-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/part1-3f54506c3adf-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/part1-3f54506c3adf-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/part1-3f54506c3adf-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/part1-3f54506c3adf-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/part1-3f54506c3adf-1280.webp"
+        },
+        {
+          "width": 1898,
+          "src": "/assets/generated/part1-3f54506c3adf-1898.webp"
+        }
+      ],
+      "original": "/assets/generated/original/part1-3f54506c3adf-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/part1.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/Part3.png": {
+      "placeholder": "/assets/generated/Part3-69fb36d2442f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/Part3-69fb36d2442f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/Part3-69fb36d2442f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/Part3-69fb36d2442f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/Part3-69fb36d2442f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/Part3-69fb36d2442f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/Part3-69fb36d2442f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/Part3-69fb36d2442f-640.webp"
+        },
+        {
+          "width": 737,
+          "src": "/assets/generated/Part3-69fb36d2442f-737.webp"
+        }
+      ],
+      "original": "/assets/generated/original/Part3-69fb36d2442f-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/Part3.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/Picture_data.png": {
+      "placeholder": "/assets/generated/Picture_data-b823612e8cc7-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-1280.webp"
+        },
+        {
+          "width": 1823,
+          "src": "/assets/generated/Picture_data-b823612e8cc7-1823.webp"
+        }
+      ],
+      "original": "/assets/generated/original/Picture_data-b823612e8cc7-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/Picture_data.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/UserComment.png": {
+      "placeholder": "/assets/generated/UserComment-9800f82bab51-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/UserComment-9800f82bab51-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/UserComment-9800f82bab51-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/UserComment-9800f82bab51-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/UserComment-9800f82bab51-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/UserComment-9800f82bab51-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/UserComment-9800f82bab51-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/UserComment-9800f82bab51-640.webp"
+        },
+        {
+          "width": 738,
+          "src": "/assets/generated/UserComment-9800f82bab51-738.webp"
+        }
+      ],
+      "original": "/assets/generated/original/UserComment-9800f82bab51-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/UserComment.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/wh.png": {
+      "placeholder": "/assets/generated/wh-3e4bc68d3f0f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/wh-3e4bc68d3f0f-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/wh-3e4bc68d3f0f-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/wh.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/picture/wh2.png": {
+      "placeholder": "/assets/generated/wh2-e05229bc1c23-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/wh2-e05229bc1c23-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/wh2-e05229bc1c23-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/wh2-e05229bc1c23-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/wh2-e05229bc1c23-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/wh2-e05229bc1c23-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/wh2-e05229bc1c23-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/wh2-e05229bc1c23-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/wh2-e05229bc1c23-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/wh2-e05229bc1c23-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/wh2-e05229bc1c23-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/wh2-e05229bc1c23-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/picture/wh2.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/whoami/flag-whoami.png": {
+      "placeholder": "/assets/generated/flag-whoami-a8780bb9c10a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-whoami-a8780bb9c10a-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-whoami-a8780bb9c10a-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/whoami/flag-whoami.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/whoami/link_01.png": {
+      "placeholder": "/assets/generated/link_01-c1198dfad0ea-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/link_01-c1198dfad0ea-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/link_01-c1198dfad0ea-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/link_01-c1198dfad0ea-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/link_01-c1198dfad0ea-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/link_01-c1198dfad0ea-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/link_01-c1198dfad0ea-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/link_01-c1198dfad0ea-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/link_01-c1198dfad0ea-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/link_01-c1198dfad0ea-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/link_01-c1198dfad0ea-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/link_01-c1198dfad0ea-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/whoami/link_01.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/whoami/search.png": {
+      "placeholder": "/assets/generated/search-71305395d3f3-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/search-71305395d3f3-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/search-71305395d3f3-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/search-71305395d3f3-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/search-71305395d3f3-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/search-71305395d3f3-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/search-71305395d3f3-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/search-71305395d3f3-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/search-71305395d3f3-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/search-71305395d3f3-1280.webp"
+        },
+        {
+          "width": 1728,
+          "src": "/assets/generated/search-71305395d3f3-1728.webp"
+        }
+      ],
+      "original": "/assets/generated/original/search-71305395d3f3-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/whoami/search.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/misc/whoami/web_sheet.png": {
+      "placeholder": "/assets/generated/web_sheet-dce2bbc90acc-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/web_sheet-dce2bbc90acc-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/web_sheet-dce2bbc90acc-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/misc/whoami/web_sheet.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/baseh/bug.png": {
+      "placeholder": "/assets/generated/bug-8fa0234ae09c-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/bug-8fa0234ae09c-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/bug-8fa0234ae09c-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/bug-8fa0234ae09c-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/bug-8fa0234ae09c-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/bug-8fa0234ae09c-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/bug-8fa0234ae09c-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/bug-8fa0234ae09c-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/bug-8fa0234ae09c-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/bug-8fa0234ae09c-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/bug-8fa0234ae09c-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/bug-8fa0234ae09c-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/baseh/bug.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/baseh/flag.png": {
+      "placeholder": "/assets/generated/flag-313333d13a44-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-313333d13a44-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-313333d13a44-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-313333d13a44-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-313333d13a44-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-313333d13a44-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-313333d13a44-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-313333d13a44-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-313333d13a44-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-313333d13a44-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-313333d13a44-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-313333d13a44-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/baseh/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/baseh/main.png": {
+      "placeholder": "/assets/generated/main-b8bb2ccaa96f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/main-b8bb2ccaa96f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/main-b8bb2ccaa96f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/main-b8bb2ccaa96f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/main-b8bb2ccaa96f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/main-b8bb2ccaa96f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/main-b8bb2ccaa96f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/main-b8bb2ccaa96f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/main-b8bb2ccaa96f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/main-b8bb2ccaa96f-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/main-b8bb2ccaa96f-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/main-b8bb2ccaa96f-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/baseh/main.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstack/400507.png": {
+      "placeholder": "/assets/generated/400507-bce708e923a3-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/400507-bce708e923a3-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/400507-bce708e923a3-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/400507-bce708e923a3-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/400507-bce708e923a3-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/400507-bce708e923a3-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/400507-bce708e923a3-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/400507-bce708e923a3-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/400507-bce708e923a3-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/400507-bce708e923a3-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/400507-bce708e923a3-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/400507-bce708e923a3-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstack/400507.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstack/400522.png": {
+      "placeholder": "/assets/generated/400522-f407fe035a1c-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/400522-f407fe035a1c-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/400522-f407fe035a1c-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/400522-f407fe035a1c-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/400522-f407fe035a1c-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/400522-f407fe035a1c-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/400522-f407fe035a1c-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/400522-f407fe035a1c-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/400522-f407fe035a1c-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/400522-f407fe035a1c-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/400522-f407fe035a1c-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/400522-f407fe035a1c-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstack/400522.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstack/64.png": {
+      "placeholder": "/assets/generated/64-44c0b12db269-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/64-44c0b12db269-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/64-44c0b12db269-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/64-44c0b12db269-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/64-44c0b12db269-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/64-44c0b12db269-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/64-44c0b12db269-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/64-44c0b12db269-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/64-44c0b12db269-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/64-44c0b12db269-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/64-44c0b12db269-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/64-44c0b12db269-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstack/64.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstack/ezstack_flag.png": {
+      "placeholder": "/assets/generated/ezstack_flag-537c37489b96-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/ezstack_flag-537c37489b96-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/ezstack_flag-537c37489b96-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstack/ezstack_flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstack/ida_main.png": {
+      "placeholder": "/assets/generated/ida_main-89e043308668-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/ida_main-89e043308668-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/ida_main-89e043308668-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/ida_main-89e043308668-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/ida_main-89e043308668-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/ida_main-89e043308668-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/ida_main-89e043308668-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/ida_main-89e043308668-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/ida_main-89e043308668-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/ida_main-89e043308668-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/ida_main-89e043308668-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/ida_main-89e043308668-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstack/ida_main.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstring/check地址.png": {
+      "placeholder": "/assets/generated/check-b4ae8a5f9faf-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/check-b4ae8a5f9faf-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/check-b4ae8a5f9faf-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/check-b4ae8a5f9faf-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/check-b4ae8a5f9faf-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/check-b4ae8a5f9faf-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/check-b4ae8a5f9faf-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/check-b4ae8a5f9faf-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/check-b4ae8a5f9faf-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/check-b4ae8a5f9faf-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/check-b4ae8a5f9faf-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/check-b4ae8a5f9faf-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstring/check地址.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstring/flag.png": {
+      "placeholder": "/assets/generated/flag-ded513020a9a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-ded513020a9a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-ded513020a9a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-ded513020a9a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-ded513020a9a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-ded513020a9a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-ded513020a9a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-ded513020a9a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-ded513020a9a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-ded513020a9a-1280.webp"
+        },
+        {
+          "width": 1728,
+          "src": "/assets/generated/flag-ded513020a9a-1728.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-ded513020a9a-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstring/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/ezstring/main.png": {
+      "placeholder": "/assets/generated/main-49fc3a03673a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/main-49fc3a03673a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/main-49fc3a03673a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/main-49fc3a03673a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/main-49fc3a03673a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/main-49fc3a03673a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/main-49fc3a03673a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/main-49fc3a03673a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/main-49fc3a03673a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/main-49fc3a03673a-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/main-49fc3a03673a-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/main-49fc3a03673a-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/ezstring/main.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/pwm/nopnopnop/flag.png": {
+      "placeholder": "/assets/generated/flag-4478ae4c0735-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-4478ae4c0735-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-4478ae4c0735-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-4478ae4c0735-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-4478ae4c0735-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-4478ae4c0735-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-4478ae4c0735-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-4478ae4c0735-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-4478ae4c0735-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-4478ae4c0735-1280.webp"
+        },
+        {
+          "width": 1716,
+          "src": "/assets/generated/flag-4478ae4c0735-1716.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-4478ae4c0735-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/pwm/nopnopnop/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/flag-strings.png": {
+      "placeholder": "/assets/generated/flag-strings-c41008fff92c-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-strings-c41008fff92c-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-strings-c41008fff92c-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-strings-c41008fff92c-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-strings-c41008fff92c-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-strings-c41008fff92c-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-strings-c41008fff92c-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-strings-c41008fff92c-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-strings-c41008fff92c-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-strings-c41008fff92c-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/flag-strings-c41008fff92c-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-strings-c41008fff92c-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/flag-strings.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/nyah/flag.png": {
+      "placeholder": "/assets/generated/flag-db388fd72871-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-db388fd72871-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-db388fd72871-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-db388fd72871-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-db388fd72871-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-db388fd72871-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-db388fd72871-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-db388fd72871-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-db388fd72871-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-db388fd72871-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-db388fd72871-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-db388fd72871-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/nyah/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/nyah/主逻辑函数.png": {
+      "placeholder": "/assets/generated/image-f73f754f7ad7-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-f73f754f7ad7-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-f73f754f7ad7-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-f73f754f7ad7-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-f73f754f7ad7-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-f73f754f7ad7-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-f73f754f7ad7-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-f73f754f7ad7-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-f73f754f7ad7-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-f73f754f7ad7-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-f73f754f7ad7-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-f73f754f7ad7-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/nyah/主逻辑函数.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/nyah/加密.png": {
+      "placeholder": "/assets/generated/image-9e44d90a5048-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-9e44d90a5048-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-9e44d90a5048-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-9e44d90a5048-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-9e44d90a5048-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-9e44d90a5048-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-9e44d90a5048-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-9e44d90a5048-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-9e44d90a5048-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-9e44d90a5048-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-9e44d90a5048-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-9e44d90a5048-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/nyah/加密.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/nyah/洗牌函数.png": {
+      "placeholder": "/assets/generated/image-b40714b739ab-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/image-b40714b739ab-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/image-b40714b739ab-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/image-b40714b739ab-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/image-b40714b739ab-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/image-b40714b739ab-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/image-b40714b739ab-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/image-b40714b739ab-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/image-b40714b739ab-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/image-b40714b739ab-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/image-b40714b739ab-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/image-b40714b739ab-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/nyah/洗牌函数.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/prinky.png": {
+      "placeholder": "/assets/generated/prinky-c610667adc4f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/prinky-c610667adc4f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/prinky-c610667adc4f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/prinky-c610667adc4f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/prinky-c610667adc4f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/prinky-c610667adc4f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/prinky-c610667adc4f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/prinky-c610667adc4f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/prinky-c610667adc4f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/prinky-c610667adc4f-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/prinky-c610667adc4f-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/prinky-c610667adc4f-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/prinky.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/zako/compile.png": {
+      "placeholder": "/assets/generated/compile-c0ba1948018c-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/compile-c0ba1948018c-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/compile-c0ba1948018c-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/compile-c0ba1948018c-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/compile-c0ba1948018c-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/compile-c0ba1948018c-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/compile-c0ba1948018c-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/compile-c0ba1948018c-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/compile-c0ba1948018c-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/compile-c0ba1948018c-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/compile-c0ba1948018c-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/compile-c0ba1948018c-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/zako/compile.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/zako/flag.png": {
+      "placeholder": "/assets/generated/flag-f0897919d3db-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-f0897919d3db-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-f0897919d3db-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-f0897919d3db-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-f0897919d3db-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-f0897919d3db-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-f0897919d3db-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-f0897919d3db-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-f0897919d3db-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-f0897919d3db-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-f0897919d3db-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-f0897919d3db-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/zako/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/zako/racket编译.png": {
+      "placeholder": "/assets/generated/racket-d6cdfc483806-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/racket-d6cdfc483806-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/racket-d6cdfc483806-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/racket-d6cdfc483806-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/racket-d6cdfc483806-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/racket-d6cdfc483806-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/racket-d6cdfc483806-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/racket-d6cdfc483806-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/racket-d6cdfc483806-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/racket-d6cdfc483806-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/racket-d6cdfc483806-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/racket-d6cdfc483806-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/zako/racket编译.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/zako/strings.png": {
+      "placeholder": "/assets/generated/strings-13549b79686d-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/strings-13549b79686d-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/strings-13549b79686d-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/strings-13549b79686d-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/strings-13549b79686d-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/strings-13549b79686d-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/strings-13549b79686d-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/strings-13549b79686d-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/strings-13549b79686d-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/strings-13549b79686d-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/strings-13549b79686d-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/strings-13549b79686d-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/zako/strings.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/zako/winhex.png": {
+      "placeholder": "/assets/generated/winhex-df632632f127-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/winhex-df632632f127-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/winhex-df632632f127-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/winhex-df632632f127-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/winhex-df632632f127-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/winhex-df632632f127-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/winhex-df632632f127-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/winhex-df632632f127-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/winhex-df632632f127-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/winhex-df632632f127-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/winhex-df632632f127-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/winhex-df632632f127-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/zako/winhex.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/reverse/_main.png": {
+      "placeholder": "/assets/generated/_main-0537e8fd7f13-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/_main-0537e8fd7f13-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/_main-0537e8fd7f13-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/_main-0537e8fd7f13-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/_main-0537e8fd7f13-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/_main-0537e8fd7f13-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/_main-0537e8fd7f13-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/_main-0537e8fd7f13-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/_main-0537e8fd7f13-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/_main-0537e8fd7f13-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/_main-0537e8fd7f13-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/_main-0537e8fd7f13-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/reverse/_main.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/CVE/boundary.png": {
+      "placeholder": "/assets/generated/boundary-7703e5e3ea0e-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/boundary-7703e5e3ea0e-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/boundary-7703e5e3ea0e-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/CVE/boundary.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/CVE/flag.png": {
+      "placeholder": "/assets/generated/flag-ed5a6787699f-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-ed5a6787699f-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-ed5a6787699f-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-ed5a6787699f-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-ed5a6787699f-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-ed5a6787699f-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-ed5a6787699f-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-ed5a6787699f-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-ed5a6787699f-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-ed5a6787699f-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag-ed5a6787699f-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-ed5a6787699f-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/CVE/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/CVE/flag_file.png": {
+      "placeholder": "/assets/generated/flag_file-455da3295c61-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag_file-455da3295c61-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag_file-455da3295c61-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag_file-455da3295c61-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag_file-455da3295c61-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag_file-455da3295c61-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag_file-455da3295c61-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag_file-455da3295c61-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag_file-455da3295c61-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag_file-455da3295c61-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flag_file-455da3295c61-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag_file-455da3295c61-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/CVE/flag_file.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/CVE/root.png": {
+      "placeholder": "/assets/generated/root-c604b7cc3f48-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/root-c604b7cc3f48-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/root-c604b7cc3f48-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/root-c604b7cc3f48-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/root-c604b7cc3f48-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/root-c604b7cc3f48-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/root-c604b7cc3f48-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/root-c604b7cc3f48-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/root-c604b7cc3f48-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/root-c604b7cc3f48-1280.webp"
+        },
+        {
+          "width": 1710,
+          "src": "/assets/generated/root-c604b7cc3f48-1710.webp"
+        }
+      ],
+      "original": "/assets/generated/original/root-c604b7cc3f48-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/CVE/root.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/CVE/web_code.png": {
+      "placeholder": "/assets/generated/web_code-c99558ff9cce-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/web_code-c99558ff9cce-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/web_code-c99558ff9cce-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/web_code-c99558ff9cce-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/web_code-c99558ff9cce-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/web_code-c99558ff9cce-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/web_code-c99558ff9cce-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/web_code-c99558ff9cce-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/web_code-c99558ff9cce-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/web_code-c99558ff9cce-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/web_code-c99558ff9cce-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/web_code-c99558ff9cce-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/CVE/web_code.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png": {
+      "placeholder": "/assets/generated/flag-46a42b63f808-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flag-46a42b63f808-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flag-46a42b63f808-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flag-46a42b63f808-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flag-46a42b63f808-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flag-46a42b63f808-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flag-46a42b63f808-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flag-46a42b63f808-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flag-46a42b63f808-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flag-46a42b63f808-1280.webp"
+        },
+        {
+          "width": 1717,
+          "src": "/assets/generated/flag-46a42b63f808-1717.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flag-46a42b63f808-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flag.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flagencode.png": {
+      "placeholder": "/assets/generated/flagencode-5f6ae26102a6-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-1280.webp"
+        },
+        {
+          "width": 1730,
+          "src": "/assets/generated/flagencode-5f6ae26102a6-1730.webp"
+        }
+      ],
+      "original": "/assets/generated/original/flagencode-5f6ae26102a6-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/flagencode.png"
+    },
+    "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/return.png": {
+      "placeholder": "/assets/generated/return-690570af3b16-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/return-690570af3b16-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/return-690570af3b16-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/return-690570af3b16-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/return-690570af3b16-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/return-690570af3b16-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/return-690570af3b16-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/return-690570af3b16-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/return-690570af3b16-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/return-690570af3b16-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/return-690570af3b16-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/return-690570af3b16-original.png",
+      "source": "src/content/posts/ctf/20260529正式赛/web/HiddenSecret/return.png"
+    },
+    "src/content/posts/images/1.avif": {
+      "placeholder": "/assets/generated/1-e8354df90ad2-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/1-e8354df90ad2-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/1-e8354df90ad2-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/1-e8354df90ad2-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/1-e8354df90ad2-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/1-e8354df90ad2-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/1-e8354df90ad2-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/1-e8354df90ad2-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/1-e8354df90ad2-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/1-e8354df90ad2-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/1-e8354df90ad2-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/1-e8354df90ad2-original.avif",
+      "source": "src/content/posts/images/1.avif"
+    },
+    "src/content/posts/images/both-grid.avif": {
+      "placeholder": "/assets/generated/both-grid-fd923d5ada95-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/both-grid-fd923d5ada95-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/both-grid-fd923d5ada95-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/both-grid-fd923d5ada95-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/both-grid-fd923d5ada95-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/both-grid-fd923d5ada95-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/both-grid-fd923d5ada95-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/both-grid-fd923d5ada95-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/both-grid-fd923d5ada95-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/both-grid-fd923d5ada95-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/both-grid-fd923d5ada95-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/both-grid-fd923d5ada95-original.avif",
+      "source": "src/content/posts/images/both-grid.avif"
+    },
+    "src/content/posts/images/both-list.avif": {
+      "placeholder": "/assets/generated/both-list-2ccf67c7391d-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/both-list-2ccf67c7391d-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/both-list-2ccf67c7391d-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/both-list-2ccf67c7391d-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/both-list-2ccf67c7391d-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/both-list-2ccf67c7391d-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/both-list-2ccf67c7391d-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/both-list-2ccf67c7391d-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/both-list-2ccf67c7391d-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/both-list-2ccf67c7391d-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/both-list-2ccf67c7391d-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/both-list-2ccf67c7391d-original.avif",
+      "source": "src/content/posts/images/both-list.avif"
+    },
+    "src/content/posts/images/firefly1.avif": {
+      "placeholder": "/assets/generated/firefly1-9b843e84c3d7-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/firefly1-9b843e84c3d7-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/firefly1-9b843e84c3d7-original.avif",
+      "source": "src/content/posts/images/firefly1.avif"
+    },
+    "src/content/posts/images/firefly2.avif": {
+      "placeholder": "/assets/generated/firefly2-24784cc8f855-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/firefly2-24784cc8f855-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/firefly2-24784cc8f855-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/firefly2-24784cc8f855-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/firefly2-24784cc8f855-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/firefly2-24784cc8f855-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/firefly2-24784cc8f855-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/firefly2-24784cc8f855-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/firefly2-24784cc8f855-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/firefly2-24784cc8f855-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/firefly2-24784cc8f855-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/firefly2-24784cc8f855-original.avif",
+      "source": "src/content/posts/images/firefly2.avif"
+    },
+    "src/content/posts/images/firefly3.avif": {
+      "placeholder": "/assets/generated/firefly3-c37572425928-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/firefly3-c37572425928-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/firefly3-c37572425928-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/firefly3-c37572425928-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/firefly3-c37572425928-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/firefly3-c37572425928-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/firefly3-c37572425928-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/firefly3-c37572425928-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/firefly3-c37572425928-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/firefly3-c37572425928-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/firefly3-c37572425928-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/firefly3-c37572425928-original.avif",
+      "source": "src/content/posts/images/firefly3.avif"
+    },
+    "src/content/posts/images/github.avif": {
+      "placeholder": "/assets/generated/github-4da7ef6c1b98-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/github-4da7ef6c1b98-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/github-4da7ef6c1b98-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/github-4da7ef6c1b98-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/github-4da7ef6c1b98-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/github-4da7ef6c1b98-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/github-4da7ef6c1b98-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/github-4da7ef6c1b98-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/github-4da7ef6c1b98-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/github-4da7ef6c1b98-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/github-4da7ef6c1b98-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/github-4da7ef6c1b98-original.avif",
+      "source": "src/content/posts/images/github.avif"
+    },
+    "src/content/posts/images/left-grid3.avif": {
+      "placeholder": "/assets/generated/left-grid3-fc5d2039c885-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/left-grid3-fc5d2039c885-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/left-grid3-fc5d2039c885-original.avif",
+      "source": "src/content/posts/images/left-grid3.avif"
+    },
+    "src/content/posts/images/left-list.avif": {
+      "placeholder": "/assets/generated/left-list-87915e086c6a-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/left-list-87915e086c6a-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/left-list-87915e086c6a-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/left-list-87915e086c6a-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/left-list-87915e086c6a-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/left-list-87915e086c6a-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/left-list-87915e086c6a-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/left-list-87915e086c6a-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/left-list-87915e086c6a-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/left-list-87915e086c6a-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/left-list-87915e086c6a-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/left-list-87915e086c6a-original.avif",
+      "source": "src/content/posts/images/left-list.avif"
+    },
+    "src/content/posts/images/masonry.avif": {
+      "placeholder": "/assets/generated/masonry-8054565e1fc6-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/masonry-8054565e1fc6-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/masonry-8054565e1fc6-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/masonry-8054565e1fc6-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/masonry-8054565e1fc6-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/masonry-8054565e1fc6-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/masonry-8054565e1fc6-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/masonry-8054565e1fc6-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/masonry-8054565e1fc6-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/masonry-8054565e1fc6-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/masonry-8054565e1fc6-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/masonry-8054565e1fc6-original.avif",
+      "source": "src/content/posts/images/masonry.avif"
+    },
+    "src/content/posts/images/obsidian.avif": {
+      "placeholder": "/assets/generated/obsidian-0ab04201d581-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/obsidian-0ab04201d581-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/obsidian-0ab04201d581-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/obsidian-0ab04201d581-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/obsidian-0ab04201d581-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/obsidian-0ab04201d581-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/obsidian-0ab04201d581-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/obsidian-0ab04201d581-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/obsidian-0ab04201d581-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/obsidian-0ab04201d581-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/obsidian-0ab04201d581-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/obsidian-0ab04201d581-original.avif",
+      "source": "src/content/posts/images/obsidian.avif"
+    },
+    "src/content/posts/images/right-grid2.avif": {
+      "placeholder": "/assets/generated/right-grid2-d58eb86322c9-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/right-grid2-d58eb86322c9-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/right-grid2-d58eb86322c9-original.avif",
+      "source": "src/content/posts/images/right-grid2.avif"
+    },
+    "src/content/posts/images/vitepress.avif": {
+      "placeholder": "/assets/generated/vitepress-f3447b53dc68-64.webp",
+      "sources": [
+        {
+          "width": 192,
+          "src": "/assets/generated/vitepress-f3447b53dc68-192.webp"
+        },
+        {
+          "width": 240,
+          "src": "/assets/generated/vitepress-f3447b53dc68-240.webp"
+        },
+        {
+          "width": 256,
+          "src": "/assets/generated/vitepress-f3447b53dc68-256.webp"
+        },
+        {
+          "width": 320,
+          "src": "/assets/generated/vitepress-f3447b53dc68-320.webp"
+        },
+        {
+          "width": 384,
+          "src": "/assets/generated/vitepress-f3447b53dc68-384.webp"
+        },
+        {
+          "width": 512,
+          "src": "/assets/generated/vitepress-f3447b53dc68-512.webp"
+        },
+        {
+          "width": 640,
+          "src": "/assets/generated/vitepress-f3447b53dc68-640.webp"
+        },
+        {
+          "width": 960,
+          "src": "/assets/generated/vitepress-f3447b53dc68-960.webp"
+        },
+        {
+          "width": 1280,
+          "src": "/assets/generated/vitepress-f3447b53dc68-1280.webp"
+        },
+        {
+          "width": 1920,
+          "src": "/assets/generated/vitepress-f3447b53dc68-1920.webp"
+        }
+      ],
+      "original": "/assets/generated/original/vitepress-f3447b53dc68-original.avif",
+      "source": "src/content/posts/images/vitepress.avif"
+    }
+  }
+}

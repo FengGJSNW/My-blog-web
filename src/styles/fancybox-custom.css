@@ -131,3 +131,33 @@ html.firefly-low-power .fancybox__thumbs,
 html.firefly-low-power .fancybox__button {
   backdrop-filter: none;
 }
+
+.fancybox__container .firefly-fancybox-svg-frame,
+.fancybox__container .firefly-fancybox-svg-slide .f-panzoom__viewport {
+  background: #fff !important;
+  border-radius: 8px;
+}
+
+.fancybox__container img[data-firefly-local-svg="true"],
+.fancybox__container img[src^="/__local_svg/"],
+.fancybox__container img[src*="/__local_svg/"],
+.fancybox__container img[src*="/assets/local-svg/"],
+.fancybox__container img[src$=".svg"] {
+  background-color: #fff !important;
+  color-scheme: light;
+  filter: none !important;
+}
+
+.fancybox__container .f-panzoom__viewport > img[data-firefly-local-svg="true"],
+.fancybox__container .f-panzoom__viewport > img[src*="/__local_svg/"],
+.fancybox__container .f-panzoom__viewport > img[src*="/assets/local-svg/"],
+.fancybox__container .f-panzoom__viewport > img[src$=".svg"] {
+  object-fit: contain;
+}
+
+.fancybox__container .f-thumbs img[data-firefly-local-svg="true"],
+.fancybox__container .f-thumbs img[src*="/__local_svg/"],
+.fancybox__container .f-thumbs img[src*="/assets/local-svg/"],
+.fancybox__container .f-thumbs img[src$=".svg"] {
+  object-fit: contain;
+}
